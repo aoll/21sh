@@ -1,6 +1,43 @@
 #include "project.h"
 
 /**
+ * clear all the screen up the cursor position line , including the current line
+ */
+int  ft_cursor_clear_up(t_cursor *cursor)
+{
+  int pos_y_tmp;
+
+  pos_y_tmp = cursor->pos_y;
+  ft_cursor_move_x(0, cursor->move_x);
+  while (pos_y_tmp >= 0)
+  {
+    ft_term_apply_cmd(cursor->clear_current_line, 1);
+    ft_term_apply_cmd(cursor->up, 1);
+    pos_y_tmp--;
+  }
+  return (EXIT_SUCCESS);
+}
+/**
+ * clear all the screen below the cursor position line , including the current line
+ */
+int  ft_cursor_clear_down(t_cursor *cursor)
+{
+  int pos_y_tmp;
+
+  pos_y_tmp = 0;
+  ft_term_apply_cmd(cursor->save_cursor_position, 1);
+  ft_cursor_move_x(0, cursor->move_x);
+  while (pos_y_tmp <= cursor->terminal_size.ws_row)
+  {
+    ft_term_apply_cmd(cursor->clear_current_line, 1);
+    ft_term_apply_cmd(cursor->down, 1);
+    pos_y_tmp++;
+  }
+  ft_term_apply_cmd(cursor->restore_cursor_position, 1);
+  return (EXIT_SUCCESS);
+}
+
+/**
  * add a char to arr a marke if is a element to a tabulation
  */
 int  ft_arr_add_char(t_cursor *cursor, t_arr *arr, char c, int is_tab)
@@ -21,11 +58,66 @@ int  ft_arr_add_char(t_cursor *cursor, t_arr *arr, char c, int is_tab)
 }
 
 /**
+ * return the index to start the arr with show n - line_off line
+ */
+int  ft_arr_index_line_start_showed(t_cursor *cursor, t_arr *arr, int line_off)
+{
+  int index;
+  int line;
+  int index_line;
+  unsigned char *s_line;
+
+  index_line = cursor->prompt_len;
+  index = 0;
+  line = 0;
+  while (index < (int)arr->length)
+  {
+    s_line = ((unsigned char *)arr->ptr + arr->sizeof_elem * index);
+    s_line = *(unsigned char **)s_line;
+    if (line >= line_off)
+    {
+      return (index);
+    }
+    else if (index_line == cursor->terminal_size.ws_col - 1 || *s_line == 10)
+    {
+      index_line = 0;
+      line++;
+      index++;
+    }
+    else
+    {
+      index_line++;
+      index++;
+    }
+  }
+  return (index);
+}
+
+/**
  * print a char
  */
-int  ft_cursor_print_char(t_cursor *cursor, char c)
+int  ft_cursor_print_char(t_cursor *cursor, char c, t_arr *arr)
 {
+  unsigned char *s_line;
+  int len_tmp;
+  int index_start_showed;
 
+  s_line = arr->ptr;
+  len_tmp = arr->length;
+  if (cursor->pos_y + 1 >= cursor->terminal_size.ws_row && cursor->pos_x + 1 >= cursor->terminal_size.ws_col)
+  {
+    cursor->y_start++;
+    ft_cursor_clear_up(cursor);
+    index_start_showed = ft_arr_index_line_start_showed(cursor, arr, cursor->pos_y + 1 - cursor->terminal_size.ws_row + 1);
+
+    arr->ptr = (unsigned char *)arr->ptr + arr->sizeof_elem * index_start_showed;
+    arr->length -= (index_start_showed + 1);
+
+    ft_arr_print(arr);
+
+    arr->ptr = s_line;
+    arr->length = len_tmp;
+  }
   ft_putchar(c);
   cursor->pos_x++;
   if (cursor->pos_x >= cursor->terminal_size.ws_col)
@@ -37,6 +129,7 @@ int  ft_cursor_print_char(t_cursor *cursor, char c)
     cursor->pos_y++;
     cursor->y_total++;
   }
+
   return (EXIT_SUCCESS);
 }
 
@@ -89,11 +182,11 @@ int  ft_add_char_isprint(t_cursor *cursor, t_arr *arr, char c)
   ft_arr_add_char(cursor, arr, c, 0);
   if (cursor->index_line == (int)arr->length)
   {
-    ft_cursor_print_char(cursor, c);
+    ft_cursor_print_char(cursor, c, arr);
   }
   else
   {
-    ft_cursor_print_char(cursor, c);
+    ft_cursor_print_char(cursor, c, arr);
     ft_cursor_print_overide_line(cursor, arr);
   }
   return (EXIT_SUCCESS);
@@ -131,11 +224,11 @@ int  ft_add_char_tab(t_cursor *cursor, t_arr *arr)
     ft_arr_add_char(cursor, arr, ' ', 1);
     if (cursor->index_line == (int)arr->length)
     {
-      ft_cursor_print_char(cursor, ' ');
+      ft_cursor_print_char(cursor, ' ', arr);
     }
     else
     {
-      ft_cursor_print_char(cursor, ' ');
+      ft_cursor_print_char(cursor, ' ', arr);
     }
   }
   if (cursor->index_line != (int)arr->length)

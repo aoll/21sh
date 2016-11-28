@@ -87,7 +87,8 @@ int  ft_init_cursor(t_cursor *cursor)
   cursor->left = ft_cmd(tgetstr("le", NULL));
   cursor->right = ft_cmd(tgetstr("nd", NULL));
   cursor->sup_char = ft_cmd(tgetstr("dc", NULL));
-  cursor->move_x = ft_cmd(tgetstr("ch", NULL));
+  cursor->move_x = tgetstr("ch", NULL);
+  cursor->clear_current_line = ft_cmd(tgetstr("ce", NULL));
   cursor->clear_down = ft_cmd(tgetstr("cd", NULL));
   cursor->mode_insertion = ft_cmd(tgetstr("im", NULL));
   cursor->mode_insertion_end = ft_cmd(tgetstr("ei", NULL));
@@ -97,6 +98,7 @@ int  ft_init_cursor(t_cursor *cursor)
   cursor->restore_cursor_position = ft_cmd(tgetstr("rc", NULL));
   cursor->scroll_down = ft_cmd(tgetstr("sr", NULL));
   cursor->scroll_up = ft_cmd(tgetstr("sf", NULL));
+  cursor->left_corner = ft_cmd(tgetstr("ho", NULL));
 
   return (EXIT_SUCCESS);
 }
@@ -146,7 +148,8 @@ int  read_stdin()
   cursor.dquote = false;
   cursor.prev_chariot = 0;
   cursor.chariot = 0;
-  cursor.y_total = 0;
+  cursor.y_total = 1;
+  cursor.y_start = 0;
   buff = ft_strnew(8); //need 3 but we are never to sure
   ft_bzero(buff, 8);
   ft_cursor_save_position();
@@ -291,8 +294,8 @@ int  read_stdin()
         ft_arr_push(&history_line, arr, -1);
         ft_putstr("\ncursor.index_line: ");
         ft_putnbr(cursor.index_line);
-        ft_putstr(" nb_char: ");
-        ft_putnbr(nb_char);
+        ft_putstr(" y_total: ");
+        ft_putnbr(cursor.y_total);
         ft_putstr(" cursor.pos_x: ");
         ft_putnbr(cursor.pos_x);
         ft_putstr(" cursor.pos_y:");
@@ -308,7 +311,11 @@ int  read_stdin()
         cursor.index_line = 0;
         cursor.pos_x = cursor.prompt_len;
         cursor.pos_y = 0;
-        nb_char =cursor.prompt_len;
+        cursor.y_total = 1;
+        cursor.prev_chariot = 0;
+        cursor.chariot = 0;
+        cursor.y_start = 0;
+        nb_char = cursor.prompt_len;
         ft_putstr("\n");
         // ft_cursor_save_position();
         ft_putstr(cursor.prompt);

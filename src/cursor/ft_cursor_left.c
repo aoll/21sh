@@ -6,12 +6,12 @@
 int  ft_move_left_bw(void)
 {
   char *cmd;
-  char *cmd2;
-  char *cmd3;
+  // char *cmd2;
+  // char *cmd3;
 
 
-  if ((cmd2 = tgetstr("ho", NULL)) == NULL) //move to the left
-    ft_putstr("NULLLLLLLLLLLL\n");
+  // if ((cmd2 = tgetstr("ho", NULL)) == NULL) //move to the left
+  //   ft_putstr("NULLLLLLLLLLLL\n");
     // return (EXIT_FAILURE); //pas quiter le programme
 
   // tputs(cmd2, 0, &my_putchar);
@@ -134,6 +134,65 @@ int  ft_cursor_left_chariot(t_cursor *cursor, t_arr *arr)
 }
 
 /**
+ * return the index of the start of the prev line
+ */
+int  ft_cursor_index_prev_line_start(t_cursor *cursor, t_arr *arr)
+{
+  int index;
+  unsigned char *s_line;
+  int index_line;
+
+  index = cursor->index_line;
+  index_line = 0;
+  while (index > 0)
+  {
+      s_line = (unsigned char *)arr->ptr + arr->sizeof_elem * index;
+      s_line = *(unsigned char **)s_line;
+      if (index_line == cursor->terminal_size.ws_col - 1)
+      {
+        return (index);
+      }
+      if (*s_line == 10)
+      {
+        return (index + 1);
+      }
+      index--;
+      index_line++;
+  }
+  return (index);
+}
+
+
+/**
+ *
+ */
+int  ft_cursor_scroll_up(t_cursor *cursor, t_arr *arr)
+{
+  void *s_line;
+  int index_start_showed;
+  int len_tmp;
+  int y_start;
+
+  ft_cursor_clear_down(cursor);
+  s_line = arr->ptr;
+  len_tmp = arr->length;
+  arr->length -= (cursor->terminal_size.ws_col - 1) ; // debug actuelement va tout printer mois une ligne seulement il ne faut peutre printer que @lignes
+
+  if (!(cursor->pos_y - 1))
+  {
+    ft_putstr(cursor->prompt);
+  }
+  cursor->y_start--;
+  arr->ptr = (unsigned char *)arr->ptr + arr->sizeof_elem * ft_cursor_index_prev_line_start(cursor, arr);
+  ft_arr_print(arr);
+  arr->length = len_tmp;
+  arr->ptr = s_line;
+  ft_term_apply_cmd(cursor->restore_cursor_position, 1);
+  return (EXIT_SUCCESS);
+}
+
+
+/**
  * if the cursor position is on the first col
  */
 
@@ -141,11 +200,11 @@ static int  ft_cursor_left_up_line(t_cursor *cursor, t_arr *arr, unsigned char *
 {
   if (cursor->pos_y)
   {
-    if (cursor->pos_y < cursor->terminal_size.ws_row
-      && cursor->y_total > cursor->terminal_size.ws_row)
+    if (cursor->pos_y == cursor->y_start)
     {
-      // ft_term_apply_cmd(cursor->scroll_, 1);
-      ft_move_left_bw();
+      ft_cursor_scroll_up(cursor, arr);
+      cursor->y_start--;
+      // return (0);
     }
     else
     {

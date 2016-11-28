@@ -36,6 +36,7 @@ struct  s_cursor
   int pos_y;
   int index_line;
   int y_total;
+  int y_start;
 
   struct winsize terminal_size;
 
@@ -62,8 +63,10 @@ struct  s_cursor
   char *mode_reverse_video;
   char *save_cursor_position;
   char *restore_cursor_position;
-  char *scroll_up;
-  char *scroll_down;
+  char *scroll_up; // not use
+  char *scroll_down;// not use
+  char *left_corner;// not use
+  char *clear_current_line;
 };
 
 
@@ -108,6 +111,9 @@ int  ft_cursor_move_to_start(t_cursor *cursor, t_arr *arr);
 int  ft_restore_prompt_and_line(t_cursor *cursor, t_arr *arr);
 int  ft_cursor_move_to_index_line_from_start(t_cursor *cursor);
 
+int  ft_cursor_clear_up(t_cursor *cursor);
+int  ft_cursor_clear_down(t_cursor *cursor);
+
 int  ft_cursor_select_left(t_cursor *cursor, t_arr *arr, t_arr *select_line);
 int  ft_cursor_select_right(t_cursor *cursor, t_arr *arr, t_arr *select_line);
 
@@ -118,7 +124,7 @@ int  ft_cursor_deselect_all(t_cursor *cursor, t_arr *arr, t_arr *select_line);
 int  ft_cursor_add_char(t_cursor *cursor, t_arr *arr, char *buff);
 
 int  ft_nb_char_between_two_chariot(t_arr *arr, int index);
-
+int  ft_arr_index_line_start_showed(t_cursor *cursor, t_arr *arr, int line_off);
 
 void  ft_read_line(void);
 
