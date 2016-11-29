@@ -67,6 +67,8 @@ struct  s_cursor
   char *scroll_down;// not use
   char *left_corner;// not use
   char *clear_current_line;
+  char *marge;
+  char *no_marge;
 };
 
 

@@ -160,15 +160,21 @@ int  ft_cursor_right_line_more(t_cursor *cursor, t_arr *arr)
   len_tmp = arr->length;
   ptr_tmp = arr->ptr;
   index_end_showed = ft_index_line_end_showed(cursor, arr);
-  ft_putstr("index_end_showed: ");ft_putnbr(index_end_showed);ft_putstr("\n");
-  index_start_showed = ft_index_line_start_showed(cursor, arr, cursor->index_line);
-  ft_putstr("index_start_showed: ");ft_putnbr(index_start_showed);ft_putstr("\n");
+  // ft_putstr("index_end_showed: ");ft_putnbr(index_end_showed);ft_putstr("\n");
+  index_start_showed = ft_index_line_start_showed(cursor, arr, cursor->index_line);// - 1);
+  // ft_putstr("index_start_showed: ");ft_putnbr(index_start_showed);ft_putstr("\n");
   arr->ptr = (unsigned char *)arr->ptr + arr->sizeof_elem * index_start_showed;
-  arr->length = index_end_showed - index_start_showed + 1;
-  if (cursor->index_line + 1 == len_tmp)
-  {
-    arr->length--;
-  }
+  arr->length = cursor->index_line + 1 - index_start_showed;// + 1;
+  // arr->length = index_end_showed - index_start_showed + 1;
+
+
+  // if (cursor->index_line + 1 == len_tmp)
+  // {
+  //   arr->length--;
+  // }
+  ft_arr_print(arr);
+  arr->ptr = (unsigned char *)arr->ptr + arr->sizeof_elem * cursor->index_line + 1;
+  arr->length = len_tmp - index_end_showed - cursor->index_line - 1;
   ft_arr_print(arr);
   arr->length = len_tmp;
   arr->ptr = ptr_tmp;
