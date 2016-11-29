@@ -2,9 +2,6 @@
 
 #include <signal.h>
 
-
-
-
 /*
 ** function for print some char * was stocked in a t_arr like elem
 ** is give for arr->f_print, print some elem
@@ -88,7 +85,7 @@ int  ft_init_cursor(t_cursor *cursor)
   cursor->right = ft_cmd(tgetstr("nd", NULL));
   cursor->sup_char = ft_cmd(tgetstr("dc", NULL));
   cursor->move_x = tgetstr("ch", NULL);
-  cursor->clear_current_line = ft_cmd(tgetstr("ce", NULL));
+  cursor->clear_current_line = ft_cmd(tgetstr("ce", NULL)); //ce
   cursor->clear_down = ft_cmd(tgetstr("cd", NULL));
   cursor->mode_insertion = ft_cmd(tgetstr("im", NULL));
   cursor->mode_insertion_end = ft_cmd(tgetstr("ei", NULL));
@@ -300,6 +297,8 @@ int  read_stdin()
         ft_putnbr(cursor.pos_x);
         ft_putstr(" cursor.pos_y:");
         ft_putnbr(cursor.pos_y);
+        ft_putstr(" cursor.y_start:");
+        ft_putnbr(cursor.y_start);
         ft_putstr("\n");
         index_hitory = history_line->length; // yes, because, when you press enter is a new line
         arr = ft_arr_new(1, sizeof(char *));

@@ -27,7 +27,7 @@ int  ft_cursor_clear_down(t_cursor *cursor)
   pos_y_tmp = 0;
   ft_term_apply_cmd(cursor->save_cursor_position, 1);
   ft_cursor_move_x(0, cursor->move_x);
-  while (pos_y_tmp <= cursor->terminal_size.ws_row)
+  while (pos_y_tmp < cursor->terminal_size.ws_row)
   {
     ft_term_apply_cmd(cursor->clear_current_line, 1);
     ft_term_apply_cmd(cursor->down, 1);
@@ -136,9 +136,29 @@ int  ft_cursor_print_char(t_cursor *cursor, char c, t_arr *arr)
 /**
  * print a return chariot
  */
-int  ft_cursor_print_chariot(t_cursor *cursor)
+int  ft_cursor_print_chariot(t_cursor *cursor, t_arr *arr)
 {
+  unsigned char *s_line;
+  int len_tmp;
+  int index_start_showed;
 
+  s_line = arr->ptr;
+  len_tmp = arr->length;
+
+  if (cursor->pos_y + 1 >= cursor->terminal_size.ws_row)
+  {
+    cursor->y_start++;
+    ft_cursor_clear_up(cursor);
+    index_start_showed = ft_arr_index_line_start_showed(cursor, arr, cursor->pos_y + 1 - cursor->terminal_size.ws_row + 1);
+
+    arr->ptr = (unsigned char *)arr->ptr + arr->sizeof_elem * index_start_showed;
+    arr->length -= (index_start_showed + 1);
+
+    ft_arr_print(arr);
+
+    arr->ptr = s_line;
+    arr->length = len_tmp;
+  }
   ft_putchar('\n');
   cursor->pos_x = 0;
   cursor->pos_y++;
@@ -201,11 +221,11 @@ int  ft_add_char_chariot(t_cursor *cursor, t_arr *arr)
   ft_arr_add_char(cursor, arr, '\n', 0);
   if (cursor->index_line == (int)arr->length)
   {
-    ft_cursor_print_chariot(cursor);
+    ft_cursor_print_chariot(cursor, arr);
   }
   else
   {
-    ft_cursor_print_chariot(cursor);
+    ft_cursor_print_chariot(cursor, arr);
     ft_cursor_print_overide_line(cursor, arr);
   }
   return (EXIT_SUCCESS);
