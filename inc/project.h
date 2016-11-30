@@ -65,7 +65,8 @@ struct  s_cursor
   char *restore_cursor_position;
   char *scroll_up; // not use
   char *scroll_down;// not use
-  char *left_corner;// not use
+  char *left_corner_up;// not use
+  char *left_corner_down;
   char *clear_current_line;
   char *marge;
   char *no_marge;
@@ -115,6 +116,7 @@ int  ft_cursor_move_to_index_line_from_start(t_cursor *cursor);
 
 int  ft_cursor_clear_up(t_cursor *cursor);
 int  ft_cursor_clear_down(t_cursor *cursor);
+int  ft_cursor_clear_all_screen(t_cursor *cursor); // very effective!!
 
 int  ft_cursor_select_left(t_cursor *cursor, t_arr *arr, t_arr *select_line);
 int  ft_cursor_select_right(t_cursor *cursor, t_arr *arr, t_arr *select_line);

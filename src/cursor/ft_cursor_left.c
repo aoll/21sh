@@ -213,6 +213,25 @@ int  ft_cursor_index_prev_line_end(t_cursor *cursor, t_arr *arr, int start)
   return (len);
 }
 
+/**
+ * clear all the screen and restore the position of the cursor
+ */
+int  ft_cursor_clear_all_screen(t_cursor *cursor)
+{
+  int pos_y;
+
+  pos_y = 0;
+  ft_term_apply_cmd(cursor->save_cursor_position, 1);
+  ft_term_apply_cmd(cursor->left_corner_down, 1);
+  while (pos_y < cursor->terminal_size.ws_row)
+  {
+    ft_term_apply_cmd(cursor->clear_current_line, 1);
+    ft_term_apply_cmd(cursor->up, 1);
+    pos_y++;
+  }
+  ft_term_apply_cmd(cursor->restore_cursor_position, 1);
+  return (EXIT_SUCCESS);
+}
 
 /**
  * clear the actual line and reprint from line - 1 to line - 1
@@ -224,7 +243,8 @@ int  ft_cursor_scroll_up(t_cursor *cursor, t_arr *arr)
   int len_tmp;
   int y_end;
 
-  ft_cursor_clear_down(cursor);
+  // ft_cursor_clear_down(cursor);
+  ft_cursor_clear_all_screen(cursor);
   s_line = arr->ptr;
   len_tmp = arr->length;
   index_start_showed = ft_cursor_index_prev_line_start(cursor, arr);
