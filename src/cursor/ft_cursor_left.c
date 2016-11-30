@@ -178,18 +178,20 @@ int  ft_cursor_index_prev_line_end(t_cursor *cursor, t_arr *arr, int start)
   int index_line;
   int y_line;
   int arr_len;
-  int len;
 
   index_line = 0;
   if (cursor->pos_y - 1 == 0)
   {
     index_line = cursor->prompt_len;
   }
-  len = 0;
   y_line = 0;
   arr_len = (int)arr->length;
-  while (start < arr_len && y_line < cursor->terminal_size.ws_row)
+  while (start < arr_len)
   {
+    if (y_line == cursor->terminal_size.ws_row)
+    {
+      return (start - 1);
+    }
     s_line = (unsigned char *)arr->ptr + arr->sizeof_elem * start;
     s_line = *(unsigned char **)s_line;
     if (index_line == cursor->terminal_size.ws_col - 1 || *s_line == 10 )
@@ -198,19 +200,17 @@ int  ft_cursor_index_prev_line_end(t_cursor *cursor, t_arr *arr, int start)
       y_line++;
       if (y_line == cursor->terminal_size.ws_row && *s_line == 10)
       {
-        return (len);
+        return (start - 1);
       }
       start++;
-      len++;
     }
     else
     {
-      len++;
       start++;
       index_line++;
     }
   }
-  return (len);
+  return (start - 1);
 }
 
 /**
@@ -221,15 +221,16 @@ int  ft_cursor_clear_all_screen(t_cursor *cursor)
   int pos_y;
 
   pos_y = 0;
-  ft_term_apply_cmd(cursor->save_cursor_position, 1);
-  ft_term_apply_cmd(cursor->left_corner_down, 1);
+  // ft_term_apply_cmd(cursor->save_cursor_position, 1);
+  ft_term_apply_cmd(cursor->down, cursor->terminal_size.ws_row); // debug here !!!!
   while (pos_y < cursor->terminal_size.ws_row)
   {
+    ft_cursor_move_x(0, cursor->move_x);
     ft_term_apply_cmd(cursor->clear_current_line, 1);
     ft_term_apply_cmd(cursor->up, 1);
     pos_y++;
   }
-  ft_term_apply_cmd(cursor->restore_cursor_position, 1);
+  // ft_term_apply_cmd(cursor->restore_cursor_position, 1);
   return (EXIT_SUCCESS);
 }
 
@@ -241,32 +242,33 @@ int  ft_cursor_scroll_up(t_cursor *cursor, t_arr *arr)
   void *s_line;
   int index_start_showed;
   int len_tmp;
-  int y_end;
+  int index_end_showed;
 
-  // ft_cursor_clear_down(cursor);
+  cursor->y_start--;
   ft_cursor_clear_all_screen(cursor);
+  // ft_term_apply_cmd(cursor->up, cursor->terminal_size.ws_row);
+  ft_cursor_move_x(0, cursor->move_x);
   s_line = arr->ptr;
   len_tmp = arr->length;
-  index_start_showed = ft_cursor_index_prev_line_start(cursor, arr);
-  // ft_putstr("index_start_showed: ");ft_putnbr(index_start_showed);ft_putstr("\n");
-  y_end = ft_cursor_index_prev_line_end(cursor, arr, index_start_showed);
-  // ft_putstr("y_end: ");ft_putnbr(y_end);ft_putstr("\n");
-  arr->length = y_end;
-  // ft_putstr("arr len: ");ft_putnbr(arr->length);ft_putstr("\n");
-  // ft_putstr("arr len save: ");ft_putnbr(len_tmp);ft_putstr("\n");
+  // index_start_showed = ft_cursor_index_prev_line_start(cursor, arr);
+  index_start_showed = ft_index_line_start_showed(cursor, arr);
+  // ft_putstr("\nindex_start_showed: ");ft_putnbr(index_start_showed);ft_putstr("\n");
+  index_end_showed = ft_cursor_index_prev_line_end(cursor, arr, index_start_showed);
+  // ft_putstr("\nindex_end_showed: ");ft_putnbr(index_end_showed);ft_putstr("\n");
 
-  // ft_putnbr(arr->length);
+  arr->length = index_end_showed + 1 - index_start_showed;
+  // ft_putstr("\narr->length: ");ft_putnbr(arr->length);ft_putstr("\n");
+
   if ((cursor->pos_y - 1) == 0)
   {
     ft_putstr(cursor->prompt);
   }
-  cursor->y_start--;
   arr->ptr = (unsigned char *)arr->ptr + arr->sizeof_elem * index_start_showed;
   ft_arr_print(arr);
   arr->length = len_tmp;
   arr->ptr = s_line;
-  ft_term_apply_cmd(cursor->restore_cursor_position, 1);
-  ft_cursor_move_x(cursor->pos_x, cursor->move_x);
+  ft_term_apply_cmd(cursor->up, 1);
+  // ft_cursor_move_x(cursor->pos_x, cursor->move_x);
   return (EXIT_SUCCESS);
 }
 
@@ -284,7 +286,6 @@ static int  ft_cursor_left_up_line(t_cursor *cursor, t_arr *arr, unsigned char *
       // ft_move_left_bw();
       ft_cursor_scroll_up(cursor, arr);
       // cursor->y_start--;
-      // return (0);
     }
     else
     {

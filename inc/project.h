@@ -130,6 +130,8 @@ int  ft_cursor_add_char(t_cursor *cursor, t_arr *arr, char *buff);
 int  ft_nb_char_between_two_chariot(t_arr *arr, int index);
 int  ft_arr_index_line_start_showed(t_cursor *cursor, t_arr *arr, int line_off);
 
+int  ft_index_line_start_showed(t_cursor *cursor, t_arr *arr);
+
 void  ft_read_line(void);
 
 t_kval  *ft_kval_init(const char *env_line);

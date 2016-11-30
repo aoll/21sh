@@ -31,6 +31,21 @@ static int  ft_cursor_right_tab(t_cursor *cursor, int same_line)
 }
 
 /**
+ * cursor is actually on a '\n' move down one time and place the cursor and the
+ * first col
+ */
+int  ft_cursor_right_chariot(t_cursor *cursor)
+{
+  cursor->prev_chariot++;
+  cursor->pos_y++;
+  cursor->pos_x = 0;
+  cursor->index_line++;
+  ft_term_apply_cmd(cursor->down, 1);
+  ft_cursor_move_x(cursor->pos_x, cursor->move_x);
+  return (EXIT_SUCCESS);
+}
+
+/**
  * next char is on the same line as the cursor
  */
 static int  ft_cursor_right_same_line(t_cursor *cursor, t_arr *arr,
@@ -112,37 +127,39 @@ int  ft_index_line_end_showed(t_cursor *cursor, t_arr *arr)
  * from the index in parameter
  * this function calcul the number of char can be dysplayed
  */
-int  ft_index_line_start_showed(t_cursor *cursor, t_arr *arr, int index_end_showed)
+int  ft_index_line_start_showed(t_cursor *cursor, t_arr *arr)
 {
   unsigned char *s_line;
   int index_line;
   int nb_line;
+  int index;
 
-  index_line = 0;
   nb_line = 0;
-  while (index_end_showed)
+  index = 0;
+  index_line = cursor->prompt_len;
+  while (index < (int)arr->length)
   {
-    if (nb_line == cursor->terminal_size.ws_row - 1)
+    if (nb_line == cursor->y_start)
     {
-      return (index_end_showed + 1);
+      return (index);
     }
-    s_line = (unsigned char *)arr->ptr + arr->sizeof_elem * index_end_showed;
+    s_line = (unsigned char *)arr->ptr + arr->sizeof_elem * index;
     s_line = *(unsigned char **)s_line;
-    if (index_line == cursor->terminal_size.ws_col - 1)
+    if (index_line == cursor->terminal_size.ws_col - 1 || *s_line == 10)
     {
       nb_line++;
       index_line = 0;
-      index_end_showed--;
+      index++;
     }
     else
     {
-      index_end_showed--;
+      index++;
       index_line++;
     }
 
 
   }
-  return (index_end_showed);
+  return (index);
 }
 
 /**
@@ -157,24 +174,32 @@ int  ft_cursor_right_line_more(t_cursor *cursor, t_arr *arr)
   int len_tmp;
 
   cursor->y_start++;
-  ft_term_apply_cmd(cursor->save_cursor_position, 1);
-  ft_clear_up_from_bottom(cursor);
+  // ft_term_apply_cmd(cursor->save_cursor_position, 1);
+  // ft_clear_up_from_bottom(cursor);
+  ft_cursor_clear_all_screen(cursor);
+  ft_term_apply_cmd(cursor->up, cursor->terminal_size.ws_row);
+  ft_cursor_move_x(0, cursor->move_x);
+
   len_tmp = arr->length;
   ptr_tmp = arr->ptr;
   index_end_showed = ft_index_line_end_showed(cursor, arr);
   // ft_putstr("index_end_showed: ");ft_putnbr(index_end_showed);ft_putstr("\n");
-  index_start_showed = ft_index_line_start_showed(cursor, arr, cursor->index_line);// - 1);
+  index_start_showed = ft_index_line_start_showed(cursor, arr);// - 1);
   // ft_putstr("index_start_showed: ");ft_putnbr(index_start_showed);ft_putstr("\n");
   arr->ptr = (unsigned char *)arr->ptr + arr->sizeof_elem * index_start_showed;
   arr->length = cursor->index_line + 1 - index_start_showed;// + 1;
+  // ft_putstr("\narr->length: ");ft_putnbr(arr->length);ft_putstr("\n");
+  // ft_putstr("\nindex_line: ");ft_putnbr(cursor->index_line);ft_putstr("\n");
   // arr->length = index_end_showed - index_start_showed + 1;
 
+  // return (0);
 
   // if (cursor->index_line + 1 == len_tmp)
   // {
   //   arr->length--;
   // }
   ft_arr_print(arr);
+  // return (0);
   if ((cursor->index_line + 2) < len_tmp)
   {
     arr->ptr = (unsigned char *)ptr_tmp + arr->sizeof_elem * (cursor->index_line + 2);
@@ -204,6 +229,8 @@ int  ft_cursor_right_line_more(t_cursor *cursor, t_arr *arr)
   // ft_putstr("index_end_showed: ");ft_putnbr(index_end_showed);ft_putstr("\n");
   arr->length = len_tmp;
   arr->ptr = ptr_tmp;
+  ft_term_apply_cmd(cursor->up, 1);
+  ft_cursor_move_x(cursor->pos_x, cursor->move_x);
   return (EXIT_SUCCESS);
 }
 
@@ -229,6 +256,10 @@ static int  ft_cursor_right_down_line(t_cursor *cursor, t_arr *arr, unsigned cha
     }
     ft_cursor_right_tab(cursor, 1);
   }
+  else if (*s_line == 10)
+  {
+    ft_cursor_right_chariot(cursor);
+  }
   else
   {
     ft_term_apply_cmd(cursor->down, 1);
@@ -240,20 +271,7 @@ static int  ft_cursor_right_down_line(t_cursor *cursor, t_arr *arr, unsigned cha
   return (EXIT_SUCCESS);
 }
 
-/**
- * cursor is actually on a '\n' move down one time and place the cursor and the
- * first col
- */
-int  ft_cursor_right_chariot(t_cursor *cursor)
-{
-  cursor->prev_chariot++;
-  cursor->pos_y++;
-  cursor->pos_x = 0;
-  cursor->index_line++;
-  ft_term_apply_cmd(cursor->down, 1);
-  ft_cursor_move_x(cursor->pos_x, cursor->move_x);
-  return (EXIT_SUCCESS);
-}
+
 
 /**
  * move the cursor to current position + 1 on the same line or line + 1 if
@@ -268,11 +286,12 @@ int  ft_cursor_right(t_cursor *cursor, t_arr *arr)
   {
     s_line = (unsigned char *)arr->ptr + arr->sizeof_elem * (cursor->index_line);
     s_line = *(unsigned char **)s_line;
-    if (*s_line == 10)
-    {
-      ft_cursor_right_chariot(cursor);
-    }
-    else if (cursor->pos_x + 1 < cursor->terminal_size.ws_col)
+    // if (*s_line == 10)
+    // {
+    //   ft_cursor_right_chariot(cursor);
+    // }
+    // else
+    if (cursor->pos_x + 1 < cursor->terminal_size.ws_col && *s_line != 10)
     {
       ft_cursor_right_same_line(cursor, arr, s_line);
     }
