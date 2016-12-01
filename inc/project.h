@@ -71,6 +71,7 @@ struct  s_cursor
   char *marge;
   char *no_marge;
 
+  char *clear_all_the_screen;
   int test;
 };
 

@@ -98,10 +98,13 @@ int  ft_cursor_print_after_resize(t_cursor *cursor, t_arr *arr)
   int index_line_tmp;
 
   index_line_tmp = cursor->index_line;
-  ft_cursor_clear_only_the_line(cursor, arr);
+  ft_term_apply_cmd(cursor->clear_all_the_screen, 1);
   ft_putstr(cursor->prompt);
   ft_arr_print(arr);
   ft_cursor_restore_index(cursor, arr, index_line_tmp);
+
+  // ft_cursor_home(cursor, arr);
+  // ft_cursor_end(cursor, arr);
   return (EXIT_SUCCESS);
 }
 
@@ -116,20 +119,17 @@ int  ft_cursor_resize(t_cursor *cursor, t_arr *arr, struct winsize *terminal_siz
   int nb_line_displayed_new;
   struct winsize terminal_size_tmp;
 
-  cursor->terminal_size.ws_col = terminal_size_old->ws_col;
-  cursor->terminal_size.ws_row = terminal_size_old->ws_row;
-  cursor->test++;
-  return (0);
+
   terminal_size_tmp = cursor->terminal_size;
   index_start_showed = ft_index_line_start_showed(cursor, arr);
   nb_line_displayed_old = ft_cursor_nb_line_displayed(cursor, arr, 0, 1);
   cursor->terminal_size.ws_col = terminal_size_old->ws_col;
   cursor->terminal_size.ws_row = terminal_size_old->ws_row;
   nb_line_displayed_new = ft_cursor_nb_line_displayed(cursor, arr, 0, 1);
-  if (nb_line_displayed_new > cursor->terminal_size.ws_row)
+  if (nb_line_displayed_new + 1 > cursor->terminal_size.ws_row)// || nb_line_displayed_old + 1 > cursor->terminal_size.ws_row )
   {
     ft_cursor_print_after_resize(cursor, arr);
-    return(0);
+    // return(0);
   }
   // // nb_line_displayed = ft_cursor_nb_line_displayed(cursor, arr, index_start_showed);
   // // ft_putstr("\nnb_line_displayed can be");ft_putnbr(nb_line_displayed);ft_putstr("\n");

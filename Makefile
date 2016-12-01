@@ -68,7 +68,8 @@ C_CURSOR= ft_cursor_left.c \
 					ft_cursor_select_left.c \
 					ft_cursor_select_right.c \
 					ft_cursor_deselect_all.c \
-					ft_cursor_add_char.c
+					ft_cursor_add_char.c \
+					ft_cursor_resize.c
 
 ST_SRC= ft_start.c ft_env_init.c ft_read_line.c
 

@@ -97,6 +97,7 @@ int  ft_init_cursor(t_cursor *cursor)
   cursor->scroll_up = ft_cmd(tgetstr("sf", NULL));
   cursor->left_corner_up = ft_cmd(tgetstr("ho", NULL));
   cursor->left_corner_down = ft_cmd(tgetstr("ll", NULL));
+  cursor->clear_all_the_screen = tgetstr("cl", NULL);
   // cursor->no_marge = tgetflag("nam");
   // if (!cursor->no_marge)
   //   ft_putstr("Ooooooooooooooo\n");
