@@ -133,41 +133,41 @@ int  ft_cursor_left_chariot(t_cursor *cursor, t_arr *arr)
   return (EXIT_SUCCESS);
 }
 
-/**
- * return the index of the start of the prev line
- */
-int  ft_cursor_index_prev_line_start(t_cursor *cursor, t_arr *arr)
-{
-  int index;
-  unsigned char *s_line;
-  int index_line;
-  bool is_one_prev_chariot;
-
-  index = cursor->index_line - 1;
-  index_line = 0;
-  is_one_prev_chariot = false;
-  while (index > 0)
-  {
-      s_line = (unsigned char *)arr->ptr + arr->sizeof_elem * index;
-      s_line = *(unsigned char **)s_line;
-      if (index_line == cursor->terminal_size.ws_col - 1)
-      {
-        return (index);
-      }
-      if (*s_line == 10)
-      {
-        if (is_one_prev_chariot)
-        {
-          return (index + 1);
-        }
-        is_one_prev_chariot = true;
-        index--;
-      }
-      index--;
-      index_line++;
-  }
-  return (index);
-}
+// /**
+//  * return the index of the start of the prev line
+//  */
+// int  ft_cursor_index_prev_line_start(t_cursor *cursor, t_arr *arr)
+// {
+//   int index;
+//   unsigned char *s_line;
+//   int index_line;
+//   bool is_one_prev_chariot;
+//
+//   index = cursor->index_line - 1;
+//   index_line = 0;
+//   is_one_prev_chariot = false;
+//   while (index > 0)
+//   {
+//       s_line = (unsigned char *)arr->ptr + arr->sizeof_elem * index;
+//       s_line = *(unsigned char **)s_line;
+//       if (index_line == cursor->terminal_size.ws_col - 1)
+//       {
+//         return (index);
+//       }
+//       if (*s_line == 10)
+//       {
+//         if (is_one_prev_chariot)
+//         {
+//           return (index + 1);
+//         }
+//         is_one_prev_chariot = true;
+//         index--;
+//       }
+//       index--;
+//       index_line++;
+//   }
+//   return (index);
+// }
 
 /**
  * return the index to the last line showed - 1
@@ -255,7 +255,6 @@ int  ft_cursor_scroll_up(t_cursor *cursor, t_arr *arr)
   ft_cursor_move_x(0, cursor->move_x);
   s_line = arr->ptr;
   len_tmp = arr->length;
-  // index_start_showed = ft_cursor_index_prev_line_start(cursor, arr);
   index_start_showed = ft_index_line_start_showed(cursor, arr);
   // ft_putstr("\nindex_start_showed: ");ft_putnbr(index_start_showed);ft_putstr("\n");
   index_end_showed = ft_cursor_index_prev_line_end(cursor, arr, index_start_showed);

@@ -81,7 +81,7 @@ int  ft_init_cursor(t_cursor *cursor)
   // cursor->up = tgetstr("sr", NULL);
   cursor->up = ft_cmd(tgetstr("up", NULL));
   cursor->down = ft_cmd(tgetstr("do", NULL));
-  cursor->left = ft_cmd(tgetstr("le", NULL));
+  cursor->left = tgetstr("le", NULL);
   cursor->right = ft_cmd(tgetstr("nd", NULL));
   cursor->sup_char = ft_cmd(tgetstr("dc", NULL));
   cursor->move_x = tgetstr("ch", NULL);
@@ -102,6 +102,7 @@ int  ft_init_cursor(t_cursor *cursor)
   //   ft_putstr("Ooooooooooooooo\n");
   // ft_putnbr(tgetflag("am"));
   cursor->marge = tgetstr("am", NULL);
+
   return (EXIT_SUCCESS);
 }
 
@@ -120,7 +121,7 @@ int  read_stdin()
   int pos_x_tmp;
   t_arr *history_line;
   int index_hitory;
-  struct winsize terminal_size_new;
+  struct winsize terminal_size_old;
 
   cursor.prompt = ft_strdup("$> ");
   ft_init_cursor(&cursor);
@@ -152,30 +153,19 @@ int  read_stdin()
   cursor.chariot = 0;
   cursor.y_total = 1;
   cursor.y_start = 0;
+  cursor.test = 0;
   buff = ft_strnew(8); //need 3 but we are never to sure
   ft_bzero(buff, 8);
   ft_cursor_save_position();
   ft_putstr(cursor.prompt);
-  ft_terminal_winsize(&terminal_size_new); // a checker le retour
+  ft_terminal_winsize(&terminal_size_old); // a checker le retour
+  ft_terminal_winsize(&(cursor.terminal_size)); // a checker le retour
   while (1 == 1)
   {
-    ft_terminal_winsize(&(cursor.terminal_size)); // a checker le retour
-    if (cursor.terminal_size.ws_col != terminal_size_new.ws_col)
+    ft_terminal_winsize(&terminal_size_old); // a checker le retour
+    if (cursor.terminal_size.ws_col != terminal_size_old.ws_col || cursor.terminal_size.ws_row != terminal_size_old.ws_row)
     {
-      terminal_size_new.ws_col = cursor.terminal_size.ws_col;
-      if (!((cursor.index_line + cursor.prompt_len) % terminal_size_new.ws_col))
-      {
-        ft_putchar('Z');
-        ft_move_left();
-        ft_sup_char(1);
-        cursor.pos_x = 0;
-        cursor.pos_y += 1;
-      }
-      else
-      {
-        cursor.pos_y = (cursor.index_line + cursor.prompt_len) / terminal_size_new.ws_col;
-        cursor.pos_x = (cursor.index_line + cursor.prompt_len) % terminal_size_new.ws_col;
-      }
+      ft_cursor_resize(&cursor, arr, &terminal_size_old);
     }
 
     if ((rd = read(0, buff, 8)) > 0)
@@ -287,24 +277,27 @@ int  read_stdin()
         * and not free actual but only a new
         * and maybe , yes only maybe exec the line ??
         */
-        ft_putstr("\n");
-        ft_putstr("@< ");
-        ft_arr_print(arr);
-        ft_putstr("       cursor.is_select: ");
-        ft_arr_print(select_line);
-        ft_putchar('\n');
-        ft_arr_push(&history_line, arr, -1);
-        ft_putstr("\ncursor.index_line: ");
-        ft_putnbr(cursor.index_line);
-        ft_putstr(" y_total: ");
-        ft_putnbr(cursor.y_total);
-        ft_putstr(" cursor.pos_x: ");
-        ft_putnbr(cursor.pos_x);
-        ft_putstr(" cursor.pos_y:");
-        ft_putnbr(cursor.pos_y);
-        ft_putstr(" cursor.y_start:");
-        ft_putnbr(cursor.y_start);
-        ft_putstr("\n");
+        // ft_putstr("\n");
+        // ft_putstr("@< ");
+        // ft_arr_print(arr);
+        // ft_putstr("       cursor.is_select: ");
+        // ft_arr_print(select_line);
+        // ft_putchar('\n');
+        // ft_arr_push(&history_line, arr, -1);
+        // ft_putstr("\ncursor.index_line: ");
+        // ft_putnbr(cursor.index_line);
+        // ft_putstr(" y_total: ");
+        // ft_putnbr(cursor.y_total);
+        // ft_putstr(" cursor.pos_x: ");
+        // ft_putnbr(cursor.pos_x);
+        // ft_putstr(" cursor.pos_y:");
+        // ft_putnbr(cursor.pos_y);
+        // ft_putstr(" cursor.y_start:");
+        // ft_putnbr(cursor.y_start);
+        // ft_putstr("\n");
+        //
+        ft_putstr("\ntest: ");ft_putnbr(cursor.test);ft_putstr("\n");
+        cursor.test = 0;
         index_hitory = history_line->length; // yes, because, when you press enter is a new line
         arr = ft_arr_new(1, sizeof(char *));
         arr->f_print = &ft_arr_putchar;

@@ -9,12 +9,13 @@ int  ft_cursor_clear_up(t_cursor *cursor)
 
   pos_y_tmp = cursor->pos_y;
   ft_cursor_move_x(0, cursor->move_x);
-  while (pos_y_tmp >= 0)
+  while (pos_y_tmp > 0)
   {
     ft_term_apply_cmd(cursor->clear_current_line, 1);
     ft_term_apply_cmd(cursor->up, 1);
     pos_y_tmp--;
   }
+  ft_term_apply_cmd(cursor->clear_current_line, 1);
   return (EXIT_SUCCESS);
 }
 /**

@@ -70,6 +70,8 @@ struct  s_cursor
   char *clear_current_line;
   char *marge;
   char *no_marge;
+
+  int test;
 };
 
 
@@ -131,6 +133,10 @@ int  ft_nb_char_between_two_chariot(t_arr *arr, int index);
 int  ft_arr_index_line_start_showed(t_cursor *cursor, t_arr *arr, int line_off);
 
 int  ft_index_line_start_showed(t_cursor *cursor, t_arr *arr);
+
+int  ft_cursor_resize(t_cursor *cursor, t_arr *arr, struct winsize *terminal_size_old);
+
+
 
 void  ft_read_line(void);
 
