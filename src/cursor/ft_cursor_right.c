@@ -191,16 +191,8 @@ int  ft_cursor_right_line_more(t_cursor *cursor, t_arr *arr)
   arr->length = cursor->index_line + 1 - index_start_showed;// + 1;
   // ft_putstr("\narr->length: ");ft_putnbr(arr->length);ft_putstr("\n");
   // ft_putstr("\nindex_line: ");ft_putnbr(cursor->index_line);ft_putstr("\n");
-  // arr->length = index_end_showed - index_start_showed + 1;
 
-  // return (0);
-
-  // if (cursor->index_line + 1 == len_tmp)
-  // {
-  //   arr->length--;
-  // }
   ft_arr_print(arr);
-  // return (0);
   if ((cursor->index_line + 2) < len_tmp)
   {
     arr->ptr = (unsigned char *)ptr_tmp + arr->sizeof_elem * (cursor->index_line + 2);
