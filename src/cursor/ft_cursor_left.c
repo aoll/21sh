@@ -216,16 +216,21 @@ int  ft_cursor_index_prev_line_end(t_cursor *cursor, t_arr *arr, int start)
 /**
  * clear all the screen and restore the position of the cursor
  */
-int  ft_cursor_clear_all_screen(t_cursor *cursor)
+int  ft_cursor_clear_all_screen(t_cursor *cursor, int is_up)
 {
   int pos_y;
 
   pos_y = 0;
   // ft_term_apply_cmd(cursor->save_cursor_position, 1);
-  ft_term_apply_cmd(cursor->down, cursor->terminal_size.ws_row); // debug here !!!!
+  ft_term_apply_cmd(cursor->up, cursor->terminal_size.ws_row - 1); // debug here !!!!
+  if (is_up)
+  {
+    ft_term_apply_cmd(cursor->down, cursor->terminal_size.ws_row - 1); // debug here !!!!
+  }
+  // ft_term_apply_cmd()
+  ft_cursor_move_x(0, cursor->move_x);
   while (pos_y < cursor->terminal_size.ws_row)
   {
-    ft_cursor_move_x(0, cursor->move_x);
     ft_term_apply_cmd(cursor->clear_current_line, 1);
     ft_term_apply_cmd(cursor->up, 1);
     pos_y++;
@@ -245,7 +250,7 @@ int  ft_cursor_scroll_up(t_cursor *cursor, t_arr *arr)
   int index_end_showed;
 
   cursor->y_start--;
-  ft_cursor_clear_all_screen(cursor);
+  ft_cursor_clear_all_screen(cursor, 1);
   // ft_term_apply_cmd(cursor->up, cursor->terminal_size.ws_row);
   ft_cursor_move_x(0, cursor->move_x);
   s_line = arr->ptr;
@@ -267,7 +272,7 @@ int  ft_cursor_scroll_up(t_cursor *cursor, t_arr *arr)
   ft_arr_print(arr);
   arr->length = len_tmp;
   arr->ptr = s_line;
-  ft_term_apply_cmd(cursor->up, 1);
+  ft_term_apply_cmd(cursor->up, cursor->terminal_size.ws_row - 1);
   // ft_cursor_move_x(cursor->pos_x, cursor->move_x);
   return (EXIT_SUCCESS);
 }

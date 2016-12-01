@@ -116,7 +116,7 @@ int  ft_cursor_move_to_index_line_from_start(t_cursor *cursor);
 
 int  ft_cursor_clear_up(t_cursor *cursor);
 int  ft_cursor_clear_down(t_cursor *cursor);
-int  ft_cursor_clear_all_screen(t_cursor *cursor); // very effective!!
+int  ft_cursor_clear_all_screen(t_cursor *cursor, int is_up); // very effective!!
 
 int  ft_cursor_select_left(t_cursor *cursor, t_arr *arr, t_arr *select_line);
 int  ft_cursor_select_right(t_cursor *cursor, t_arr *arr, t_arr *select_line);
