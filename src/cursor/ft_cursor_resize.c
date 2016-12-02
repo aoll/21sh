@@ -70,10 +70,10 @@ int  ft_cursor_nb_line_displayed(t_cursor *cursor, t_arr *arr, int index_start_s
  */
 int  ft_cursor_restore_index(t_cursor *cursor, t_arr *arr, int index)
 {
-  ft_cursor_end(cursor, arr);
+  ft_cursor_home(cursor, arr);
   while (cursor->index_line != index)
   {
-    ft_cursor_left(cursor, arr);
+    ft_cursor_right(cursor, arr);
   }
   return (EXIT_SUCCESS);
 }
@@ -89,9 +89,60 @@ int  ft_cursor_clear_only_the_line(t_cursor *cursor, t_arr *arr)
 }
 
 /**
+ * restore the pos_y and pos_y of the cursor
+ */
+int  ft_cursor_restore_y_x(t_cursor *cursor, t_arr *arr, int nb_line_displayed)
+{
+  int index;
+  unsigned char *s_line;
+
+  index = 0;
+  cursor->pos_y = 0;
+  cursor->pos_x = cursor->prompt_len;
+  while (index < (int)arr->length)
+  {
+    s_line = (unsigned char *)arr->ptr + index * arr->sizeof_elem;
+    s_line = *(unsigned char **)s_line;
+    if (index == cursor->index_line)
+    {
+      ft_putstr("prout!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+      sleep(2);
+      cursor->y_start = cursor->pos_y - (nb_line_displayed - 1);
+      return (EXIT_SUCCESS);
+    }
+    if (cursor->pos_x == cursor->terminal_size.ws_col - 1 || *s_line == 10)
+    {
+      cursor->pos_y++;
+      cursor->pos_x = 0;
+      index++;
+    }
+    else
+    {
+      cursor->pos_x++;
+      index++;
+    }
+  }
+  if (cursor->pos_x + 1 == cursor->terminal_size.ws_col - 1)
+  {
+    cursor->pos_x = 0;
+    cursor->pos_y++;
+    ft_putchar('Z');
+    ft_term_apply_cmd(cursor->left, 1);
+    ft_sup_char(1);
+    nb_line_displayed++;
+  }
+  // else
+  // {
+  //   cursor->pos_x++;
+  // }
+  cursor->y_start = cursor->pos_y - (nb_line_displayed - 1);
+  return (EXIT_SUCCESS);
+}
+
+/**
  * reprint the line with the new size
  */
-int  ft_cursor_print_after_resize(t_cursor *cursor, t_arr *arr)
+int  ft_cursor_print_after_resize(t_cursor *cursor, t_arr *arr, int nb_line_displayed)
 {
   // ft_cursor_end(cursor, arr);
 
@@ -99,9 +150,24 @@ int  ft_cursor_print_after_resize(t_cursor *cursor, t_arr *arr)
 
   index_line_tmp = cursor->index_line;
   ft_term_apply_cmd(cursor->clear_all_the_screen, 1);
+
+  cursor->index_line = arr->length;
+  // ft_putstr("\ny_start: ");ft_putnbr(cursor->y_start);ft_putstr("\n");
   ft_putstr(cursor->prompt);
   ft_arr_print(arr);
+  ft_cursor_restore_y_x(cursor, arr, nb_line_displayed);
+  // sleep( 2);
+  // if (cursor->pos_x == cursor->terminal_size.ws_col - 1)
+  // {
+  //   cursor->pos_x = 0;
+  //   cursor->pos_y++;
+  //   ft_putchar('Z');
+  //   ft_term_apply_cmd(cursor->left, 1);
+  //   ft_sup_char(1);
+  // }
   ft_cursor_restore_index(cursor, arr, index_line_tmp);
+
+
 
   // ft_cursor_home(cursor, arr);
   // ft_cursor_end(cursor, arr);
@@ -125,31 +191,28 @@ int  ft_cursor_resize(t_cursor *cursor, t_arr *arr, struct winsize *terminal_siz
   nb_line_displayed_old = ft_cursor_nb_line_displayed(cursor, arr, 0, 1);
   cursor->terminal_size.ws_col = terminal_size_old->ws_col;
   cursor->terminal_size.ws_row = terminal_size_old->ws_row;
-  nb_line_displayed_new = ft_cursor_nb_line_displayed(cursor, arr, 0, 1);
-  if (nb_line_displayed_new + 1 > cursor->terminal_size.ws_row)// || nb_line_displayed_old + 1 > cursor->terminal_size.ws_row )
-  {
-    ft_cursor_print_after_resize(cursor, arr);
-    // return(0);
-  }
+  nb_line_displayed_new = ft_cursor_nb_line_displayed(cursor, arr, 0, 0);
+  // if (nb_line_displayed_new + 1 > cursor->terminal_size.ws_row || nb_line_displayed_old + 1 > cursor->terminal_size.ws_row )
+  // {
+  ft_cursor_print_after_resize(cursor, arr, nb_line_displayed_new);
+  return(0);
+  // }
   // // nb_line_displayed = ft_cursor_nb_line_displayed(cursor, arr, index_start_showed);
   // // ft_putstr("\nnb_line_displayed can be");ft_putnbr(nb_line_displayed);ft_putstr("\n");
-  cursor->terminal_size.ws_col = terminal_size_old->ws_col;
-  cursor->terminal_size.ws_row = terminal_size_old->ws_row;
 
-  if (!((cursor->index_line + cursor->prompt_len) % terminal_size_old->ws_col))
+
+  // if (cursor->index_line == (int)arr->length && !((cursor->index_line + cursor->prompt_len) % terminal_size_old->ws_col))
+  if (cursor->pos_x)
   {
     ft_putchar('Z');
     ft_term_apply_cmd(cursor->left, 1);
     ft_sup_char(1);
 
-    // ft_term_apply_cmd(cursor->scroll_up, 1);
-    cursor->pos_x = 0;
-    cursor->pos_y += 1;
+    // ft_cursor_restore_y_x(cursor, arr, nb_line_displayed_new);
   }
-  else
-  {
-    cursor->pos_y = (cursor->index_line + cursor->prompt_len) / terminal_size_old->ws_col;
-    cursor->pos_x = (cursor->index_line + cursor->prompt_len) % terminal_size_old->ws_col;
-  }
+  // else
+  // {
+  //   ft_cursor_restore_y_x(cursor, arr, nb_line_displayed_new);
+  // }
   return (EXIT_SUCCESS);
 }

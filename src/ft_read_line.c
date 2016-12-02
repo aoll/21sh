@@ -163,12 +163,12 @@ int  read_stdin()
   ft_terminal_winsize(&(cursor.terminal_size)); // a checker le retour
   while (1 == 1)
   {
+
     ft_terminal_winsize(&terminal_size_old); // a checker le retour
     if (cursor.terminal_size.ws_col != terminal_size_old.ws_col || cursor.terminal_size.ws_row != terminal_size_old.ws_row)
     {
       ft_cursor_resize(&cursor, arr, &terminal_size_old);
     }
-
     if ((rd = read(0, buff, 8)) > 0)
     {
 
