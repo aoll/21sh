@@ -213,12 +213,12 @@ int  ft_cursor_right_line_more(t_cursor *cursor, t_arr *arr)
   else if ((cursor->index_line + 1) < len_tmp)
   {
     arr->ptr = (unsigned char *)ptr_tmp + arr->sizeof_elem * (cursor->index_line + 1);
-    arr->length = len_tmp - cursor->index_line + 1;
+    arr->length = len_tmp - (cursor->index_line + 1);
     ft_arr_print(arr);
     ft_term_apply_cmd(cursor->up, 1);
     ft_cursor_move_x(cursor->terminal_size.ws_col - 1, cursor->move_x);
   }
-  else
+  else if (cursor->index_line < len_tmp)
   {
     s_line = (unsigned char *)ptr_tmp + arr->sizeof_elem * cursor->index_line;
     s_line = *(unsigned char **)s_line;

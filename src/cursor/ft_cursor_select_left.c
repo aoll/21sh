@@ -70,13 +70,23 @@ int  ft_cursor_select_left(t_cursor *cursor, t_arr *arr, t_arr *select_line)
   unsigned char *s_line;
   int err;
   int is_will_reverse;
+  int pos_x_tmp;
+  int pos_y_tmp;
+  int y_start_tmp;
+  int index_line_tmp;
+  int prev_chariot_tmp;
 
+  index_line_tmp = cursor->index_line;
+  pos_x_tmp = cursor->pos_x;
+  pos_y_tmp = cursor->pos_y;
+  y_start_tmp = cursor->y_start;
+  prev_chariot_tmp = cursor->prev_chariot;
   is_will_reverse = 0;
-  if ((err = ft_cursor_left(cursor, arr)))
   {
+    if ((err = ft_cursor_left(cursor, arr)))
     return (EXIT_FAILURE);
   }
-  ft_term_apply_cmd(cursor->save_cursor_position, 1);
+  // ft_term_apply_cmd(cursor->save_cursor_position, 1);
   s_line = (unsigned char *)arr->ptr + arr->sizeof_elem * (cursor->index_line);
   s_line = *(unsigned char **)s_line;
   if (s_line[5] != 1)
@@ -95,6 +105,12 @@ int  ft_cursor_select_left(t_cursor *cursor, t_arr *arr, t_arr *select_line)
   }
   ft_term_apply_cmd(cursor->mode_insertion, 1);
   ft_term_apply_cmd(cursor->mode_basic_video, 1);
-  ft_term_apply_cmd(cursor->restore_cursor_position, 1);
+  cursor->pos_x = pos_x_tmp;
+  cursor->pos_y = pos_y_tmp;
+  cursor->y_start = y_start_tmp;
+  cursor->prev_chariot = prev_chariot_tmp;
+  cursor->index_line = index_line_tmp;
+  ft_cursor_left(cursor, arr);
+  // ft_term_apply_cmd(cursor->restore_cursor_position, 1);
   return (EXIT_SUCCESS);
 }

@@ -68,6 +68,7 @@ int  ft_cursor_move_x(int new_pos_x, char *cmd)
  */
 char *ft_cmd(char *cmd)
 {
+  // return (ft_strjoin("1.3*5", cmd));
   char *new;
 
   new = ft_strnew(ft_strlen(cmd) + PADDING_BUFFER);
@@ -81,7 +82,7 @@ int  ft_init_cursor(t_cursor *cursor)
   // cursor->up = tgetstr("sr", NULL);
   cursor->up = ft_cmd(tgetstr("up", NULL));
   cursor->down = ft_cmd(tgetstr("do", NULL));
-  cursor->left = tgetstr("le", NULL);
+  cursor->left = ft_cmd(tgetstr("le", NULL));
   cursor->right = ft_cmd(tgetstr("nd", NULL));
   cursor->sup_char = ft_cmd(tgetstr("dc", NULL));
   cursor->move_x = tgetstr("ch", NULL);
@@ -499,7 +500,7 @@ int  ft_init_terminal(void)
   term.c_lflag &= ~(ICANON);
   term.c_lflag &= ~(ECHO);
   term.c_cc[VMIN] = 0;
-  term.c_cc[VTIME] = 0;
+  term.c_cc[VTIME] = 1;
 
 
   if (tcsetattr(0, TCSADRAIN, &term) == -1)

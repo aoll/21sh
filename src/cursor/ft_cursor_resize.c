@@ -105,8 +105,6 @@ int  ft_cursor_restore_y_x(t_cursor *cursor, t_arr *arr, int nb_line_displayed)
     s_line = *(unsigned char **)s_line;
     if (index == cursor->index_line)
     {
-      ft_putstr("prout!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-      sleep(2);
       cursor->y_start = cursor->pos_y - (nb_line_displayed - 1);
       return (EXIT_SUCCESS);
     }
@@ -131,10 +129,6 @@ int  ft_cursor_restore_y_x(t_cursor *cursor, t_arr *arr, int nb_line_displayed)
     ft_sup_char(1);
     nb_line_displayed++;
   }
-  // else
-  // {
-  //   cursor->pos_x++;
-  // }
   cursor->y_start = cursor->pos_y - (nb_line_displayed - 1);
   return (EXIT_SUCCESS);
 }
@@ -144,33 +138,15 @@ int  ft_cursor_restore_y_x(t_cursor *cursor, t_arr *arr, int nb_line_displayed)
  */
 int  ft_cursor_print_after_resize(t_cursor *cursor, t_arr *arr, int nb_line_displayed)
 {
-  // ft_cursor_end(cursor, arr);
-
   int index_line_tmp;
 
   index_line_tmp = cursor->index_line;
   ft_term_apply_cmd(cursor->clear_all_the_screen, 1);
-
   cursor->index_line = arr->length;
-  // ft_putstr("\ny_start: ");ft_putnbr(cursor->y_start);ft_putstr("\n");
   ft_putstr(cursor->prompt);
   ft_arr_print(arr);
   ft_cursor_restore_y_x(cursor, arr, nb_line_displayed);
-  // sleep( 2);
-  // if (cursor->pos_x == cursor->terminal_size.ws_col - 1)
-  // {
-  //   cursor->pos_x = 0;
-  //   cursor->pos_y++;
-  //   ft_putchar('Z');
-  //   ft_term_apply_cmd(cursor->left, 1);
-  //   ft_sup_char(1);
-  // }
   ft_cursor_restore_index(cursor, arr, index_line_tmp);
-
-
-
-  // ft_cursor_home(cursor, arr);
-  // ft_cursor_end(cursor, arr);
   return (EXIT_SUCCESS);
 }
 

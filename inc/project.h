@@ -135,6 +135,9 @@ int  ft_arr_index_line_start_showed(t_cursor *cursor, t_arr *arr, int line_off);
 
 int  ft_index_line_start_showed(t_cursor *cursor, t_arr *arr);
 
+int  ft_cursor_restore_index(t_cursor *cursor, t_arr *arr, int index);
+int  ft_cursor_nb_line_displayed(t_cursor *cursor, t_arr *arr, int index_start_showed, int is_total);
+int  ft_cursor_restore_y_x(t_cursor *cursor, t_arr *arr, int nb_line_displayed);
 int  ft_cursor_resize(t_cursor *cursor, t_arr *arr, struct winsize *terminal_size_old);
 
 
