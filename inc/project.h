@@ -140,6 +140,7 @@ int  ft_cursor_nb_line_displayed(t_cursor *cursor, t_arr *arr, int index_start_s
 int  ft_cursor_restore_y_x(t_cursor *cursor, t_arr *arr, int nb_line_displayed);
 int  ft_cursor_resize(t_cursor *cursor, t_arr *arr, struct winsize *terminal_size_old);
 
+int  ft_cursor_copy_line(t_cursor *cursor, t_arr *select_line, t_arr **copy_line);
 
 
 void  ft_read_line(void);

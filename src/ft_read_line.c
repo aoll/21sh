@@ -373,7 +373,7 @@ int  read_stdin()
           }
           index = 0;
           cursor.index_line = -1;
-          cursor.pos_x =cursor.prompt_len;
+          cursor.pos_x = cursor.prompt_len;
           ft_move_x(cursor.pos_x);
           while (index < (int)arr->length)
           {
@@ -422,13 +422,9 @@ int  read_stdin()
         cursor.is_select = true;
         if (select_line->length)
         {
-          if (copy_line)
-          {
-            ft_arr_free(copy_line);
-            copy_line = NULL;
-          }
-          copy_line = ft_arr_dup(select_line);
+          ft_cursor_copy_line(&cursor, select_line, &copy_line);
         }
+
       }
       //ctrl + v // paste //done
       else if (buff[0] == 22 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6] && !buff[7])
@@ -445,8 +441,8 @@ int  read_stdin()
             ft_arr_push(&arr, ft_strdup((char *)copy_tmp), cursor.index_line);
             if (!ft_strcmp((char *)copy_tmp, "\t"))
             {
-              cursor.pos_x += 3;
-              nb_char += 3;
+              cursor.pos_x += cursor.prompt_len;
+              nb_char += cursor.prompt_len;
             }
             nb_char++;
             cursor.pos_x++;
