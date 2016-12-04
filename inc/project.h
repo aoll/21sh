@@ -143,6 +143,7 @@ int  ft_cursor_resize(t_cursor *cursor, t_arr *arr, struct winsize *terminal_siz
 int  ft_cursor_copy_line(t_cursor *cursor, t_arr *select_line, t_arr **copy_line);
 
 
+
 void  ft_read_line(void);
 
 t_kval  *ft_kval_init(const char *env_line);

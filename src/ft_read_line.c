@@ -361,6 +361,8 @@ int  read_stdin()
         cursor.is_select = false;
         if (select_line->length)
         {
+          ft_cursor_cut(&cursor, arr, select_line, &copy_line);
+          continue;
           if (copy_line)
           {
             ft_arr_free(copy_line);
