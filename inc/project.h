@@ -123,10 +123,11 @@ int  ft_cursor_clear_all_screen(t_cursor *cursor, int is_up); // very effective!
 
 int  ft_cursor_select_left(t_cursor *cursor, t_arr *arr, t_arr *select_line);
 int  ft_cursor_select_right(t_cursor *cursor, t_arr *arr, t_arr *select_line);
+int  ft_cursor_deselect_all(t_cursor *cursor, t_arr *arr, t_arr *select_line);
+
 
 int  ft_cursor_del_or_suppr(t_cursor *cursor, t_arr *arr, int is_prev_char);
 
-int  ft_cursor_deselect_all(t_cursor *cursor, t_arr *arr, t_arr *select_line);
 
 int  ft_cursor_add_char(t_cursor *cursor, t_arr *arr, char *buff);
 
@@ -142,7 +143,7 @@ int  ft_cursor_resize(t_cursor *cursor, t_arr *arr, struct winsize *terminal_siz
 
 int  ft_cursor_copy_line(t_cursor *cursor, t_arr *select_line, t_arr **copy_line);
 
-
+int  ft_cursor_cut(t_cursor *cursor, t_arr *arr, t_arr *select_line, t_arr **copy_line);
 
 void  ft_read_line(void);
 
