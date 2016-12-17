@@ -37,7 +37,7 @@ int  ft_cursor_deselect_all(t_cursor *cursor, t_arr *arr, t_arr *select_line)
   }
   tmp.index_line = cursor->index_line;
   ft_cursor_end(cursor, arr);
-
+  ft_term_apply_cmd(cursor->save_cursor_position, 1);
   end.pos_y = cursor->pos_y;
   end.pos_x = cursor->pos_x;
   end.y_start = cursor->y_start;
@@ -54,11 +54,12 @@ int  ft_cursor_deselect_all(t_cursor *cursor, t_arr *arr, t_arr *select_line)
   cursor->y_start = end.y_start;
   cursor->prev_chariot = end.prev_chariot;
   cursor->chariot = end.chariot;
+  ft_term_apply_cmd(cursor->restore_cursor_position, 1);
   ft_cursor_restore_index(cursor, arr, tmp.index_line);
   ft_term_apply_cmd(cursor->mode_insertion, 1);
   return (0);
 
-  
+
 
   nb_line_displayed = ft_cursor_nb_line_displayed(cursor, arr, 0, 0);
 

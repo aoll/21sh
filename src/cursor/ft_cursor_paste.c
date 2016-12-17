@@ -22,6 +22,12 @@ int  ft_cursor_paste(t_cursor *cursor, t_arr *arr, t_arr *copy_line)
     cursor->pos_x++;
     if (cursor->pos_x >= cursor->terminal_size.ws_col || *s_line == 10)
     {
+      if (cursor->index_line == arr->length)
+      {
+        ft_putchar('Z');
+        ft_term_apply_cmd(cursor->left, 1);
+        ft_term_apply_cmd(cursor->sup_char, 1);
+      }
       cursor->pos_x = 0;
       cursor->pos_y++;
     }
@@ -30,5 +36,6 @@ int  ft_cursor_paste(t_cursor *cursor, t_arr *arr, t_arr *copy_line)
       cursor->y_start++;
     }
   }
+
   return (EXIT_SUCCESS);
 }
