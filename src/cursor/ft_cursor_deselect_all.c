@@ -28,6 +28,7 @@ static int  ft_arr_cancel_reverse_video(t_arr *arr, int index, t_arr *select_lin
 int  ft_cursor_deselect_all(t_cursor *cursor, t_arr *arr, t_arr *select_line)
 {
   t_cursor tmp;
+  t_cursor end;
   int nb_line_displayed;
 
   if (!select_line->length || !cursor->save_cursor_position)
@@ -35,8 +36,30 @@ int  ft_cursor_deselect_all(t_cursor *cursor, t_arr *arr, t_arr *select_line)
     return (EXIT_SUCCESS);
   }
   tmp.index_line = cursor->index_line;
-  tmp.pos_y = cursor->pos_y;
-  tmp.pos_x = cursor->pos_x;
+  ft_cursor_end(cursor, arr);
+
+  end.pos_y = cursor->pos_y;
+  end.pos_x = cursor->pos_x;
+  end.y_start = cursor->y_start;
+  end.prev_chariot = cursor->prev_chariot;
+  end.chariot = cursor->chariot;
+
+  ft_cursor_home(cursor, arr);
+  ft_arr_cancel_reverse_video(arr, 0, select_line);
+  ft_term_apply_cmd(cursor->mode_insertion_end, 1);
+  ft_arr_print(arr);
+  cursor->index_line = arr->length;
+  cursor->pos_y = end.pos_y;
+  cursor->pos_x = end.pos_x;
+  cursor->y_start = end.y_start;
+  cursor->prev_chariot = end.prev_chariot;
+  cursor->chariot = end.chariot;
+  ft_cursor_restore_index(cursor, arr, tmp.index_line);
+  ft_term_apply_cmd(cursor->mode_insertion, 1);
+  return (0);
+
+
+
   nb_line_displayed = ft_cursor_nb_line_displayed(cursor, arr, 0, 0);
 
   ft_arr_cancel_reverse_video(arr, 0, select_line);
