@@ -144,6 +144,7 @@ int  ft_cursor_resize(t_cursor *cursor, t_arr *arr, struct winsize *terminal_siz
 int  ft_cursor_copy_line(t_cursor *cursor, t_arr *select_line, t_arr **copy_line);
 
 int  ft_cursor_cut(t_cursor *cursor, t_arr *arr, t_arr *select_line, t_arr **copy_line);
+int  ft_cursor_paste(t_cursor *cursor, t_arr *arr, t_arr *copy_line);
 
 void  ft_read_line(void);
 
