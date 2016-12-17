@@ -88,7 +88,7 @@ int  ft_init_cursor(t_cursor *cursor)
   cursor->move_x = tgetstr("ch", NULL);
   cursor->clear_current_line = ft_cmd(tgetstr("ce", NULL)); //ce
   cursor->clear_down = ft_cmd(tgetstr("cd", NULL));
-  cursor->mode_insertion = ft_cmd(tgetstr("im", NULL));
+  cursor->mode_insertion = tgetstr("im", NULL);
   cursor->mode_insertion_end = ft_cmd(tgetstr("ei", NULL));
   cursor->mode_basic_video = ft_cmd(tgetstr("me", NULL));
   cursor->mode_reverse_video = ft_cmd(tgetstr("mr", NULL));

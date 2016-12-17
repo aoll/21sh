@@ -8,6 +8,8 @@ int  ft_cursor_paste(t_cursor *cursor, t_arr *arr, t_arr *copy_line)
   int index;
   unsigned char *s_line;
 
+  // ft_mode_insertion();
+  ft_term_apply_cmd(cursor->mode_insertion, 1);
   ft_arr_print(copy_line);
   index = 0;
   while (index < (int)copy_line->length)
