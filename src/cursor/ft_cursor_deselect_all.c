@@ -59,7 +59,6 @@ int  ft_cursor_deselect_all(t_cursor *cursor, t_arr *arr, t_arr *select_line)
   return (0);
 
 
-
   nb_line_displayed = ft_cursor_nb_line_displayed(cursor, arr, 0, 0);
 
   ft_arr_cancel_reverse_video(arr, 0, select_line);
