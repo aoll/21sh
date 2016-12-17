@@ -18,6 +18,10 @@ int  ft_cursor_cut(t_cursor *cursor, t_arr *arr, t_arr *select_line, t_arr **cop
   ft_cursor_clear_up(cursor);
 
   ft_cursor_copy_line(cursor, select_line, copy_line);
+  while (select_line->length)
+  {
+    free(ft_arr_pop(&select_line, 0));
+  }
   while (index < (int)arr->length)
   {
     s_line = (unsigned char *)arr->ptr + arr->sizeof_elem * index;
@@ -31,10 +35,13 @@ int  ft_cursor_cut(t_cursor *cursor, t_arr *arr, t_arr *select_line, t_arr **cop
       index++;
     }
   }
-  if (cursor->index_line > (int)arr->length)
+  if (index_line_tmp > (int)arr->length)
   {
-    cursor->index_line = arr->length;
+    index_line_tmp = arr->length;
   }
+  cursor->index_line = arr->length;
+
+  nb_line_displayed = ft_cursor_nb_line_displayed(cursor, arr, 0, 0);
   ft_putstr(cursor->prompt);
   ft_arr_print(arr);
   ft_cursor_restore_y_x(cursor, arr, nb_line_displayed);

@@ -110,6 +110,12 @@ int  ft_cursor_select_left(t_cursor *cursor, t_arr *arr, t_arr *select_line)
   cursor->y_start = y_start_tmp;
   cursor->prev_chariot = prev_chariot_tmp;
   cursor->index_line = index_line_tmp;
+  // sleep(2);
+  if (!cursor->pos_x && *s_line != 10)
+  {
+    ft_cursor_move_x(cursor->pos_x, cursor->move_x);
+    ft_term_apply_cmd(cursor->down, 1);
+  }
   ft_cursor_left(cursor, arr);
   // ft_term_apply_cmd(cursor->restore_cursor_position, 1);
   return (EXIT_SUCCESS);

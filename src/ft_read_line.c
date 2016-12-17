@@ -115,12 +115,8 @@ int  read_stdin()
   int rd;
   int nb_char;
   t_arr *arr;
-  unsigned char *s_line;
   t_arr *select_line;
   t_arr *copy_line;
-  unsigned char *copy_tmp;
-  int index;
-  int pos_x_tmp;
   t_arr *history_line;
   int index_hitory;
   struct winsize terminal_size_old;
@@ -362,59 +358,6 @@ int  read_stdin()
         if (select_line->length)
         {
           ft_cursor_cut(&cursor, arr, select_line, &copy_line);
-          continue;
-          if (copy_line)
-          {
-            ft_arr_free(copy_line);
-            copy_line = NULL;
-          }
-          copy_line = ft_arr_dup(select_line);
-          while (select_line->length)
-          {
-            free(ft_arr_pop(&select_line, 0));
-          }
-          index = 0;
-          cursor.index_line = -1;
-          cursor.pos_x = cursor.prompt_len;
-          ft_move_x(cursor.pos_x);
-          while (index < (int)arr->length)
-          {
-            s_line  = (unsigned char *)arr->ptr + arr->sizeof_elem * (index);
-            if ((*(char **)s_line)[5] == -1)
-            {
-              if (cursor.index_line == -1)
-              {
-                pos_x_tmp = cursor.pos_x;
-                cursor.index_line = index;
-              }
-              if (!ft_strcmp((*(char **)s_line), "\t"))
-              {
-                nb_char -= TABULATION_LEN;
-                ft_sup_char(TABULATION_LEN);
-              }
-              else
-              {
-                ft_sup_char(1);
-                nb_char--;
-              }
-              free(ft_arr_pop(&arr, index));
-            }
-            else
-            {
-              if (!ft_strcmp((*(char **)s_line), "\t"))
-              {
-                cursor.pos_x += TABULATION_LEN;
-              }
-              else
-              {
-                cursor.pos_x++;
-              }
-              ft_move_x(cursor.pos_x);
-              index++;
-            }
-          }
-          cursor.pos_x = pos_x_tmp;
-          ft_move_x(cursor.pos_x);
         }
 
       }
@@ -431,26 +374,11 @@ int  read_stdin()
       //ctrl + v // paste //done
       else if (buff[0] == 22 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6] && !buff[7])
       {
-        if (copy_line)
+        if (copy_line->length)
         {
-          ft_arr_print(copy_line);
-          index = 0;
-          while (index < (int)copy_line->length)
-          {
-            copy_tmp  = (unsigned char *)copy_line->ptr + index * copy_line->sizeof_elem;
-            copy_tmp = *(unsigned char **)copy_tmp;
-            ((char *)copy_tmp)[5] = 0;
-            ft_arr_push(&arr, ft_strdup((char *)copy_tmp), cursor.index_line);
-            if (!ft_strcmp((char *)copy_tmp, "\t"))
-            {
-              cursor.pos_x += cursor.prompt_len;
-              nb_char += cursor.prompt_len;
-            }
-            nb_char++;
-            cursor.pos_x++;
-            cursor.index_line++;
-            index++;
-          }
+          ft_cursor_paste(&cursor, arr, copy_line);
+          continue;
+
         }
       }
 
