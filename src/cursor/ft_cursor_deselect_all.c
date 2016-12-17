@@ -57,6 +57,7 @@ int  ft_cursor_deselect_all(t_cursor *cursor, t_arr *arr, t_arr *select_line)
   ft_cursor_restore_index(cursor, arr, tmp.index_line);
   ft_term_apply_cmd(cursor->mode_insertion, 1);
   return (0);
+
   
 
   nb_line_displayed = ft_cursor_nb_line_displayed(cursor, arr, 0, 0);
