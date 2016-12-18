@@ -55,6 +55,12 @@ int  ft_cursor_nb_line_displayed(t_cursor *cursor, t_arr *arr, int index_start_s
       index_line = 0;
       nb_line++;
       index_start_showed++;
+      if (index_start_showed >= (int)arr->length && *s_line != 10)
+      {
+        ft_putchar('Z');
+        ft_term_apply_cmd(cursor->left, 1);
+        ft_term_apply_cmd(cursor->sup_char, 1);
+      }
     }
     else
     {
@@ -120,15 +126,15 @@ int  ft_cursor_restore_y_x(t_cursor *cursor, t_arr *arr, int nb_line_displayed)
       index++;
     }
   }
-  if (cursor->pos_x + 1 == cursor->terminal_size.ws_col - 1)
-  {
-    cursor->pos_x = 0;
-    cursor->pos_y++;
-    ft_putchar('Z');
-    ft_term_apply_cmd(cursor->left, 1);
-    ft_sup_char(1);
-    nb_line_displayed++;
-  }
+  // if (cursor->pos_x + 1 == cursor->terminal_size.ws_col - 1)
+  // {
+  //   cursor->pos_x = 0;
+  //   cursor->pos_y++;
+  //   ft_putchar('Z');
+  //   ft_term_apply_cmd(cursor->left, 1);
+  //   ft_sup_char(1);
+  //   nb_line_displayed++;
+  // }
   cursor->y_start = cursor->pos_y - (nb_line_displayed - 1);
   return (EXIT_SUCCESS);
 }

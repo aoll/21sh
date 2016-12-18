@@ -22,7 +22,7 @@ int  ft_cursor_paste(t_cursor *cursor, t_arr *arr, t_arr *copy_line)
     cursor->pos_x++;
     if (cursor->pos_x >= cursor->terminal_size.ws_col || *s_line == 10)
     {
-      if (cursor->index_line == arr->length)
+      if (cursor->index_line == (int)arr->length)
       {
         ft_putchar('Z');
         ft_term_apply_cmd(cursor->left, 1);

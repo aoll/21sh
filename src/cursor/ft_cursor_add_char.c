@@ -207,7 +207,7 @@ int  ft_cusor_clear_down_line(t_cursor *cursor, t_arr *arr)
 
   // ft_term_apply_cmd(cursor->mode_insertion_end, 1);
   index = cursor->index_line;
-  cursor->index_line--;
+  // cursor->index_line--;
   ft_cursor_home(cursor, arr);
   ft_term_apply_cmd(cursor->save_cursor_position, 1);
   pos_y = cursor->pos_y - cursor->y_start;
@@ -226,15 +226,24 @@ int  ft_cusor_clear_down_line(t_cursor *cursor, t_arr *arr)
     }
   }
   ft_term_apply_cmd(cursor->restore_cursor_position, 1);
-  ft_arr_print(arr);
-  cursor->index_line = arr->length;
-  ft_cursor_restore_y_x(cursor, arr, ft_cursor_nb_line_displayed(cursor, arr, 0, 0));
-  ft_cursor_restore_index(cursor, arr, index);
+
   // while (cursor->index_line != index)
   // {
   //   ft_cursor_left(cursor, arr);
   // }
 
+  return (index);
+}
+
+/**
+ * print the line after the cursor and reposition the cursor
+ */
+int  ft_cursor_print_line(t_cursor *cursor, t_arr *arr, int index)
+{
+  ft_arr_print(arr);
+  cursor->index_line = arr->length;
+  ft_cursor_restore_y_x(cursor, arr, ft_cursor_nb_line_displayed(cursor, arr, 0, 0));
+  ft_cursor_restore_index(cursor, arr, index);
   return (EXIT_SUCCESS);
 }
 
@@ -243,6 +252,8 @@ int  ft_cusor_clear_down_line(t_cursor *cursor, t_arr *arr)
  */
 int  ft_add_char_isprint(t_cursor *cursor, t_arr *arr, char c)
 {
+  int index;
+
   if (cursor->index_line == (int)arr->length)
   {
     ft_arr_add_char(cursor, arr, c, 0);
@@ -250,8 +261,11 @@ int  ft_add_char_isprint(t_cursor *cursor, t_arr *arr, char c)
   }
   else
   {
+    index = ft_cusor_clear_down_line(cursor, arr);
+    cursor->index_line = index;
     ft_arr_add_char(cursor, arr, c, 0);
-    ft_cusor_clear_down_line(cursor, arr);
+    index++;
+    ft_cursor_print_line(cursor, arr, index);
     // ft_cursor_print_char(cursor, c, arr);
     // ft_cursor_print_overide_line(cursor, arr);
   }
@@ -262,17 +276,28 @@ int  ft_add_char_isprint(t_cursor *cursor, t_arr *arr, char c)
  */
 int  ft_add_char_chariot(t_cursor *cursor, t_arr *arr)
 {
-  cursor->prev_chariot++;
-  cursor->chariot++;
-  ft_arr_add_char(cursor, arr, '\n', 0);
+  int index;
+
+  // cursor->prev_chariot++;
+  // cursor->chariot++;
   if (cursor->index_line == (int)arr->length)
   {
+    ft_arr_add_char(cursor, arr, '\n', 0);
     ft_cursor_print_chariot(cursor, arr);
   }
   else
   {
-    ft_cursor_print_chariot(cursor, arr);
-    ft_cursor_print_overide_line(cursor, arr);
+    index = ft_cusor_clear_down_line(cursor, arr);
+    cursor->index_line = index;
+    ft_arr_add_char(cursor, arr, '\n', 0);
+    cursor->y_total++;
+    // cursor->chariot++;
+    // cursor->prev_chariot++;
+    index++;
+    // sleep(2);
+    ft_cursor_print_line(cursor, arr, index);
+    // ft_cursor_print_chariot(cursor, arr);
+    // ft_cursor_print_overide_line(cursor, arr);
   }
   return (EXIT_SUCCESS);
 }
@@ -283,23 +308,36 @@ int  ft_add_char_chariot(t_cursor *cursor, t_arr *arr)
 int  ft_add_char_tab(t_cursor *cursor, t_arr *arr)
 {
   int index_tab;
+  int index;
 
   index_tab = -1;
   while (++index_tab < TABULATION_LEN)
   {
-    ft_arr_add_char(cursor, arr, ' ', 1);
     if (cursor->index_line == (int)arr->length)
     {
+      ft_arr_add_char(cursor, arr, ' ', 1);
       ft_cursor_print_char(cursor, ' ', arr);
     }
-    else
-    {
-      ft_cursor_print_char(cursor, ' ', arr);
-    }
+    // else
+    // {
+    //   ft_cusor_clear_down_line(cursor, arr);
+    //   // ft_cursor_print_char(cursor, ' ', arr);
+    // }
   }
   if (cursor->index_line != (int)arr->length)
   {
-    ft_cursor_print_overide_line(cursor, arr);
+    index = ft_cusor_clear_down_line(cursor, arr);
+    cursor->index_line = index;
+    ft_arr_add_char(cursor, arr, ' ', 1);
+    ft_arr_add_char(cursor, arr, ' ', 1);
+    ft_arr_add_char(cursor, arr, ' ', 1);
+    ft_arr_add_char(cursor, arr, ' ', 1);
+    index += 4;
+    ft_cursor_print_line(cursor, arr, index);
+    //
+    // cursor->index_line -= 3;
+    // ft_cusor_clear_down_line(cursor, arr);
+    // ft_cursor_print_overide_line(cursor, arr);
   }
   return (EXIT_SUCCESS);
 }
