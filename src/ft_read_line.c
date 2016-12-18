@@ -77,7 +77,7 @@ char *ft_cmd(char *cmd)
   return (new);
 }
 
-int  ft_init_cursor(t_cursor *cursor)
+int  ft_init_cursor_cmd(t_cursor *cursor)
 {
   // cursor->up = tgetstr("sr", NULL);
   cursor->up = ft_cmd(tgetstr("up", NULL));
@@ -108,50 +108,68 @@ int  ft_init_cursor(t_cursor *cursor)
   return (EXIT_SUCCESS);
 }
 
+/**
+ * init the cursor position
+ */
+int  ft_init_cursor_position(t_cursor *cursor)
+{
+  cursor->prompt = ft_strdup("$> ");
+  cursor->pos_y = 0;
+  cursor->prompt_len = ft_strlen(cursor->prompt);
+  cursor->pos_x = cursor->prompt_len;
+  cursor->index_line = 0;
+  cursor->dquote = false;
+  cursor->prev_chariot = 0;
+  cursor->chariot = 0;
+  cursor->y_total = 1;
+  cursor->y_start = 0;
+  cursor->test = 0;
+  return (EXIT_SUCCESS);
+}
+
+
 int  read_stdin()
 {
   t_cursor cursor;
   char *buff;
   int rd;
   int nb_char;
-  t_arr *arr;
   t_arr *select_line;
   t_arr *copy_line;
-  t_arr *history_line;
-  int index_hitory;
+  int index_history;
   struct winsize terminal_size_old;
+  t_arr *history_line;
+  t_arr *current_line;
+  t_arr *arr;
+  t_arr *line_tmp;
 
-  cursor.prompt = ft_strdup("$> ");
-  ft_init_cursor(&cursor);
+  history_line = ft_arr_new(1, sizeof(t_arr *));
+  current_line = ft_arr_new(1, sizeof(t_arr *));
+  ft_arr_push(&history_line, current_line, 0);
+  arr = ft_arr_new(1, sizeof(char *));
+  ft_arr_push(&current_line, arr, 0);
+  arr->f_print = &ft_arr_putchar;
+  arr->f_dup_elem = &ft_arr_strdup;
+
+
+  ft_init_cursor_position(&cursor);
+  ft_init_cursor_cmd(&cursor);
   //chaque apel a malloc doit etre proteger soit dit au passage!!!
   ft_terminal_winsize(&(cursor.terminal_size)); // a checker le retour
   ft_putnbr(cursor.terminal_size.ws_col);
   ft_putstr("-");
   ft_putnbr(cursor.terminal_size.ws_row);
   ft_putchar('\n');
-  index_hitory = 0;
-  history_line = ft_arr_new(1, sizeof(t_arr *));
+  index_history = 0;
   // history_line->f_print = &ft_arr_print; // mal construit !! doit eux pouvoir prendre des void
   // history_line->f_dup_elem = &ft_arr_dup; //mal construit !! doit eux meme pouvoir prendre des void
-  arr = ft_arr_new(1, sizeof(char *));
   select_line = ft_arr_new(1, sizeof(char *));
   copy_line = NULL;
-  arr->f_print = &ft_arr_putchar;
-  arr->f_dup_elem = &ft_arr_strdup;
   select_line->f_print = &ft_arr_putchar;
   select_line->f_dup_elem = &ft_arr_strdup;
   // ft_arr_push(&history_line, arr, 0);
-  cursor.pos_y = 0;
-  cursor.prompt_len = ft_strlen(cursor.prompt);
-  cursor.pos_x = cursor.prompt_len;
   nb_char = cursor.prompt_len;
-  cursor.index_line = 0;
-  cursor.dquote = false;
-  cursor.prev_chariot = 0;
-  cursor.chariot = 0;
-  cursor.y_total = 1;
-  cursor.y_start = 0;
-  cursor.test = 0;
+
   buff = ft_strnew(8); //need 3 but we are never to sure
   ft_bzero(buff, 8);
   ft_cursor_save_position();
@@ -220,31 +238,34 @@ int  read_stdin()
       else if (buff[0] == 27 && buff[1] == 91 && (buff[2] == 65 || buff[2] == 66 || buff[2] == 67 || buff[2] == 68) && !buff[3] && !buff[4] && !buff[5] && !buff[6] && !buff[7])
       {
         // up
-        if (buff[2] == 65 && index_hitory - 1 >= 0)
+        if (buff[2] == 65 && index_history - 1 >= 0)
         {
-          cursor.pos_x = cursor.prompt_len;
-          ft_move_x(cursor.pos_x);
-          ft_sup_char(nb_char);
-          nb_char = cursor.prompt_len;
-
-          unsigned char *tmp;
-          index_hitory--;
-          tmp = history_line->ptr + history_line->sizeof_elem * (index_hitory);
-          //si arr !null
-          arr = ft_arr_dup(*((t_arr**)tmp));
-          // arr = *((t_arr**)tmp);
-          nb_char += arr->length; // doit rajouter une verification de nombre de tabulation
-          cursor.index_line = arr->length;
-          cursor.pos_x += arr->length;
+          ft_cusor_clear_down_line(&cursor, arr);
+          index_history--;
+          current_line = *(t_arr **)((unsigned char *)history_line->ptr + index_history * history_line->sizeof_elem);
+          // current_line = *(t_arr **)current_line;
+          arr = *(t_arr **)((unsigned char *)current_line->ptr + current_line->sizeof_elem);
           ft_arr_print(arr);
-          // while (index < (int)history_line->length)
-          // {
-          //   ft_putstr("-> ");
-          //   ft_arr_print(*((t_arr**)tmp));
-          //   ft_putchar('\n');
-          //   tmp += history_line->sizeof_elem;
-          //   index++;
-          // }
+          cursor.index_line = arr->length;
+
+          ft_cursor_restore_y_x(&cursor, arr, ft_cursor_nb_line_displayed(&cursor, arr, 0, 0));
+          ft_cursor_restore_index(&cursor, arr, cursor.index_line);
+          // cursor.pos_x = cursor.prompt_len;
+          // ft_move_x(cursor.pos_x);
+          // ft_sup_char(nb_char);
+          // nb_char = cursor.prompt_len;
+          //
+          // unsigned char *tmp;
+          // index_history--;
+          // tmp = history_line->ptr + history_line->sizeof_elem * (index_history);
+          // //si arr !null
+          // arr = ft_arr_dup(*((t_arr**)tmp));
+          // // arr = *((t_arr**)tmp);
+          // nb_char += arr->length; // doit rajouter une verification de nombre de tabulation
+          // cursor.index_line = arr->length;
+          // cursor.pos_x += arr->length;
+          // ft_arr_print(arr);
+
         }
         // for key left check if the prev char is a tab and consequently move the time nescessary
         else if (buff[1] == 91 && buff[2] == 68) //key left
@@ -303,12 +324,31 @@ int  read_stdin()
         // ft_putnbr(cursor.y_start);
         // ft_putstr("\n");
         //
-        ft_putstr("\ntest: ");ft_putnbr(cursor.test);ft_putstr("\n");
-        cursor.test = 0;
-        index_hitory = history_line->length; // yes, because, when you press enter is a new line
-        arr = ft_arr_new(1, sizeof(char *));
+        ft_cursor_end(&cursor, arr);
+        if (current_line->length == 1)
+        {
+          ft_arr_push(&current_line, ft_arr_dup(arr), -1);
+        }
+        else if (current_line->length == 2)
+        {
+          line_tmp = ft_arr_new(2, sizeof(t_arr *));
+          ft_arr_push(&line_tmp, ft_arr_dup(arr), 0);
+          ft_arr_push(&line_tmp, ft_arr_dup(arr), 0);
+          //TODO  free current_line!!!!!
+          ft_arr_pop(&current_line, 1);
+          arr = *(t_arr **)current_line->ptr;
+          ft_arr_push(&current_line, ft_arr_dup(arr), -1);
+        }
+        current_line = ft_arr_new(1, sizeof(t_arr *));
+        ft_arr_push(&history_line, current_line, -1);
+        arr = ft_arr_new(1, sizeof(char*));
+        ft_arr_push(&current_line, arr, 0);
+
+        index_history = history_line->length - 1; // yes, because, when you press enter is a new line
+        // arr = ft_arr_new(1, sizeof(char *));
         arr->f_print = &ft_arr_putchar;
         arr->f_dup_elem = &ft_arr_strdup;
+
         // ft_putstr("-> ");
         // ft_arr_print(*((t_arr**)history_line->ptr));
         // ft_putchar('\n');
