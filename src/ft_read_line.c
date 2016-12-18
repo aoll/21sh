@@ -206,6 +206,15 @@ int  read_stdin()
           ft_cursor_select_right(&cursor, arr, select_line);
         }
       }
+      else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 49 && buff[3] == 59 && buff[4] == 53 && buff[5] == 65 && !buff[6] && !buff[7]) // ctrl + up //done
+      {
+        ft_cursor_up_line(&cursor, arr);
+
+      }
+      else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 49 && buff[3] == 59 && buff[4] == 53 && buff[5] == 66 && !buff[6] && !buff[7]) // ctrl + down //done
+      {
+        ft_cursor_down_line(&cursor, arr);
+      }
 
       // up or down or key left or right
       else if (buff[0] == 27 && buff[1] == 91 && (buff[2] == 65 || buff[2] == 66 || buff[2] == 67 || buff[2] == 68) && !buff[3] && !buff[4] && !buff[5] && !buff[6] && !buff[7])
