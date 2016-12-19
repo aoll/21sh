@@ -72,7 +72,12 @@ C_CURSOR= ft_cursor_left.c \
 					ft_cursor_resize.c \
 					ft_cursor_copy_line.c \
 					ft_cursor_cut.c \
-					ft_cursor_paste.c
+					ft_cursor_paste.c \
+					ft_cursor_up_line.c \
+					ft_cursor_down_line.c \
+					ft_cursor_up_history_line.c \
+					ft_cursor_down_history_line.c \
+					ft_cursor_valide_line.c
 
 ST_SRC= ft_start.c ft_env_init.c ft_read_line.c
 

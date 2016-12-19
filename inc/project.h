@@ -37,6 +37,7 @@ struct  s_cursor
   int index_line;
   int y_total;
   int y_start;
+  int index_history;
 
   struct winsize terminal_size;
 
@@ -104,6 +105,11 @@ int  ft_mode_insertion_end(void);
 int  ft_clear_down(void);
 
 /**
+ * Function for t_arr
+ */
+ void  *ft_arr_strdup(const void *s, size_t n);
+ void  ft_arr_putchar(const void *s);
+/**
  * Action on the cursor
  */
 int  ft_cursor_left(t_cursor *cursor, t_arr *arr);
@@ -145,6 +151,15 @@ int  ft_cursor_copy_line(t_cursor *cursor, t_arr *select_line, t_arr **copy_line
 
 int  ft_cursor_cut(t_cursor *cursor, t_arr *arr, t_arr *select_line, t_arr **copy_line);
 int  ft_cursor_paste(t_cursor *cursor, t_arr *arr, t_arr *copy_line);
+
+int  ft_cursor_up_line(t_cursor *cursor, t_arr *arr);
+int  ft_cursor_down_line(t_cursor *cursor, t_arr *arr);
+int  ft_cusor_clear_down_line(t_cursor *cursor, t_arr *arr);
+
+int  ft_cursor_up_history_line(t_cursor *cursor, t_arr *history_line, t_arr **current_line, t_arr **arr);
+int  ft_cursor_down_history_line(t_cursor *cursor, t_arr *history_line, t_arr **current_line, t_arr **arr);
+int  ft_cursor_valide_line(t_cursor *cursor, t_arr **history_line, t_arr **current_line, t_arr **arr);
+
 
 void  ft_read_line(void);
 
