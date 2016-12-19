@@ -68,13 +68,13 @@ int  ft_cursor_move_x(int new_pos_x, char *cmd)
  */
 char *ft_cmd(char *cmd)
 {
-  // return (ft_strjoin("1.3*5", cmd));
-  char *new;
-
-  new = ft_strnew(ft_strlen(cmd) + PADDING_BUFFER);
-  ft_bzero(new, ft_strlen(cmd) + PADDING_BUFFER);
-  ft_memcpy(new, cmd, ft_strlen(cmd));
-  return (new);
+  // // return (ft_strjoin("1.3*5", cmd));
+  // char *new;
+  //
+  // new = ft_strnew(ft_strlen(cmd) + PADDING_BUFFER);
+  // ft_bzero(new, ft_strlen(cmd) + PADDING_BUFFER);
+  // ft_memcpy(new, cmd, ft_strlen(cmd));
+  return (cmd);
 }
 
 int  ft_init_cursor_cmd(t_cursor *cursor)
@@ -99,12 +99,40 @@ int  ft_init_cursor_cmd(t_cursor *cursor)
   cursor->left_corner_up = ft_cmd(tgetstr("ho", NULL));
   cursor->left_corner_down = ft_cmd(tgetstr("ll", NULL));
   cursor->clear_all_the_screen = tgetstr("cl", NULL);
-  // cursor->no_marge = tgetflag("nam");
-  // if (!cursor->no_marge)
-  //   ft_putstr("Ooooooooooooooo\n");
-  // ft_putnbr(tgetflag("am"));
   cursor->marge = tgetstr("am", NULL);
 
+  return (EXIT_SUCCESS);
+}
+
+/**
+ * free all command save in struct cursor
+ */
+int  ft_free_cursor(t_cursor *cursor)
+{
+  if (cursor->prompt)
+  {
+    free(cursor->prompt);
+  }
+  // free(cursor->up);
+  // free(cursor->down);
+  // free(cursor->left);
+  // free(cursor->right);
+  // free(cursor->sup_char);
+  // free(cursor->move_x);
+  // free(cursor->clear_current_line);
+  // free(cursor->clear_down);
+  // free(cursor->mode_insertion);
+  // free(cursor->mode_insertion_end);
+  // free(cursor->mode_basic_video);
+  // free(cursor->mode_reverse_video);
+  // free(cursor->save_cursor_position);
+  // free(cursor->restore_cursor_position);
+  // free(cursor->scroll_down);
+  // free(cursor->scroll_up);
+  // free(cursor->left_corner_up);
+  // free(cursor->left_corner_down);
+  // free(cursor->clear_all_the_screen);
+  // free(cursor->marge);
   return (EXIT_SUCCESS);
 }
 
@@ -143,6 +171,11 @@ int  read_stdin()
   t_arr *history_line;
   t_arr *current_line;
   t_arr *arr;
+  int index_history_free;
+  int index_current_free;
+  t_arr *current_line_free;
+  t_arr *arr_free;
+
 
   history_line = ft_arr_new(1, sizeof(t_arr *));
   current_line = ft_arr_new(1, sizeof(t_arr *));
@@ -269,6 +302,28 @@ int  read_stdin()
       else if (buff[0] == 4 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6] && !buff[7]) //ctrl-d eof //doone
       {
         // si une ligne de commande est en cours exec ligne; ft_putstr("$> ");
+        ft_free_cursor(&cursor);
+        if (select_line)
+        {
+          ft_arr_free(select_line);
+        }
+        if (copy_line)
+        {
+          ft_arr_free(copy_line);
+        }
+        index_history_free = 0;
+        while (index_history_free < (int)history_line->length)
+        {
+          current_line_free = *((t_arr **)((unsigned char *)history_line->ptr + index_history_free * history_line->sizeof_elem));
+          index_current_free = 0;
+          while (index_current_free < (int)current_line_free->length)
+          {
+            ft_arr_free(ft_arr_pop(&current_line_free, index_current_free));
+          }
+          ft_arr_free(ft_arr_pop(&history_line, index_history_free));
+          // index_history_free++;
+        }
+        ft_arr_free(history_line);
         free(buff);
         buff = NULL;
         ft_putchar('\n');
@@ -304,73 +359,7 @@ int  read_stdin()
         // ft_putstr("\n");
         //
         ft_cursor_valide_line(&cursor, &history_line, &current_line, &arr);
-        //
-        // ft_cursor_end(&cursor, arr);
-        // if (current_line->length == 1 && arr->length)
-        // {
-        //   ft_arr_push(&current_line, ft_arr_dup(arr), -1);
-        //   invalide_line = *(t_arr **)((unsigned char *)history_line->ptr + (history_line->length - 1) * history_line->sizeof_elem);
-        //   if (invalide_line->length < 2)
-        //   {
-        //     ft_arr_pop(&history_line, history_line->length - 1);
-        //   }
-        // }
-        // else if (current_line->length == 1 && !arr->length)
-        // {
-        //   invalide_line = *(t_arr **)((unsigned char *)history_line->ptr + (history_line->length - 1) * history_line->sizeof_elem);
-        //   if (invalide_line->length < 2)
-        //   {
-        //     ft_arr_pop(&history_line, history_line->length - 1);
-        //   }
-        // }
-        // else if (current_line->length >= 2)
-        // {
-        //   invalide_line = *(t_arr **)((unsigned char *)history_line->ptr + (history_line->length - 1) * history_line->sizeof_elem);
-        //   if (invalide_line->length < 2)
-        //   {
-        //     ft_arr_pop(&history_line, history_line->length - 1);
-        //   }
-        //   line_tmp = ft_arr_new(2, sizeof(t_arr *));
-        //   ft_arr_push(&line_tmp, ft_arr_dup(arr), 0);
-        //   ft_arr_push(&line_tmp, ft_arr_dup(arr), 1);
-        //   ft_arr_push(&history_line, line_tmp, -1);
-        //   //TODO  free current_line!!!!!
-        //   ft_arr_pop(&current_line, 1);
-        //   arr = *(t_arr **)current_line->ptr;
-        //   ft_arr_push(&current_line, ft_arr_dup(arr), 1);
-        //
-        //
-        // }
-        // cursor.index_history = 0;
-        // while (cursor.index_history < (int)history_line->length)
-        // {
-        //   line_tmp = *(t_arr **)((unsigned char *)history_line->ptr + cursor.index_history * history_line->sizeof_elem);
-        //   ft_arr_pop(&line_tmp, 1);
-        //   arr = *(t_arr **)line_tmp->ptr;
-        //   ft_arr_push(&line_tmp, ft_arr_dup(arr), 1);
-        //   cursor.index_history++;
-        // }
-        //
-        // arr = ft_arr_new(1, sizeof(char*));
-        // arr->f_print = &ft_arr_putchar;
-        // arr->f_dup_elem = &ft_arr_strdup;
-        // current_line = ft_arr_new(1, sizeof(t_arr*));
-        // ft_arr_push(&current_line, arr, 0);
-        // ft_arr_push(&history_line, current_line, -1);
-        //
-        // cursor.index_history = history_line->length - 1; // yes, because, when you press enter is a new line
-        //
-        // cursor.index_line = 0;
-        // cursor.pos_x = cursor.prompt_len;
-        // cursor.pos_y = 0;
-        // cursor.y_total = 1;
-        // cursor.prev_chariot = 0;
-        // cursor.chariot = 0;
-        // cursor.y_start = 0;
-        // nb_char = cursor.prompt_len;
-        // ft_putstr("\n");
-        // // ft_cursor_save_position();
-        // ft_putstr(cursor.prompt);
+
       }
 
       //Del
