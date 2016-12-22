@@ -174,7 +174,6 @@ int  read_stdin()
   int index_history_free;
   int index_current_free;
   t_arr *current_line_free;
-  t_arr *arr_free;
 
 
   history_line = ft_arr_new(1, sizeof(t_arr *));
@@ -358,6 +357,8 @@ int  read_stdin()
         // ft_putnbr(cursor.y_start);
         // ft_putstr("\n");
         //
+        ft_cursor_end(&cursor, arr);
+        ft_parse_line(arr);
         ft_cursor_valide_line(&cursor, &history_line, &current_line, &arr);
 
       }
