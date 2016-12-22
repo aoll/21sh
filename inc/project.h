@@ -160,6 +160,15 @@ int  ft_cursor_up_history_line(t_cursor *cursor, t_arr *history_line, t_arr **cu
 int  ft_cursor_down_history_line(t_cursor *cursor, t_arr *history_line, t_arr **current_line, t_arr **arr);
 int  ft_cursor_valide_line(t_cursor *cursor, t_arr **history_line, t_arr **current_line, t_arr **arr);
 
+/**
+ * Parsing section
+ */
+
+int ft_parse_line(t_arr *arr);
+/**
+ * fork test
+ */
+int  ft_fork_test(char **env);
 
 void  ft_read_line(void);
 

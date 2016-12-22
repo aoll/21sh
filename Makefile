@@ -79,7 +79,9 @@ C_CURSOR= ft_cursor_left.c \
 					ft_cursor_down_history_line.c \
 					ft_cursor_valide_line.c
 
-ST_SRC= ft_start.c ft_env_init.c ft_read_line.c
+C_PARSE= ft_parse_line.c
+
+ST_SRC= ft_start.c ft_env_init.c ft_read_line.c ft_fork_test.c
 
 UC_SRC = main_test.c
 
@@ -90,12 +92,13 @@ else
 endif
 
 # VPATH= src
-VPATH= src:test_project/test_file/src:src/terminal:src/cursor
+VPATH= src:test_project/test_file/src:src/terminal:src/cursor:src/parse
 # VPATH= src/str:src/put:src/int:src/mem:src/char:src/file:src/lst
 
 
 OBJS= $(MC_SRC:%.c=$(O_DIR)/%.o) $(ST_SRC:%.c=$(O_DIR)/%.o) \
-			$(C_TERM:%.c=$(O_DIR)/%.o) $(C_CURSOR:%.c=$(O_DIR)/%.o)
+			$(C_TERM:%.c=$(O_DIR)/%.o) $(C_CURSOR:%.c=$(O_DIR)/%.o) \
+			$(C_PARSE:%.c=$(O_DIR)/%.o)
 
 
 
