@@ -73,7 +73,7 @@ int  ft_parse_pop_space_inside(t_arr *arr)
     {
       dquote = !dquote;
     }
-    if (*s_line == '\'' && !dquote)
+    else if (*s_line == '\'' && !dquote)
     {
       quote = !quote;
     }
@@ -132,6 +132,226 @@ int  ft_parse_pop_prev_space(t_arr *arr)
 }
 
 /**
+ * replace space outside quote or dquote
+ */
+int  ft_parse_replace_space(t_arr *arr)
+{
+  int index;
+  unsigned char *s_line;
+  bool dquote;
+  bool quote;
+
+  dquote = false;
+  quote = false;
+  index = 0;
+  while (index < (int)arr->length)
+  {
+    s_line = (unsigned char *)arr->ptr + index * arr->sizeof_elem;
+    s_line = *(unsigned char **)s_line;
+    if (*s_line == '"' && !quote)
+    {
+      *s_line = SPACE_SEPARATOR;
+      dquote = !dquote;
+    }
+    else if (*s_line == '\'' && !dquote)
+    {
+      *s_line = SPACE_SEPARATOR;
+      quote = !quote;
+    }
+    if (!quote && !dquote && ft_isspace(*s_line))
+    {
+      *s_line = SPACE_SEPARATOR;
+    }
+    index++;
+  }
+  return (EXIT_SUCCESS);
+}
+
+/**
+ * replace all double left redirection outside quote and dquote
+ */
+int  ft_parse_replace_d_left_redirect(t_arr *arr)
+{
+  int index;
+  unsigned char *s_line;
+  bool dquote;
+  bool quote;
+
+  dquote = false;
+  quote = false;
+  index = 0;
+  while (index < (int)arr->length)
+  {
+    s_line = (unsigned char *)arr->ptr + index * arr->sizeof_elem;
+    s_line = *(unsigned char **)s_line;
+    if (*s_line == '"' && !quote)
+    {
+      dquote = !dquote;
+    }
+    else if (*s_line == '\'' && !dquote)
+    {
+      quote = !quote;
+    }
+    if (!dquote && !quote)
+    {
+      if (*s_line == '<' && index + 1 < (int)arr->length)
+      {
+        s_line = (unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem;
+        s_line = *(unsigned char **)s_line;
+        if (*s_line == '<')
+        {
+          free(ft_arr_pop(&arr, index));
+          *s_line = D_LEFT_REDIRECT;
+        }
+      }
+    }
+    index++;
+  }
+  return (EXIT_SUCCESS);
+}
+/**
+ * replace all double right redirection outside quote and dquote
+ */
+int  ft_parse_replace_d_right_redirect(t_arr *arr)
+{
+  int index;
+  unsigned char *s_line;
+  bool dquote;
+  bool quote;
+
+  dquote = false;
+  quote = false;
+  index = 0;
+  while (index < (int)arr->length)
+  {
+    s_line = (unsigned char *)arr->ptr + index * arr->sizeof_elem;
+    s_line = *(unsigned char **)s_line;
+    if (*s_line == '"' && !quote)
+    {
+      dquote = !dquote;
+    }
+    else if (*s_line == '\'' && !dquote)
+    {
+      quote = !quote;
+    }
+    if (!dquote && !quote)
+    {
+      if (*s_line == '>' && index + 1 < (int)arr->length)
+      {
+        s_line = (unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem;
+        s_line = *(unsigned char **)s_line;
+        if (*s_line == '>')
+        {
+          free(ft_arr_pop(&arr, index));
+          *s_line = D_RIGHT_REDIRECT;
+        }
+      }
+    }
+    index++;
+  }
+  return (EXIT_SUCCESS);
+}
+/**
+ * replace all simple right redirection outside quote and dquote
+ */
+int  ft_parse_replace_s_right_redirect(t_arr *arr)
+{
+  int index;
+  unsigned char *s_line;
+  bool dquote;
+  bool quote;
+
+  dquote = false;
+  quote = false;
+  index = 0;
+  while (index < (int)arr->length)
+  {
+    s_line = (unsigned char *)arr->ptr + index * arr->sizeof_elem;
+    s_line = *(unsigned char **)s_line;
+    if (*s_line == '"' && !quote)
+    {
+      dquote = !dquote;
+    }
+    else if (*s_line == '\'' && !dquote)
+    {
+      quote = !quote;
+    }
+    if (!dquote && !quote && *s_line == '>')
+    {
+      *s_line = S_RIGHT_REDIRECT;
+    }
+    index++;
+  }
+  return (EXIT_SUCCESS);
+}
+/**
+ * replace all simple left redirection outside quote and dquote
+ */
+int  ft_parse_replace_s_left_redirect(t_arr *arr)
+{
+  int index;
+  unsigned char *s_line;
+  bool dquote;
+  bool quote;
+
+  dquote = false;
+  quote = false;
+  index = 0;
+  while (index < (int)arr->length)
+  {
+    s_line = (unsigned char *)arr->ptr + index * arr->sizeof_elem;
+    s_line = *(unsigned char **)s_line;
+    if (*s_line == '"' && !quote)
+    {
+      dquote = !dquote;
+    }
+    else if (*s_line == '\'' && !dquote)
+    {
+      quote = !quote;
+    }
+    if (!dquote && !quote && *s_line == '<')
+    {
+      *s_line = S_RIGHT_REDIRECT;
+    }
+    index++;
+  }
+  return (EXIT_SUCCESS);
+}
+/**
+ * replace all pipe outside quote and dquote
+ */
+int  ft_parse_replace_pipe(t_arr *arr)
+{
+  int index;
+  unsigned char *s_line;
+  bool dquote;
+  bool quote;
+
+  dquote = false;
+  quote = false;
+  index = 0;
+  while (index < (int)arr->length)
+  {
+    s_line = (unsigned char *)arr->ptr + index * arr->sizeof_elem;
+    s_line = *(unsigned char **)s_line;
+    if (*s_line == '"' && !quote)
+    {
+      dquote = !dquote;
+    }
+    else if (*s_line == '\'' && !dquote)
+    {
+      quote = !quote;
+    }
+    if (!dquote && !quote && *s_line == '|')
+    {
+      *s_line = PIPE;
+    }
+    index++;
+  }
+  return (EXIT_SUCCESS);
+}
+
+/**
  * itere every line and aply function who pop every usless space
  */
 int  ft_parse_pop_space(t_arr *tab_cmds)
@@ -145,6 +365,12 @@ int  ft_parse_pop_space(t_arr *tab_cmds)
     cmd = *(t_arr **)((unsigned char *)tab_cmds->ptr + index * tab_cmds->sizeof_elem);
     ft_parse_pop_prev_space(cmd);
     ft_parse_pop_space_inside(cmd);
+    ft_parse_replace_d_left_redirect(cmd);
+    ft_parse_replace_d_right_redirect(cmd);
+    ft_parse_replace_s_left_redirect(cmd);
+    ft_parse_replace_s_right_redirect(cmd);
+    ft_parse_replace_pipe(cmd);
+    // ft_parse_replace_space(cmd);
     if (!cmd->length)
     {
       ft_arr_free(ft_arr_pop(&tab_cmds, index));
