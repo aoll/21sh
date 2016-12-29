@@ -66,7 +66,7 @@ int ft_fork(char **cmd, struct t_tube tab_tube[], int fd, char **env, char *path
 
   i = 0;
 
-  while (i < 4)
+  while (i < 1)
   {
     if ((pid = create_process()) == -1)
     {
@@ -74,26 +74,26 @@ int ft_fork(char **cmd, struct t_tube tab_tube[], int fd, char **env, char *path
     }
     if (!pid)
     {
-      if (i < 3)
-      {
-        close(tab_tube[i].tube[0]);
-        dup2(tab_tube[i].tube[1], 1);
-      }
+      // if (i < 3)
+      // {
+      //   close(tab_tube[i].tube[0]);
+      //   dup2(tab_tube[i].tube[1], 1);
+      // }
 
       ft_son(path, cmd[i], env, i);
     }
     else if (pid)
     {
-      if (i < 3)
-      {
-        wait(&status);
-        close(tab_tube[i].tube[1]);
-        dup2(tab_tube[i].tube[0], 0);
-      }
-      else
-      {
-        wait(&status);
-      }
+      // if (i < 3)
+      // {
+      //   wait(&status);
+      //   close(tab_tube[i].tube[1]);
+      //   dup2(tab_tube[i].tube[0], 0);
+      // }
+      // else
+      // {
+      //   wait(&status);
+      // }
       wait(&status);
       i++;
     }
@@ -124,7 +124,8 @@ int  ft_fork_test(char **env)
   pipe(tab_tube[1].tube);
   pipe(tab_tube[2].tube);
   cmd = malloc(sizeof(char *) * 4);
-  cmd[0] = ft_strdup("ls - l");
+  cmd[0] = ft_strdup("cat lua");
+  // cmd[0] = ft_strdup("ls -l");
   cmd[1] = ft_strdup("wc");
   cmd[2] = ft_strdup("wc");
   cmd[3] = ft_strdup("cat -e");

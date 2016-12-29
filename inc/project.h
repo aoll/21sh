@@ -22,6 +22,13 @@
 #define TABULATION_LEN 4
 #define PADDING_BUFFER 30
 
+
+#define SPACE_SEPARATOR   -1
+#define D_LEFT_REDIRECT   -2
+#define D_RIGHT_REDIRECT  -3
+#define S_LEFT_REDIRECT   -4
+#define S_RIGHT_REDIRECT  -5
+#define PIPE              -6
 /**
  * STRUCT
  */
@@ -76,8 +83,14 @@ struct  s_cursor
   int test;
 };
 
-
-
+typedef struct s_token t_token;
+struct  s_token
+{
+  int  category;
+  int  pipe[2];
+  int  fd;
+  char **cmd_args;
+};
 /**
  * PROTOTYPES
  */
@@ -164,7 +177,7 @@ int  ft_cursor_valide_line(t_cursor *cursor, t_arr **history_line, t_arr **curre
  * Parsing section
  */
 
-int ft_parse_line(t_arr *arr);
+t_arr *ft_parse_line(t_arr *arr);
 /**
  * fork test
  */

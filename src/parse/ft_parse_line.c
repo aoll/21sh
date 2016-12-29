@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parse_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/12/29 09:31:13 by alex              #+#    #+#             */
+/*   Updated: 2016/12/29 16:43:40 by alex             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "project.h"
 
 /**
@@ -311,7 +323,7 @@ int  ft_parse_replace_s_left_redirect(t_arr *arr)
     }
     if (!dquote && !quote && *s_line == '<')
     {
-      *s_line = S_RIGHT_REDIRECT;
+      *s_line = S_LEFT_REDIRECT;
     }
     index++;
   }
@@ -352,12 +364,175 @@ int  ft_parse_replace_pipe(t_arr *arr)
 }
 
 /**
- * itere every line and aply function who pop every usless space
+ * check if the token past in parameter in present in double succecsive
+ * return 1 if is true or 0 if not
  */
-int  ft_parse_pop_space(t_arr *tab_cmds)
+int  ft_parse_check_double(t_arr *arr, int token)
+{
+  int index;
+  char *s_line;
+  bool dquote;
+  bool quote;
+  bool check;
+
+  check = false;
+  dquote = false;
+  quote = false;
+  index = 0;
+  while (index < (int)arr->length)
+  {
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
+    if (*s_line == '"' && !quote)
+    {
+      dquote = !dquote;
+    }
+    else if (*s_line == '\'' && !dquote)
+    {
+      quote = !quote;
+    }
+    if (!dquote && !quote)
+    {
+      if (check && token != PIPE)
+      {
+        if (*s_line == D_LEFT_REDIRECT || *s_line == D_RIGHT_REDIRECT
+        || *s_line == S_LEFT_REDIRECT || *s_line == S_RIGHT_REDIRECT
+        || *s_line == PIPE)
+        {
+          return (EXIT_FAILURE);
+        }
+      }
+      if (*s_line == token)
+      {
+        if (check)
+        {
+          return (EXIT_FAILURE);
+        }
+        check = true;
+      }
+      else if (!ft_isspace(*s_line))
+      {
+        check = false;
+      }
+    }
+    index++;
+  }
+  return (EXIT_SUCCESS);
+}
+
+/**
+ * check if the charactere are only space
+ * if a not space if found return 0
+ */
+int  ft_parse_is_only_space(t_arr *arr, int index)
+{
+  char *s_line;
+
+  while (index < (int)arr->length)
+  {
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
+    if (!ft_isspace(*s_line))
+    {
+      return (EXIT_SUCCESS);
+    }
+    index++;
+  }
+  return (EXIT_FAILURE);
+}
+
+/**
+ * check if a token is not the end of the command (space not included)
+ * return 1 if is true or 0 if not
+ */
+int  ft_parse_check_end_space(t_arr *arr)
+{
+  int index;
+  char *s_line;
+  bool dquote;
+  bool quote;
+
+  dquote = false;
+  quote = false;
+  index = 0;
+  while (index < (int)arr->length)
+  {
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
+    if (*s_line == '"' && !quote)
+    {
+      dquote = !dquote;
+    }
+    else if (*s_line == '\'' && !dquote)
+    {
+      quote = !quote;
+    }
+    if (!dquote && !quote)
+    {
+      if (*s_line == D_LEFT_REDIRECT || *s_line == D_RIGHT_REDIRECT
+      || *s_line == S_LEFT_REDIRECT || *s_line == S_RIGHT_REDIRECT
+      || *s_line == PIPE)
+      {
+        if (ft_parse_is_only_space(arr, index + 1))
+        {
+          return (EXIT_FAILURE);
+        }
+      }
+    }
+    index++;
+  }
+  return (EXIT_SUCCESS);
+}
+
+/**
+ * iter every line and apply a batery of function to check the good grammar
+ * of different command
+ */
+int  ft_parse_check_error(t_arr *cmd)
+{
+  int err;
+
+  if ((err = ft_parse_check_double(cmd, S_LEFT_REDIRECT)))
+  {
+    ft_putstr("\n21sh: parse error near `<'");
+    return (EXIT_FAILURE);
+  }
+  else if ((err = ft_parse_check_double(cmd, D_LEFT_REDIRECT)))
+  {
+    ft_putstr("\n21sh: parse error near `<'");
+    return (EXIT_FAILURE);
+  }
+  else if ((err = ft_parse_check_double(cmd, S_RIGHT_REDIRECT)))
+  {
+    ft_putstr("\n21sh: parse error near `>'");
+    return (EXIT_FAILURE);
+  }
+  else if ((err = ft_parse_check_double(cmd, D_RIGHT_REDIRECT)))
+  {
+    ft_putstr("\n21sh: parse error near `>'");
+    return (EXIT_FAILURE);
+  }
+  else if ((err = ft_parse_check_double(cmd, PIPE)))
+  {
+    ft_putstr("\n21sh: parse error near `|'");
+    return (EXIT_FAILURE);
+  }
+  else if ((err = ft_parse_check_end_space(cmd)))
+  {
+    ft_putstr("\n21sh: parse error near `\\n'");
+    return (EXIT_FAILURE);
+  }
+
+
+  return (EXIT_SUCCESS);
+}
+
+/**
+ * itere every line and aply function who pop every usless space
+ *
+ */
+int  ft_parse_pop_and_replace_and_check_error(t_arr *tab_cmds)
 {
   int index;
   t_arr *cmd;
+  int err;
 
   index = 0;
   while (index < (int)tab_cmds->length)
@@ -370,7 +545,11 @@ int  ft_parse_pop_space(t_arr *tab_cmds)
     ft_parse_replace_s_left_redirect(cmd);
     ft_parse_replace_s_right_redirect(cmd);
     ft_parse_replace_pipe(cmd);
-    // ft_parse_replace_space(cmd);
+    if ((err = ft_parse_check_error(cmd)))
+    {
+      return (EXIT_FAILURE);
+    }
+    ft_parse_replace_space(cmd);
     if (!cmd->length)
     {
       ft_arr_free(ft_arr_pop(&tab_cmds, index));
@@ -381,31 +560,35 @@ int  ft_parse_pop_space(t_arr *tab_cmds)
   return (EXIT_SUCCESS);
 }
 
-
 /**
  * parsing
  */
-int  ft_parse_line(t_arr *arr)
+t_arr  *ft_parse_line(t_arr *arr)
 {
   t_arr *tab_cmds;
   int index;
   t_arr *cmd;
+  int err;
 
   if (!(tab_cmds = ft_parse_separate_cmd(arr)))
   {
-    return (EXIT_SUCCESS);
+    return (NULL);
   }
-  ft_parse_pop_space(tab_cmds);
-  ft_putstr("\n");
-  index = 0;
-  while (index < (int)tab_cmds->length)
+  if ((err = ft_parse_pop_and_replace_and_check_error(tab_cmds)))
   {
-    cmd = *(t_arr **)((unsigned char *)tab_cmds->ptr + index * tab_cmds->sizeof_elem);
-    ft_arr_print(cmd);
-    ft_putstr("\n");
-    index++;
+    //TODO free t_arr * t_arr *
+    return (NULL);
   }
-  ft_putstr("\n");
-  ft_putstr("parsing start\n");
-  return (EXIT_SUCCESS);
+  // ft_putstr("\n");
+  // index = 0;
+  // while (index < (int)tab_cmds->length)
+  // {
+  //   cmd = *(t_arr **)((unsigned char *)tab_cmds->ptr + index * tab_cmds->sizeof_elem);
+  //   ft_arr_print(cmd);
+  //   ft_putstr("\n");
+  //   index++;
+  // }
+  // ft_putstr("\n");
+  // ft_putstr("parsing start\n");
+  return (tab_cmds);
 }
