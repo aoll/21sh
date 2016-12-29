@@ -88,8 +88,7 @@ int  ft_cursor_valide_line(t_cursor *cursor, t_arr **history_line, t_arr **curre
   cursor->prev_chariot = 0;
   cursor->chariot = 0;
   cursor->y_start = 0;
-  ft_putstr("\n");
-  // ft_cursor_save_position();
+  // ft_putstr("\n");
   ft_putstr(cursor->prompt);
   *arr = tmp_arr;
   *current_line = tmp_current_line;

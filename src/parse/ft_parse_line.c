@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/29 09:31:13 by alex              #+#    #+#             */
-/*   Updated: 2016/12/29 16:43:40 by alex             ###   ########.fr       */
+/*   Updated: 2016/12/29 17:48:13 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -566,9 +566,9 @@ int  ft_parse_pop_and_replace_and_check_error(t_arr *tab_cmds)
 t_arr  *ft_parse_line(t_arr *arr)
 {
   t_arr *tab_cmds;
-  int index;
-  t_arr *cmd;
   int err;
+  // int index;
+  // t_arr *cmd;
 
   if (!(tab_cmds = ft_parse_separate_cmd(arr)))
   {

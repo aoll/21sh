@@ -108,13 +108,12 @@ int ft_fork(char **cmd, struct t_tube tab_tube[], int fd, char **env, char *path
 /**
  * fork test
  */
-int  ft_fork_test(char **env)
+int  ft_fork_test_save(char **env, t_arr *tab_cmds)
 {
   char **cmd;
   struct t_tube tab_tube[3];
   int fd = 0;
   char *path;
-
 
   // fd = open("./toto_fork", O_RDWR | O_APPEND | O_CREAT, 0777);
   path = getenv("PATH");
@@ -124,8 +123,7 @@ int  ft_fork_test(char **env)
   pipe(tab_tube[1].tube);
   pipe(tab_tube[2].tube);
   cmd = malloc(sizeof(char *) * 4);
-  cmd[0] = ft_strdup("cat lua");
-  // cmd[0] = ft_strdup("ls -l");
+  cmd[0] = ft_strdup("ls -l");
   cmd[1] = ft_strdup("wc");
   cmd[2] = ft_strdup("wc");
   cmd[3] = ft_strdup("cat -e");
@@ -136,5 +134,77 @@ int  ft_fork_test(char **env)
   // {
   // }
 
+  return (EXIT_SUCCESS);
+}
+
+/**
+ * return the number of pipe
+ */
+int  ft_fork_nb_pipe(t_arr *arr)
+{
+  int index;
+  int nb_pipe;
+  char *s_line;
+
+  index = 0;
+  nb_pipe = 0;
+  while (index < (int)arr->length)
+  {
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
+    if (*s_line == PIPE)
+    {
+      nb_pipe++;
+    }
+    index++;
+  }
+  return (nb_pipe);
+}
+
+/**
+ * return a new string with the element of a t_arr
+ */
+char*  ft_fork_str_from_arr(t_arr *arr)
+{
+  char *str;
+  int index;
+  char *s_line;
+
+  if (!(str = ft_strnew((int)arr->length)))
+    return (NULL);
+  index = 0;
+  while (index < (int)arr->length)
+  {
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
+    str[index] = *s_line;
+    index++;
+  }
+  return (str);
+}
+
+/**
+ * fork
+ */
+int  ft_fork_test(char **env, t_arr *tab_cmds)
+{
+  int index;
+  t_arr *cmd;
+  int nb_pipe;
+  char *command;
+
+  index = 0;
+  while (index < (int)tab_cmds->length)
+  {
+
+    cmd = *(t_arr **)((unsigned char *)tab_cmds->ptr + index * tab_cmds->sizeof_elem);
+    nb_pipe = ft_fork_nb_pipe(cmd);
+    command = ft_fork_str_from_arr(cmd);
+    ft_putstr("\nnb_pipe: ");
+    ft_putnbr(nb_pipe);
+    ft_putstr("\ncmd: ");
+    ft_putstr(command);
+    ft_putstr("\n");
+    index++;
+  }
+  ft_putstr("\n");
   return (EXIT_SUCCESS);
 }

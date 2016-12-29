@@ -181,7 +181,7 @@ t_arr *ft_parse_line(t_arr *arr);
 /**
  * fork test
  */
-int  ft_fork_test(char **env);
+int  ft_fork_test(char **env, t_arr *tab_cmds);
 
 void  ft_read_line(void);
 

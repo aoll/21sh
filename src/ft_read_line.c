@@ -147,6 +147,7 @@ int  ft_init_cursor_position(t_cursor *cursor)
   cursor->pos_x = cursor->prompt_len;
   cursor->index_line = 0;
   cursor->dquote = false;
+  cursor->quote = false;
   cursor->prev_chariot = 0;
   cursor->chariot = 0;
   cursor->y_total = 1;
@@ -332,7 +333,7 @@ int  read_stdin()
       }
 
       //enter
-      else if (!cursor.dquote && buff[0] == 10 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6]  && !buff[7])
+      else if (!cursor.dquote && !cursor.quote && buff[0] == 10 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6]  && !buff[7])
       {
         /**
         * next step push arr dans arr :p :p
@@ -358,9 +359,25 @@ int  read_stdin()
         // ft_putnbr(cursor.y_start);
         // ft_putstr("\n");
         //
+        tab_cmds = NULL;
         ft_cursor_end(&cursor, arr);
+        if (tab_cmds)
+        {
+          //TODO free tab_cmds
+        }
         tab_cmds = ft_parse_line(arr);
+        if (tab_cmds)
+        {
+          ft_putstr("\n");
+          ft_fork_test(NULL, tab_cmds);
+          // ft_putstr("\n");
+        }
+        else
+        {
+          ft_putstr("\n");
+        }
         ft_cursor_valide_line(&cursor, &history_line, &current_line, &arr);
+
 
       }
 
