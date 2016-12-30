@@ -176,11 +176,11 @@ int  ft_cursor_valide_line(t_cursor *cursor, t_arr **history_line, t_arr **curre
 /**
  * Parsing section
  */
-
 t_arr *ft_parse_line(t_arr *arr);
 /**
  * fork test
  */
+ #include <fcntl.h>
 int  ft_fork_test(char **env, t_arr *tab_cmds);
 
 void  ft_read_line(void);

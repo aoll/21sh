@@ -31,24 +31,16 @@ pid_t create_process(void)
 }
 
 
-int  ft_son(char *path, char *cmd, char **envp, int i)
+int  ft_son(char *path_cmd, char **tab_cmd, char **envp, int i)
 {
-  char **tab_cmd = malloc(sizeof(char*) * 2);
-  char **tab_path = malloc(sizeof(char*) * 2);
-  int index;
-  char *path_tmp;
+  // char **tab_cmd = malloc(sizeof(char*) * 2);
+  // char **tab_path = malloc(sizeof(char*) * 2);
 
-  tab_path = ft_strsplit(path, ':');
-  tab_cmd = ft_strsplit(cmd, SPACE_SEPARATOR);
-  index = 0;
-  while (tab_path[i])
-  {
-    path_tmp = ft_strjoin(tab_path[index], "/");
-    path_tmp = ft_strjoin(path_tmp, tab_cmd[0]);
-    if (execve(path_tmp, tab_cmd, envp) != -1)
-      break;
-    index++;
-  }
+  execve(path_cmd, tab_cmd, envp);
+
+  // ft_putstr("\n21sh: command not found: ");
+  // ft_putstr(tab_cmd[0]);
+  // ft_putstr("\n");
   // if (i == 3)
   //   execlp(cmd, cmd, "-e", (char *)0);
   // execlp(cmd, cmd, (char *)0);
@@ -65,37 +57,66 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, char **env, char *path,
   int status;
   int stdin_copy = dup(0);
   int stdout_copy = dup(1);
+  char **tab_path;
+  char **tab_cmd;
+  int err;
+  int index;
+  char *path_tmp;
 
+  tab_path = ft_strsplit(path, ':');
   i = 0;
-
   while (i < nb_pipe + 1)
   {
+    err = 0;
+    tab_cmd = ft_strsplit(cmd[i], SPACE_SEPARATOR);
+    index = 0;
+    path_tmp = ft_strdup(tab_cmd[0]);
+    while (tab_path[index] && (err = access(path_tmp, F_OK)) )
+    {
+      path_tmp = ft_strjoin(tab_path[index], "/");
+      path_tmp = ft_strjoin(path_tmp, tab_cmd[0]);
+      index++;
+    }
+    if (err)
+    {
+      ft_putstr("21sh: command not found: ");
+      ft_putstr(tab_cmd[0]);
+      ft_putstr("\n");
+      i++;
+      continue;
+    }
     if ((pid = create_process()) == -1)
     {
       return (EXIT_FAILURE);
     }
     if (!pid)
     {
-
-      if (i < nb_pipe)
+      if (i < nb_pipe && !err)
       {
         close(tab_tube[i].tube[0]);
         dup2(tab_tube[i].tube[1], 1);
       }
-      ft_son(path, cmd[i], env, i);
+      if (!err)
+      {
+        ft_son(path_tmp, tab_cmd, env, i);
+      }
     }
     else if (pid)
     {
-      if (i < nb_pipe)
+      if (!err)
       {
-        wait(&status);
-        close(tab_tube[i].tube[1]);
-        dup2(tab_tube[i].tube[0], 0);
+        if (i < nb_pipe)
+        {
+          wait(&status);
+          close(tab_tube[i].tube[1]);
+          dup2(tab_tube[i].tube[0], 0);
+        }
+        else
+        {
+          wait(&status);
+        }
       }
-      else
-      {
-        wait(&status);
-      }
+
       i++;
     }
   }
@@ -103,43 +124,8 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, char **env, char *path,
   dup2(stdout_copy, 1);
   close(stdin_copy);
   close(stdout_copy);
-
-
-
   return EXIT_SUCCESS;
 }
-
-// /**
-//  * fork test
-//  */
-// int  ft_fork_test_save(char **env, t_arr *tab_cmds)
-// {
-//   char **cmd;
-//   struct t_tube tab_tube[3];
-//   int fd = 0;
-//   char *path;
-//
-//   // fd = open("./toto_fork", O_RDWR | O_APPEND | O_CREAT, 0777);
-//   path = getenv("PATH");
-//
-//
-//   pipe(tab_tube[0].tube);
-//   pipe(tab_tube[1].tube);
-//   pipe(tab_tube[2].tube);
-//   cmd = malloc(sizeof(char *) * 4);
-//   cmd[0] = ft_strdup("ls -l");
-//   cmd[1] = ft_strdup("wc");
-//   cmd[2] = ft_strdup("wc");
-//   cmd[3] = ft_strdup("cat -e");
-//   cmd[4] = NULL;
-//
-//   ft_fork(cmd, tab_tube, fd, env, path);
-//   // while (true)
-//   // {
-//   // }
-//
-//   return (EXIT_SUCCESS);
-// }
 
 /**
  * return the number of pipe
@@ -195,10 +181,8 @@ int  ft_fork_split_pipe(char *str, int nb_pipe, char **env)
   struct t_tube *tab_tube;
   int index;
   char *path;
-  // int tube[2];
 
   path = getenv("PATH");
-
   tab_tube = NULL;
   if (nb_pipe)
   {
@@ -219,13 +203,6 @@ int  ft_fork_split_pipe(char *str, int nb_pipe, char **env)
     return (EXIT_FAILURE);
   }
   ft_fork(cmds, tab_tube, 0, env, path, nb_pipe);
-  // if (nb_pipe)
-  // {
-  //   pipe(tube);
-  //   // close(tube[1]);
-  //   // dup2(tube[1], 0);
-  //   // dup2(tube[0], 1);
-  // }
 
   return (EXIT_SUCCESS);
 }
@@ -249,11 +226,7 @@ int  ft_fork_test(char **env, t_arr *tab_cmds)
     nb_pipe = ft_fork_nb_pipe(cmd);
     cmd_str = ft_fork_str_from_arr(cmd);
     ft_fork_split_pipe(cmd_str, nb_pipe, env);
-    // ft_putstr("\nnb_pipe: ");
-    // ft_putnbr(nb_pipe);
-    // ft_putstr("\ncmd: ");
-    // ft_putstr(command);
-    // ft_putstr("\n");
+
     index++;
   }
   // ft_putstr("\n");
