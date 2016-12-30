@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/29 09:31:13 by alex              #+#    #+#             */
-/*   Updated: 2016/12/29 17:48:13 by alex             ###   ########.fr       */
+/*   Updated: 2016/12/30 10:36:06 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,6 +374,7 @@ int  ft_parse_check_double(t_arr *arr, int token)
   bool dquote;
   bool quote;
   bool check;
+  int index_tmp;
 
   check = false;
   dquote = false;
@@ -382,6 +383,10 @@ int  ft_parse_check_double(t_arr *arr, int token)
   while (index < (int)arr->length)
   {
     s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
+    if (*s_line == PIPE && !index && token == PIPE)
+    {
+      return (EXIT_FAILURE);
+    }
     if (*s_line == '"' && !quote)
     {
       dquote = !dquote;
@@ -392,17 +397,26 @@ int  ft_parse_check_double(t_arr *arr, int token)
     }
     if (!dquote && !quote)
     {
-      if (check && token != PIPE)
+      if (check)
       {
         if (*s_line == D_LEFT_REDIRECT || *s_line == D_RIGHT_REDIRECT
         || *s_line == S_LEFT_REDIRECT || *s_line == S_RIGHT_REDIRECT
         || *s_line == PIPE)
         {
-          return (EXIT_FAILURE);
+          if (*s_line != PIPE && token == PIPE)
+          {
+            free(ft_arr_pop(&arr, index_tmp));
+            index -= 1;
+          }
+          else
+          {
+            return (EXIT_FAILURE);
+          }
         }
       }
       if (*s_line == token)
       {
+        index_tmp = index;
         if (check)
         {
           return (EXIT_FAILURE);
@@ -545,6 +559,7 @@ int  ft_parse_pop_and_replace_and_check_error(t_arr *tab_cmds)
     ft_parse_replace_s_left_redirect(cmd);
     ft_parse_replace_s_right_redirect(cmd);
     ft_parse_replace_pipe(cmd);
+
     if ((err = ft_parse_check_error(cmd)))
     {
       return (EXIT_FAILURE);

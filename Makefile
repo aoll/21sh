@@ -1,4 +1,4 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -6,16 +6,16 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2016/02/03 12:47:52 by aollivie         ###   ########.fr        #
+#    Updated: 2016/12/30 10:28:16 by alex             ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 
 DEBUG=yes
 CC=clang
 
 ifeq ($(DEBUG), yes)
-				CFLAGS= -Wall -Wextra # -g -fsanitize=address,undefined # -g -ansi -pedantic
+				CFLAGS= -Wall -Wextra -Wno-unused-variable -Wno-unused-parameter # -g -fsanitize=address,undefined # -g -ansi -pedantic
 else
 		CFLAGS= -Wall -Wextra -Werror
 endif
