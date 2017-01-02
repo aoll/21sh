@@ -29,6 +29,7 @@
 #define S_LEFT_REDIRECT   -4
 #define S_RIGHT_REDIRECT  -5
 #define PIPE              -6
+#define FILE_REDIRECT     -7
 /**
  * STRUCT
  */
