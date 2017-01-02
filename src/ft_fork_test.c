@@ -82,6 +82,78 @@ int  ft_son(char *path_cmd, char **tab_cmd, char **envp)
   return (EXIT_SUCCESS);
 }
 
+/**
+ * return a name file
+ */
+char  *ft_fork_name_file(char **command, int i)
+{
+  int index;
+  char *name_file;
+  char *cmd;
+
+  cmd = *command;
+  name_file = NULL;
+  while (cmd[i])
+  {
+    if (cmd[i] != SPACE_SEPARATOR)
+    {
+      break;
+    }
+    i++;
+  }
+  index = i;
+  while (cmd[index])
+  {
+    if (cmd[index] == SPACE_SEPARATOR)
+    {
+      break;
+    }
+    // cmd[index] = SPACE_SEPARATOR;
+    index++;
+  }
+  if (!(name_file = ft_strsub(cmd, i, index - i)))
+  {
+    return (NULL);
+  }
+
+  while (i <= index)
+  {
+    cmd[i] = SPACE_SEPARATOR;
+    i++;
+  }
+  // index--;
+  ft_putstr("\nname_file:");
+  ft_putstr(name_file);
+  ft_putstr(";\n");
+  return (name_file);
+}
+
+/**
+ * in case in sucess return EXIT_SUCCESS else EXIT_FAILURE
+ * give a list of fd with good right and position cursor
+ * error if the file can be open
+ */
+int  ft_fork_list_fd(char **command, t_arr *arr)
+{
+  char *str;
+  int i;
+  int fd;
+  char *cmd;
+
+  i = 0;
+  cmd = *command;
+  while (cmd[i])
+  {
+    if (cmd[i] == S_RIGHT_REDIRECT)
+    {
+      cmd[i] = SPACE_SEPARATOR;
+      str = ft_fork_name_file(&cmd, i + 1);
+    }
+    i++;
+  }
+  return (EXIT_SUCCESS);
+}
+
 int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path, int nb_pipe)
 {
   int i;
@@ -103,6 +175,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path,
   int rd;
   int fd_tmp;
   int fd_tmp2;
+  t_arr *tab_fd;
 
   fd1 = open("test1", O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
   pipe(tube_fork);
@@ -112,6 +185,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path,
   {
     builtin = false;
     err = 0;
+    err = ft_fork_list_fd(&cmd[i], tab_fd);
     tab_cmd = ft_strsplit(cmd[i], SPACE_SEPARATOR);
     if (!ft_strcmp("env", tab_cmd[0]) && !tab_cmd[1])
     {
