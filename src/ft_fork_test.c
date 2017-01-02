@@ -108,14 +108,12 @@ char  *ft_fork_name_file(char **command, int i)
     {
       break;
     }
-    // cmd[index] = SPACE_SEPARATOR;
     index++;
   }
   if (!(name_file = ft_strsub(cmd, i, index - i)))
   {
     return (NULL);
   }
-
   while (i <= index)
   {
     cmd[i] = SPACE_SEPARATOR;
@@ -129,26 +127,74 @@ char  *ft_fork_name_file(char **command, int i)
 }
 
 /**
+ *  return a case of sucess a fd with the good permission
+ * -1 if error like not have the permission
+ */
+int  ft_fork_fd(char *name_file, int token)
+{
+  int fd;
+
+  fd = -1;
+  if (token == S_RIGHT_REDIRECT)
+  {
+    fd = open(name_file, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
+  }
+  else //if (token == D_RIGHT_REDIRECT)
+  {
+    fd = open(name_file, O_CREAT|O_RDWR|O_APPEND, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
+  }
+  if (fd < 0)
+  {
+    return (EXIT_FAILURE);
+  }
+  return (fd);
+}
+
+/**
  * in case in sucess return EXIT_SUCCESS else EXIT_FAILURE
  * give a list of fd with good right and position cursor
  * error if the file can be open
  */
 int  ft_fork_list_fd(char **command, t_arr *arr)
 {
-  char *str;
+  char *name_file;
   int i;
   int fd;
   char *cmd;
 
   i = 0;
   cmd = *command;
+
   while (cmd[i])
   {
     if (cmd[i] == S_RIGHT_REDIRECT)
     {
       cmd[i] = SPACE_SEPARATOR;
-      str = ft_fork_name_file(&cmd, i + 1);
+      if (!(name_file = ft_fork_name_file(&cmd, i + 1)))
+      {
+        return (EXIT_FAILURE);
+      }
+      fd = ft_fork_fd(name_file, S_RIGHT_REDIRECT);
+      if (fd < 0)
+      {
+        ft_putstr("\n21sh: permission denied: ");
+        ft_putstr(name_file);
+        ft_putstr("\n");
+      }
+      else
+      {
+        ft_arr_push(&arr, &fd, -1);
+      }
     }
+    i++;
+  }
+  i = 0;
+  while (i)
+  {
+    fd = *(int **)((unsigned char *)arr->ptr + i * arr->sizeof_elem);
+    ft_putstr("\nfd: ");
+    ft_putnbr(fd);
+    ft_putstr("\n");
     i++;
   }
   return (EXIT_SUCCESS);
@@ -169,15 +215,14 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path,
   bool builtin;
   char **envp;
   int tube_fork[2];
-  int fd1;
-  int fd2;
   char *buff;
   int rd;
   int fd_tmp;
   int fd_tmp2;
   t_arr *tab_fd;
 
-  fd1 = open("test1", O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
+  tab_fd = ft_arr_new(1, sizeof(int));
+
   pipe(tube_fork);
   tab_path = ft_strsplit(path, ':');
   i = 0;
