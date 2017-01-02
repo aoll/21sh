@@ -82,8 +82,6 @@ int  ft_son(char *path_cmd, char **tab_cmd, char **envp)
   return (EXIT_SUCCESS);
 }
 
-
-
 int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path, int nb_pipe)
 {
   int i;
@@ -98,7 +96,16 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path,
   char *path_tmp;
   bool builtin;
   char **envp;
+  int tube_fork[2];
+  int fd1;
+  int fd2;
+  char *buff;
+  int rd;
+  int fd_tmp;
+  int fd_tmp2;
 
+  fd1 = open("test1", O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
+  pipe(tube_fork);
   tab_path = ft_strsplit(path, ':');
   i = 0;
   while (i < nb_pipe + 1)
@@ -140,6 +147,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path,
       {
         close(tab_tube[i].tube[0]);
         dup2(tab_tube[i].tube[1], 1);
+
       }
       if (builtin)
       {
@@ -153,11 +161,27 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path,
     }
     else if (pid)
     {
+      pipe(tube_fork);
       wait(&status);
       if (i < nb_pipe && !err)
       {
+        buff = ft_strnew(1);
+
         close(tab_tube[i].tube[1]);
-        dup2(tab_tube[i].tube[0], 0);
+        while ((rd = read(tab_tube[i].tube[0], buff, 1)) )
+        {
+          if (rd < 0)
+            break;
+          write(1, buff, 1);
+          write(tube_fork[1], buff, 1);
+        }
+        ft_putstr("\n------------------------------------------------------\n");
+        close(tube_fork[1]);
+        dup2(tube_fork[0], 0);
+
+        // close(tab_tube[i].tube[1]);
+        //
+        // dup2(tab_tube[i].tube[0], 0);
       }
       i++;
     }
