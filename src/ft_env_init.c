@@ -31,7 +31,7 @@ t_kval  *ft_kval_init(const char *env_line)
   return (new);
 }
 
-t_arr  *ft_env_init(int ac, char **av, char **env)
+t_arr  *ft_env_init(char **env)
 {
   size_t length;
   t_arr *arr;
@@ -51,7 +51,5 @@ t_arr  *ft_env_init(int ac, char **av, char **env)
       ft_arr_push(&arr, kv, -1);
       env++;
   }
-  (void)ac;
-  (void)av;
   return (arr);
 }

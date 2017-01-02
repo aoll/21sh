@@ -30,27 +30,61 @@ pid_t create_process(void)
     return pid;
 }
 
-
-int  ft_son(char *path_cmd, char **tab_cmd, char **envp, int i)
+/**
+ * return a new pointeur to a char **
+ */
+char  **ft_fork_env_arr_to_tab_str(t_arr *envp)
 {
-  // char **tab_cmd = malloc(sizeof(char*) * 2);
-  // char **tab_path = malloc(sizeof(char*) * 2);
+  char **env;
+  int index;
+  t_kval *kv;
+  int i;
+  int len;
+
+  if (!envp)
+  {
+    return (NULL);
+  }
+  if ((env = malloc(sizeof(char *) * (envp->length + 1))))
+  {
+    return (NULL);
+  }
+  env[envp->length] = NULL;
+  index = 0;
+  while (index < (int)envp->length)
+  {
+    kv = *(t_kval **)((unsigned char *)envp->ptr + index * envp->sizeof_elem);
+    env[index] = ft_strnew(ft_strlen(kv->key) + ft_strlen(kv->value) + 1);
+    i = -1;
+    len = ft_strlen(kv->key);
+    while (++i < len)
+    {
+      env[index][i] = kv->key[i];
+    }
+    env[index][i] = '=';
+    i = 0;
+    len = ft_strlen(kv->value);
+    while (++i < len)
+    {
+      env[index][i] = kv->value[i];
+    }
+    index++;
+  }
+  return (env);
+}
+
+
+int  ft_son(char *path_cmd, char **tab_cmd, char **envp)
+{
 
   execve(path_cmd, tab_cmd, envp);
-
-  // ft_putstr("\n21sh: command not found: ");
-  // ft_putstr(tab_cmd[0]);
-  // ft_putstr("\n");
-  // if (i == 3)
-  //   execlp(cmd, cmd, "-e", (char *)0);
-  // execlp(cmd, cmd, (char *)0);
 
   return (EXIT_SUCCESS);
 }
 
 
 
-int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, char **env, char *path, int nb_pipe)
+int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path, int nb_pipe)
 {
   int i;
   pid_t pid;
@@ -62,22 +96,33 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, char **env, char *path,
   int err;
   int index;
   char *path_tmp;
+  bool builtin;
+  char **envp;
 
   tab_path = ft_strsplit(path, ':');
   i = 0;
   while (i < nb_pipe + 1)
   {
+    builtin = false;
     err = 0;
     tab_cmd = ft_strsplit(cmd[i], SPACE_SEPARATOR);
-    index = 0;
-    path_tmp = ft_strdup(tab_cmd[0]);
-    while (tab_path[index] && (err = access(path_tmp, F_OK)) )
+    if (!ft_strcmp("env", tab_cmd[0]) && !tab_cmd[1])
     {
-      path_tmp = ft_strjoin(tab_path[index], "/");
-      path_tmp = ft_strjoin(path_tmp, tab_cmd[0]);
-      index++;
+      builtin = true;
     }
-    if (err)
+    if (!builtin)
+    {
+      envp = ft_fork_env_arr_to_tab_str(env);
+      index = 0;
+      path_tmp = ft_strdup(tab_cmd[0]);
+      while (tab_path[index] && (err = access(path_tmp, F_OK)) )
+      {
+        path_tmp = ft_strjoin(tab_path[index], "/");
+        path_tmp = ft_strjoin(path_tmp, tab_cmd[0]);
+        index++;
+      }
+    }
+    if (err && !builtin)
     {
       ft_putstr("21sh: command not found: ");
       ft_putstr(tab_cmd[0]);
@@ -96,27 +141,24 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, char **env, char *path,
         close(tab_tube[i].tube[0]);
         dup2(tab_tube[i].tube[1], 1);
       }
-      if (!err)
+      if (builtin)
       {
-        ft_son(path_tmp, tab_cmd, env, i);
+        ft_arr_print(env);
       }
+      else if (!err)
+      {
+        ft_son(path_tmp, tab_cmd, envp);
+      }
+      exit(EXIT_SUCCESS);
     }
     else if (pid)
     {
-      if (!err)
+      wait(&status);
+      if (i < nb_pipe && !err)
       {
-        if (i < nb_pipe)
-        {
-          wait(&status);
-          close(tab_tube[i].tube[1]);
-          dup2(tab_tube[i].tube[0], 0);
-        }
-        else
-        {
-          wait(&status);
-        }
+        close(tab_tube[i].tube[1]);
+        dup2(tab_tube[i].tube[0], 0);
       }
-
       i++;
     }
   }
@@ -175,14 +217,23 @@ char*  ft_fork_str_from_arr(t_arr *arr)
  * split the command line with the PIPE
  * create a array of tube[2]
  */
-int  ft_fork_split_pipe(char *str, int nb_pipe, char **env)
+int  ft_fork_split_pipe(char *str, int nb_pipe, t_arr *env)
 {
   char **cmds;
   struct t_tube *tab_tube;
   int index;
   char *path;
+  int index_path;
+  t_kval *kval;
 
-  path = getenv("PATH");
+  // path = getenv("PATH");
+  path = NULL;
+  index_path = ft_arr_indexof(env, "PATH");
+  if (index_path >= 0 && index_path < (int)env->length)
+  {
+    kval = *(t_kval **)((unsigned char *)env->ptr + env->sizeof_elem * index_path);
+    path = kval->value;
+  }
   tab_tube = NULL;
   if (nb_pipe)
   {
@@ -211,7 +262,7 @@ int  ft_fork_split_pipe(char *str, int nb_pipe, char **env)
 /**
  * fork
  */
-int  ft_fork_test(char **env, t_arr *tab_cmds)
+int  ft_fork_test(t_arr *env, t_arr *tab_cmds)
 {
   int index;
   t_arr *cmd;

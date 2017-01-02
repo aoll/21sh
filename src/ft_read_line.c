@@ -159,7 +159,7 @@ int  ft_init_cursor_position(t_cursor *cursor)
 }
 
 
-int  read_stdin()
+int  read_stdin(char **envp)
 {
   t_cursor cursor;
   char *buff;
@@ -176,8 +176,10 @@ int  read_stdin()
   int index_current_free;
   t_arr *current_line_free;
   t_arr *tab_cmds;
+  t_arr *env;
 
 
+  env = ft_env_init(envp);
   history_line = ft_arr_new(1, sizeof(t_arr *));
   current_line = ft_arr_new(1, sizeof(t_arr *));
   ft_arr_push(&history_line, current_line, 0);
@@ -369,7 +371,7 @@ int  read_stdin()
         if (tab_cmds)
         {
           ft_putstr("\n");
-          ft_fork_test(NULL, tab_cmds);
+          ft_fork_test(env, tab_cmds);
           // ft_putstr("\n");
         }
         else
@@ -523,19 +525,19 @@ void  test_struc(void)
 
 
 
-void  ft_loop(void)
+void  ft_loop(char **env)
 {
 
   ft_init_terminal();
 
-  read_stdin();
+  read_stdin(env);
   return;
 }
 
 
-void  ft_read_line(void)
+void  ft_read_line(char **env)
 {
   ft_putstr("test du read_line\n");
-  ft_loop();
+  ft_loop(env);
   return;
 }
