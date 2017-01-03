@@ -228,6 +228,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path,
   int fd_tmp2;
   t_arr *tab_fd;
 
+  return(0);
   tab_fd = ft_arr_new(1, sizeof(int *));
   // pipe(tube_fork);
   tab_path = ft_strsplit(path, ':');
