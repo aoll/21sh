@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/29 09:31:13 by alex              #+#    #+#             */
-/*   Updated: 2017/01/02 12:28:18 by alex             ###   ########.fr       */
+/*   Updated: 2017/01/03 11:25:25 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -565,11 +565,29 @@ int  ft_parse_check_file_redirect(t_arr *arr)
           s_line = *(char **)((unsigned char *)arr->ptr + (index - 1) * arr->sizeof_elem);
           if (*s_line != S_RIGHT_REDIRECT)
           {
+            if (index + 1 < (int)arr->length)
+            {
+              s_line = *(char **)((unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem);
+              if (*s_line == S_RIGHT_REDIRECT)
+              {
+                index++;
+                continue;
+              }
+            }
             return (EXIT_FAILURE);
           }
         }
         else
         {
+          if (index + 1 < (int)arr->length)
+          {
+            s_line = *(char **)((unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem);
+            if (*s_line == S_RIGHT_REDIRECT)
+            {
+              index++;
+              continue;
+            }
+          }
           return (EXIT_FAILURE);
         }
       }

@@ -114,7 +114,7 @@ char  *ft_fork_name_file(char **command, int i)
   {
     return (NULL);
   }
-  while (i <= index)
+  while (i < index)
   {
     cmd[i] = SPACE_SEPARATOR;
     i++;
@@ -130,24 +130,28 @@ char  *ft_fork_name_file(char **command, int i)
  *  return a case of sucess a fd with the good permission
  * -1 if error like not have the permission
  */
-int  ft_fork_fd(char *name_file, int token)
+int  *ft_fork_fd(char *name_file, int token)
 {
   int fd;
+  int *fd_ptr;
 
   fd = -1;
+  fd_ptr = malloc(sizeof(int));
+  *fd_ptr = -1;
   if (token == S_RIGHT_REDIRECT)
   {
     fd = open(name_file, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
   }
-  else //if (token == D_RIGHT_REDIRECT)
+  else if (token == D_RIGHT_REDIRECT)
   {
     fd = open(name_file, O_CREAT|O_RDWR|O_APPEND, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
   }
   if (fd < 0)
   {
-    return (EXIT_FAILURE);
+    return (fd_ptr);
   }
-  return (fd);
+  *fd_ptr = fd;
+  return (fd_ptr);
 }
 
 /**
@@ -159,7 +163,7 @@ int  ft_fork_list_fd(char **command, t_arr *arr)
 {
   char *name_file;
   int i;
-  int fd;
+  int *fd;
   char *cmd;
 
   i = 0;
@@ -167,34 +171,37 @@ int  ft_fork_list_fd(char **command, t_arr *arr)
 
   while (cmd[i])
   {
-    if (cmd[i] == S_RIGHT_REDIRECT)
+    if (cmd[i] == S_RIGHT_REDIRECT || cmd[i] == D_RIGHT_REDIRECT)
     {
-      cmd[i] = SPACE_SEPARATOR;
       if (!(name_file = ft_fork_name_file(&cmd, i + 1)))
       {
         return (EXIT_FAILURE);
       }
-      fd = ft_fork_fd(name_file, S_RIGHT_REDIRECT);
-      if (fd < 0)
+      fd = ft_fork_fd(name_file, cmd[i]);
+      cmd[i] = SPACE_SEPARATOR;
+      if (*fd < 0)
       {
         ft_putstr("\n21sh: permission denied: ");
         ft_putstr(name_file);
         ft_putstr("\n");
+        i = 0;
+        while (arr->length)
+        {
+          free(ft_arr_pop(&arr, 0));
+        }
+        return (EXIT_FAILURE);
       }
       else
       {
-        ft_arr_push(&arr, &fd, -1);
+        ft_arr_push(&arr, fd, -1);
       }
     }
     i++;
   }
   i = 0;
-  while (i)
+  while (i < (int)arr->length)
   {
     fd = *(int **)((unsigned char *)arr->ptr + i * arr->sizeof_elem);
-    ft_putstr("\nfd: ");
-    ft_putnbr(fd);
-    ft_putstr("\n");
     i++;
   }
   return (EXIT_SUCCESS);
@@ -221,9 +228,8 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path,
   int fd_tmp2;
   t_arr *tab_fd;
 
-  tab_fd = ft_arr_new(1, sizeof(int));
-
-  pipe(tube_fork);
+  tab_fd = ft_arr_new(1, sizeof(int *));
+  // pipe(tube_fork);
   tab_path = ft_strsplit(path, ':');
   i = 0;
   while (i < nb_pipe + 1)
@@ -231,13 +237,22 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path,
     builtin = false;
     err = 0;
     err = ft_fork_list_fd(&cmd[i], tab_fd);
-    tab_cmd = ft_strsplit(cmd[i], SPACE_SEPARATOR);
+    if (err)
+    {
+      return (EXIT_FAILURE);
+    }
+    if (!(tab_cmd = ft_strsplit(cmd[i], SPACE_SEPARATOR)))
+    {
+      break;
+      // return (EXIT_FAILURE);
+    }
     if (!ft_strcmp("env", tab_cmd[0]) && !tab_cmd[1])
     {
       builtin = true;
     }
-    if (!builtin)
+    if (!builtin && *tab_cmd)
     {
+      // TODO segfault si !tab_cmd[0]
       envp = ft_fork_env_arr_to_tab_str(env);
       index = 0;
       path_tmp = ft_strdup(tab_cmd[0]);
@@ -272,7 +287,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path,
       {
         ft_arr_print(env);
       }
-      else if (!err)
+      else if (!err && *tab_cmd)
       {
         ft_son(path_tmp, tab_cmd, envp);
       }
@@ -280,6 +295,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path,
     }
     else if (pid)
     {
+      close(tube_fork[0]);
       pipe(tube_fork);
       wait(&status);
       if (i < nb_pipe && !err)
