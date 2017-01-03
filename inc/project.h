@@ -23,14 +23,16 @@
 #define PADDING_BUFFER 30
 
 
-#define SPACE_SEPARATOR   -1
-#define D_LEFT_REDIRECT   -2
-#define D_RIGHT_REDIRECT  -3
-#define S_LEFT_REDIRECT   -4
-#define S_RIGHT_REDIRECT  -5
-#define PIPE              -6
-#define FILE_REDIRECT     -7
-#define D_FILE_REDIRECT     -7
+#define SPACE_SEPARATOR       -1
+#define D_LEFT_REDIRECT       -2
+#define D_RIGHT_REDIRECT      -3
+#define S_LEFT_REDIRECT       -4
+#define S_RIGHT_REDIRECT      -5
+#define PIPE                  -6
+#define FILE_REDIRECT         -7
+#define STDIN_STDERR_REDIRECT  -8
+
+
 /**
  * STRUCT
  */

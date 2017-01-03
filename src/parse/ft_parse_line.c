@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/29 09:31:13 by alex              #+#    #+#             */
-/*   Updated: 2017/01/03 13:49:05 by alex             ###   ########.fr       */
+/*   Updated: 2017/01/03 16:44:30 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_arr  *ft_parse_separate_cmd(t_arr *arr)
 {
   t_arr *tab_cmds;
   t_arr *cmd;
-  unsigned char *s_line;
+  char *s_line;
   int index;
   bool dquote;
   bool quote;
@@ -40,8 +40,7 @@ t_arr  *ft_parse_separate_cmd(t_arr *arr)
   cmd->f_print = &ft_arr_putchar;
   while (index < (int)arr->length)
   {
-    s_line = (unsigned char *)arr->ptr + index * arr->sizeof_elem;
-    s_line = *(unsigned char **)s_line;
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
     if (*s_line == '"' && !quote)
     {
       dquote = !dquote;
@@ -72,15 +71,14 @@ t_arr  *ft_parse_separate_cmd(t_arr *arr)
 int  ft_parse_pop_space_inside(t_arr *arr)
 {
   int index;
-  unsigned char *s_line;
+  char *s_line;
   bool dquote;
   bool quote;
 
   index = 0;
   while (index < (int)arr->length)
   {
-    s_line = (unsigned char *)arr->ptr + index * arr->sizeof_elem;
-    s_line = *(unsigned char **)s_line;
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
     if (*s_line == '"' && !quote)
     {
       dquote = !dquote;
@@ -93,8 +91,8 @@ int  ft_parse_pop_space_inside(t_arr *arr)
     {
       if (index + 1 < (int)arr->length)
       {
-        s_line = (unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem;
-        s_line = *(unsigned char **)s_line;
+        s_line = *(char **)((unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem);
+
         if (ft_isspace(*s_line))
         {
           free(ft_arr_pop(&arr, index));
@@ -123,13 +121,13 @@ int  ft_parse_pop_space_inside(t_arr *arr)
 int  ft_parse_pop_prev_space(t_arr *arr)
 {
   int index;
-  unsigned char *s_line;
+  char *s_line;
 
   index = 0;
   while (index < (int)arr->length)
   {
-    s_line = (unsigned char *)arr->ptr + index * arr->sizeof_elem;
-    s_line = *(unsigned char **)s_line;
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
+
     if (!ft_isspace(*s_line))
     {
       return (EXIT_SUCCESS);
@@ -149,7 +147,7 @@ int  ft_parse_pop_prev_space(t_arr *arr)
 int  ft_parse_replace_space(t_arr *arr)
 {
   int index;
-  unsigned char *s_line;
+  char *s_line;
   bool dquote;
   bool quote;
 
@@ -158,8 +156,7 @@ int  ft_parse_replace_space(t_arr *arr)
   index = 0;
   while (index < (int)arr->length)
   {
-    s_line = (unsigned char *)arr->ptr + index * arr->sizeof_elem;
-    s_line = *(unsigned char **)s_line;
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
     if (*s_line == '"' && !quote)
     {
       *s_line = SPACE_SEPARATOR;
@@ -185,7 +182,7 @@ int  ft_parse_replace_space(t_arr *arr)
 int  ft_parse_replace_d_left_redirect(t_arr *arr)
 {
   int index;
-  unsigned char *s_line;
+  char *s_line;
   bool dquote;
   bool quote;
 
@@ -194,8 +191,8 @@ int  ft_parse_replace_d_left_redirect(t_arr *arr)
   index = 0;
   while (index < (int)arr->length)
   {
-    s_line = (unsigned char *)arr->ptr + index * arr->sizeof_elem;
-    s_line = *(unsigned char **)s_line;
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
+
     if (*s_line == '"' && !quote)
     {
       dquote = !dquote;
@@ -208,8 +205,8 @@ int  ft_parse_replace_d_left_redirect(t_arr *arr)
     {
       if (*s_line == '<' && index + 1 < (int)arr->length)
       {
-        s_line = (unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem;
-        s_line = *(unsigned char **)s_line;
+        s_line = *(char **)((unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem);
+
         if (*s_line == '<')
         {
           free(ft_arr_pop(&arr, index));
@@ -227,7 +224,7 @@ int  ft_parse_replace_d_left_redirect(t_arr *arr)
 int  ft_parse_replace_d_right_redirect(t_arr *arr)
 {
   int index;
-  unsigned char *s_line;
+  char *s_line;
   bool dquote;
   bool quote;
 
@@ -236,8 +233,8 @@ int  ft_parse_replace_d_right_redirect(t_arr *arr)
   index = 0;
   while (index < (int)arr->length)
   {
-    s_line = (unsigned char *)arr->ptr + index * arr->sizeof_elem;
-    s_line = *(unsigned char **)s_line;
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
+
     if (*s_line == '"' && !quote)
     {
       dquote = !dquote;
@@ -250,8 +247,8 @@ int  ft_parse_replace_d_right_redirect(t_arr *arr)
     {
       if (*s_line == '>' && index + 1 < (int)arr->length)
       {
-        s_line = (unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem;
-        s_line = *(unsigned char **)s_line;
+        s_line = *(char **)((unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem);
+
         if (*s_line == '>')
         {
           free(ft_arr_pop(&arr, index));
@@ -269,7 +266,7 @@ int  ft_parse_replace_d_right_redirect(t_arr *arr)
 int  ft_parse_replace_s_right_redirect(t_arr *arr)
 {
   int index;
-  unsigned char *s_line;
+  char *s_line;
   bool dquote;
   bool quote;
 
@@ -278,8 +275,8 @@ int  ft_parse_replace_s_right_redirect(t_arr *arr)
   index = 0;
   while (index < (int)arr->length)
   {
-    s_line = (unsigned char *)arr->ptr + index * arr->sizeof_elem;
-    s_line = *(unsigned char **)s_line;
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
+
     if (*s_line == '"' && !quote)
     {
       dquote = !dquote;
@@ -302,7 +299,7 @@ int  ft_parse_replace_s_right_redirect(t_arr *arr)
 int  ft_parse_replace_s_left_redirect(t_arr *arr)
 {
   int index;
-  unsigned char *s_line;
+  char *s_line;
   bool dquote;
   bool quote;
 
@@ -311,8 +308,7 @@ int  ft_parse_replace_s_left_redirect(t_arr *arr)
   index = 0;
   while (index < (int)arr->length)
   {
-    s_line = (unsigned char *)arr->ptr + index * arr->sizeof_elem;
-    s_line = *(unsigned char **)s_line;
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
     if (*s_line == '"' && !quote)
     {
       dquote = !dquote;
@@ -335,7 +331,7 @@ int  ft_parse_replace_s_left_redirect(t_arr *arr)
 int  ft_parse_replace_pipe(t_arr *arr)
 {
   int index;
-  unsigned char *s_line;
+  char *s_line;
   bool dquote;
   bool quote;
 
@@ -344,8 +340,7 @@ int  ft_parse_replace_pipe(t_arr *arr)
   index = 0;
   while (index < (int)arr->length)
   {
-    s_line = (unsigned char *)arr->ptr + index * arr->sizeof_elem;
-    s_line = *(unsigned char **)s_line;
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
     if (*s_line == '"' && !quote)
     {
       dquote = !dquote;
@@ -363,12 +358,12 @@ int  ft_parse_replace_pipe(t_arr *arr)
   return (EXIT_SUCCESS);
 }
 /**
- * replace all pipe outside quote and dquote
+ * replace all & outside quote and dquote
  */
 int  ft_parse_replace_file_redirect(t_arr *arr)
 {
   int index;
-  unsigned char *s_line;
+  char *s_line;
   bool dquote;
   bool quote;
 
@@ -377,8 +372,7 @@ int  ft_parse_replace_file_redirect(t_arr *arr)
   index = 0;
   while (index < (int)arr->length)
   {
-    s_line = (unsigned char *)arr->ptr + index * arr->sizeof_elem;
-    s_line = *(unsigned char **)s_line;
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
     if (*s_line == '"' && !quote)
     {
       dquote = !dquote;
@@ -390,6 +384,90 @@ int  ft_parse_replace_file_redirect(t_arr *arr)
     if (!dquote && !quote && *s_line == '&')
     {
       *s_line = FILE_REDIRECT;
+    }
+    index++;
+  }
+  return (EXIT_SUCCESS);
+}
+/**
+ * check if duble & exist outside quote and dquote
+ * return 1 if is true
+ */
+int  ft_parse_check_double_redirect(t_arr *arr)
+{
+  int index;
+  char *s_line;
+  bool dquote;
+  bool quote;
+
+  dquote = false;
+  quote = false;
+  index = 0;
+  while (index < (int)arr->length)
+  {
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
+    if (*s_line == '"' && !quote)
+    {
+      dquote = !dquote;
+    }
+    else if (*s_line == '\'' && !dquote)
+    {
+      quote = !quote;
+    }
+    if (!dquote && !quote && *s_line == '&')
+    {
+      if (index + 1 < (int)arr->length)
+      {
+        s_line = *(char **)((unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem);
+        if (*s_line == '&')
+        {
+          return (EXIT_FAILURE);
+        }
+      }
+    }
+    index++;
+  }
+  return (EXIT_SUCCESS);
+}
+/**
+ * replace all &> outside quote and dquote
+ */
+int  ft_parse_replace_stdin_sdterr_redirect(t_arr *arr)
+{
+  int index;
+  char *s_line;
+  bool dquote;
+  bool quote;
+
+  dquote = false;
+  quote = false;
+  index = 0;
+  while (index < (int)arr->length)
+  {
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
+    if (*s_line == '"' && !quote)
+    {
+      dquote = !dquote;
+    }
+    else if (*s_line == '\'' && !dquote)
+    {
+      quote = !quote;
+    }
+    if (!dquote && !quote && *s_line == '&')
+    {
+      *s_line = FILE_REDIRECT;
+      if (index + 1 < (int)arr->length)
+      {
+        s_line = *(char **)((unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem);
+        if (*s_line == S_RIGHT_REDIRECT)
+        {
+          *s_line = STDIN_STDERR_REDIRECT;
+          s_line = *(char **)((unsigned char *)arr->ptr + (index ) * arr->sizeof_elem);
+          *s_line = ' ';
+          index++;
+          continue;
+        }
+      }
     }
     index++;
   }
@@ -474,6 +552,9 @@ int  ft_parse_is_only_space(t_arr *arr, int index)
 {
   char *s_line;
 
+  ft_putstr("\nonly_space: ");
+  ft_arr_print(arr);
+  ft_putstr(";\n---\n");
   while (index < (int)arr->length)
   {
     s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
@@ -556,54 +637,33 @@ int  ft_parse_check_file_redirect(t_arr *arr)
     {
       if (*s_line == FILE_REDIRECT)
       {
-        if (ft_parse_is_only_space(arr, index + 1))
+        if (index + 1 < (int)arr->length)
         {
+          s_line = *(char **)((unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem);
+          if (*s_line == D_LEFT_REDIRECT)
+          {
+            ft_putstr("\n21sh: parse error near `>'");
+            return (EXIT_FAILURE);
+          }
+          if (ft_isspace(*s_line))
+          {
+            ft_putstr("\n21sh: parse error near `&'");
+            return (EXIT_FAILURE);
+          }
+        }
+        else
+        {
+          ft_putstr("\n21sh: parse error near `\\n'");
           return (EXIT_FAILURE);
         }
         if (index - 1 >= 0)
         {
           s_line = *(char **)((unsigned char *)arr->ptr + (index - 1) * arr->sizeof_elem);
-          if (*s_line != S_RIGHT_REDIRECT)
+          if (ft_isspace(*s_line))
           {
-            if (index + 1 < (int)arr->length && ft_isspace(*s_line))
-            {
-              s_line = *(char **)((unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem);
-              if (*s_line == S_RIGHT_REDIRECT)
-              {
-                index++;
-                continue;
-              }
-            }
+            ft_putstr("\n21sh: parse error near `&'");
             return (EXIT_FAILURE);
           }
-          else
-          {
-            if (index + 1 < (int)arr->length)
-            {
-              s_line = *(char **)((unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem);
-              if (ft_isspace(*s_line))
-              {
-                return (EXIT_FAILURE);
-              }
-            }
-            else
-            {
-              return (EXIT_FAILURE);
-            }
-          }
-        }
-        else
-        {
-          if (index + 1 < (int)arr->length)
-          {
-            s_line = *(char **)((unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem);
-            if (*s_line == S_RIGHT_REDIRECT)
-            {
-              index++;
-              continue;
-            }
-          }
-          return (EXIT_FAILURE);
         }
       }
     }
@@ -640,6 +700,11 @@ int  ft_parse_check_error(t_arr *cmd)
     ft_putstr("\n21sh: parse error near `>'");
     return (EXIT_FAILURE);
   }
+  else if ((err = ft_parse_check_double(cmd, STDIN_STDERR_REDIRECT)))
+  {
+    ft_putstr("\n21sh: parse error near `>'");
+    return (EXIT_FAILURE);
+  }
   else if ((err = ft_parse_check_double(cmd, PIPE)))
   {
     ft_putstr("\n21sh: parse error near `|'");
@@ -652,7 +717,7 @@ int  ft_parse_check_error(t_arr *cmd)
   }
   else if ((err = ft_parse_check_file_redirect(cmd)))
   {
-    ft_putstr("\n21sh: parse error near `&'");
+    // ft_putstr("\n21sh: parse error near `&'");
     return (EXIT_FAILURE);
   }
 
@@ -681,6 +746,13 @@ int  ft_parse_pop_and_replace_and_check_error(t_arr *tab_cmds)
     ft_parse_replace_s_left_redirect(cmd);
     ft_parse_replace_s_right_redirect(cmd);
     ft_parse_replace_pipe(cmd);
+    if ((err = ft_parse_check_double_redirect(cmd)))
+    {
+      ft_putstr("\n21sh: parse error near `&'");
+      return (EXIT_FAILURE);
+    }
+
+    ft_parse_replace_stdin_sdterr_redirect(cmd);
     ft_parse_replace_file_redirect(cmd);
 
     if ((err = ft_parse_check_error(cmd)))
