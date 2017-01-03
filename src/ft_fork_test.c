@@ -138,7 +138,7 @@ int  *ft_fork_fd(char *name_file, int token)
   fd = -1;
   fd_ptr = malloc(sizeof(int));
   *fd_ptr = -1;
-  if (token == S_RIGHT_REDIRECT)
+  if (token == S_RIGHT_REDIRECT || token == STDIN_STDERR_REDIRECT)
   {
     fd = open(name_file, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
   }
@@ -159,7 +159,7 @@ int  *ft_fork_fd(char *name_file, int token)
  * give a list of fd with good right and position cursor
  * error if the file can be open
  */
-int  ft_fork_list_fd(char **command, t_arr *arr)
+int  ft_fork_list_fd(char **command, t_arr *tab_fd_stdin, t_arr *tab_fd_stderr)
 {
   char *name_file;
   int i;
@@ -168,10 +168,13 @@ int  ft_fork_list_fd(char **command, t_arr *arr)
 
   i = 0;
   cmd = *command;
-
+  while (tab_fd_stdin->length)
+  {
+    free(ft_arr_pop(&tab_fd_stdin, 0));
+  }
   while (cmd[i])
   {
-    if (cmd[i] == S_RIGHT_REDIRECT || cmd[i] == D_RIGHT_REDIRECT)
+    if (cmd[i] == S_RIGHT_REDIRECT || cmd[i] == D_RIGHT_REDIRECT || cmd[i] == STDIN_STDERR_REDIRECT )
     {
       if (!(name_file = ft_fork_name_file(&cmd, i + 1)))
       {
@@ -185,23 +188,26 @@ int  ft_fork_list_fd(char **command, t_arr *arr)
         ft_putstr(name_file);
         ft_putstr("\n");
         i = 0;
-        while (arr->length)
+        while (tab_fd_stdin->length)
         {
-          free(ft_arr_pop(&arr, 0));
+          free(ft_arr_pop(&tab_fd_stdin, 0));
         }
         return (EXIT_FAILURE);
       }
       else
       {
-        ft_arr_push(&arr, fd, -1);
+        ft_arr_push(&tab_fd_stdin, fd, -1);
       }
     }
     i++;
   }
   i = 0;
-  while (i < (int)arr->length)
+  while (i < (int)tab_fd_stdin->length)
   {
-    fd = *(int **)((unsigned char *)arr->ptr + i * arr->sizeof_elem);
+    fd = *(int **)((unsigned char *)tab_fd_stdin->ptr + i * tab_fd_stdin->sizeof_elem);
+    ft_putstr("\nfd: ");
+    ft_putnbr(*fd);
+    ft_putstr("\n");
     i++;
   }
   return (EXIT_SUCCESS);
@@ -226,10 +232,12 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path,
   int rd;
   int fd_tmp;
   int fd_tmp2;
-  t_arr *tab_fd;
+  t_arr *tab_fd_stdin;
+  t_arr *tab_fd_stderr;
 
-  return(0);
-  tab_fd = ft_arr_new(1, sizeof(int *));
+
+  tab_fd_stdin = ft_arr_new(1, sizeof(int *));
+  tab_fd_stderr = ft_arr_new(1, sizeof(int *));
   // pipe(tube_fork);
   tab_path = ft_strsplit(path, ':');
   i = 0;
@@ -237,11 +245,12 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path,
   {
     builtin = false;
     err = 0;
-    err = ft_fork_list_fd(&cmd[i], tab_fd);
-    if (err)
+
+    if ((err = ft_fork_list_fd(&cmd[i], tab_fd_stdin, tab_fd_stderr) ))
     {
       return (EXIT_FAILURE);
     }
+
     if (!(tab_cmd = ft_strsplit(cmd[i], SPACE_SEPARATOR)))
     {
       break;

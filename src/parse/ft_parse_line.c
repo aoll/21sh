@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/29 09:31:13 by alex              #+#    #+#             */
-/*   Updated: 2017/01/03 16:44:30 by alex             ###   ########.fr       */
+/*   Updated: 2017/01/03 16:47:28 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -552,9 +552,6 @@ int  ft_parse_is_only_space(t_arr *arr, int index)
 {
   char *s_line;
 
-  ft_putstr("\nonly_space: ");
-  ft_arr_print(arr);
-  ft_putstr(";\n---\n");
   while (index < (int)arr->length)
   {
     s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
