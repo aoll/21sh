@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/29 09:31:13 by alex              #+#    #+#             */
-/*   Updated: 2017/01/03 16:47:28 by alex             ###   ########.fr       */
+/*   Updated: 2017/01/04 14:09:08 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -473,6 +473,274 @@ int  ft_parse_replace_stdin_sdterr_redirect(t_arr *arr)
   }
   return (EXIT_SUCCESS);
 }
+/**
+ * replace all 2> and 2&> outside quote and dquote
+ */
+int  ft_parse_replace_sdterr_redirect(t_arr *arr)
+{
+  int index;
+  char *s_line;
+  char *s_prev_line;
+  char *s_prev_prev_line;
+  char *s_prev_prev_prev_line;
+  bool dquote;
+  bool quote;
+
+  dquote = false;
+  quote = false;
+  index = 0;
+  while (index < (int)arr->length)
+  {
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
+    if (*s_line == '"' && !quote)
+    {
+      dquote = !dquote;
+    }
+    else if (*s_line == '\'' && !dquote)
+    {
+      quote = !quote;
+    }
+    if (!dquote && !quote && *s_line == S_RIGHT_REDIRECT)
+    {
+      if (index - 1 >= 0)
+      {
+        s_prev_line = *(char **)((unsigned char *)arr->ptr + (index - 1) * arr->sizeof_elem);
+        if (*s_prev_line == '2')
+        {
+          if (index - 2 < 0)
+          {
+            *s_prev_line = ' ';
+            *s_line = STDERR_REDIRECT;
+            index++;
+            continue;
+          }
+          else
+          {
+            s_prev_prev_line = *(char **)((unsigned char *)arr->ptr + (index - 2) * arr->sizeof_elem);
+            if (ft_isspace(*s_prev_prev_line))
+            {
+              *s_prev_line = ' ';
+              *s_line = STDERR_REDIRECT;
+              index++;
+              continue;
+            }
+          }
+        }
+        else if (*s_prev_line == '1')
+        {
+          if (index - 2 < 0)
+          {
+            *s_prev_line = ' ';
+            // *s_line = STDERR_REDIRECT;
+            index++;
+            continue;
+          }
+          else
+          {
+            s_prev_prev_line = *(char **)((unsigned char *)arr->ptr + (index - 2) * arr->sizeof_elem);
+            if (ft_isspace(*s_prev_prev_line))
+            {
+              *s_prev_line = ' ';
+              // *s_line = STDERR_REDIRECT;
+              index++;
+              continue;
+            }
+          }
+        }
+        if (*s_prev_line == '&')
+        {
+          if (index - 2 >= 0)
+          {
+            s_prev_prev_line = *(char **)((unsigned char *)arr->ptr + (index - 2) * arr->sizeof_elem);
+            if (*s_prev_prev_line == '2')
+            {
+              if (index - 3 < 0)
+              {
+                *s_line = STDERR_REDIRECT;
+                *s_prev_line = ' ';
+                *s_prev_prev_line = ' ';
+                index++;
+                continue;
+              }
+              else
+              {
+                s_prev_prev_prev_line = *(char **)((unsigned char *)arr->ptr + (index - 3) * arr->sizeof_elem);
+                if (ft_isspace(*s_prev_prev_prev_line))
+                {
+                  *s_line = STDERR_REDIRECT;
+                  *s_prev_line = ' ';
+                  *s_prev_prev_line = ' ';
+                  index++;
+                  continue;
+                }
+              }
+            }
+            else if (*s_prev_prev_line == '1')
+            {
+              if (index - 3 < 0)
+              {
+                // *s_line = S_REDIRECT;
+                *s_prev_line = ' ';
+                *s_prev_prev_line = ' ';
+                index++;
+                continue;
+              }
+              else
+              {
+                s_prev_prev_prev_line = *(char **)((unsigned char *)arr->ptr + (index - 3) * arr->sizeof_elem);
+                if (ft_isspace(*s_prev_prev_prev_line))
+                {
+                  // *s_line = STDERR_REDIRECT;
+                  *s_prev_line = ' ';
+                  *s_prev_prev_line = ' ';
+                  index++;
+                  continue;
+                }
+              }
+            }
+          }
+        }
+
+      }
+    }
+    index++;
+  }
+  return (EXIT_SUCCESS);
+}
+/**
+ * replace all 2>> and 2&>> outside quote and dquote
+ */
+int  ft_parse_replace_sdterr_double_redirect(t_arr *arr)
+{
+  int index;
+  char *s_line;
+  char *s_prev_line;
+  char *s_prev_prev_line;
+  char *s_prev_prev_prev_line;
+  bool dquote;
+  bool quote;
+
+  dquote = false;
+  quote = false;
+  index = 0;
+  while (index < (int)arr->length)
+  {
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
+    if (*s_line == '"' && !quote)
+    {
+      dquote = !dquote;
+    }
+    else if (*s_line == '\'' && !dquote)
+    {
+      quote = !quote;
+    }
+    if (!dquote && !quote && *s_line == D_RIGHT_REDIRECT)
+    {
+      if (index - 1 >= 0)
+      {
+        s_prev_line = *(char **)((unsigned char *)arr->ptr + (index - 1) * arr->sizeof_elem);
+        if (*s_prev_line == '2')
+        {
+          if (index - 2 < 0)
+          {
+            *s_prev_line = ' ';
+            *s_line = STDERR_REDIRECT;
+            index++;
+            continue;
+          }
+          else
+          {
+            s_prev_prev_line = *(char **)((unsigned char *)arr->ptr + (index - 2) * arr->sizeof_elem);
+            if (ft_isspace(*s_prev_prev_line))
+            {
+              *s_prev_line = ' ';
+              *s_line = STDERR_REDIRECT;
+              index++;
+              continue;
+            }
+          }
+        }
+        else if (*s_prev_line == '1')
+        {
+          if (index - 2 < 0)
+          {
+            *s_prev_line = ' ';
+            // *s_line = STDERR_REDIRECT;
+            index++;
+            continue;
+          }
+          else
+          {
+            s_prev_prev_line = *(char **)((unsigned char *)arr->ptr + (index - 2) * arr->sizeof_elem);
+            if (ft_isspace(*s_prev_prev_line))
+            {
+              *s_prev_line = ' ';
+              // *s_line = STDERR_REDIRECT;
+              index++;
+              continue;
+            }
+          }
+        }
+        if (*s_prev_line == '&')
+        {
+          if (index - 2 >= 0)
+          {
+            s_prev_prev_line = *(char **)((unsigned char *)arr->ptr + (index - 2) * arr->sizeof_elem);
+            if (*s_prev_prev_line == '2')
+            {
+              if (index - 3 < 0)
+              {
+                *s_line = D_STDERR_REDIRECT;
+                *s_prev_line = ' ';
+                *s_prev_prev_line = ' ';
+                index++;
+                continue;
+              }
+              else
+              {
+                s_prev_prev_prev_line = *(char **)((unsigned char *)arr->ptr + (index - 3) * arr->sizeof_elem);
+                if (ft_isspace(*s_prev_prev_prev_line))
+                {
+                  *s_line = D_STDERR_REDIRECT;
+                  *s_prev_line = ' ';
+                  *s_prev_prev_line = ' ';
+                  index++;
+                  continue;
+                }
+              }
+            }
+            else if (*s_prev_prev_line == '1')
+            {
+              if (index - 3 < 0)
+              {
+                // *s_line = D_STDERR_REDIRECT;
+                *s_prev_line = ' ';
+                *s_prev_prev_line = ' ';
+                index++;
+                continue;
+              }
+              else
+              {
+                s_prev_prev_prev_line = *(char **)((unsigned char *)arr->ptr + (index - 3) * arr->sizeof_elem);
+                if (ft_isspace(*s_prev_prev_prev_line))
+                {
+                  // *s_line = D_STDERR_REDIRECT;
+                  *s_prev_line = ' ';
+                  *s_prev_prev_line = ' ';
+                  index++;
+                  continue;
+                }
+              }
+            }
+          }
+        }
+
+      }
+    }
+    index++;
+  }
+  return (EXIT_SUCCESS);
+}
 
 /**
  * check if the token past in parameter in present in double succecsive
@@ -593,7 +861,8 @@ int  ft_parse_check_end_space(t_arr *arr)
     {
       if (*s_line == D_LEFT_REDIRECT || *s_line == D_RIGHT_REDIRECT
       || *s_line == S_LEFT_REDIRECT || *s_line == S_RIGHT_REDIRECT
-      || *s_line == PIPE)
+      || *s_line == PIPE || *s_line == STDIN_STDERR_REDIRECT
+      || *s_line == STDERR_REDIRECT || *s_line == D_STDERR_REDIRECT)
       {
         if (ft_parse_is_only_space(arr, index + 1))
         {
@@ -749,6 +1018,8 @@ int  ft_parse_pop_and_replace_and_check_error(t_arr *tab_cmds)
       return (EXIT_FAILURE);
     }
 
+    ft_parse_replace_sdterr_redirect(cmd);
+    ft_parse_replace_sdterr_double_redirect(cmd);
     ft_parse_replace_stdin_sdterr_redirect(cmd);
     ft_parse_replace_file_redirect(cmd);
 

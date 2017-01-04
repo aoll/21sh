@@ -138,11 +138,15 @@ int  *ft_fork_fd(char *name_file, int token)
   fd = -1;
   fd_ptr = malloc(sizeof(int));
   *fd_ptr = -1;
-  if (token == S_RIGHT_REDIRECT || token == STDIN_STDERR_REDIRECT)
+  if (token == S_RIGHT_REDIRECT || token == STDIN_STDERR_REDIRECT || token == STDERR_REDIRECT)
   {
+    ft_putstr("\nfd create open\n");
     fd = open(name_file, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
+    ft_putstr("\nfd:");
+    ft_putnbr(fd);
+    ft_putstr(";\n");
   }
-  else if (token == D_RIGHT_REDIRECT)
+  else if (token == D_RIGHT_REDIRECT || token == D_STDERR_REDIRECT)
   {
     fd = open(name_file, O_CREAT|O_RDWR|O_APPEND, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
   }
@@ -174,30 +178,44 @@ int  ft_fork_list_fd(char **command, t_arr *tab_fd_stdin, t_arr *tab_fd_stderr)
   }
   while (cmd[i])
   {
-    if (cmd[i] == S_RIGHT_REDIRECT || cmd[i] == D_RIGHT_REDIRECT || cmd[i] == STDIN_STDERR_REDIRECT )
+    if (cmd[i] == S_RIGHT_REDIRECT || cmd[i] == D_RIGHT_REDIRECT || cmd[i] == STDIN_STDERR_REDIRECT || cmd[i] == STDERR_REDIRECT || cmd[i] == D_STDERR_REDIRECT)
     {
       if (!(name_file = ft_fork_name_file(&cmd, i + 1)))
       {
+        ft_putstr("\nwhat\n");
         return (EXIT_FAILURE);
       }
       fd = ft_fork_fd(name_file, cmd[i]);
-      cmd[i] = SPACE_SEPARATOR;
       if (*fd < 0)
       {
+        cmd[i] = SPACE_SEPARATOR;
         ft_putstr("\n21sh: permission denied: ");
         ft_putstr(name_file);
         ft_putstr("\n");
         i = 0;
         while (tab_fd_stdin->length)
         {
-          free(ft_arr_pop(&tab_fd_stdin, 0));
+          fd = *(int **)(ft_arr_pop(&tab_fd_stdin, 0));
+          close(*fd);
+          free(fd);
+        }
+        while (tab_fd_stderr->length)
+        {
+          fd = *(int **)(ft_arr_pop(&tab_fd_stderr, 0));
+          close(*fd);
+          free(fd);
         }
         return (EXIT_FAILURE);
       }
-      else
+      if (cmd[i] == STDIN_STDERR_REDIRECT || cmd[i] == STDERR_REDIRECT || cmd[i] == D_STDERR_REDIRECT)
+      {
+        ft_arr_push(&tab_fd_stderr, fd, -1);
+      }
+      if (cmd[i] == S_RIGHT_REDIRECT || cmd[i] == D_RIGHT_REDIRECT || cmd[i] == STDIN_STDERR_REDIRECT)
       {
         ft_arr_push(&tab_fd_stdin, fd, -1);
       }
+      cmd[i] = SPACE_SEPARATOR;
     }
     i++;
   }
@@ -205,10 +223,28 @@ int  ft_fork_list_fd(char **command, t_arr *tab_fd_stdin, t_arr *tab_fd_stderr)
   while (i < (int)tab_fd_stdin->length)
   {
     fd = *(int **)((unsigned char *)tab_fd_stdin->ptr + i * tab_fd_stdin->sizeof_elem);
-    ft_putstr("\nfd: ");
+    ft_putstr("\nfdp: ");
     ft_putnbr(*fd);
     ft_putstr("\n");
     i++;
+  }
+  return (EXIT_SUCCESS);
+}
+
+/**
+ * write on a list of fd
+ */
+int  ft_fork_write_list_fd(t_arr *arr, char *buff)
+{
+  int index;
+  int *fd;
+
+  index = 0;
+  while (index < (int)arr->length)
+  {
+    fd = *(int **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
+    write(*fd, buff, 1);
+    index++;
   }
   return (EXIT_SUCCESS);
 }
@@ -227,7 +263,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path,
   char *path_tmp;
   bool builtin;
   char **envp;
-  int tube_fork[2];
+  int tube_fork_stdin[2];
   char *buff;
   int rd;
   int fd_tmp;
@@ -238,9 +274,13 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path,
 
   tab_fd_stdin = ft_arr_new(1, sizeof(int *));
   tab_fd_stderr = ft_arr_new(1, sizeof(int *));
-  // pipe(tube_fork);
+  // pipe(tube_fork_stdin);
   tab_path = ft_strsplit(path, ':');
   i = 0;
+  // ft_putstr("\ncmd:");
+  // ft_putstr(cmd[i]);
+  // ft_putstr(";\n");
+  // return(1);
   while (i < nb_pipe + 1)
   {
     builtin = false;
@@ -305,8 +345,8 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path,
     }
     else if (pid)
     {
-      close(tube_fork[0]);
-      pipe(tube_fork);
+      close(tube_fork_stdin[0]);
+      pipe(tube_fork_stdin);
       wait(&status);
       if (i < nb_pipe && !err)
       {
@@ -318,11 +358,12 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, int fd, t_arr *env, char *path,
           if (rd < 0)
             break;
           write(1, buff, 1);
-          write(tube_fork[1], buff, 1);
+          ft_fork_write_list_fd(tab_fd_stdin, buff);
+          write(tube_fork_stdin[1], buff, 1);
         }
         ft_putstr("\n------------------------------------------------------\n");
-        close(tube_fork[1]);
-        dup2(tube_fork[0], 0);
+        close(tube_fork_stdin[1]);
+        dup2(tube_fork_stdin[0], 0);
 
         // close(tab_tube[i].tube[1]);
         //
