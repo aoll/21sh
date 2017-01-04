@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/29 09:31:13 by alex              #+#    #+#             */
-/*   Updated: 2017/01/04 14:09:08 by alex             ###   ########.fr       */
+/*   Updated: 2017/01/04 16:30:12 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -507,6 +507,7 @@ int  ft_parse_replace_sdterr_redirect(t_arr *arr)
         s_prev_line = *(char **)((unsigned char *)arr->ptr + (index - 1) * arr->sizeof_elem);
         if (*s_prev_line == '2')
         {
+          ft_putstr("\nstder redirect\n");
           if (index - 2 < 0)
           {
             *s_prev_line = ' ';
@@ -641,10 +642,11 @@ int  ft_parse_replace_sdterr_double_redirect(t_arr *arr)
         s_prev_line = *(char **)((unsigned char *)arr->ptr + (index - 1) * arr->sizeof_elem);
         if (*s_prev_line == '2')
         {
+
           if (index - 2 < 0)
           {
             *s_prev_line = ' ';
-            *s_line = STDERR_REDIRECT;
+            *s_line = D_STDERR_REDIRECT;
             index++;
             continue;
           }
@@ -654,7 +656,7 @@ int  ft_parse_replace_sdterr_double_redirect(t_arr *arr)
             if (ft_isspace(*s_prev_prev_line))
             {
               *s_prev_line = ' ';
-              *s_line = STDERR_REDIRECT;
+              *s_line = D_STDERR_REDIRECT;
               index++;
               continue;
             }
