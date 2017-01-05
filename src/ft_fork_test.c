@@ -298,7 +298,7 @@ int  ft_fork_list_fd(char **command, t_arr *tab_fd_stdin, t_arr *tab_fd_stderr)
 /**
  * write on a list of fd
  */
-int  ft_fork_write_list_fd(t_arr *arr, char *buff)
+int  ft_fork_write_list_fd(t_arr *arr, char *buff, int len)
 {
   int index;
   int *fd;
@@ -307,7 +307,7 @@ int  ft_fork_write_list_fd(t_arr *arr, char *buff)
   while (index < (int)arr->length)
   {
     fd = *(int **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
-    write(*fd, buff, 1);
+    write(*fd, buff, len);
     index++;
   }
   return (EXIT_SUCCESS);
@@ -338,6 +338,8 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr *env, char *path, int nb_
   t_arr *tab_fd_stdin;
   t_arr *tab_fd_stderr;
   int *fd;
+  int len_stdin;
+  int len_stderr;
 
 
   tab_fd_stdin = ft_arr_new(1, sizeof(int *));
@@ -363,6 +365,8 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr *env, char *path, int nb_
     }
     pipe(tube_fork_stdin);
     pipe(tube_fork_stderr);
+    pipe(tube_fork_stdin_tmp);
+    pipe(tube_fork_stderr_tmp);
     builtin = false;
     err = 0;
     if ((err = ft_fork_list_fd(&cmd[i], tab_fd_stdin, tab_fd_stderr) ))
@@ -412,11 +416,11 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr *env, char *path, int nb_
         // close(tab_tube[i].tube[0]);
         // dup2(tab_tube[i].tube[1], 1);
 
-      close(tube_fork_stdin[0]);
-      dup2(tube_fork_stdin[1], 1);
+      close(tube_fork_stdin_tmp[0]);
+      dup2(tube_fork_stdin_tmp[1], 1);
 
-      close(tube_fork_stderr[0]);
-      dup2(tube_fork_stderr[1], 2);
+      close(tube_fork_stderr_tmp[0]);
+      dup2(tube_fork_stderr_tmp[1], 2);
 
 
       // }
@@ -434,46 +438,92 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr *env, char *path, int nb_
     {
 
       wait(&status);
-      close(tube_fork_stdin[1]);
-      close(tube_fork_stderr[1]);
+
+
+
+      close(tube_fork_stdin_tmp[1]);
+      close(tube_fork_stderr_tmp[1]);
       buff = ft_strnew(1);
-      while ((rd = read(tube_fork_stdin[0], buff, 1)))
+      len_stdin = 0;
+      while ((rd = read(tube_fork_stdin_tmp[0], buff, 1)))
+      {
+        if (rd < 0)
+          break;
+        write(tube_fork_stdin[1], buff, 1);
+        len_stdin++;
+      }
+      len_stderr = 0;
+      while ((rd = read(tube_fork_stderr_tmp[0], buff, 1)))
+      {
+        if (rd < 0)
+          break;
+        write(tube_fork_stderr[1], buff, 1);
+        len_stderr++;
+      }
+
+
+
+
+
+      if (buff)
+      {
+        free(buff);
+      }
+      buff = ft_strnew(len_stdin);
+      close(tube_fork_stderr[1]);
+      close(tube_fork_stdin[1]);
+      while ((rd = read(tube_fork_stdin[0], buff, len_stdin)))
       {
         if (rd < 0)
           break;
         if (i < nb_pipe && !err)
         {
-          write(tab_tube[i].tube[1], buff, 1);
+          write(tab_tube[i].tube[1], buff, len_stdin);
         }
         if (tab_fd_stdin->length)
         {
-          ft_fork_write_list_fd(tab_fd_stdin, buff);
+          ft_fork_write_list_fd(tab_fd_stdin, buff, len_stdin);
         }
 
         if (!tab_fd_stdin->length && i >= nb_pipe)
         {
-          write(1, buff, 1);
+          write(1, buff, len_stdin);
         }
       }
-      while ((rd = read(tube_fork_stderr[0], buff, 1)) )
+
+      if (buff)
+      {
+        free(buff);
+      }
+      buff = ft_strnew(len_stderr);
+      while ((rd = read(tube_fork_stderr[0], buff, len_stderr)) )
       {
         if (rd < 0)
           break;
 
         if (tab_fd_stderr->length)
         {
-          ft_fork_write_list_fd(tab_fd_stderr, buff);
+          ft_fork_write_list_fd(tab_fd_stderr, buff, len_stderr);
         }
         else if (!tab_fd_stderr->length)
         {
-          write(2, buff, 1);
+          write(2, buff, len_stderr);
         }
       }
+      if (buff)
+      {
+        free(buff);
+      }
+
       if (i < nb_pipe && !err)
       {
         close(tab_tube[i].tube[1]);
         dup2(tab_tube[i].tube[0], 0);
       }
+
+
+
+
       while (tab_fd_stdin->length)
       {
         fd = (int *)(ft_arr_pop(&tab_fd_stdin, 0));
