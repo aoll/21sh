@@ -77,6 +77,9 @@ char  **ft_fork_env_arr_to_tab_str(t_arr *envp)
 int  ft_son(char *path_cmd, char **tab_cmd, char **envp)
 {
 
+  ft_putstr("\nson:");
+  ft_putstr(*tab_cmd);
+  ft_putstr("\n");
   execve(path_cmd, tab_cmd, envp);
 
   return (EXIT_SUCCESS);
@@ -444,20 +447,13 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr *env, char *path, int nb_
     }
     if (!pid)
     {
-      // while ((rd = read(tube_fork_stdin[0], buff, 1)))
-      // {
-      //   if (rd < 0)
-      //   break;
-      //   write(1, buff, 1);
-      //   // ft_putstr("\nok\n");
-      //   // write(tube_fork_stdin[1], buff, 1);
-      // }
-      close(tube_fork_stdin[1]);
-      dup2(tube_fork_stdin[0], 0);
-      // if (i < nb_pipe && !err)
-      // {
-        // close(tab_tube[i].tube[0]);
-        // dup2(tab_tube[i].tube[1], 1);
+
+      if (tab_fd_stdin->length)
+      {
+        ft_putstr("\nwhat\n");
+        close(tube_fork_stdin[1]);
+        dup2(tube_fork_stdin[0], 0);
+      }
 
       close(tube_fork_stdout_tmp[0]);
       dup2(tube_fork_stdout_tmp[1], 1);
@@ -474,18 +470,6 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr *env, char *path, int nb_
       else if (!err && *tab_cmd)
       {
 
-        // close(tube_fork_stdin[1]);
-
-        // *buff = '\0';
-        // if (tab_fd_stdin->length)
-        // {
-        //   ft_putstr("\n dup stdin\n");
-        //   // write(tube_fork_stdin[1], buff, 1);
-        //   // close(tube_fork_stdin[1]);
-        //   dup2(tube_fork_stdin[0], 0);
-        // }
-
-
         if (buff)
         {
           free(buff);
@@ -500,6 +484,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr *env, char *path, int nb_
 
       index = 0;
 
+      // close(tube_fork_stdin[0]);
       while (index < (int)tab_fd_stdin->length)
       {
         fd = *(int **)((unsigned char *)tab_fd_stdin->ptr + index * tab_fd_stdin->sizeof_elem);
@@ -510,23 +495,12 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr *env, char *path, int nb_
         {
           if (rd < 0)
             break;
-          // write(1, buff, 1);
           write(tube_fork_stdin[1], buff, 1);
         }
         index++;
       }
       close(tube_fork_stdin[1]);
-      // while ((rd = read(tube_fork_stdin[0], buff, 1)))
-      // {
-      //   if (rd < 0)
-      //   break;
-      //   write(1, buff, 1);
-      //   // ft_putstr("\nok\n");
-      //   // write(tube_fork_stdin[1], buff, 1);
-      // }
 
-
-      dup2(tube_fork_stdin[0], 0);
       wait(&status);
 
 
@@ -623,6 +597,12 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr *env, char *path, int nb_
       while (tab_fd_stderr->length)
       {
         fd = (int *)(ft_arr_pop(&tab_fd_stderr, 0));
+        close(*fd);
+        free(fd);
+      }
+      while (tab_fd_stdin->length)
+      {
+        fd = (int *)(ft_arr_pop(&tab_fd_stdin, 0));
         close(*fd);
         free(fd);
       }
