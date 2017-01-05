@@ -30,7 +30,7 @@
 #define S_RIGHT_REDIRECT      -5
 #define PIPE                  -6
 #define FILE_REDIRECT         -7
-#define STDIN_STDERR_REDIRECT -8
+#define STDOUT_STDERR_REDIRECT -8
 #define STDERR_REDIRECT       -9
 #define D_STDERR_REDIRECT     -10
 

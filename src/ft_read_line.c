@@ -141,7 +141,7 @@ int  ft_free_cursor(t_cursor *cursor)
  */
 int  ft_init_cursor_position(t_cursor *cursor)
 {
-  cursor->prompt = ft_strdup("$> ");
+  cursor->prompt = ft_strdup("\033[32m$> \033[0m");
   cursor->pos_y = 0;
   cursor->prompt_len = ft_strlen(cursor->prompt);
   cursor->pos_x = cursor->prompt_len;

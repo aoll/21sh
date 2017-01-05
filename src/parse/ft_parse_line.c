@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/29 09:31:13 by alex              #+#    #+#             */
-/*   Updated: 2017/01/05 11:31:29 by alex             ###   ########.fr       */
+/*   Updated: 2017/01/05 15:22:15 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -461,7 +461,7 @@ int  ft_parse_replace_stdin_sdterr_redirect(t_arr *arr)
         s_line = *(char **)((unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem);
         if (*s_line == S_RIGHT_REDIRECT)
         {
-          *s_line = STDIN_STDERR_REDIRECT;
+          *s_line = STDOUT_STDERR_REDIRECT;
           s_line = *(char **)((unsigned char *)arr->ptr + (index ) * arr->sizeof_elem);
           *s_line = ' ';
           index++;
@@ -507,7 +507,7 @@ int  ft_parse_replace_sdterr_redirect(t_arr *arr)
         s_prev_line = *(char **)((unsigned char *)arr->ptr + (index - 1) * arr->sizeof_elem);
         if (*s_prev_line == '2')
         {
-          
+
           if (index - 2 < 0)
           {
             *s_prev_line = ' ';
@@ -863,7 +863,7 @@ int  ft_parse_check_end_space(t_arr *arr)
     {
       if (*s_line == D_LEFT_REDIRECT || *s_line == D_RIGHT_REDIRECT
       || *s_line == S_LEFT_REDIRECT || *s_line == S_RIGHT_REDIRECT
-      || *s_line == PIPE || *s_line == STDIN_STDERR_REDIRECT
+      || *s_line == PIPE || *s_line == STDOUT_STDERR_REDIRECT
       || *s_line == STDERR_REDIRECT || *s_line == D_STDERR_REDIRECT)
       {
         if (ft_parse_is_only_space(arr, index + 1))
@@ -968,7 +968,7 @@ int  ft_parse_check_error(t_arr *cmd)
     ft_putstr("\n21sh: parse error near `>'");
     return (EXIT_FAILURE);
   }
-  else if ((err = ft_parse_check_double(cmd, STDIN_STDERR_REDIRECT)))
+  else if ((err = ft_parse_check_double(cmd, STDOUT_STDERR_REDIRECT)))
   {
     ft_putstr("\n21sh: parse error near `>'");
     return (EXIT_FAILURE);
