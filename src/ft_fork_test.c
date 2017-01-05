@@ -120,9 +120,7 @@ char  *ft_fork_name_file(char **command, int i)
     i++;
   }
   // index--;
-  ft_putstr("\nname_file:");
-  ft_putstr(name_file);
-  ft_putstr(";\n");
+
   return (name_file);
 }
 
@@ -140,19 +138,35 @@ int  *ft_fork_fd(char *name_file, int token)
   *fd_ptr = -1;
   if (token == S_RIGHT_REDIRECT || token == STDIN_STDERR_REDIRECT || token == STDERR_REDIRECT)
   {
-    ft_putstr("\nfd create open\n");
-    fd = open(name_file, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
-    ft_putstr("\nfd:");
-    ft_putnbr(fd);
-    ft_putstr(";\n");
+    if (*name_file == FILE_REDIRECT)
+    {
+      fd = ft_atoi(name_file + 1);
+
+    }
+    else
+    {
+      fd = open(name_file, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
+    }
   }
   else if (token == D_RIGHT_REDIRECT || token == D_STDERR_REDIRECT)
   {
-    fd = open(name_file, O_CREAT|O_RDWR|O_APPEND, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
+    if (*name_file == FILE_REDIRECT)
+    {
+      fd = ft_atoi(name_file + 1);
+    }
+    else
+    {
+      fd = open(name_file, O_CREAT|O_RDWR|O_APPEND, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
+    }
   }
-  if (fd < 0)
+  if (fd == -1)
   {
-    return (fd_ptr);
+    free(fd_ptr);
+    fd_ptr = NULL;
+  }
+  if (fd == 1 || fd == 2)
+  {
+    fd *= -1;
   }
   *fd_ptr = fd;
   return (fd_ptr);
@@ -170,6 +184,9 @@ int  ft_fork_list_fd(char **command, t_arr *tab_fd_stdin, t_arr *tab_fd_stderr)
   int *fd;
   char *cmd;
   int *fd_err;
+  int index;
+  int *fd_tmp;
+  int *fd_dup;
 
   i = 0;
   cmd = *command;
@@ -189,21 +206,20 @@ int  ft_fork_list_fd(char **command, t_arr *tab_fd_stdin, t_arr *tab_fd_stderr)
   {
     if (cmd[i] == S_RIGHT_REDIRECT || cmd[i] == D_RIGHT_REDIRECT || cmd[i] == STDIN_STDERR_REDIRECT || cmd[i] == STDERR_REDIRECT || cmd[i] == D_STDERR_REDIRECT)
     {
-      ft_putstr("\ncmd i:");
-      ft_putnbr(cmd[i]);
-      ft_putstr("\n");
+
       if (!(name_file = ft_fork_name_file(&cmd, i + 1)))
       {
-        ft_putstr("\nwhat\n");
+
         return (EXIT_FAILURE);
       }
       fd = ft_fork_fd(name_file, cmd[i]);
-      if (*fd < 0)
+      if (fd == NULL)
       {
         cmd[i] = SPACE_SEPARATOR;
         ft_putstr("\n21sh: permission denied: ");
         ft_putstr(name_file);
         ft_putstr("\n");
+        free(name_file);
         i = 0;
         while (tab_fd_stdin->length)
         {
@@ -219,30 +235,55 @@ int  ft_fork_list_fd(char **command, t_arr *tab_fd_stdin, t_arr *tab_fd_stderr)
         }
         return (EXIT_FAILURE);
       }
-      if (cmd[i] == STDIN_STDERR_REDIRECT || cmd[i] == STDERR_REDIRECT || cmd[i] == D_STDERR_REDIRECT)
+      free(name_file);
+      index = 0;
+      if (*fd == -2)
       {
-        ft_putstr("\npush errstd\n");
-        ft_arr_push(&tab_fd_stderr, fd, -1);
+        while (index < (int)tab_fd_stderr->length)
+        {
+          fd_tmp = *(int **)((unsigned char *)tab_fd_stderr->ptr + index * tab_fd_stderr->sizeof_elem);
+          if (!(fd_dup = malloc(sizeof(int))))
+          {
+            return (EXIT_FAILURE);
+          }
+          *fd_dup = *fd_tmp;
+          ft_arr_push(&tab_fd_stdin, fd_dup, -1);
+          index++;
+        }
       }
-      if (cmd[i] == S_RIGHT_REDIRECT || cmd[i] == D_RIGHT_REDIRECT || cmd[i] == STDIN_STDERR_REDIRECT)
+      else if (*fd == -1)
       {
-        ft_putstr("\npush stdin\n");
+        while (index < (int)tab_fd_stdin->length)
+        {
+          fd_tmp = *(int **)((unsigned char *)tab_fd_stdin->ptr + index * tab_fd_stdin->sizeof_elem);
+          if (!(fd_dup = malloc(sizeof(int))))
+          {
+            return (EXIT_FAILURE);
+          }
+          *fd_dup = *fd_tmp;
+          ft_arr_push(&tab_fd_stderr, fd_dup, -1);
+          index++;
+        }
+      }
+      else if (cmd[i] == STDIN_STDERR_REDIRECT || cmd[i] == STDERR_REDIRECT || cmd[i] == D_STDERR_REDIRECT)
+      {
+        ft_arr_push(&tab_fd_stderr, fd, -1);
         if (cmd[i] == STDIN_STDERR_REDIRECT)
         {
           fd_err = malloc(sizeof(int));
           *fd_err = *fd;
           ft_arr_push(&tab_fd_stdin, fd_err, -1);
         }
-        else
-        {
-          ft_arr_push(&tab_fd_stdin, fd, -1);
-        }
+      }
+      else if (cmd[i] == S_RIGHT_REDIRECT || cmd[i] == D_RIGHT_REDIRECT)
+      {
+        ft_arr_push(&tab_fd_stdin, fd, -1);
       }
       cmd[i] = SPACE_SEPARATOR;
     }
     i++;
   }
-  i = 0;
+  // i = 0;
   // while (i < (int)tab_fd_stdin->length)
   // {
   //   fd = *(int **)((unsigned char *)tab_fd_stdin->ptr + i * tab_fd_stdin->sizeof_elem);
@@ -286,6 +327,8 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr *env, char *path, int nb_
   char *path_tmp;
   bool builtin;
   char **envp;
+  int tube_fork_stdin_tmp[2];
+  int tube_fork_stderr_tmp[2];
   int tube_fork_stdin[2];
   int tube_fork_stderr[2];
   char *buff;
@@ -313,6 +356,10 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr *env, char *path, int nb_
       close(tube_fork_stdin[1]);
       close(tube_fork_stderr[0]);
       close(tube_fork_stderr[1]);
+      close(tube_fork_stdin_tmp[0]);
+      close(tube_fork_stdin_tmp[1]);
+      close(tube_fork_stderr_tmp[0]);
+      close(tube_fork_stderr_tmp[1]);
     }
     pipe(tube_fork_stdin);
     pipe(tube_fork_stderr);
@@ -323,7 +370,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr *env, char *path, int nb_
       return (EXIT_FAILURE);
     }
 
-    if (!(tab_cmd = ft_strsplit(cmd[i], SPACE_SEPARATOR)))
+    if (!(tab_cmd = ft_strsplit(cmd[i], SPACE_SEPARATOR)) && !tab_cmd[1])
     {
       break;
       // return (EXIT_FAILURE);
@@ -370,6 +417,8 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr *env, char *path, int nb_
 
       close(tube_fork_stderr[0]);
       dup2(tube_fork_stderr[1], 2);
+
+
       // }
       if (builtin)
       {
@@ -388,7 +437,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr *env, char *path, int nb_
       close(tube_fork_stdin[1]);
       close(tube_fork_stderr[1]);
       buff = ft_strnew(1);
-      while ((rd = read(tube_fork_stdin[0], buff, 1)) )
+      while ((rd = read(tube_fork_stdin[0], buff, 1)))
       {
         if (rd < 0)
           break;

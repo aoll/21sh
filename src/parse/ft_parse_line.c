@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/29 09:31:13 by alex              #+#    #+#             */
-/*   Updated: 2017/01/04 16:30:12 by alex             ###   ########.fr       */
+/*   Updated: 2017/01/05 11:31:29 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -507,7 +507,7 @@ int  ft_parse_replace_sdterr_redirect(t_arr *arr)
         s_prev_line = *(char **)((unsigned char *)arr->ptr + (index - 1) * arr->sizeof_elem);
         if (*s_prev_line == '2')
         {
-          ft_putstr("\nstder redirect\n");
+          
           if (index - 2 < 0)
           {
             *s_prev_line = ' ';
