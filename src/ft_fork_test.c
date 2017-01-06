@@ -505,7 +505,16 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr *env, char *path, int nb_
     }
     else if (pid)
     {
-
+      index = 0;
+      while (cmd[i][index])
+      {
+        if (cmd[i][index] == D_LEFT_REDIRECT)
+        {
+          buff = ft_strnew(1);
+          read(0, buff, 1);
+        }
+        index++;
+      }
 
       if (tab_fd_stdin->length)
       {
