@@ -187,7 +187,7 @@ t_arr *ft_parse_line(t_arr *arr);
  * fork test
  */
  #include <fcntl.h>
-int  ft_fork_test(t_arr *env, t_arr *tab_cmds);
+int  ft_fork_test(t_arr *env, t_arr *tab_cmds, char **envp);
 
 void  ft_read_line(char **env);
 

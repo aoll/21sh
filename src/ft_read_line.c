@@ -2,6 +2,58 @@
 
 #include <signal.h>
 
+
+static int  ft_get_term(struct termios *term)
+{
+  char *name_terminal;
+
+  if (!(name_terminal = getenv("TERM"))) //retour le nom du terminal
+    return (EXIT_FAILURE);
+  if (tgetent(NULL, name_terminal) != 1) //check if name_terminal exist and if
+    return (EXIT_FAILURE);            //the terminfo databbase could be found
+  if (tcgetattr(0, term) == -1) // rempli la struct termios avec les
+    return (EXIT_FAILURE);       // possibilités du terminal
+  return (EXIT_SUCCESS);
+}
+int  ft_init_terminal(void)
+{
+  struct termios term;
+
+  if (ft_get_term(&term))
+    return (EXIT_FAILURE);
+
+  term.c_lflag &= ~(ICANON);
+  term.c_lflag &= ~(ECHO);
+  // term.c_cc[VMIN] = 0;
+  // term.c_cc[VTIME] = 1;
+
+
+  if (tcsetattr(0, TCSADRAIN, &term) == -1)
+  {
+    return (EXIT_FAILURE);
+  }
+  return (EXIT_SUCCESS);
+}
+
+int  ft_get_term_restore(struct termios *term)
+{
+  char *name_terminal;
+
+  // if (!(name_terminal = getenv("TERM"))) //retour le nom du terminal
+  //   return (EXIT_FAILURE);
+  // if (tgetent(NULL, name_terminal) != 1) //check if name_terminal exist and if
+  //   return (EXIT_FAILURE);            //the terminfo databbase could be found
+  // if (tcgetattr(0, term) == -1) // rempli la struct termios avec les
+  //    return (EXIT_FAILURE);       // possibilités du terminal
+  ft_putstr("\ncoucou\n");
+  term->c_lflag |= ICANON;
+  term->c_lflag |=  ECHO;
+  if (tcsetattr(0, 0, term) == -1)
+    return (-1);
+  ft_putstr("\ncoucou 2\n");
+  return (EXIT_SUCCESS);
+}
+
 /*
 ** function for print some char * was stocked in a t_arr like elem
 ** is give for arr->f_print, print some elem
@@ -159,6 +211,8 @@ int  ft_init_cursor_position(t_cursor *cursor)
 }
 
 
+
+
 int  read_stdin(char **envp)
 {
   t_cursor cursor;
@@ -177,7 +231,17 @@ int  read_stdin(char **envp)
   t_arr *current_line_free;
   t_arr *tab_cmds;
   t_arr *env;
+  struct termios term;
 
+  if (ft_get_term(&term))
+    return (EXIT_FAILURE);
+
+  term.c_lflag &= ~(ICANON);
+  term.c_lflag &= ~(ECHO);
+  if (tcsetattr(0, TCSADRAIN, &term) == -1)
+  {
+    return (EXIT_FAILURE);
+  }
 
   env = ft_env_init(envp);
   history_line = ft_arr_new(1, sizeof(t_arr *));
@@ -330,7 +394,9 @@ int  read_stdin(char **envp)
         free(buff);
         buff = NULL;
         ft_putchar('\n');
-
+        ft_term_apply_cmd(cursor.mode_insertion_end, 1);
+        if (ft_get_term_restore(&term))
+          return (EXIT_FAILURE);
         return (EXIT_SUCCESS);
       }
 
@@ -361,6 +427,12 @@ int  read_stdin(char **envp)
         // ft_putnbr(cursor.y_start);
         // ft_putstr("\n");
         //
+        // char **arg;
+        //
+        // arg = malloc(sizeof(char *) * 2);
+        // arg[0] = ft_strdup("emacs");
+        // arg[1] = NULL;
+        // execve("/usr/bin/emacs", arg, envp);
         tab_cmds = NULL;
         ft_cursor_end(&cursor, arr);
         if (tab_cmds)
@@ -370,9 +442,20 @@ int  read_stdin(char **envp)
         tab_cmds = ft_parse_line(arr);
         if (tab_cmds)
         {
+          ft_term_apply_cmd(cursor.mode_insertion_end, 1);
+          if (ft_get_term_restore(&term))
+            return (EXIT_FAILURE);
           ft_putstr("\n");
-          ft_fork_test(env, tab_cmds);
-          // ft_putstr("\n");
+          ft_fork_test(env, tab_cmds, envp);
+          ft_term_apply_cmd(cursor.mode_insertion, 1);
+          term.c_lflag &= ~(ICANON);
+          term.c_lflag &= ~(ECHO);
+          if (tcsetattr(0, TCSADRAIN, &term) == -1)
+          {
+            return (EXIT_FAILURE);
+          }
+          // ft_init_terminal();
+          ft_putstr("\n");
         }
         else
         {
@@ -470,65 +553,16 @@ int  read_stdin(char **envp)
   return (EXIT_SUCCESS);
 }
 
-int  ft_get_term(struct termios *term)
-{
-  char *name_terminal;
-
-  if (!(name_terminal = getenv("TERM"))) //retour le nom du terminal
-    return (EXIT_FAILURE);
-  if (tgetent(NULL, name_terminal) != 1) //check if name_terminal exist and if
-    return (EXIT_FAILURE);            //the terminfo databbase could be found
-  if (tcgetattr(0, term) == -1) // rempli la struct termios avec les
-    return (EXIT_FAILURE);       // possibilités du terminal
-  return (EXIT_SUCCESS);
-}
-int  ft_init_terminal(void)
-{
-  struct termios term;
-  // struct termios term_save; // la copier au debut pour une restauration futur
-
-  if (ft_get_term(&term))
-    return (EXIT_FAILURE);
-
-  term.c_lflag &= ~(ICANON);
-  term.c_lflag &= ~(ECHO);
-  term.c_cc[VMIN] = 0;
-  term.c_cc[VTIME] = 1;
 
 
-  if (tcsetattr(0, TCSADRAIN, &term) == -1)
-  {
-    return (EXIT_FAILURE);
-  }
-  return (EXIT_SUCCESS);
-}
 
-void  edit_cursor(t_cursor *cursor)
-{
-  cursor->pos_x = 42;
-  return;
-}
-
-void  test_struc(void)
-{
-  t_cursor cursor;
-
-  cursor.pos_x = 1;
-  ft_putstr("init: \n"); ft_putnbr(cursor.pos_x); ft_putstr("\n");
-
-  edit_cursor(&cursor);
-
-  ft_putstr("after edit: \n"); ft_putnbr(cursor.pos_x); ft_putstr("\n");
-
-  return;
-}
 
 
 
 void  ft_loop(char **env)
 {
 
-  ft_init_terminal();
+  // ft_init_terminal();
 
   read_stdin(env);
   return;
