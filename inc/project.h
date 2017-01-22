@@ -13,7 +13,8 @@
 #include <term.h>
 #include <curses.h>
 #include <signal.h>
-#include <sys/ioctl.h>
+#include <sys/stat.h>
+
 
 /**
  * DEFINE

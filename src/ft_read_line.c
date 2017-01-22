@@ -45,12 +45,10 @@ int  ft_get_term_restore(struct termios *term)
   //   return (EXIT_FAILURE);            //the terminfo databbase could be found
   // if (tcgetattr(0, term) == -1) // rempli la struct termios avec les
   //    return (EXIT_FAILURE);       // possibilités du terminal
-  ft_putstr("\ncoucou\n");
   term->c_lflag |= ICANON;
   term->c_lflag |=  ECHO;
   if (tcsetattr(0, 0, term) == -1)
     return (-1);
-  ft_putstr("\ncoucou 2\n");
   return (EXIT_SUCCESS);
 }
 
@@ -455,7 +453,7 @@ int  read_stdin(char **envp)
             return (EXIT_FAILURE);
           }
           // ft_init_terminal();
-          ft_putstr("\n");
+          // ft_putstr("\n");
         }
         else
         {
