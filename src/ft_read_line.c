@@ -444,7 +444,7 @@ int  read_stdin(char **envp)
           if (ft_get_term_restore(&term))
             return (EXIT_FAILURE);
           ft_putstr("\n");
-          ft_fork_test(env, tab_cmds, envp);
+          ft_fork_test(&env, tab_cmds, envp);
           ft_term_apply_cmd(cursor.mode_insertion, 1);
           term.c_lflag &= ~(ICANON);
           term.c_lflag &= ~(ECHO);
