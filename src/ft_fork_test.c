@@ -79,7 +79,7 @@ char  **ft_fork_env_arr_to_tab_str(t_arr *envp)
   return (env);
 }
 
-int  ft_son(char *path_cmd, char **tab_cmd, char **envp,char **env_init)
+int  ft_son(char *path_cmd, char **tab_cmd, char **envp)
 {
   // struct termios term;
   //
@@ -424,7 +424,7 @@ int  ft_fork_list_d_end_word(char **command, t_arr *tab_d_end_word)
   return (EXIT_SUCCESS);
 }
 
-int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb_pipe, char **env_init)
+int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb_pipe)
 {
   int i;
   pid_t pid;
@@ -457,12 +457,17 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb
   char *line;
   char *end_word;
   int index_end_word;
+  int index_path;
+  t_kval *kval;
+  t_arr *env_ptr;
+  char *path_ptr;
 
 
   tab_d_end_word = ft_arr_new(1, sizeof(char *));
   tab_fd_stdout = ft_arr_new(1, sizeof(int *));
   tab_fd_stderr = ft_arr_new(1, sizeof(int *));
   tab_fd_stdin = ft_arr_new(1, sizeof(int *));
+  // tab_path = ft_strsplit(path, ':');
   tab_path = ft_strsplit(path, ':');
   i = 0;
   // ft_putstr("\ncmd:");
@@ -512,29 +517,29 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb
     {
       index_builtin = ft_is_builtin(tab_cmd[0]);
     }
-    envp = ft_fork_env_arr_to_tab_str(*env);
-    if (!index_builtin && *tab_cmd)
-    {
-      // TODO segfault si !tab_cmd[0]
-      index = 0;
-      path_tmp = ft_strdup(tab_cmd[0]);
-      while (tab_path[index] && (err = access(path_tmp, F_OK)) )
-      {
-        path_tmp = ft_strjoin(tab_path[index], "/");
-        path_tmp = ft_strjoin(path_tmp, tab_cmd[0]);
-        index++;
-      }
-
-    }
-    if (err && !index_builtin)
-    {
-
-      ft_putstr("21sh: command not found: ");
-      ft_putstr(tab_cmd[0]);
-      ft_putstr("\n");
-      i++;
-      continue;
-    }
+    // envp = ft_fork_env_arr_to_tab_str(*env);
+    // if (!index_builtin && *tab_cmd)
+    // {
+    //   // TODO segfault si !tab_cmd[0]
+    //   index = 0;
+    //   path_tmp = ft_strdup(tab_cmd[0]);
+    //   while (tab_path[index] && (err = access(path_tmp, F_OK)) )
+    //   {
+    //     path_tmp = ft_strjoin(tab_path[index], "/");
+    //     path_tmp = ft_strjoin(path_tmp, tab_cmd[0]);
+    //     index++;
+    //   }
+    //
+    // }
+    // if (err && !index_builtin)
+    // {
+    //
+    //   ft_putstr("21sh: command not found: ");
+    //   ft_putstr(tab_cmd[0]);
+    //   ft_putstr("\n");
+    //   i++;
+    //   continue;
+    // }
 
     if ((pid = create_process()) == -1)
     {
@@ -558,15 +563,62 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb
 
 
 
-      // if (index_builtin)
+      if (index_builtin == B_ENV)
+      {
+        index_builtin = ft_builtin_env(&tab_cmd, env, tube_fork_stdout_tmp[1], tube_fork_stderr_tmp[1]);
+
+      }
+      // ft_putstr("\n .0. :");
+      // ft_putstr(tab_cmd[0]);
+      // ft_putstr("\n");
+      envp = ft_fork_env_arr_to_tab_str(*env);
+      if (!index_builtin && *tab_cmd)
+      {
+        index_path = ft_arr_indexof(*env, "PATH");
+        env_ptr = *env;
+        if (index_path > 0 & index_path < (int)env_ptr->length)
+        {
+          // ft_putstr("21sh: no path: ");
+          // ft_putstr(*tab_cmd);
+          // ft_putstr("\n");
+          // exit(EXIT_SUCCESS);
+          kval = *(t_kval **)((unsigned char *)env_ptr->ptr + index_path *env_ptr->sizeof_elem);
+          path_ptr = kval->value;
+        }
+        else
+        {
+          path_ptr = ft_strnew(0);
+        }
+        tab_path = ft_strsplit(path_ptr, ':');
+        // TODO segfault si !tab_cmd[0]
+        index = 0;
+        path_tmp = ft_strdup(*tab_cmd);
+        while (tab_path[index] && (err = access(path_tmp, F_OK)) )
+        {
+          path_tmp = ft_strjoin(tab_path[index], "/");
+          path_tmp = ft_strjoin(path_tmp, *tab_cmd);
+          index++;
+        }
+
+      }
+      // if (err && !index_builtin)
       // {
-      //   ft_builtin_exec(index_builtin, tab_cmd, env);
       //
+      //   ft_putstr("21sh: command not found: ");
+      //   ft_putstr(*tab_cmd);
+      //   ft_putstr("\n");
+      //   i++;
       // }
       // else if (!err && *tab_cmd)
       if (!index_builtin && !err && *tab_cmd) // ?? index_builtin pour env
       {
-        ft_son(path_tmp, tab_cmd, envp, env_init);
+        ft_son(path_tmp, tab_cmd, envp);
+      }
+      if (!index_builtin)
+      {
+        ft_putstr("21sh: command not found: ");
+        ft_putstr(*tab_cmd);
+        ft_putstr("\n");
       }
       exit(EXIT_SUCCESS);
     }
@@ -664,7 +716,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb
 
 
 
-      if (index_builtin)
+      if (index_builtin > B_ENV)
       {
         ft_builtin_exec(index_builtin, tab_cmd, env, tube_fork_stdout_tmp[1], tube_fork_stderr_tmp[1]);
       }
@@ -833,7 +885,7 @@ char*  ft_fork_str_from_arr(t_arr *arr)
  * split the command line with the PIPE
  * create a array of tube[2]
  */
-int  ft_fork_split_pipe(char *str, int nb_pipe, t_arr **env_ptr, char **envp)
+int  ft_fork_split_pipe(char *str, int nb_pipe, t_arr **env_ptr)
 {
   char **cmds;
   struct t_tube *tab_tube;
@@ -871,7 +923,7 @@ int  ft_fork_split_pipe(char *str, int nb_pipe, t_arr **env_ptr, char **envp)
   {
     return (EXIT_FAILURE);
   }
-  ft_fork(cmds, tab_tube, env_ptr, path, nb_pipe, envp);
+  ft_fork(cmds, tab_tube, env_ptr, path, nb_pipe);
 
   return (EXIT_SUCCESS);
 }
@@ -894,7 +946,7 @@ int  ft_fork_test(t_arr **env, t_arr *tab_cmds, char **envp)
     cmd = *(t_arr **)((unsigned char *)tab_cmds->ptr + index * tab_cmds->sizeof_elem);
     nb_pipe = ft_fork_nb_pipe(cmd);
     cmd_str = ft_fork_str_from_arr(cmd);
-    ft_fork_split_pipe(cmd_str, nb_pipe, env, envp);
+    ft_fork_split_pipe(cmd_str, nb_pipe, env);
 
     index++;
   }

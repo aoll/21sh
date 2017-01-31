@@ -11,10 +11,10 @@ int  ft_builtin_exec(
   {
     return (EXIT_FAILURE);
   }
-  else if (index_builtin == B_ENV)
-  {
-    ft_builtin_env(tab_cmd, env, fd_stdout, fd_stderr);
-  }
+  // else if (index_builtin == B_ENV)
+  // {
+  //   ft_builtin_env(tab_cmd, env, fd_stdout, fd_stderr);
+  // }
   else if (index_builtin == B_SETENV)
   {
     ft_builtin_setenv((const char **)tab_cmd, env, fd_stderr);
