@@ -35,7 +35,14 @@
 #define STDERR_REDIRECT       -9
 #define D_STDERR_REDIRECT     -10
 
+#define B_ENV                   1
+#define B_SETENV                2
+#define B_UNSETENV              3
+#define B_CD                    4
+#define B_ECHO                  5
+#define B_EXIT                  6
 
+#define HOME                    "/home/alex"
 /**
  * STRUCT
  */
@@ -188,7 +195,20 @@ t_arr *ft_parse_line(t_arr *arr);
  * fork test
  */
  #include <fcntl.h>
-int  ft_fork_test(t_arr *env, t_arr *tab_cmds, char **envp);
+int  ft_fork_test(t_arr **env, t_arr *tab_cmds, char **envp);
+
+/**
+ * builtin
+ */
+int  ft_is_builtin(char *command);
+int  ft_builtin_exec(int index_builtin,char **tab_cmd, t_arr **env, int fd_stdout, int fd_stderr);
+int  ft_builtin_env(char **tab_cmd, t_arr **env, int fd_stdout, int fd_stderr);
+int  ft_builtin_setenv(const char **tab_cmd, t_arr **env, int fd_stderr);
+int  ft_builtin_unsetenv(const char **tab_cmd, t_arr **env, int fd_stderr);
+int  ft_builtin_cd(const char **tab_cmd, t_arr **env, int fd_stderr);
+int  ft_builtin_echo(const char **tab_cmd, t_arr **env);
+int  ft_builtin_exit(char **tab_cmd, t_arr **env);
+int  ft_builtin_setenv_check_argument(const char ** tab_cmd, char *cmd, int fd_stderr);
 
 void  ft_read_line(char **env);
 
