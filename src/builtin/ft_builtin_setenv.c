@@ -6,19 +6,19 @@
  * return if no error 0 and 1 if error
  */
 static int  ft_builtin_setenv_set_name_value(
-  const char *s, char **name, char **value)
+  const char *s, char **name, char **value, int fd_stderr)
 {
   int index;
 
   index = ft_indexof_first_char(s, '=');
   if (index <= 0)
   {
-    ft_putstr("21sh: setenv bad argument\n");
+    ft_putstr_fd("21sh: setenv bad argument\n", fd_stderr);
     return (EXIT_FAILURE);
   }
   if (!(*name = ft_strsub(s, 0, index)))
   {
-    ft_putstr("21sh: error malloc\n");
+    ft_putstr_fd("21sh: error malloc\n", fd_stderr);
     return (EXIT_FAILURE);
   }
   if (index + 1 < (int)ft_strlen(s))
@@ -26,7 +26,7 @@ static int  ft_builtin_setenv_set_name_value(
     if (!(*value = ft_strsub(s, index + 1, ft_strlen(s) - index + 1)))
     {
       free(*name);
-      ft_putstr("21sh: error malloc\n");
+      ft_putstr_fd("21sh: error malloc\n", fd_stderr);
       return (EXIT_FAILURE);
     }
   }
@@ -136,7 +136,7 @@ int  ft_free_name_value(char **name, char **value)
  * 0 if succes
  * 1 if error
  */
-int  ft_builtin_setenv(const char **tab_cmd, t_arr **env)
+int  ft_builtin_setenv(const char **tab_cmd, t_arr **env, int fd_stderr)
 {
   int err;
   char *name;
@@ -144,12 +144,12 @@ int  ft_builtin_setenv(const char **tab_cmd, t_arr **env)
 
   name = NULL;
   value = NULL;
-  if ((err = ft_builtin_setenv_check_argument(tab_cmd, "setenv")))
+  if ((err = ft_builtin_setenv_check_argument(tab_cmd, "setenv", fd_stderr)))
   {
     return (EXIT_FAILURE);
   }
   if ((err = ft_builtin_setenv_set_name_value(
-    (const char *)tab_cmd[1], &name, &value)))
+    (const char *)tab_cmd[1], &name, &value, fd_stderr)))
   {
     return (EXIT_FAILURE);
   }
@@ -157,7 +157,7 @@ int  ft_builtin_setenv(const char **tab_cmd, t_arr **env)
     env, (const char *)name, (const char *)value)))
   {
     ft_free_name_value(&name, &value);
-    ft_putstr("21sh: error malloc\n");
+    ft_putstr_fd("21sh: error malloc\n", fd_stderr);
     return (EXIT_FAILURE);
   }
   ft_free_name_value(&name, &value);

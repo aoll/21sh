@@ -664,13 +664,13 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb
 
 
 
+      if (index_builtin)
+      {
+        ft_builtin_exec(index_builtin, tab_cmd, env, tube_fork_stdout_tmp[1], tube_fork_stderr_tmp[1]);
+      }
 
       wait(&status);
 
-      if (index_builtin)
-      {
-        ft_builtin_exec(index_builtin, tab_cmd, env);
-      }
 
 
       close(tube_fork_stdout_tmp[1]);

@@ -27,14 +27,14 @@ int  ft_builtin_unsetenv_pop_key(t_arr **env, int index)
  * if the var is present in the env it will be delete else sucess is returned
  * and the env stay the same
  */
-int  ft_builtin_unsetenv(const char **tab_cmd, t_arr **env)
+int  ft_builtin_unsetenv(const char **tab_cmd, t_arr **env, int fd_stderr)
 {
   int err;
   int index;
   t_arr *envp;
 
   envp = *env;
-  if ((err = ft_builtin_setenv_check_argument(tab_cmd, "unsetenv")))
+  if ((err = ft_builtin_setenv_check_argument(tab_cmd, "unsetenv", fd_stderr)))
   {
     return (EXIT_FAILURE);
   }
