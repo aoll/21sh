@@ -112,6 +112,8 @@ struct  s_token
 /**
  * Action to the terminal with termcaps
  */
+int  ft_get_term_restore(struct termios *term);
+
 int  ft_cursor_move_x(int new_pos_x, char *cmd);
 int  ft_term_apply_cmd(char *cmd, int n);
 int  ft_terminal_winsize(struct winsize *terminal_size);
@@ -136,9 +138,16 @@ int  ft_clear_down(void);
  */
  void  *ft_arr_strdup(const void *s, size_t n);
  void  ft_arr_putchar(const void *s);
+
+ /**
+  * Functions for read the key
+  */
+  int  ft_read_parse(const char *buff, t_cursor *cursor, t_arr **arr_ptr, t_arr *history_line, t_arr *current_line, t_arr *select_line, t_arr *copy_line);
+  int  ft_read_parse_eof(char **buff, t_cursor *cursor, t_arr *arr, t_arr *history_line, t_arr *current_line, t_arr *copy_line, t_arr *select_line, struct termios *term, t_arr *env);
 /**
  * Action on the cursor
  */
+int  ft_free_cursor(t_cursor *cursor);
 int  ft_cursor_left(t_cursor *cursor, t_arr *arr);
 int  ft_cursor_right(t_cursor *cursor, t_arr *arr);
 int  ft_cursor_word_left(t_cursor *cursor, t_arr *arr);

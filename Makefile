@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/01/28 11:17:38 by alex             ###   ########.fr        #
+#    Updated: 2017/02/01 17:37:18 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,9 @@ DEBUG=yes
 CC=clang
 
 ifeq ($(DEBUG), yes)
-				CFLAGS= -Wall -Wextra -Wno-unused-variable -Wno-unused-parameter # -g -fsanitize=address,undefined # -g -ansi -pedantic
+				CFLAGS= -Wall -Wextra -Wno-unused-variable -Wno-unused-parameter -O1 -g #-fsanitize=address -fno-omit-frame-pointer # -g -fsanitize=address,undefined # -g -ansi -pedantic
 else
-		CFLAGS= -Wall -Wextra -Werror
+		CFLAGS= -Wall -Wextra -Werror -O1 -g #-fsanitize=address -fno-omit-frame-pointer
 endif
 
 
@@ -54,6 +54,8 @@ C_TERM= ft_sup_char.c \
   			ft_clear_down.c \
 				my_putchar.c \
 				ft_terminal_winsize.c
+
+C_READ= ft_read_parse.c
 
 C_CURSOR= ft_cursor_left.c \
 					ft_cursor_right.c \
@@ -103,13 +105,14 @@ else
 endif
 
 # VPATH= src
-VPATH= src:test_project/test_file/src:src/terminal:src/cursor:src/parse:src/builtin
+VPATH= src:test_project/test_file/src:src/terminal:src/cursor:src/parse:src/builtin:src/read
 # VPATH= src/str:src/put:src/int:src/mem:src/char:src/file:src/lst
 
 
 OBJS= $(MC_SRC:%.c=$(O_DIR)/%.o) $(ST_SRC:%.c=$(O_DIR)/%.o) \
 			$(C_TERM:%.c=$(O_DIR)/%.o) $(C_CURSOR:%.c=$(O_DIR)/%.o) \
-			$(C_PARSE:%.c=$(O_DIR)/%.o) $(C_BUILTIN:%.c=$(O_DIR)/%.o)
+			$(C_PARSE:%.c=$(O_DIR)/%.o) $(C_BUILTIN:%.c=$(O_DIR)/%.o) \
+			$(C_READ:%.c=$(O_DIR)/%.o)
 
 
 
