@@ -429,11 +429,6 @@ int  read_stdin(char **envp)
           free(line);
           line = NULL;
         }
-        if (tab_cmds)
-        {
-          ft_arr_free(tab_cmds);
-          //TODO free tab_cmds
-        }
         tab_cmds = ft_parse_line(arr);
         if (tab_cmds)
         {
@@ -446,6 +441,8 @@ int  read_stdin(char **envp)
         if (tab_cmds)
         {
           ft_arr_free(tab_cmds);
+          
+          tab_cmds = NULL;
           //TODO free tab_cmds
         }
         ft_putstr(cursor.prompt);
