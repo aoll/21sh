@@ -268,22 +268,23 @@ int  read_stdin(char **envp)
   struct termios term;
   char *line;
 
-  if (ft_get_term(&term))
-  {
-    cursor.is_env = false;
-  }
-  else
-  {
-    cursor.is_env = true;
-    term.c_lflag &= ~(ICANON);
-    term.c_lflag &= ~(ECHO);
-    if (tcsetattr(0, TCSADRAIN, &term) == -1)
-    {
-      return (EXIT_FAILURE);
-    }
-
-    ft_init_cursor_cmd(&cursor);
-  }
+  cursor.is_env = false;
+  // if (ft_get_term(&term))
+  // {
+  //   cursor.is_env = false;
+  // }
+  // else
+  // {
+  //   cursor.is_env = true;
+  //   term.c_lflag &= ~(ICANON);
+  //   term.c_lflag &= ~(ECHO);
+  //   if (tcsetattr(0, TCSADRAIN, &term) == -1)
+  //   {
+  //     return (EXIT_FAILURE);
+  //   }
+  //
+  //   ft_init_cursor_cmd(&cursor);
+  // }
 
 
   env = ft_env_init(envp);
@@ -341,14 +342,13 @@ int  read_stdin(char **envp)
           ft_bzero(buff, 8);
           continue;
         }
-        else if (!(ft_read_parse_eof(&buff, &cursor, arr, history_line, current_line, copy_line, select_line, &term, env)))
+        else if (!(ft_read_parse_eof(&buff, &cursor, arr, history_line, current_line, copy_line, select_line, &term, env, false)))
         {
           return (EXIT_SUCCESS);
         }
         //enter
         else if (!cursor.dquote && !cursor.quote && buff[0] == 10 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6]  && !buff[7])
         {
-          ft_putstr("\nenter\n");
           /**
           * next step push arr dans arr :p :p
           * and not free actual but only a new
@@ -415,7 +415,8 @@ int  read_stdin(char **envp)
     }
     else
     {
-      line = ft_strnew(BUFF_SIZE);
+      // line = ft_strnew(BUFF_SIZE);
+      line = NULL;
       if (get_next_line(0, &line))
       {
         while (arr->length)
@@ -423,8 +424,14 @@ int  read_stdin(char **envp)
           free(ft_arr_pop(&arr, 0));
         }
         ft_arr_str(arr, line);
+        if (line)
+        {
+          free(line);
+          line = NULL;
+        }
         if (tab_cmds)
         {
+          ft_arr_free(tab_cmds);
           //TODO free tab_cmds
         }
         tab_cmds = ft_parse_line(arr);
@@ -436,6 +443,11 @@ int  read_stdin(char **envp)
         {
           ft_putstr("\n");
         }
+        if (tab_cmds)
+        {
+          ft_arr_free(tab_cmds);
+          //TODO free tab_cmds
+        }
         ft_putstr(cursor.prompt);
 
       }
@@ -444,12 +456,18 @@ int  read_stdin(char **envp)
         if (line)
         {
           free(line);
+          line = NULL;
+        }
+        if (!(ft_read_parse_eof(&buff, &cursor, arr, history_line, current_line, copy_line, select_line, &term, env, true)))
+        {
+          return (EXIT_SUCCESS);
         }
         return (EXIT_SUCCESS);
       }
       if (line)
       {
         free(line);
+        line = NULL;
       }
     }
   }

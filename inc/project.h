@@ -145,7 +145,7 @@ int  ft_clear_down(void);
   * Functions for read the key
   */
   int  ft_read_parse(const char *buff, t_cursor *cursor, t_arr **arr_ptr, t_arr *history_line, t_arr *current_line, t_arr *select_line, t_arr *copy_line);
-  int  ft_read_parse_eof(char **buff, t_cursor *cursor, t_arr *arr, t_arr *history_line, t_arr *current_line, t_arr *copy_line, t_arr *select_line, struct termios *term, t_arr *env);
+  int  ft_read_parse_eof(char **buff, t_cursor *cursor, t_arr *arr, t_arr *history_line, t_arr *current_line, t_arr *copy_line, t_arr *select_line, struct termios *term, t_arr *env, bool option);
 /**
  * Action on the cursor
  */

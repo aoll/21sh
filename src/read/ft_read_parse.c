@@ -207,7 +207,7 @@ int  ft_read_parse_del_or_suppr(const char *buff, t_cursor *cursor, t_arr *arr)
  */
 int  ft_read_parse_eof(char **buff, t_cursor *cursor,
   t_arr *arr, t_arr *history_line, t_arr *current_line,
-  t_arr *copy_line, t_arr *select_line, struct termios *term, t_arr *env)
+  t_arr *copy_line, t_arr *select_line, struct termios *term, t_arr *env, bool option)
 {
   char *buff_ptr;
   int index_history_free;
@@ -215,8 +215,8 @@ int  ft_read_parse_eof(char **buff, t_cursor *cursor,
   t_arr *current_line_free;
 
   buff_ptr = *buff;
-  if (buff_ptr[0] == 4 && !buff_ptr[1] && !buff_ptr[2] && !buff_ptr[3]
-    && !buff_ptr[4] && !buff_ptr[5] && !buff_ptr[6] && !buff_ptr[7])
+  if ((buff_ptr[0] == 4 && !buff_ptr[1] && !buff_ptr[2] && !buff_ptr[3]
+    && !buff_ptr[4] && !buff_ptr[5] && !buff_ptr[6] && !buff_ptr[7]) || option)
   {
     // si une ligne de commande est en cours exec ligne; ft_putstr("$> ");
     ft_free_cursor(cursor);
@@ -248,9 +248,12 @@ int  ft_read_parse_eof(char **buff, t_cursor *cursor,
     free(*buff);
     *buff = NULL;
     ft_putchar('\n');
-    ft_term_apply_cmd(cursor->mode_insertion_end, 1);
-    if (ft_get_term_restore(term))
+    if (cursor->is_env)
+    {
+      ft_term_apply_cmd(cursor->mode_insertion_end, 1);
+      if (ft_get_term_restore(term))
       return (EXIT_SUCCESS);
+    }
     return (EXIT_SUCCESS);
   }
   return (EXIT_FAILURE);
