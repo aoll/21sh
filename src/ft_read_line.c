@@ -266,16 +266,25 @@ int  read_stdin(char **envp)
   t_arr *tab_cmds;
   t_arr *env;
   struct termios term;
+  char *line;
 
   if (ft_get_term(&term))
-    return (EXIT_FAILURE);
-
-  term.c_lflag &= ~(ICANON);
-  term.c_lflag &= ~(ECHO);
-  if (tcsetattr(0, TCSADRAIN, &term) == -1)
   {
-    return (EXIT_FAILURE);
+    cursor.is_env = false;
   }
+  else
+  {
+    cursor.is_env = true;
+    term.c_lflag &= ~(ICANON);
+    term.c_lflag &= ~(ECHO);
+    if (tcsetattr(0, TCSADRAIN, &term) == -1)
+    {
+      return (EXIT_FAILURE);
+    }
+
+    ft_init_cursor_cmd(&cursor);
+  }
+
 
   env = ft_env_init(envp);
   history_line = ft_arr_new(1, sizeof(t_arr *));
@@ -288,7 +297,6 @@ int  read_stdin(char **envp)
 
 
   ft_init_cursor_position(&cursor);
-  ft_init_cursor_cmd(&cursor);
   //chaque apel a malloc doit etre proteger soit dit au passage!!!
   ft_terminal_winsize(&(cursor.terminal_size)); // a checker le retour
   ft_putnbr(cursor.terminal_size.ws_col);
@@ -318,33 +326,103 @@ int  read_stdin(char **envp)
     {
       ft_cursor_resize(&cursor, arr, &terminal_size_old);
     }
-    if ((rd = read(0, buff, 8)) > 0)
+    if (cursor.is_env)
     {
-      // ft_print_key(buff);
-      // continue;
-      cursor.is_select = false;
-      // cursor.prompt_len = ft_strlen(cursor.prompt); // maybe one function with the adress of promt a the change is do it only if a change has be do it an not a check every loop
-
-      if (!(ft_read_parse((const char *)buff, &cursor, &arr, history_line, current_line, select_line, copy_line)))
+      if ((rd = read(0, buff, 8)) > 0)
       {
+        // ft_print_key(buff);
+        // continue;
+        cursor.is_select = false;
+        // cursor.prompt_len = ft_strlen(cursor.prompt); // maybe one function with the adress of promt a the change is do it only if a change has be do it an not a check every loop
+
+
+        if (!(ft_read_parse((const char *)buff, &cursor, &arr, history_line, current_line, select_line, copy_line)))
+        {
+          ft_bzero(buff, 8);
+          continue;
+        }
+        else if (!(ft_read_parse_eof(&buff, &cursor, arr, history_line, current_line, copy_line, select_line, &term, env)))
+        {
+          return (EXIT_SUCCESS);
+        }
+        //enter
+        else if (!cursor.dquote && !cursor.quote && buff[0] == 10 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6]  && !buff[7])
+        {
+          ft_putstr("\nenter\n");
+          /**
+          * next step push arr dans arr :p :p
+          * and not free actual but only a new
+          * and maybe , yes only maybe exec the line ??
+          */
+          // tab_cmds = NULL;
+          if (cursor.is_env)
+          {
+            ft_cursor_end(&cursor, arr);
+          }
+          if (tab_cmds)
+          {
+            //TODO free tab_cmds
+          }
+          tab_cmds = ft_parse_line(arr);
+          if (tab_cmds)
+          {
+            if (cursor.is_env)
+            {
+              ft_term_apply_cmd(cursor.mode_insertion_end, 1);
+              if (ft_get_term_restore(&term))
+              return (EXIT_FAILURE);
+            }
+            ft_putstr("\n");
+            ft_fork_test(&env, tab_cmds);
+            if (cursor.is_env)
+            {
+              ft_term_apply_cmd(cursor.mode_insertion, 1);
+              term.c_lflag &= ~(ICANON);
+              term.c_lflag &= ~(ECHO);
+              if (tcsetattr(0, TCSADRAIN, &term) == -1)
+              {
+                return (EXIT_FAILURE);
+              }
+            }
+            // ft_init_terminal();
+            // ft_putstr("\n");
+          }
+          else
+          {
+            ft_putstr("\n");
+          }
+          ft_cursor_valide_line(&cursor, &history_line, &current_line, &arr);
+
+
+        }
+
+
+        else //everithing else the previous command and past cmd - v
+        {
+          ft_cursor_add_char(&cursor, arr, buff);
+        }
+
+        // delete all char reverse video and normal and rewrite in normal video
+        if (!cursor.is_select && select_line->length && arr->length && cursor.is_env)
+        {
+          ft_cursor_deselect_all(&cursor, arr, select_line);
+        }
+
         ft_bzero(buff, 8);
-        continue;
-      }
-      if (!(ft_read_parse_eof(&buff, &cursor, arr, history_line, current_line, copy_line, select_line, &term, env)))
-      {
-        return (EXIT_SUCCESS);
-      }
-      //enter
-      if (!cursor.dquote && !cursor.quote && buff[0] == 10 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6]  && !buff[7])
-      {
-        /**
-        * next step push arr dans arr :p :p
-        * and not free actual but only a new
-        * and maybe , yes only maybe exec the line ??
-        */
 
-        tab_cmds = NULL;
-        ft_cursor_end(&cursor, arr);
+      }
+
+    }
+    else
+    {
+      line = ft_strnew(BUFF_SIZE);
+      if (get_next_line(0, &line))
+      {
+        while (arr->length)
+        {
+          free(ft_arr_pop(&arr, 0));
+        }
+        ft_arr_str(arr, line);
         if (tab_cmds)
         {
           //TODO free tab_cmds
@@ -352,45 +430,27 @@ int  read_stdin(char **envp)
         tab_cmds = ft_parse_line(arr);
         if (tab_cmds)
         {
-          ft_term_apply_cmd(cursor.mode_insertion_end, 1);
-          if (ft_get_term_restore(&term))
-            return (EXIT_FAILURE);
-          ft_putstr("\n");
-          ft_fork_test(&env, tab_cmds, envp);
-          ft_term_apply_cmd(cursor.mode_insertion, 1);
-          term.c_lflag &= ~(ICANON);
-          term.c_lflag &= ~(ECHO);
-          if (tcsetattr(0, TCSADRAIN, &term) == -1)
-          {
-            return (EXIT_FAILURE);
-          }
-          // ft_init_terminal();
-          // ft_putstr("\n");
+          ft_fork_test(&env, tab_cmds);
         }
         else
         {
           ft_putstr("\n");
         }
-        ft_cursor_valide_line(&cursor, &history_line, &current_line, &arr);
-
+        ft_putstr(cursor.prompt);
 
       }
-
-
-      else //everithing else the previous command and past cmd - v
+      else
       {
-        ft_cursor_add_char(&cursor, arr, buff);
+        if (line)
+        {
+          free(line);
+        }
+        return (EXIT_SUCCESS);
       }
-
-      // delete all char reverse video and normal and rewrite in normal video
-      if (!cursor.is_select && select_line->length && arr->length)
+      if (line)
       {
-        ft_cursor_deselect_all(&cursor, arr, select_line);
+        free(line);
       }
-
-      ft_bzero(buff, 8);
-      // free(buff);
-      // buff = NULL;
     }
   }
   return (EXIT_SUCCESS);

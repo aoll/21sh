@@ -68,10 +68,8 @@ int  ft_cursor_valide_line(t_cursor *cursor, t_arr **history_line, t_arr **curre
   while (cursor->index_history < (int)tmp_history_line->length)
   {
     line_tmp = *(t_arr **)((unsigned char *)tmp_history_line->ptr + cursor->index_history * tmp_history_line->sizeof_elem);
-    if (line_tmp->length > 1)
-    {
-      ft_arr_free(ft_arr_pop(&line_tmp, 1));
-    }
+
+    ft_arr_free(ft_arr_pop(&line_tmp, 1));
     tmp_arr = *(t_arr **)line_tmp->ptr;
     tmp_arr = ft_arr_dup(tmp_arr);
     if (tmp_arr)

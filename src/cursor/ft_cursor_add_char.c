@@ -419,15 +419,12 @@ int  ft_cursor_add_char_save(t_cursor *cursor, t_arr *arr, char *buff)
       ft_memcpy(char_line, buff_tmp, 1);
     }
 
-    // if (nb_char < cursor->terminal_size.ws_col)
-    // {
-    // ft_mode_insertion();
     if (*char_line == 9)
     {
       index_tab = 0;
       while (index_tab < TABULATION_LEN)
       {
-        if (cursor->pos_x == cursor->terminal_size.ws_col)
+        if (cursor->pos_x == cursor->terminal_size.ws_col && cursor->is_env)
         {
           ft_putchar('Z');
           ft_move_left();
@@ -445,7 +442,10 @@ int  ft_cursor_add_char_save(t_cursor *cursor, t_arr *arr, char *buff)
         *char_line = ' ';
         char_line[4] = 1;
         ft_arr_push(&arr, char_line, cursor->index_line);
-        ft_mode_insertion();
+        if (cursor->is_env)
+        {
+          ft_mode_insertion();
+        }
         ft_putchar(' ');
         cursor->pos_x++;
         cursor->index_line++;
@@ -456,7 +456,7 @@ int  ft_cursor_add_char_save(t_cursor *cursor, t_arr *arr, char *buff)
     else
     {
       ft_arr_push(&arr, char_line, cursor->index_line);
-      if (nb_char + 1 > cursor->terminal_size.ws_col && nb_char > cursor->terminal_size.ws_col * (cursor->pos_y + 1))
+      if (nb_char + 1 > cursor->terminal_size.ws_col && nb_char > cursor->terminal_size.ws_col * (cursor->pos_y + 1) && cursor->is_env)
       {
         ft_move_x(cursor->terminal_size.ws_col - 1);
         ft_sup_char(1);
@@ -475,14 +475,17 @@ int  ft_cursor_add_char_save(t_cursor *cursor, t_arr *arr, char *buff)
       }
       else
       {
-        ft_mode_insertion();
+        if (cursor->is_env)
+        {
+          ft_mode_insertion();
+        }
         ft_putstr(char_line);
         nb_char++;
         cursor->pos_x++;
         cursor->index_line++;
       }
     }
-    if (cursor->pos_x == cursor->terminal_size.ws_col)
+    if (cursor->pos_x == cursor->terminal_size.ws_col && cursor->is_env)
     {
       cursor->pos_y++;
       ft_putchar('Z');

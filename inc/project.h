@@ -50,6 +50,8 @@
 typedef struct s_cursor t_cursor;
 struct  s_cursor
 {
+  bool is_env;
+
   char *prompt;
   size_t prompt_len;
 
@@ -204,7 +206,7 @@ t_arr *ft_parse_line(t_arr *arr);
  * fork test
  */
  #include <fcntl.h>
-int  ft_fork_test(t_arr **env, t_arr *tab_cmds, char **envp);
+int  ft_fork_test(t_arr **env, t_arr *tab_cmds);
 
 /**
  * builtin

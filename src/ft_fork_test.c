@@ -904,6 +904,10 @@ int  ft_fork_split_pipe(char *str, int nb_pipe, t_arr **env_ptr)
     kval = *(t_kval **)((unsigned char *)env->ptr + env->sizeof_elem * index_path);
     path = kval->value;
   }
+  else
+  {
+    path = ft_strnew(0);
+  }
   tab_tube = NULL;
   if (nb_pipe)
   {
@@ -932,7 +936,7 @@ int  ft_fork_split_pipe(char *str, int nb_pipe, t_arr **env_ptr)
 /**
  * fork
  */
-int  ft_fork_test(t_arr **env, t_arr *tab_cmds, char **envp)
+int  ft_fork_test(t_arr **env, t_arr *tab_cmds)
 {
   int index;
   t_arr *cmd;
