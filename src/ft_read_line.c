@@ -1,7 +1,31 @@
 #include "project.h"
 
 #include <signal.h>
-
+/**
+ * print the key
+ */
+int  ft_print_key(char *buff)
+{
+  ft_putchar('\n');
+  ft_putnbr(buff[0]);
+  ft_putchar('\n');
+  ft_putnbr(buff[1]);
+  ft_putchar('\n');
+  ft_putnbr(buff[2]);
+  ft_putchar('\n');
+  ft_putnbr(buff[3]);
+  ft_putchar('\n');
+  ft_putnbr(buff[4]);
+  ft_putchar('\n');
+  ft_putnbr(buff[5]);
+  ft_putchar('\n');
+  ft_putnbr(buff[6]);
+  ft_putchar('\n');
+  ft_putnbr(buff[7]);
+  ft_putchar('\n');
+  ft_bzero(buff, 8);
+  return (EXIT_SUCCESS);
+}
 
 static int  ft_get_term(struct termios *term)
 {
@@ -58,15 +82,24 @@ int  ft_get_term_restore(struct termios *term)
 */
 void  ft_arr_putchar(const void *s)
 {
-  unsigned char *s_line;
+  unsigned char *s_line_u;
+  char *s_line;
 
-  s_line = *((unsigned char **)s);
 
+  s_line_u = *((unsigned char **)s);
+  s_line = (char *)s_line_u;
+  if (!s_line)
+  {
+    return;
+  }
   if (s_line[5] == 1)
   {
     ft_mode_reverse_video();
   }
   ft_putstr(*((char **)s));
+  if (s_line[5] == 1)
+  {
+  }
   ft_mode_basic_video();
   return;
 }
@@ -79,6 +112,10 @@ void  *ft_arr_strdup(const void *s, size_t n)
   void *new;
 
   (void)n;
+  if (!s)
+  {
+    return (NULL);
+  }
   new = ft_strdup(*((char **)s));
   return (new);
 }
@@ -193,7 +230,8 @@ int  ft_init_cursor_position(t_cursor *cursor)
 {
   cursor->prompt = ft_strdup("\033[32m$> \033[0m");
   cursor->pos_y = 0;
-  cursor->prompt_len = ft_strlen(cursor->prompt);
+  // cursor->prompt_len = ft_strlen(cursor->prompt);
+  cursor->prompt_len = 3;
   cursor->pos_x = cursor->prompt_len;
   cursor->index_line = 0;
   cursor->dquote = false;
@@ -224,8 +262,6 @@ int  read_stdin(char **envp)
   t_arr *history_line;
   t_arr *current_line;
   t_arr *arr;
-  int index_history_free;
-  int index_current_free;
   t_arr *current_line_free;
   t_arr *tab_cmds;
   t_arr *env;
@@ -284,153 +320,29 @@ int  read_stdin(char **envp)
     }
     if ((rd = read(0, buff, 8)) > 0)
     {
-
-      // ft_putchar('\n');
-      // ft_putnbr(buff[0]);
-      // ft_putchar('\n');
-      // ft_putnbr(buff[1]);
-      // ft_putchar('\n');
-      // ft_putnbr(buff[2]);
-      // ft_putchar('\n');
-      // ft_putnbr(buff[3]);
-      // ft_putchar('\n');
-      // ft_putnbr(buff[4]);
-      // ft_putchar('\n');
-      // ft_putnbr(buff[5]);
-      // ft_putchar('\n');
-      // ft_putnbr(buff[6]);
-      // ft_putchar('\n');
-      // ft_putnbr(buff[7]);
-      // ft_putchar('\n');
-      // ft_bzero(buff, 8);
+      // ft_print_key(buff);
       // continue;
       cursor.is_select = false;
-      cursor.prompt_len = ft_strlen(cursor.prompt); // maybe one function with the adress of promt a the change is do it only if a change has be do it an not a check every loop
-      if (buff[0] == 27 && buff[1] == 91 && buff[2] == 49 && buff[3] == 59 && buff[4] == 50 && buff[5] == 68 && !buff[6] && !buff[7]) // shift + left //done
-      {
-        cursor.is_select = true;
-        if (cursor.index_line > 0 && arr->length)
-        {
-          ft_cursor_select_left(&cursor, arr, select_line);
-        }
-      }
-      else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 49 && buff[3] == 59 && buff[4] == 50 && buff[5] == 67 && !buff[6] && !buff[7]) // shift + right //done
-      {
-        cursor.is_select = true;
-        if (cursor.index_line < (int)arr->length)
-        {
-          ft_cursor_select_right(&cursor, arr, select_line);
-        }
-      }
-      else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 49 && buff[3] == 59 && buff[4] == 53 && buff[5] == 65 && !buff[6] && !buff[7]) // ctrl + up //done
-      {
-        ft_cursor_up_line(&cursor, arr);
+      // cursor.prompt_len = ft_strlen(cursor.prompt); // maybe one function with the adress of promt a the change is do it only if a change has be do it an not a check every loop
 
-      }
-      else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 49 && buff[3] == 59 && buff[4] == 53 && buff[5] == 66 && !buff[6] && !buff[7]) // ctrl + down //done
+      if (!(ft_read_parse((const char *)buff, &cursor, &arr, history_line, current_line, select_line, copy_line)))
       {
-        ft_cursor_down_line(&cursor, arr);
+        ft_bzero(buff, 8);
+        continue;
       }
-
-      // up or down or key left or right
-      else if (buff[0] == 27 && buff[1] == 91 && (buff[2] == 65 || buff[2] == 66 || buff[2] == 67 || buff[2] == 68) && !buff[3] && !buff[4] && !buff[5] && !buff[6] && !buff[7])
+      if (!(ft_read_parse_eof(&buff, &cursor, arr, history_line, current_line, copy_line, select_line, &term, env)))
       {
-        // up
-        if (buff[2] == 65 && cursor.index_history - 1 >= 0)
-        {
-          ft_cursor_up_history_line(&cursor, history_line, &current_line, &arr);
-        }
-        else if (buff[2] == 66 && cursor.index_history  +  1 < (int)history_line->length)
-        {
-          ft_cursor_down_history_line(&cursor, history_line, &current_line, &arr);
-        }
-        // for key left check if the prev char is a tab and consequently move the time nescessary
-        else if (buff[1] == 91 && buff[2] == 68) //key left
-        {
-          ft_cursor_left(&cursor, arr);
-        }
-        // for key right check if the next char is a tab and consequently move the time nescessary
-        else if (buff[1] == 91 && buff[2] == 67)// && (cursor.pos_x + 1) <= nb_char) //key right
-        {
-          ft_cursor_right(&cursor, arr);
-        }
-      }
-      else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 72 && !buff[3] && !buff[4] && !buff[5] && !buff[6] && !buff[7]) //key home //done
-      {
-        ft_cursor_home(&cursor, arr);
-      }
-      else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 70 && !buff[3] && !buff[4] && !buff[5] && !buff[6] && !buff[7]) //key end //done
-      {
-        ft_cursor_end(&cursor, arr);
-      }
-
-      else if (buff[0] == 4 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6] && !buff[7]) //ctrl-d eof //doone
-      {
-        // si une ligne de commande est en cours exec ligne; ft_putstr("$> ");
-        ft_free_cursor(&cursor);
-        if (select_line)
-        {
-          ft_arr_free(select_line);
-        }
-        if (copy_line)
-        {
-          ft_arr_free(copy_line);
-        }
-        index_history_free = 0;
-        while (index_history_free < (int)history_line->length)
-        {
-          current_line_free = *((t_arr **)((unsigned char *)history_line->ptr + index_history_free * history_line->sizeof_elem));
-          index_current_free = 0;
-          while (index_current_free < (int)current_line_free->length)
-          {
-            ft_arr_free(ft_arr_pop(&current_line_free, index_current_free));
-          }
-          ft_arr_free(ft_arr_pop(&history_line, index_history_free));
-          // index_history_free++;
-        }
-        ft_arr_free(history_line);
-        free(buff);
-        buff = NULL;
-        ft_putchar('\n');
-        ft_term_apply_cmd(cursor.mode_insertion_end, 1);
-        if (ft_get_term_restore(&term))
-          return (EXIT_FAILURE);
         return (EXIT_SUCCESS);
       }
-
       //enter
-      else if (!cursor.dquote && !cursor.quote && buff[0] == 10 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6]  && !buff[7])
+      if (!cursor.dquote && !cursor.quote && buff[0] == 10 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6]  && !buff[7])
       {
         /**
         * next step push arr dans arr :p :p
         * and not free actual but only a new
         * and maybe , yes only maybe exec the line ??
         */
-        // ft_putstr("\n");
-        // ft_putstr("@< ");
-        // ft_arr_print(arr);
-        // ft_putstr("       cursor.is_select: ");
-        // ft_arr_print(select_line);
-        // ft_putchar('\n');
-        // ft_arr_push(&history_line, arr, -1);
-        // ft_putstr("\ncursor.index_line: ");
-        // ft_putnbr(cursor.index_line);
-        // ft_putstr(" y_total: ");
-        // ft_putnbr(cursor.y_total);
-        // ft_putstr(" cursor.pos_x: ");
-        // ft_putnbr(cursor.pos_x);
-        // ft_putstr(" cursor.pos_y:");
-        // ft_putnbr(cursor.pos_y);
-        // ft_putstr(" cursor.y_start:");
-        // ft_putnbr(cursor.y_start);
-        // ft_putstr("\n");
-        //
-        // char **arg;
-        //
-        // arg = malloc(sizeof(char *) * 2);
-        // arg[0] = ft_strdup("emacs");
-        // arg[1] = NULL;
-        // execve("/usr/bin/emacs", arg, envp);
+
         tab_cmds = NULL;
         ft_cursor_end(&cursor, arr);
         if (tab_cmds)
@@ -463,73 +375,6 @@ int  read_stdin(char **envp)
 
 
       }
-
-      //Del
-      else if (buff[0] == 127 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6]  && !buff[7]) //del //done
-      {
-        if (cursor.index_line > 0)
-        {
-          ft_cursor_del_or_suppr(&cursor, arr, 1);
-        }
-      }
-
-      else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 51 && buff[3] == 126 && !buff[4] && !buff[5] && !buff[6]  && !buff[7]) //sup //done si le cursor se trouve sur char et pas avant ou apres
-      {
-        if (arr->length && cursor.index_line < (int)arr->length)
-        {
-          ft_cursor_del_or_suppr(&cursor, arr, 0);
-        }
-      }
-      // ctrl + left arrow // done
-      else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 49 && buff[3] == 59 && buff[4] == 53 && buff[5] == 68 && !buff[6] && !buff[7]) // ctrl + left arrow //done
-      {
-        // if (cursor.pos_x - 1 >= 3)
-        if (cursor.index_line > 0)
-        {
-          ft_cursor_word_left(&cursor, arr);
-        }
-
-      }
-      // ctrl + right arrow // done
-      else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 49 && buff[3] == 59 && buff[4] == 53 && buff[5] == 67 && !buff[6] && !buff[7]) // ctrl + right arrow //done
-      {
-        if (cursor.index_line < (int)arr->length)
-        {
-          ft_cursor_word_right(&cursor, arr);
-        }
-      }
-      //ctrl + x //cut // done
-      else if (buff[0] == 24 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6] && !buff[7])
-      {
-        // peut se resumer par un appel a copie comme ctrl + w
-        cursor.is_select = false;
-        if (select_line->length)
-        {
-          ft_cursor_cut(&cursor, arr, select_line, &copy_line);
-        }
-
-      }
-      //ctrl + w // copy //done
-      else if (buff[0] == 23 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6] && !buff[7])
-      {
-        cursor.is_select = true;
-        if (select_line->length)
-        {
-          ft_cursor_copy_line(&cursor, select_line, &copy_line);
-        }
-
-      }
-      //ctrl + v // paste //done
-      else if (buff[0] == 22 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6] && !buff[7])
-      {
-        if (copy_line->length)
-        {
-          ft_cursor_paste(&cursor, arr, copy_line);
-          continue;
-
-        }
-      }
-
 
 
       else //everithing else the previous command and past cmd - v

@@ -62,6 +62,11 @@ static int  ft_cursor_left_tab(t_cursor *cursor, int same_line)
 
 static int  ft_cursor_left_same_line(t_cursor *cursor, unsigned char *s_line)
 {
+  if (!s_line)
+  {
+    ft_putstr("\nno s_lien ???");
+   return (EXIT_FAILURE);
+  }
   if (s_line[4] == 1)
   {
     ft_cursor_left_tab(cursor, 0);

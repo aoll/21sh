@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/29 09:31:13 by alex              #+#    #+#             */
-/*   Updated: 2017/01/05 15:22:15 by alex             ###   ########.fr       */
+/*   Updated: 2017/02/01 16:44:02 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int  ft_parse_pop_space_inside(t_arr *arr)
   bool quote;
 
   index = 0;
+  dquote = false;
+  quote = false;
   while (index < (int)arr->length)
   {
     s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
