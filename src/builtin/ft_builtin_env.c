@@ -64,6 +64,9 @@ int  ft_builtin_env_set_var(char ***tab_cmd, t_arr *env, int fd_stdout, int fd_s
   char **cmd;
   int index_separator;
   bool is_env_prev;
+  void *kval;
+  char **tmp;
+  int len;
 
   is_env_prev = false;
   index_separator = 0;
@@ -85,7 +88,11 @@ int  ft_builtin_env_set_var(char ***tab_cmd, t_arr *env, int fd_stdout, int fd_s
         //TODO free chaque element
         while (env->length)
         {
-          ft_arr_pop(&env, 0);
+          kval = ft_arr_pop(&env, 0);
+          ft_kval_free(&kval);
+          // ft_putstr("\nvalue:");
+          // ft_putstr(kval->value);
+          // ft_putstr(".\n");
         }
         is_env_prev = true;
         free(*cmd);
@@ -94,9 +101,21 @@ int  ft_builtin_env_set_var(char ***tab_cmd, t_arr *env, int fd_stdout, int fd_s
       }
       else
       {
-        *tab_cmd = cmd;
+        // tmp = ft_array_str_dup((const char **)cmd); ??????????????
+        len = ft_array_len((const void **)cmd);
+        tmp = malloc(sizeof(char *) * (len + 1));
+        tmp[len] = NULL;
+        len = 0;
+        while (*cmd)
+        {
+          tmp[len] = ft_strdup(*cmd);
+          free(*cmd);
+          cmd++;
+          len++;
+        }
+        free(*tab_cmd);
+        *tab_cmd = tmp;
         return (EXIT_SUCCESS);
-        break;
       }
     }
     ft_builtin_env_setenv(env, *cmd, fd_stderr);
@@ -104,7 +123,9 @@ int  ft_builtin_env_set_var(char ***tab_cmd, t_arr *env, int fd_stdout, int fd_s
     cmd++;
     is_env_prev = false;
   }
-  *tab_cmd = cmd;
+  // *tab_cmd = cmd;
+  free(*tab_cmd);
+  *tab_cmd = NULL;
   ft_builtin_env_print(env, fd_stdout);
   return (B_ENV);
 }

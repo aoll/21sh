@@ -31,6 +31,7 @@ t_kval  *ft_kval_init(const char *env_line)
   return (new);
 }
 
+
 t_arr  *ft_env_init(char **env)
 {
   size_t length;
@@ -45,6 +46,7 @@ t_arr  *ft_env_init(char **env)
   arr->f_print = &ft_kval_print;
   arr->f_cmp = &ft_kval_cmp_key;
   arr->f_del = &ft_kval_free;
+  arr->f_dup_elem = &ft_arr_kvaldup;
   while (*env)
   {
       kv = ft_kval_init(*env);

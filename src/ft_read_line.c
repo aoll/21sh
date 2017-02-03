@@ -121,6 +121,42 @@ void  *ft_arr_strdup(const void *s, size_t n)
 }
 
 /**
+ * return a fresh pointeur on a copy of a kval *
+ * in case of fail NULL is returned
+ */
+t_kval  *ft_kval_dup(const t_kval *old)
+{
+  t_kval *new;
+
+  if (!(new = malloc(sizeof(t_kval))))
+  {
+    return (NULL);
+  }
+  new->key = NULL;
+  new->value = NULL;
+  ft_kval_set_key(new, old->key);
+  ft_kval_set_value(new, old->value);
+  return (new);
+}
+
+/*
+** function for dup some kval * was stocked in a t_arr like elem
+** is give for arr->f_dup, dup some elem and return a void *
+*/
+void  *ft_arr_kvaldup(const void *s, size_t n)
+{
+  void *new;
+
+  (void)n;
+  if (!s)
+  {
+    return (NULL);
+  }
+  new = ft_kval_dup(*((t_kval **)s));
+  return (new);
+}
+
+/**
  *  Apply n time the command given in param
  */
 int  ft_term_apply_cmd(char *cmd, int n)
@@ -440,10 +476,17 @@ int  read_stdin(char **envp)
         }
         if (tab_cmds)
         {
-          ft_arr_free(tab_cmds);
-          
+          if (tab_cmds->length)
+          {
+            ft_arr_free(ft_arr_pop(&tab_cmds, 0));
+
+          }
+          if (tab_cmds->ptr)
+          {
+            free(tab_cmds->ptr);
+          }
+          free(tab_cmds);
           tab_cmds = NULL;
-          //TODO free tab_cmds
         }
         ft_putstr(cursor.prompt);
 

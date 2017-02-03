@@ -33,7 +33,7 @@ pid_t create_process(void)
 /**
  * return a new pointeur to a char **
  */
-char  **ft_fork_env_arr_to_tab_str(t_arr *envp)
+int  ft_fork_env_arr_to_tab_str(t_arr *envp, char ***env_ptr)
 {
   char **env;
   int index;
@@ -42,15 +42,15 @@ char  **ft_fork_env_arr_to_tab_str(t_arr *envp)
   int index_i;
   int len;
 
-
+  env = *env_ptr;
   if (!envp)
   {
-    return (NULL);
+    return (EXIT_FAILURE);
   }
 
   if (!(env = malloc(sizeof(char *) * (envp->length + 1))))
   {
-    return (NULL);
+    return (EXIT_FAILURE);
   }
 
   env[envp->length] = NULL;
@@ -76,7 +76,8 @@ char  **ft_fork_env_arr_to_tab_str(t_arr *envp)
     }
     index++;
   }
-  return (env);
+  *env_ptr = env;
+  return (EXIT_SUCCESS);
 }
 
 int  ft_son(char *path_cmd, char **tab_cmd, char **envp)
@@ -424,7 +425,7 @@ int  ft_fork_list_d_end_word(char **command, t_arr *tab_d_end_word)
   return (EXIT_SUCCESS);
 }
 
-int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb_pipe)
+int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
 {
   int i;
   pid_t pid;
@@ -464,7 +465,9 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb
   char **envp;
   char **tab_cmd;
   char **tab_path;
+  t_arr *env_copy;
 
+  env_copy = NULL;
 
   path_tmp = NULL;
   path_tmp_ptr = NULL;
@@ -480,9 +483,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb
   tab_fd_stdout = ft_arr_new(1, sizeof(int *));
   tab_fd_stderr = ft_arr_new(1, sizeof(int *));
   tab_fd_stdin = ft_arr_new(1, sizeof(int *));
-  tab_path = ft_strsplit(path, ':');
   i = 0;
-  tab_cmd = NULL;
   while (i < nb_pipe + 1)
   {
     if (i)
@@ -509,7 +510,6 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb
     {
       return (EXIT_FAILURE);
     }
-
     if ((err = ft_fork_list_d_end_word(&cmd[i], tab_d_end_word) ))
     {
       return (EXIT_FAILURE);
@@ -517,17 +517,28 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb
     if (tab_cmd)
     {
       i_free = 0;
-      while (tab_cmd[i])
+      while (tab_cmd[i_free])
       {
-        free(tab_cmd[i]);
-        i++;
+        if (tab_cmd[i_free])
+        {
+          free(tab_cmd[i_free]);
+          tab_cmd[i_free] = NULL;
+        }
+        i_free++;
       }
       free(tab_cmd);
       tab_cmd = NULL;
     }
 
-    if (!(tab_cmd = ft_strsplit(cmd[i], SPACE_SEPARATOR)) || !tab_cmd[0])
+    if (!(tab_cmd = ft_strsplit(cmd[i], SPACE_SEPARATOR)))
     {
+      ft_putstr("\n   BREAK     \n");
+      break;
+    }
+    if (!tab_cmd[0])
+    {
+
+      ft_putstr("\n     BREAK_2_   \n");
       break;
     }
 
@@ -536,11 +547,47 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb
       index_builtin = ft_is_builtin(tab_cmd[0]);
     }
 
+    pid = 0;
+    if (env_copy)
+    {
+      ft_arr_free(env_copy);
+      env_copy = NULL;
+    }
 
+    env_copy = ft_arr_dup(*env);
+    if (index_builtin == B_ENV)
+    {
+      index_builtin = ft_builtin_env(&tab_cmd, &env_copy, tube_fork_stdout_tmp[1], tube_fork_stderr_tmp[1]);
+    }
+    if (tab_cmd)
+    {
+      i_free = 0;
+      while (tab_cmd[i_free])
+      {
+        i_free++;
+      }
+    }
+    if (envp)
+    {
+      i_free = 0;
+      while (envp[i_free])
+      {
+        if (envp[i_free])
+        {
+          free(envp[i_free]);
+          envp[i_free] = NULL;
+        }
+        i_free++;
+      }
+      free(envp);
+      envp = NULL;
+    }
+    ft_fork_env_arr_to_tab_str(env_copy, &envp);
     if ((pid = create_process()) == -1)
     {
       return (EXIT_FAILURE);
     }
+
     if (!pid)
     {
       if (tab_fd_stdin->length)
@@ -548,39 +595,48 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb
         close(tube_fork_stdin[1]);
         dup2(tube_fork_stdin[0], 0);
       }
-
-
-
       close(tube_fork_stdout_tmp[0]);
       dup2(tube_fork_stdout_tmp[1], 1);
       close(tube_fork_stderr_tmp[0]);
       dup2(tube_fork_stderr_tmp[1], 2);
 
-      if (index_builtin == B_ENV)
-      {
-        index_builtin = ft_builtin_env(&tab_cmd, env, tube_fork_stdout_tmp[1], tube_fork_stderr_tmp[1]);
 
-      }
-
-
-
-
-      envp = ft_fork_env_arr_to_tab_str(*env);
       path_tmp = NULL;
       if (!index_builtin && *tab_cmd)
       {
-        index_path = ft_arr_indexof(*env, "PATH");
-        env_ptr = *env;
-        if (index_path > 0 & index_path < (int)env_ptr->length)
+        index_path = ft_arr_indexof(env_copy, "PATH");
+        if (index_path > 0 & index_path < (int)env_copy->length)
         {
-          kval = *(t_kval **)((unsigned char *)env_ptr->ptr + index_path *env_ptr->sizeof_elem);
+          kval = *(t_kval **)((unsigned char *)env_copy->ptr + index_path *env_copy->sizeof_elem);
           path_ptr = kval->value;
         }
         else
         {
           path_ptr = ft_strnew(0);
         }
+        if (tab_path)
+        {
+          i_free = 0;
+          while (tab_path[i_free])
+          {
+            free(tab_path[i_free]);
+            i_free++;
+          }
+          free(tab_path);
+          tab_path = NULL;
+        }
+        // if (env_copy)
+        // {
+        //   ft_arr_free(env_copy);
+        //   env_copy = NULL;
+        // }
+        // ft_arr_free(env_copy);
         tab_path = ft_strsplit(path_ptr, ':');
+        if (path_ptr)
+        {
+          free(path_ptr);
+          path_ptr = NULL;
+        }
         // TODO segfault si !tab_cmd[0]
         index = 0;
         path_tmp = ft_strdup(*tab_cmd);
@@ -606,12 +662,42 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb
       if (!index_builtin && !err && *tab_cmd) // ?? index_builtin pour env
       {
         ft_son(path_tmp, tab_cmd, envp);
-        if (path_tmp)
-        {
-          free(path_tmp);
-          path_tmp = NULL;
-        }
       }
+      if (path_tmp)
+      {
+        free(path_tmp);
+        path_tmp = NULL;
+      }
+      // if (tab_cmd)
+      // {
+      //   i_free = 0;
+      //   while (tab_cmd[i_free])
+      //   {
+      //     if (tab_cmd[i_free])
+      //     {
+      //       free(tab_cmd[i_free]);
+      //       tab_cmd[i_free] = NULL;
+      //     }
+      //     i_free++;
+      //   }
+      //   free(tab_cmd);
+      //   tab_cmd = NULL;
+      // }
+      // if (envp)
+      // {
+      //   i_free = 0;
+      //   while (envp[i_free])
+      //   {
+      //     if (envp[i_free])
+      //     {
+      //       free(envp[i_free]);
+      //       envp[i_free] = NULL;
+      //     }
+      //     i_free++;
+      //   }
+      //   free(envp);
+      //   envp = NULL;
+      // }
       if (!index_builtin)
       {
         ft_putstr("21sh: command not found: ");
@@ -819,6 +905,10 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb
         close(*fd);
         free(fd);
       }
+      while (tab_d_end_word->length)
+      {
+        free(ft_arr_pop(&tab_d_end_word, 0));
+      }
 
       i++;
     }
@@ -827,6 +917,34 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb
   dup2(stdout_copy, 1);
   close(stdin_copy);
   close(stdout_copy);
+
+  if (env_copy)
+  {
+    ft_arr_free(env_copy);
+    env_copy = NULL;
+  }
+
+  ft_arr_free(tab_fd_stdout);
+  ft_arr_free(tab_fd_stderr);
+  ft_arr_free(tab_fd_stdin);
+  ft_arr_free(tab_d_end_word);
+  if (envp)
+  {
+    i_free = 0;
+    while (envp[i_free])
+    {
+      if (envp[i_free])
+      {
+        free(envp[i_free]);
+        envp[i_free] = NULL;
+      }
+      i_free++;
+    }
+    free(envp);
+    envp = NULL;
+  }
+
+
   if (tab_cmd)
   {
     i_free = 0;
@@ -835,8 +953,20 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, char *path, int nb
       free(tab_cmd[i_free]);
       i_free++;
     }
-    free(tab_cmd);
+    if (tab_cmd)
+      free(tab_cmd);
     tab_cmd = NULL;
+  }
+  if (tab_path)
+  {
+    i_free = 0;
+    while (tab_path[i_free])
+    {
+      free(tab_path[i_free]);
+      i_free++;
+    }
+    free(tab_path);
+    tab_path = NULL;
   }
 
   if (path_tmp)
@@ -925,25 +1055,25 @@ int  ft_fork_split_pipe(char *str, int nb_pipe, t_arr **env_ptr)
   char **cmds;
   struct t_tube *tab_tube;
   int index;
-  char *path;
+  // char *path;
   int index_path;
   t_kval *kval;
   t_arr *env;
   int i;
 
-  // path = getenv("PATH");
-  path = NULL;
+
+  // path = NULL;
   env = *env_ptr;
-  index_path = ft_arr_indexof(env, "PATH");
-  if (index_path >= 0 && index_path < (int)env->length)
-  {
-    kval = *(t_kval **)((unsigned char *)env->ptr + env->sizeof_elem * index_path);
-    path = kval->value;
-  }
-  else
-  {
-    path = ft_strnew(0);
-  }
+  // index_path = ft_arr_indexof(env, "PATH");
+  // if (index_path >= 0 && index_path < (int)env->length)
+  // {
+  //   kval = *(t_kval **)((unsigned char *)env->ptr + env->sizeof_elem * index_path);
+  //   path = kval->value;
+  // }
+  // else
+  // {
+  //   path = ft_strnew(0);
+  // }
   tab_tube = NULL;
   if (nb_pipe)
   {
@@ -964,7 +1094,7 @@ int  ft_fork_split_pipe(char *str, int nb_pipe, t_arr **env_ptr)
     free(tab_tube);
     return (EXIT_FAILURE);
   }
-  ft_fork(cmds, tab_tube, env_ptr, path, nb_pipe);
+  ft_fork(cmds, tab_tube, env_ptr, nb_pipe);
   i = 0;
   while (cmds[i])
   {
