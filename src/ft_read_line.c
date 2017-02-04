@@ -305,22 +305,22 @@ int  read_stdin(char **envp)
   char *line;
 
   cursor.is_env = false;
-  // if (ft_get_term(&term))
-  // {
-  //   cursor.is_env = false;
-  // }
-  // else
-  // {
-  //   cursor.is_env = true;
-  //   term.c_lflag &= ~(ICANON);
-  //   term.c_lflag &= ~(ECHO);
-  //   if (tcsetattr(0, TCSADRAIN, &term) == -1)
-  //   {
-  //     return (EXIT_FAILURE);
-  //   }
-  //
-  //   ft_init_cursor_cmd(&cursor);
-  // }
+  if (ft_get_term(&term))
+  {
+    cursor.is_env = false;
+  }
+  else
+  {
+    cursor.is_env = true;
+    term.c_lflag &= ~(ICANON);
+    term.c_lflag &= ~(ECHO);
+    if (tcsetattr(0, TCSADRAIN, &term) == -1)
+    {
+      return (EXIT_FAILURE);
+    }
+
+    ft_init_cursor_cmd(&cursor);
+  }
 
 
   env = ft_env_init(envp);
@@ -373,9 +373,13 @@ int  read_stdin(char **envp)
         // cursor.prompt_len = ft_strlen(cursor.prompt); // maybe one function with the adress of promt a the change is do it only if a change has be do it an not a check every loop
 
 
-        if (!(ft_read_parse((const char *)buff, &cursor, &arr, history_line, current_line, select_line, copy_line)))
+        if (!(ft_read_parse((const char *)buff, &cursor, &arr, history_line, current_line, &select_line, &copy_line)))
         {
           ft_bzero(buff, 8);
+          if (!cursor.is_select && select_line->length && arr->length)
+          {
+            ft_cursor_deselect_all(&cursor, arr, select_line);
+          }
           continue;
         }
         else if (!(ft_read_parse_eof(&buff, &cursor, arr, history_line, current_line, copy_line, select_line, &term, env, false)))
@@ -438,8 +442,9 @@ int  read_stdin(char **envp)
           ft_cursor_add_char(&cursor, arr, buff);
         }
 
+
         // delete all char reverse video and normal and rewrite in normal video
-        if (!cursor.is_select && select_line->length && arr->length && cursor.is_env)
+        if (!cursor.is_select && select_line->length && arr->length)
         {
           ft_cursor_deselect_all(&cursor, arr, select_line);
         }

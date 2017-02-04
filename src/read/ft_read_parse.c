@@ -4,7 +4,7 @@
  * function if a key with shift is pressed
  * if true return 0 else 1
  */
-int  ft_read_parse_shift(const char *buff, t_cursor *cursor, t_arr *arr, t_arr *select_line)
+int  ft_read_parse_shift(const char *buff, t_cursor *cursor, t_arr *arr, t_arr **select_line)
 {
   if (buff[0] == 27 && buff[1] == 91 && buff[2] == 49 && buff[3] == 59
     && buff[4] == 50 && buff[5] == 68 && !buff[6] && !buff[7]) // shift + left //done
@@ -12,7 +12,7 @@ int  ft_read_parse_shift(const char *buff, t_cursor *cursor, t_arr *arr, t_arr *
     cursor->is_select = true;
     if (cursor->index_line > 0 && arr->length && cursor->is_env)
     {
-      ft_cursor_select_left(cursor, arr, select_line);
+      ft_cursor_select_left(cursor, arr, *select_line);
     }
     return (EXIT_SUCCESS);
   }
@@ -22,7 +22,7 @@ int  ft_read_parse_shift(const char *buff, t_cursor *cursor, t_arr *arr, t_arr *
     cursor->is_select = true;
     if (cursor->index_line < (int)arr->length && cursor->is_env)
     {
-      ft_cursor_select_right(cursor, arr, select_line);
+      ft_cursor_select_right(cursor, arr, *select_line);
     }
     return (EXIT_SUCCESS);
   }
@@ -142,7 +142,7 @@ int  ft_read_parse_ctrl_arrow(const char *buff, t_cursor *cursor, t_arr *arr)
  */
 int  ft_read_parse_copy_cut_paste(
   const char *buff, t_cursor *cursor,
-  t_arr *arr, t_arr *select_line, t_arr *copy_line)
+  t_arr *arr, t_arr *select_line, t_arr **copy_line)
 {
   if (buff[0] == 24 && !buff[1] && !buff[2] && !buff[3] && !buff[4]
     && !buff[5] && !buff[6] && !buff[7])
@@ -151,7 +151,7 @@ int  ft_read_parse_copy_cut_paste(
     if (!cursor->is_env)
       return (EXIT_SUCCESS);
     if (select_line->length)
-      return (ft_cursor_cut(cursor, arr, select_line, &copy_line));
+      return (ft_cursor_cut(cursor, arr, select_line, copy_line));
   }
   else if (buff[0] == 23 && !buff[1] && !buff[2] && !buff[3] && !buff[4]
     && !buff[5] && !buff[6] && !buff[7])
@@ -160,15 +160,15 @@ int  ft_read_parse_copy_cut_paste(
     if (!cursor->is_env)
       return (EXIT_SUCCESS);
     if (select_line->length)
-      return (ft_cursor_copy_line(cursor, select_line, &copy_line));
+      return (ft_cursor_copy_line(cursor, select_line, copy_line));
   }
   else if (buff[0] == 22 && !buff[1] && !buff[2] && !buff[3] && !buff[4]
     && !buff[5] && !buff[6] && !buff[7])
   {
     if (!cursor->is_env)
       return (EXIT_SUCCESS);
-    if (copy_line->length)
-    return (ft_cursor_paste(cursor, arr, copy_line));
+    if ((*copy_line)->length)
+      return (ft_cursor_paste(cursor, arr, *copy_line));
   }
       // continue; ??
   return (EXIT_FAILURE);
@@ -264,12 +264,13 @@ int  ft_read_parse_eof(char **buff, t_cursor *cursor,
  */
 int  ft_read_parse(
   const char *buff, t_cursor *cursor, t_arr **arr_ptr, t_arr *history_line,
-  t_arr *current_line, t_arr *select_line, t_arr *copy_line)
+  t_arr *current_line, t_arr **select_line, t_arr **copy_line)
 {
   int err;
   t_arr *arr;
 
   arr = *arr_ptr;
+  cursor->is_select = false;
   if (!(err = ft_read_parse_shift(buff, cursor, arr, select_line)))
     return (EXIT_SUCCESS);
   if (!(err = ft_read_parse_ctrl(buff, cursor, arr)))
@@ -282,7 +283,7 @@ int  ft_read_parse(
   if (!(err = ft_read_parse_ctrl_arrow(buff, cursor, arr)))
     return (EXIT_SUCCESS);
   if (!(err = ft_read_parse_copy_cut_paste(
-    buff, cursor, arr, select_line, copy_line)))
+    buff, cursor, arr, *select_line, copy_line)))
     return (EXIT_SUCCESS);
   if (!(err = ft_read_parse_del_or_suppr(buff, cursor, arr)))
     return (EXIT_SUCCESS);
