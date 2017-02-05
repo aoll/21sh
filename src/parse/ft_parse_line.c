@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/29 09:31:13 by alex              #+#    #+#             */
-/*   Updated: 2017/02/02 17:37:31 by alex             ###   ########.fr       */
+/*   Updated: 2017/02/05 11:16:09 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -912,18 +912,18 @@ int  ft_parse_check_file_redirect(t_arr *arr)
           s_line = *(char **)((unsigned char *)arr->ptr + (index + 1) * arr->sizeof_elem);
           if (*s_line == D_LEFT_REDIRECT)
           {
-            ft_putstr("\n21sh: parse error near `>'");
+            ft_putstr_fd("\n21sh: parse error near `>'", STDERR);
             return (EXIT_FAILURE);
           }
           if (ft_isspace(*s_line))
           {
-            ft_putstr("\n21sh: parse error near `&'");
+            ft_putstr_fd("\n21sh: parse error near `&'", STDERR);
             return (EXIT_FAILURE);
           }
         }
         else
         {
-          ft_putstr("\n21sh: parse error near `\\n'");
+          ft_putstr_fd("\n21sh: parse error near `\\n'", STDERR);
           return (EXIT_FAILURE);
         }
         if (index - 1 >= 0)
@@ -931,7 +931,7 @@ int  ft_parse_check_file_redirect(t_arr *arr)
           s_line = *(char **)((unsigned char *)arr->ptr + (index - 1) * arr->sizeof_elem);
           if (ft_isspace(*s_line))
           {
-            ft_putstr("\n21sh: parse error near `&'");
+            ft_putstr_fd("\n21sh: parse error near `&'", STDERR);
             return (EXIT_FAILURE);
           }
         }
@@ -952,37 +952,37 @@ int  ft_parse_check_error(t_arr *cmd)
 
   if ((err = ft_parse_check_double(cmd, S_LEFT_REDIRECT)))
   {
-    ft_putstr("\n21sh: parse error near `<'");
+    ft_putstr_fd("\n21sh: parse error near `<'", STDERR);
     return (EXIT_FAILURE);
   }
   else if ((err = ft_parse_check_double(cmd, D_LEFT_REDIRECT)))
   {
-    ft_putstr("\n21sh: parse error near `<'");
+    ft_putstr_fd("\n21sh: parse error near `<'", STDERR);
     return (EXIT_FAILURE);
   }
   else if ((err = ft_parse_check_double(cmd, S_RIGHT_REDIRECT)))
   {
-    ft_putstr("\n21sh: parse error near `>'");
+    ft_putstr_fd("\n21sh: parse error near `>'", STDERR);
     return (EXIT_FAILURE);
   }
   else if ((err = ft_parse_check_double(cmd, D_RIGHT_REDIRECT)))
   {
-    ft_putstr("\n21sh: parse error near `>'");
+    ft_putstr_fd("\n21sh: parse error near `>'", STDERR);
     return (EXIT_FAILURE);
   }
   else if ((err = ft_parse_check_double(cmd, STDOUT_STDERR_REDIRECT)))
   {
-    ft_putstr("\n21sh: parse error near `>'");
+    ft_putstr_fd("\n21sh: parse error near `>'", STDERR);
     return (EXIT_FAILURE);
   }
   else if ((err = ft_parse_check_double(cmd, PIPE)))
   {
-    ft_putstr("\n21sh: parse error near `|'");
+    ft_putstr_fd("\n21sh: parse error near `|'", STDERR);
     return (EXIT_FAILURE);
   }
   else if ((err = ft_parse_check_end_space(cmd)))
   {
-    ft_putstr("\n21sh: parse error near `\\n'");
+    ft_putstr_fd("\n21sh: parse error near `\\n'", STDERR);
     return (EXIT_FAILURE);
   }
   else if ((err = ft_parse_check_file_redirect(cmd)))
@@ -1018,7 +1018,7 @@ int  ft_parse_pop_and_replace_and_check_error(t_arr *tab_cmds)
     ft_parse_replace_pipe(cmd);
     if ((err = ft_parse_check_double_redirect(cmd)))
     {
-      ft_putstr("\n21sh: parse error near `&'");
+      ft_putstr_fd("\n21sh: parse error near `&'", STDERR);
       return (EXIT_FAILURE);
     }
 
@@ -1061,16 +1061,5 @@ t_arr  *ft_parse_line(t_arr *arr)
     //TODO free t_arr * t_arr *
     return (NULL);
   }
-  // ft_putstr("\n");
-  // index = 0;
-  // while (index < (int)tab_cmds->length)
-  // {
-  //   cmd = *(t_arr **)((unsigned char *)tab_cmds->ptr + index * tab_cmds->sizeof_elem);
-  //   ft_arr_print(cmd);
-  //   ft_putstr("\n");
-  //   index++;
-  // }
-  // ft_putstr("\n");
-  // ft_putstr("parsing start\n");
   return (tab_cmds);
 }
