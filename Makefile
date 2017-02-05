@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/02/01 17:37:18 by alex             ###   ########.fr        #
+#    Updated: 2017/02/05 20:08:06 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,22 @@ C_CURSOR= ft_cursor_left.c \
 					ft_cursor_down_history_line.c \
 					ft_cursor_valide_line.c
 
-C_PARSE= ft_parse_line.c
+C_PARSE= ft_parse_line.c \
+				 ft_parse_separate_cmd.c \
+				 ft_parse_init_cmd_line.c \
+				 ft_parse_init_new_arr_line.c \
+				 ft_parse_check_d_quote.c \
+				 ft_parse_pop_space_inside.c \
+				 ft_parse_pop_prev_space.c \
+				 ft_parse_replace_space.c \
+				 ft_parse_replace_d_left_redirect.c \
+				 ft_parse_replace_d_right_redirect.c \
+				 ft_parse_replace_s_right_redirect.c \
+				 ft_parse_replace_s_left_redirect.c \
+				 ft_parse_replace_pipe.c \
+				 ft_parse_replace_file_redirect.c \
+				 ft_parse_check_double_redirect.c \
+				 ft_parse_replace_stdin_sdterr_redirect.c
 
 C_BUILTIN= ft_is_builtin.c \
 					 ft_builtin_exec.c \

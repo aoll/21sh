@@ -215,7 +215,17 @@ t_arr  *ft_parse_separate_cmd(t_arr *arr);
 int  ft_parse_init_cmd_line(t_cmd_line *line);
 int  ft_parse_init_new_arr_line(t_arr **arr);
 int  ft_parse_check_d_quote(t_cmd_line *line);
-
+int  ft_parse_pop_space_inside(t_arr *arr);
+int  ft_parse_pop_prev_space(t_arr *arr);
+int  ft_parse_replace_space(t_arr *arr);
+int  ft_parse_replace_d_left_redirect(t_arr *arr);
+int  ft_parse_replace_d_right_redirect(t_arr *arr);
+int  ft_parse_replace_s_right_redirect(t_arr *arr);
+int  ft_parse_replace_s_left_redirect(t_arr *arr);
+int  ft_parse_replace_pipe(t_arr *arr);
+int  ft_parse_replace_file_redirect(t_arr *arr);
+int  ft_parse_check_double_redirect(t_arr *arr);
+int  ft_parse_replace_stdin_sdterr_redirect(t_arr *arr);
 /**
  * fork test
  */
