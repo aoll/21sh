@@ -6,64 +6,13 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/29 09:31:13 by alex              #+#    #+#             */
-/*   Updated: 2017/02/05 11:16:09 by alex             ###   ########.fr       */
+/*   Updated: 2017/02/05 12:29:38 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
 
-/**
- * separate the line on a multiple line whitout "free ;" (; not inside quote or
- * dquote)
- * return null if lien lenght == 0
- */
-t_arr  *ft_parse_separate_cmd(t_arr *arr)
-{
-  t_arr *tab_cmds;
-  t_arr *cmd;
-  char *s_line;
-  int index;
-  bool dquote;
-  bool quote;
 
-  if (!arr->length)
-  {
-    return (NULL);
-  }
-  index = 0;
-  dquote = false;
-  quote = false;
-  tab_cmds = ft_arr_new(1, sizeof(t_arr *));
-  cmd = ft_arr_new(1, sizeof(char *));
-  ft_arr_push(&tab_cmds, cmd, 0);
-  cmd->f_del = &ft_memdel;
-  cmd->f_print = &ft_arr_putchar;
-  while (index < (int)arr->length)
-  {
-    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
-    if (*s_line == '"' && !quote)
-    {
-      dquote = !dquote;
-    }
-    if (*s_line == '\'' && !dquote)
-    {
-      quote = !quote;
-    }
-    if (*s_line == ';' && !dquote && !quote && index + 1 < (int)arr->length)
-    {
-      cmd = ft_arr_new(1, sizeof(char *));
-      ft_arr_push(&tab_cmds, cmd, -1);
-      cmd->f_del = &ft_memdel;
-      cmd->f_print = &ft_arr_putchar;
-    }
-    else if (*s_line != ';')
-    {
-      ft_arr_push(&cmd, ft_strdup((const char *)s_line), -1);
-    }
-    index++;
-  }
-  return (tab_cmds);
-}
 
 /**
  * pop usless space outside quote or dquote

@@ -318,7 +318,6 @@ int  read_stdin(char **envp)
     {
       return (EXIT_FAILURE);
     }
-
     ft_init_cursor_cmd(&cursor);
   }
 

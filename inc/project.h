@@ -99,14 +99,23 @@ struct  s_cursor
   int test;
 };
 
-typedef struct s_token t_token;
-struct  s_token
+typedef struct s_cmd_line t_cmd_line;
+struct  s_cmd_line
 {
-  int  category;
-  int  pipe[2];
-  int  fd;
-  char **cmd_args;
+  int index;
+  char *s_line;
+  bool dquote;
+  bool quote;
 };
+
+// typedef struct s_token t_token;
+// struct  s_token
+// {
+//   int  category;
+//   int  pipe[2];
+//   int  fd;
+//   char **cmd_args;
+// };
 /**
  * PROTOTYPES
  */
@@ -202,6 +211,11 @@ int  ft_cursor_valide_line(t_cursor *cursor, t_arr **history_line, t_arr **curre
  * Parsing section
  */
 t_arr *ft_parse_line(t_arr *arr);
+t_arr  *ft_parse_separate_cmd(t_arr *arr);
+int  ft_parse_init_cmd_line(t_cmd_line *line);
+int  ft_parse_init_new_arr_line(t_arr **arr);
+int  ft_parse_check_d_quote(t_cmd_line *line);
+
 /**
  * fork test
  */
