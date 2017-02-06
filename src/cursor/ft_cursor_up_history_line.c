@@ -29,6 +29,7 @@ int  ft_cursor_up_history_line(t_cursor *cursor, t_arr *history_line, t_arr **cu
     tmp_arr = *(t_arr **)((unsigned char *)tmp_current_line->ptr);
   }
   // tmp_arr->f_print = &ft_arr_putchar;
+
   ft_arr_print(tmp_arr);
   cursor->index_line = tmp_arr->length;
 

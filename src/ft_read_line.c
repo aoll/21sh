@@ -82,12 +82,13 @@ int  ft_get_term_restore(struct termios *term)
 */
 void  ft_arr_putchar(const void *s)
 {
-  unsigned char *s_line_u;
   char *s_line;
 
-
-  s_line_u = *((unsigned char **)s);
-  s_line = (char *)s_line_u;
+  if (!s)
+  {
+    return;
+  }
+  s_line = *(char **)s;
   if (!s_line)
   {
     return;
@@ -97,9 +98,6 @@ void  ft_arr_putchar(const void *s)
     ft_mode_reverse_video();
   }
   ft_putstr(*((char **)s));
-  if (s_line[5] == 1)
-  {
-  }
   ft_mode_basic_video();
   return;
 }
@@ -116,7 +114,12 @@ void  *ft_arr_strdup(const void *s, size_t n)
   {
     return (NULL);
   }
-  new = ft_strdup(*((char **)s));
+  if (!(new = ft_strnew(8)))
+  {
+    return (NULL);
+  }
+  ft_memcpy(new, *((char **)s), 8);
+  // new = ft_strdup(*((char **)s));
   return (new);
 }
 

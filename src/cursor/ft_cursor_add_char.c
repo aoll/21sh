@@ -495,9 +495,7 @@ int  ft_cursor_add_char_save(t_cursor *cursor, t_arr *arr, char *buff)
       ft_putchar('Z');
       ft_move_left();
       ft_sup_char(1);
-      // ft_move_down(); test
       cursor->pos_x = 0;
-      // ft_move_x(cursor->pos_x); test
     }
     // }
     buff_tmp++;

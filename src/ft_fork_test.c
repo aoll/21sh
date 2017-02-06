@@ -82,32 +82,7 @@ int  ft_fork_env_arr_to_tab_str(t_arr *envp, char ***env_ptr)
 
 int  ft_son(char *path_cmd, char **tab_cmd, char **envp)
 {
-  // struct termios term;
-  //
-  // if (ft_get_term_restore(&term))
-  //   return (EXIT_FAILURE);
-
-
-  // term.c_lflag |= ICANON;
-  // term.c_lflag |=  ECHO;
-  // if (tcsetattr(0, 0, &term) == -1)
-  //   return (-1);
-  // ft_putstr("\ncocuou\n");
-  // ft_putstr("\ncoucou\n");
-  // execve("/usr/bin/emacs", tab_cmd, envp);
-  // execve("/usr/bin/emacs", tab_cmd, env_init);
-  // int i;
-  //
-  // i = 0;
-  // while (envp[i])
-  // {
-  //   ft_putstr(envp[i]);
-  //   ft_putstr("\n");
-  //   i++;
-  // }
   execve(path_cmd, tab_cmd, envp);
-  // execve(path_cmd, tab_cmd, env_init);
-
   return (EXIT_SUCCESS);
 }
 
@@ -239,19 +214,28 @@ int  ft_fork_list_fd(char **command, t_arr *tab_fd_stdout, t_arr *tab_fd_stderr,
   while (tab_fd_stdout->length)
   {
     fd = *(int **)(ft_arr_pop(&tab_fd_stdout, 0));
-    close(*fd);
+    if (*fd >= 0)
+    {
+      close(*fd);
+    }
     free(fd);
   }
   while (tab_fd_stderr->length)
   {
     fd = *(int **)(ft_arr_pop(&tab_fd_stderr, 0));
-    close(*fd);
+    if (*fd >= 0)
+    {
+      close(*fd);
+    }
     free(fd);
   }
   while (tab_fd_stdin->length)
   {
     fd = *(int **)(ft_arr_pop(&tab_fd_stdin, 0));
-    close(*fd);
+    if (*fd >= 0)
+    {
+      close(*fd);
+    }
     free(fd);
   }
   while (cmd[i])
@@ -293,19 +277,28 @@ int  ft_fork_list_fd(char **command, t_arr *tab_fd_stdout, t_arr *tab_fd_stderr,
         while (tab_fd_stdout->length)
         {
           fd = *(int **)(ft_arr_pop(&tab_fd_stdout, 0));
-          close(*fd);
+          if (*fd >= 0)
+          {
+            close(*fd);
+          }
           free(fd);
         }
         while (tab_fd_stderr->length)
         {
           fd = *(int **)(ft_arr_pop(&tab_fd_stderr, 0));
-          close(*fd);
+          if (*fd >= 0)
+          {
+            close(*fd);
+          }
           free(fd);
         }
         while (tab_fd_stdin->length)
         {
           fd = *(int **)(ft_arr_pop(&tab_fd_stdin, 0));
-          close(*fd);
+          if (*fd >= 0)
+          {
+            close(*fd);
+          }
           free(fd);
         }
         return (EXIT_FAILURE);
@@ -532,13 +525,11 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
 
     if (!(tab_cmd = ft_strsplit(cmd[i], SPACE_SEPARATOR)))
     {
-      ft_putstr("\n   BREAK     \n");
       break;
     }
     if (!tab_cmd[0])
     {
 
-      ft_putstr("\n     BREAK_2_   \n");
       break;
     }
 
@@ -651,6 +642,19 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
           }
           index++;
         }
+        if (tab_path)
+        {
+          i_free = 0;
+          while (tab_path[i_free])
+          {
+            free(tab_path[i_free]);
+            i_free++;
+          }
+          free(tab_path);
+          tab_path = NULL;
+        }
+
+
 
       }
 
@@ -678,15 +682,18 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
       if (tab_fd_stdin->length)
       {
         // close(tube_fork_stdout_tmp[1]);
-        buff = ft_strnew(1);
-        while ((rd = read(tab_tube[i].tube[0], buff, 1)))
+        if (nb_pipe)
         {
-          if (rd < 0)
+          buff = ft_strnew(1);
+          while ((rd = read(tab_tube[i].tube[0], buff, 1)))
+          {
+            if (rd < 0)
             break;
-          write(tube_fork_stdin[1], buff, 1);
+            write(tube_fork_stdin[1], buff, 1);
+          }
+          free(buff);
+          buff = NULL;
         }
-        free(buff);
-        buff = NULL;
 
         index = 0;
         while (index < (int)tab_fd_stdin->length)
@@ -729,6 +736,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
               free(line);
               line = NULL;
               free(end_word);
+              end_word = NULL;
             }
           }
           else
@@ -853,19 +861,28 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
       while (tab_fd_stdout->length)
       {
         fd = (int *)(ft_arr_pop(&tab_fd_stdout, 0));
-        close(*fd);
+        if (*fd >= 0)
+        {
+          close(*fd);
+        }
         free(fd);
       }
       while (tab_fd_stderr->length)
       {
         fd = (int *)(ft_arr_pop(&tab_fd_stderr, 0));
-        close(*fd);
+        if (*fd >= 0)
+        {
+          close(*fd);
+        }
         free(fd);
       }
       while (tab_fd_stdin->length)
       {
         fd = (int *)(ft_arr_pop(&tab_fd_stdin, 0));
-        close(*fd);
+        if (*fd >= 0)
+        {
+          close(*fd);
+        }
         free(fd);
       }
       while (tab_d_end_word->length)
