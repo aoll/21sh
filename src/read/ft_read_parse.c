@@ -62,17 +62,17 @@ int  ft_read_parse_ctrl(const char *buff, t_cursor *cursor, t_arr *arr)
  */
 int  ft_read_parse_arrow(
   const char *buff, t_cursor *cursor,
-  t_arr **arr, t_arr *history_line, t_arr *current_line)
+  t_arr **arr, t_arr *history_line, t_arr **current_line)
 {
   if (buff[0] == 27 && buff[1] == 91 && (buff[2] == 65 || buff[2] == 66
     || buff[2] == 67 || buff[2] == 68) && !buff[3] && !buff[4] && !buff[5]
     && !buff[6] && !buff[7])
   {
     if (buff[2] == 65 && cursor->index_history - 1 >= 0 && cursor->is_env)
-      ft_cursor_up_history_line(cursor, history_line, &current_line, arr);
+      ft_cursor_up_history_line(cursor, history_line, current_line, arr);
     else if (buff[2] == 66 && cursor->index_history +  1
       < (int)history_line->length && cursor->is_env)
-      ft_cursor_down_history_line(cursor, history_line, &current_line, arr);
+      ft_cursor_down_history_line(cursor, history_line, current_line, arr);
     else if (buff[1] == 91 && buff[2] == 68 && cursor->is_env)
       ft_cursor_left(cursor, *arr);
     else if (buff[1] == 91 && buff[2] == 67 && cursor->is_env)
@@ -264,7 +264,7 @@ int  ft_read_parse_eof(char **buff, t_cursor *cursor,
  */
 int  ft_read_parse(
   const char *buff, t_cursor *cursor, t_arr **arr_ptr, t_arr *history_line,
-  t_arr *current_line, t_arr **select_line, t_arr **copy_line)
+  t_arr **current_line, t_arr **select_line, t_arr **copy_line)
 {
   int err;
   t_arr *arr;

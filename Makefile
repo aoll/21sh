@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/02/05 20:08:06 by alex             ###   ########.fr        #
+#    Updated: 2017/02/06 12:25:47 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,17 @@ C_PARSE= ft_parse_line.c \
 				 ft_parse_replace_pipe.c \
 				 ft_parse_replace_file_redirect.c \
 				 ft_parse_check_double_redirect.c \
-				 ft_parse_replace_stdin_sdterr_redirect.c
+				 ft_parse_replace_stdin_sdterr_redirect.c \
+				 ft_parse_replace_sdterr_redirect.c \
+				 ft_parse_replace_stderr_prev_line.c \
+				 ft_parse_replace_sdterr_double_redirect.c \
+				 ft_parse_replace_stderr_double_prev_line.c \
+				 ft_parse_check_double.c \
+				 ft_parse_is_only_space.c \
+				 ft_parse_check_end_space.c \
+				 ft_parse_check_file_redirect.c \
+				 ft_parse_check_error.c \
+				 ft_parse_pop_and_replace_and_check_error.c
 
 C_BUILTIN= ft_is_builtin.c \
 					 ft_builtin_exec.c \

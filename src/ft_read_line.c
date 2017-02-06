@@ -372,7 +372,7 @@ int  read_stdin(char **envp)
         // cursor.prompt_len = ft_strlen(cursor.prompt); // maybe one function with the adress of promt a the change is do it only if a change has be do it an not a check every loop
 
 
-        if (!(ft_read_parse((const char *)buff, &cursor, &arr, history_line, current_line, &select_line, &copy_line)))
+        if (!(ft_read_parse((const char *)buff, &cursor, &arr, history_line, &current_line, &select_line, &copy_line)))
         {
           ft_bzero(buff, 8);
           if (!cursor.is_select && select_line->length && arr->length)
@@ -398,10 +398,6 @@ int  read_stdin(char **envp)
           {
             ft_cursor_end(&cursor, arr);
           }
-          if (tab_cmds)
-          {
-            //TODO free tab_cmds
-          }
           tab_cmds = ft_parse_line(arr);
           if (tab_cmds)
           {
@@ -413,6 +409,19 @@ int  read_stdin(char **envp)
             }
             ft_putstr("\n");
             ft_fork_test(&env, tab_cmds);
+            if (tab_cmds)
+            {
+              if (tab_cmds->length)
+              {
+                ft_arr_free(ft_arr_pop(&tab_cmds, 0));
+              }
+              if (tab_cmds->ptr)
+              {
+                free(tab_cmds->ptr);
+              }
+              free(tab_cmds);
+              tab_cmds = NULL;
+            }
             if (cursor.is_env)
             {
               ft_term_apply_cmd(cursor.mode_insertion, 1);

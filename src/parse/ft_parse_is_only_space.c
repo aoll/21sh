@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parse_line.c                                    :+:      :+:    :+:   */
+/*   ft_parse_is_only_space.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/29 09:31:13 by alex              #+#    #+#             */
-/*   Updated: 2017/02/06 15:22:11 by alex             ###   ########.fr       */
+/*   Created: 2017/02/06 11:54:08 by alex              #+#    #+#             */
+/*   Updated: 2017/02/06 11:54:28 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
 
 /**
- * parsing
+ * check if the charactere are only space
+ * if a not space if found return 0
  */
-t_arr  *ft_parse_line(t_arr *arr)
+int  ft_parse_is_only_space(t_arr *arr, int index)
 {
-  t_arr *tab_cmds;
-  int err;
+  char *s_line;
 
-  if (!(tab_cmds = ft_parse_separate_cmd(arr)))
-    return (NULL);
-  
-  if ((err = ft_parse_pop_and_replace_and_check_error(tab_cmds)))
+  while (index < (int)arr->length)
   {
-    if (tab_cmds)
+    s_line = *(char **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
+    if (!ft_isspace(*s_line))
     {
-      if (tab_cmds->length)
-        ft_arr_free(ft_arr_pop(&tab_cmds, 0));
-      if (tab_cmds->ptr)
-        free(tab_cmds->ptr);
-      free(tab_cmds);
-      tab_cmds = NULL;
+      return (EXIT_SUCCESS);
     }
-    return (NULL);
+    index++;
   }
-  return (tab_cmds);
+  return (EXIT_FAILURE);
 }

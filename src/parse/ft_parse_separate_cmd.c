@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/05 12:34:16 by alex              #+#    #+#             */
-/*   Updated: 2017/02/05 18:56:01 by alex             ###   ########.fr       */
+/*   Updated: 2017/02/06 15:29:31 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ static int  ft_parse_separate_cmd_is_new_cmd(
   if (*line->s_line == ';' && !line->dquote && !line->quote
   && line->index + 1 < (int)arr->length)
   {
-    ft_parse_separate_cmd_push_new(tab_cmds, cmd);
+    if ((*cmd)->length)
+    {
+      ft_parse_separate_cmd_push_new(tab_cmds, cmd);
+    }
   }
   else if (*line->s_line != ';')
   {

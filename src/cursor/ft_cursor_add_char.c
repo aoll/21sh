@@ -45,9 +45,13 @@ int  ft_arr_add_char(t_cursor *cursor, t_arr *arr, char c, int is_tab)
 {
   char *char_line;
 
-  if (c == '"')
+  if (c == '"' && !cursor->quote)
   {
     cursor->dquote = !cursor->dquote;
+  }
+  if (c == '\'' && !cursor->dquote)
+  {
+    cursor->quote = !cursor->quote;
   }
   char_line = ft_strnew(8);
   ft_bzero(char_line, 8);

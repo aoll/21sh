@@ -625,12 +625,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
           free(tab_path);
           tab_path = NULL;
         }
-        // if (env_copy)
-        // {
-        //   ft_arr_free(env_copy);
-        //   env_copy = NULL;
-        // }
-        // ft_arr_free(env_copy);
+
         tab_path = ft_strsplit(path_ptr, ':');
         if (path_ptr)
         {
@@ -668,36 +663,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
         free(path_tmp);
         path_tmp = NULL;
       }
-      // if (tab_cmd)
-      // {
-      //   i_free = 0;
-      //   while (tab_cmd[i_free])
-      //   {
-      //     if (tab_cmd[i_free])
-      //     {
-      //       free(tab_cmd[i_free]);
-      //       tab_cmd[i_free] = NULL;
-      //     }
-      //     i_free++;
-      //   }
-      //   free(tab_cmd);
-      //   tab_cmd = NULL;
-      // }
-      // if (envp)
-      // {
-      //   i_free = 0;
-      //   while (envp[i_free])
-      //   {
-      //     if (envp[i_free])
-      //     {
-      //       free(envp[i_free]);
-      //       envp[i_free] = NULL;
-      //     }
-      //     i_free++;
-      //   }
-      //   free(envp);
-      //   envp = NULL;
-      // }
+
       if (!index_builtin)
       {
         ft_putstr("21sh: command not found: ");
@@ -757,9 +723,6 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
                 line = NULL;
               }
               get_next_line(0, &line);
-              // ft_putstr("\nline:");
-              // ft_putstr(line);
-              // ft_putstr("\n");
             }
             if (line)
             {

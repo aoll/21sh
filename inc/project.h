@@ -106,16 +106,9 @@ struct  s_cmd_line
   char *s_line;
   bool dquote;
   bool quote;
+  bool check;
 };
 
-// typedef struct s_token t_token;
-// struct  s_token
-// {
-//   int  category;
-//   int  pipe[2];
-//   int  fd;
-//   char **cmd_args;
-// };
 /**
  * PROTOTYPES
  */
@@ -153,7 +146,8 @@ int  ft_clear_down(void);
  /**
   * Functions for read the key
   */
-  int  ft_read_parse(const char *buff, t_cursor *cursor, t_arr **arr_ptr, t_arr *history_line, t_arr *current_line, t_arr **select_line, t_arr **copy_line);
+  int  ft_read_parse(
+    const char *buff, t_cursor *cursor, t_arr **arr_ptr, t_arr *history_line, t_arr **current_line, t_arr **select_line, t_arr **copy_line);
   int  ft_read_parse_eof(char **buff, t_cursor *cursor, t_arr *arr, t_arr *history_line, t_arr *current_line, t_arr *copy_line, t_arr *select_line, struct termios *term, t_arr *env, bool option);
 /**
  * Action on the cursor
@@ -190,22 +184,29 @@ int  ft_arr_index_line_start_showed(t_cursor *cursor, t_arr *arr, int line_off);
 int  ft_index_line_start_showed(t_cursor *cursor, t_arr *arr);
 
 int  ft_cursor_restore_index(t_cursor *cursor, t_arr *arr, int index);
-int  ft_cursor_nb_line_displayed(t_cursor *cursor, t_arr *arr, int index_start_showed, int is_total);
+int  ft_cursor_nb_line_displayed(
+  t_cursor *cursor, t_arr *arr, int index_start_showed, int is_total);
 int  ft_cursor_restore_y_x(t_cursor *cursor, t_arr *arr, int nb_line_displayed);
-int  ft_cursor_resize(t_cursor *cursor, t_arr *arr, struct winsize *terminal_size_old);
+int  ft_cursor_resize(
+  t_cursor *cursor, t_arr *arr, struct winsize *terminal_size_old);
 
-int  ft_cursor_copy_line(t_cursor *cursor, t_arr *select_line, t_arr **copy_line);
+int  ft_cursor_copy_line(
+  t_cursor *cursor, t_arr *select_line, t_arr **copy_line);
 
-int  ft_cursor_cut(t_cursor *cursor, t_arr *arr, t_arr *select_line, t_arr **copy_line);
+int  ft_cursor_cut(
+  t_cursor *cursor, t_arr *arr, t_arr *select_line, t_arr **copy_line);
 int  ft_cursor_paste(t_cursor *cursor, t_arr *arr, t_arr *copy_line);
 
 int  ft_cursor_up_line(t_cursor *cursor, t_arr *arr);
 int  ft_cursor_down_line(t_cursor *cursor, t_arr *arr);
 int  ft_cusor_clear_down_line(t_cursor *cursor, t_arr *arr);
 
-int  ft_cursor_up_history_line(t_cursor *cursor, t_arr *history_line, t_arr **current_line, t_arr **arr);
-int  ft_cursor_down_history_line(t_cursor *cursor, t_arr *history_line, t_arr **current_line, t_arr **arr);
-int  ft_cursor_valide_line(t_cursor *cursor, t_arr **history_line, t_arr **current_line, t_arr **arr);
+int  ft_cursor_up_history_line(
+  t_cursor *cursor, t_arr *history_line, t_arr **current_line, t_arr **arr);
+int  ft_cursor_down_history_line(
+  t_cursor *cursor, t_arr *history_line, t_arr **current_line, t_arr **arr);
+int  ft_cursor_valide_line(
+  t_cursor *cursor, t_arr **history_line, t_arr **current_line, t_arr **arr);
 
 /**
  * Parsing section
@@ -226,6 +227,34 @@ int  ft_parse_replace_pipe(t_arr *arr);
 int  ft_parse_replace_file_redirect(t_arr *arr);
 int  ft_parse_check_double_redirect(t_arr *arr);
 int  ft_parse_replace_stdin_sdterr_redirect(t_arr *arr);
+int  ft_parse_replace_sdterr_redirect(t_arr *arr);
+int  ft_parse_replace_prev_line_stderr(
+  t_cmd_line *line, char **s_prev_line, char *s_prev_prev_line, t_arr *arr);
+int  ft_parse_replace_prev_line_stdout(
+  t_cmd_line *line, char **s_prev_line, char *s_prev_prev_line, t_arr *arr);
+int  ft_parse_replace_prev_prev_set_line(
+  t_cmd_line *line, char **s_prev_line, char **s_prev_prev_line);
+int  ft_parse_replace_prev_prev_line_stderr(
+  t_cmd_line *line, char **s_prev_line, char **s_prev_prev_line, t_arr *arr);
+int  ft_parse_replace_prev_prev_line_stdout(
+  t_cmd_line *line, char **s_prev_line, char **s_prev_prev_line, t_arr *arr);
+int  ft_parse_replace_sdterr_double_redirect(t_arr *arr);
+int  ft_parse_replace_stderr_double_prev_line(
+  t_cmd_line *line, char **s_prev_line, char *s_prev_prev_line, t_arr *arr);
+int  ft_parse_replace_stdout_double_prev_line(
+  t_cmd_line *line, char **s_prev_line, char *s_prev_prev_line, t_arr *arr);
+int  ft_replace_double_stderr_prev_prev_set_line(
+  t_cmd_line *line, char **s_prev_line, char **s_prev_prev_line);
+int  ft_parse_replace_stderr_double_prev_prev_line(
+  t_cmd_line *line, char **s_prev_line, char **s_prev_prev_line, t_arr *arr);
+int  ft_parse_replace_stdout_double_prev_prev_line(
+  t_cmd_line *line, char **s_prev_line, char **s_prev_prev_line, t_arr *arr);
+int  ft_parse_check_double(t_arr *arr, int token);
+int  ft_parse_is_only_space(t_arr *arr, int index);
+int  ft_parse_check_end_space(t_arr *arr);
+int  ft_parse_check_file_redirect(t_arr *arr);
+int  ft_parse_check_error(t_arr *cmd);
+int  ft_parse_pop_and_replace_and_check_error(t_arr *tab_cmds);
 /**
  * fork test
  */
@@ -236,14 +265,16 @@ int  ft_fork_test(t_arr **env, t_arr *tab_cmds);
  * builtin
  */
 int  ft_is_builtin(char *command);
-int  ft_builtin_exec(int index_builtin,char **tab_cmd, t_arr **env, int fd_stdout, int fd_stderr);
+int  ft_builtin_exec(
+  int index_builtin,char **tab_cmd, t_arr **env, int fd_stdout, int fd_stderr);
 int  ft_builtin_env(char ***tab_cmd, t_arr **env, int fd_stdout, int fd_stderr);
 int  ft_builtin_setenv(const char **tab_cmd, t_arr **env, int fd_stderr);
 int  ft_builtin_unsetenv(const char **tab_cmd, t_arr **env, int fd_stderr);
 int  ft_builtin_cd(const char **tab_cmd, t_arr **env, int fd_stderr);
 int  ft_builtin_echo(const char **tab_cmd, t_arr **env);
 int  ft_builtin_exit(char **tab_cmd, t_arr **env);
-int  ft_builtin_setenv_check_argument(const char ** tab_cmd, char *cmd, int fd_stderr);
+int  ft_builtin_setenv_check_argument(
+  const char ** tab_cmd, char *cmd, int fd_stderr);
 
 void  ft_read_line(char **env);
 
