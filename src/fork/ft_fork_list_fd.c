@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 11:51:20 by alex              #+#    #+#             */
-/*   Updated: 2017/02/07 15:57:52 by alex             ###   ########.fr       */
+/*   Updated: 2017/02/07 18:57:26 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,124 +18,111 @@
  * error if the file can be open
  */
 
-static int  ft_fork_list_fd_null(
-  char **cmd, int i, char **name_file, char **error_ptr)
-{
-  struct stat buf;
-  char *tmp;
 
-  tmp = *cmd;
-  tmp[i] = SPACE_SEPARATOR;
-  lstat(*name_file, &buf);
-  if (*error_ptr)
+static int  ft_fork_list_fd_switch_right_dup(int fd, t_arr_fd *arr_fd)
+{
+  int err;
+
+  if (fd == -2)
   {
-    free(*error_ptr);
+    if ((err = ft_fork_list_fd_dup(
+      arr_fd->arr_fd_stdout, (const t_arr *)arr_fd->arr_fd_stderr)))
+    {
+      return (EXIT_FAILURE);
+    }
   }
-  if (S_ISDIR(buf.st_mode))
+  else if (fd == -1)
   {
-    *error_ptr = ft_strdup("21sh: it is a directory: ");
+    if ((err = ft_fork_list_fd_dup(
+      arr_fd->arr_fd_stderr, (const t_arr *)arr_fd->arr_fd_stdout)))
+    {
+      return (EXIT_FAILURE);
+    }
   }
-  else
-  {
-    *error_ptr = ft_strdup("21sh: permission denied: ");
-  }
-  *error_ptr = ft_strjoin_free(error_ptr, *name_file);
-  *error_ptr = ft_strjoin_free(error_ptr, "\n");
-  free(*name_file);
   return (EXIT_SUCCESS);
 }
 
-int  ft_fork_list_fd(char **command, t_arr *tab_fd_stdout, t_arr *tab_fd_stderr, t_arr *tab_fd_stdin, char **error_ptr)
+static int  ft_fork_list_fd_switch_right_redirect(
+  int c, int **fd, t_arr_fd *arr_fd)
 {
-  char *name_file;
+  int err;
+
+  if (c == STDOUT_STDERR_REDIRECT
+    || c == STDERR_REDIRECT || c == D_STDERR_REDIRECT)
+  {
+    if ((err = ft_fork_list_fd_stderr(
+      arr_fd->arr_fd_stderr, arr_fd->arr_fd_stdout, fd, c)))
+    {
+      return (EXIT_FAILURE);
+    }
+  }
+  else if (c == S_RIGHT_REDIRECT || c == D_RIGHT_REDIRECT)
+  {
+    ft_arr_push(&arr_fd->arr_fd_stdout, *fd, -1);
+  }
+  else if (c == S_LEFT_REDIRECT)
+  {
+    ft_arr_push(&arr_fd->arr_fd_stdin, *fd, -1);
+  }
+  return (EXIT_SUCCESS);
+}
+
+static int  ft_fork_list_fd_switch_right(
+  int **fd_ptr, t_arr_fd *arr_fd, char *cmd, int i)
+{
+  int err;
+  int *fd;
+
+  fd = *fd_ptr;
+  if (*fd == -2 || *fd == -1)
+  {
+    if ((err = ft_fork_list_fd_switch_right_dup(*fd, arr_fd)))
+    {
+      return (EXIT_FAILURE);
+    }
+    return (EXIT_SUCCESS);
+  }
+  if ((err = ft_fork_list_fd_switch_right_redirect(cmd[i], fd_ptr, arr_fd)))
+  {
+    return (EXIT_FAILURE);
+  }
+  return (EXIT_SUCCESS);
+}
+
+static int  ft_fork_list_fd_is_redirect(int c)
+{
+  if (c == S_RIGHT_REDIRECT || c == D_RIGHT_REDIRECT
+    || c == STDOUT_STDERR_REDIRECT || c == STDERR_REDIRECT
+    || c == D_STDERR_REDIRECT || c == S_LEFT_REDIRECT)
+  {
+    return (1);
+  }
+  return (EXIT_SUCCESS);
+}
+
+int  ft_fork_list_fd(char **command, t_arr_fd *arr_fd, char **error_ptr)
+{
   int i;
   int *fd;
   char *cmd;
-  int *fd_err;
-  int index;
-  int *fd_tmp;
-  int *fd_dup;
+  int err;
 
-  i = 0;
+  i = -1;
   cmd = *command;
-  ft_arr_close_fd(tab_fd_stdout);
-  ft_arr_close_fd(tab_fd_stderr);
-  ft_arr_close_fd(tab_fd_stdin);
-  while (cmd[i])
-  {
+  ft_arr_close_arr_fd(arr_fd);
+  while (cmd[++i])
     if (cmd[i] == D_LEFT_REDIRECT)
     {
-      if (!(fd_dup = malloc(sizeof(int))))
-      {
+      if ((err = ft_fork_list_fd_left_redirect(arr_fd->arr_fd_stdin)))
         return (EXIT_FAILURE);
-      }
-      *fd_dup = D_LEFT_REDIRECT;
-      ft_arr_push(&tab_fd_stdin, fd_dup, -1);
     }
-    else if (cmd[i] == S_RIGHT_REDIRECT || cmd[i] == D_RIGHT_REDIRECT || cmd[i] == STDOUT_STDERR_REDIRECT || cmd[i] == STDERR_REDIRECT || cmd[i] == D_STDERR_REDIRECT || cmd[i] == S_LEFT_REDIRECT)
+    else if (ft_fork_list_fd_is_redirect(cmd[i]))
     {
-
-      if (!(name_file = ft_fork_name_file(&cmd, i + 1)))
-      {
+      if ((err = ft_fork_fd_from_name(&fd, &cmd, error_ptr, i)))
         return (EXIT_FAILURE);
-      }
-      fd = ft_fork_fd(name_file, cmd[i]);
-      if (fd == NULL)
-      {
-        ft_fork_list_fd_null(&cmd, i, &name_file, error_ptr);
+      if ((err = ft_fork_list_fd_switch_right(&fd, arr_fd, cmd, i)))
         return (EXIT_FAILURE);
-      }
-      free(name_file);
-      index = 0;
-      if (*fd == -2)
-      {
-        while (index < (int)tab_fd_stderr->length)
-        {
-          fd_tmp = *(int **)((unsigned char *)tab_fd_stderr->ptr + index * tab_fd_stderr->sizeof_elem);
-          if (!(fd_dup = malloc(sizeof(int))))
-          {
-            return (EXIT_FAILURE);
-          }
-          *fd_dup = *fd_tmp;
-          ft_arr_push(&tab_fd_stdout, fd_dup, -1);
-          index++;
-        }
-      }
-      else if (*fd == -1)
-      {
-        while (index < (int)tab_fd_stdout->length)
-        {
-          fd_tmp = *(int **)((unsigned char *)tab_fd_stdout->ptr + index * tab_fd_stdout->sizeof_elem);
-          if (!(fd_dup = malloc(sizeof(int))))
-          {
-            return (EXIT_FAILURE);
-          }
-          *fd_dup = *fd_tmp;
-          ft_arr_push(&tab_fd_stderr, fd_dup, -1);
-          index++;
-        }
-      }
-      else if (cmd[i] == STDOUT_STDERR_REDIRECT || cmd[i] == STDERR_REDIRECT || cmd[i] == D_STDERR_REDIRECT)
-      {
-        ft_arr_push(&tab_fd_stderr, fd, -1);
-        if (cmd[i] == STDOUT_STDERR_REDIRECT)
-        {
-          fd_err = malloc(sizeof(int));
-          *fd_err = *fd;
-          ft_arr_push(&tab_fd_stdout, fd_err, -1);
-        }
-      }
-      else if (cmd[i] == S_RIGHT_REDIRECT || cmd[i] == D_RIGHT_REDIRECT)
-      {
-        ft_arr_push(&tab_fd_stdout, fd, -1);
-      }
-      else if (cmd[i] == S_LEFT_REDIRECT)
-      {
-        ft_arr_push(&tab_fd_stdin, fd, -1);
-      }
       cmd[i] = SPACE_SEPARATOR;
     }
-    i++;
-  }
   return (EXIT_SUCCESS);
 }

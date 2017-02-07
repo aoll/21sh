@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/02/07 11:51:00 by alex             ###   ########.fr        #
+#    Updated: 2017/02/07 17:49:30 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -121,7 +121,14 @@ C_BUILTIN= ft_is_builtin.c \
 C_FORK= ft_fork_name_file.c \
 				ft_fork_env_arr_to_tab_str.c \
 				ft_fork_fd.c \
-				ft_fork_list_fd.c
+				ft_fork_list_fd.c \
+				ft_fork_list_fd_null.c \
+				ft_fork_fd_from_name.c \
+				ft_fork_list_fd_dup.c \
+				ft_fork_list_fd_stderr.c \
+				ft_fork_list_fd_left_redirect.c \
+				ft_fork_list_fd_tmp.c \
+				ft_arr_close_arr_fd.c
 
 ST_SRC= ft_start.c ft_env_init.c ft_read_line.c ft_fork_test.c
 

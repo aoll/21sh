@@ -109,6 +109,15 @@ struct  s_cmd_line
   bool check;
 };
 
+typedef struct s_arr_fd t_arr_fd;
+struct s_arr_fd
+{
+  t_arr *arr_fd_stdout;
+  t_arr *arr_fd_stderr;
+  t_arr *arr_fd_stdin;
+  t_arr *arr_d_end_word;
+};
+
 /**
  * PROTOTYPES
  */
@@ -263,8 +272,19 @@ int  ft_fork_test(t_arr **env, t_arr *tab_cmds);
 char  *ft_fork_name_file(char **command, int i);
 int  ft_fork_env_arr_to_tab_str(t_arr *envp, char ***env_ptr);
 int  *ft_fork_fd(char *name_file, int token);
-int  ft_fork_list_fd(
-  char **command, t_arr *tab_fd_stdout, t_arr *tab_fd_stderr, t_arr *tab_fd_stdin, char **error_ptr);
+
+int  ft_fork_list_fd(char **command, t_arr_fd *arr_fd, char **error_ptr);
+int  ft_fork_list_fd_null(
+  char **cmd, int i, char **name_file, char **error_ptr);
+int  ft_fork_fd_from_name(int **fd, char **command, char **error_ptr, int i);
+int  ft_fork_list_fd_dup(t_arr *dst, const t_arr *src);
+int  ft_fork_list_fd_stderr(
+  t_arr *arr_fd_stderr, t_arr *arr_fd_stdout, int **fd_ptr, int c);
+int  ft_fork_list_fd_left_redirect(t_arr *arr_fd_stdin);
+int  ft_arr_close_arr_fd(t_arr_fd *arr_fd);
+//TODO
+int  ft_fork_list_fd_tmp(char **cmd, t_arr_fd *arr_fd, char **error_ptr);
+
 /**
  * builtin
  */
