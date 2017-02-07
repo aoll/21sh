@@ -28,13 +28,9 @@ int  ft_cursor_up_history_line(t_cursor *cursor, t_arr *history_line, t_arr **cu
   {
     tmp_arr = *(t_arr **)((unsigned char *)tmp_current_line->ptr);
   }
-  // tmp_arr->f_print = &ft_arr_putchar;
-
   ft_arr_print(tmp_arr);
   cursor->index_line = tmp_arr->length;
-
   ft_cursor_restore_y_x(cursor, tmp_arr, ft_cursor_nb_line_displayed(cursor, tmp_arr, 0, 0));
-
   ft_cursor_restore_index(cursor, tmp_arr, cursor->index_line);
   *arr = tmp_arr;
   *current_line = tmp_current_line;
