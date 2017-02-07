@@ -30,55 +30,6 @@ pid_t create_process(void)
     return pid;
 }
 
-/**
- * return a new pointeur to a char **
- */
-int  ft_fork_env_arr_to_tab_str(t_arr *envp, char ***env_ptr)
-{
-  char **env;
-  int index;
-  t_kval *kv;
-  int i;
-  int index_i;
-  int len;
-
-  env = *env_ptr;
-  if (!envp)
-  {
-    return (EXIT_FAILURE);
-  }
-
-  if (!(env = malloc(sizeof(char *) * (envp->length + 1))))
-  {
-    return (EXIT_FAILURE);
-  }
-
-  env[envp->length] = NULL;
-  index = 0;
-  while (index < (int)envp->length)
-  {
-    kv = *(t_kval **)((unsigned char *)envp->ptr + index * envp->sizeof_elem);
-    env[index] = ft_strnew(ft_strlen(kv->key) + ft_strlen(kv->value) + 1);
-    i = -1;
-    len = ft_strlen(kv->key);
-    while (++i < len)
-    {
-      env[index][i] = kv->key[i];
-    }
-    env[index][i] = '=';
-    i++;
-    index_i = -1;
-    len = ft_strlen(kv->value);
-    while (++index_i <len)
-    {
-      env[index][i] = kv->value[index_i];
-      i++;
-    }
-    index++;
-  }
-  *env_ptr = env;
-  return (EXIT_SUCCESS);
-}
 
 int  ft_son(char *path_cmd, char **tab_cmd, char **envp)
 {
@@ -86,228 +37,7 @@ int  ft_son(char *path_cmd, char **tab_cmd, char **envp)
   return (EXIT_SUCCESS);
 }
 
-/**
- * return a name file
- */
-char  *ft_fork_name_file(char **command, int i)
-{
-  int index;
-  char *name_file;
-  char *cmd;
 
-  cmd = *command;
-  name_file = NULL;
-  while (cmd[i])
-  {
-    if (cmd[i] != SPACE_SEPARATOR)
-    {
-      break;
-    }
-    i++;
-  }
-  index = i;
-  while (cmd[index])
-  {
-    if (cmd[index] == SPACE_SEPARATOR)
-    {
-      break;
-    }
-    index++;
-  }
-  if (!(name_file = ft_strsub(cmd, i, index - i)))
-  {
-    return (NULL);
-  }
-  while (i < index)
-  {
-    cmd[i] = SPACE_SEPARATOR;
-    i++;
-  }
-  // index--;
-
-  return (name_file);
-}
-
-/**
- *  return a case of sucess a fd with the good permission
- * -1 if error like not have the permission
- */
-int  *ft_fork_fd(char *name_file, int token)
-{
-  int fd;
-  int *fd_ptr;
-
-  fd = -1;
-  if (!(fd_ptr = malloc(sizeof(int))))
-  {
-    return (NULL);
-  }
-  *fd_ptr = -1;
-  if (token == S_RIGHT_REDIRECT || token == STDOUT_STDERR_REDIRECT || token == STDERR_REDIRECT)
-  {
-    if (*name_file == FILE_REDIRECT)
-    {
-      fd = ft_atoi(name_file + 1);
-
-    }
-    else
-    {
-      fd = open(name_file, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
-    }
-  }
-  else if (token == D_RIGHT_REDIRECT || token == D_STDERR_REDIRECT)
-  {
-    if (*name_file == FILE_REDIRECT)
-    {
-      fd = ft_atoi(name_file + 1);
-    }
-    else
-    {
-      fd = open(name_file, O_CREAT|O_RDWR|O_APPEND, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
-    }
-  }
-  else if (token == S_LEFT_REDIRECT)
-  {
-    if (*name_file == FILE_REDIRECT)
-    {
-      fd = ft_atoi(name_file + 1);
-    }
-    else
-    {
-      fd = open(name_file, O_CREAT|O_RDWR, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
-    }
-  }
-  if (fd == -1)
-  {
-    free(fd_ptr);
-    fd_ptr = NULL;
-    return (NULL);
-  }
-  if (fd == 1 || fd == 2)
-  {
-    fd *= -1;
-  }
-
-  *fd_ptr = fd;
-  return (fd_ptr);
-}
-
-/**
- * in case in sucess return EXIT_SUCCESS else EXIT_FAILURE
- * give a list of fd with good right and position cursor
- * error if the file can be open
- */
-int  ft_fork_list_fd(char **command, t_arr *tab_fd_stdout, t_arr *tab_fd_stderr, t_arr *tab_fd_stdin)
-{
-  char *name_file;
-  int i;
-  int *fd;
-  char *cmd;
-  int *fd_err;
-  int index;
-  int *fd_tmp;
-  int *fd_dup;
-  struct stat buf;
-
-  i = 0;
-  cmd = *command;
-  ft_arr_close_fd(tab_fd_stdout);
-  ft_arr_close_fd(tab_fd_stderr);
-  ft_arr_close_fd(tab_fd_stdin);
-  while (cmd[i])
-  {
-    if (cmd[i] == D_LEFT_REDIRECT)
-    {
-      if (!(fd_dup = malloc(sizeof(int))))
-      {
-        return (EXIT_FAILURE);
-      }
-      *fd_dup = D_LEFT_REDIRECT;
-      ft_arr_push(&tab_fd_stdin, fd_dup, -1);
-    }
-    else if (cmd[i] == S_RIGHT_REDIRECT || cmd[i] == D_RIGHT_REDIRECT || cmd[i] == STDOUT_STDERR_REDIRECT || cmd[i] == STDERR_REDIRECT || cmd[i] == D_STDERR_REDIRECT || cmd[i] == S_LEFT_REDIRECT)
-    {
-
-      if (!(name_file = ft_fork_name_file(&cmd, i + 1)))
-      {
-
-        return (EXIT_FAILURE);
-      }
-      fd = ft_fork_fd(name_file, cmd[i]);
-      if (fd == NULL)
-      {
-        cmd[i] = SPACE_SEPARATOR;
-        lstat(name_file, &buf);
-        if (S_ISDIR(buf.st_mode))
-        {
-          ft_putstr("21sh: it is a directory: ");
-        }
-        else
-        {
-          ft_putstr("21sh: permission denied: ");
-        }
-        ft_putstr(name_file);
-        ft_putstr("\n");
-        free(name_file);
-        ft_arr_close_fd(tab_fd_stdout);
-        ft_arr_close_fd(tab_fd_stderr);
-        ft_arr_close_fd(tab_fd_stdin);
-        return (EXIT_FAILURE);
-      }
-      free(name_file);
-      index = 0;
-      if (*fd == -2)
-      {
-        while (index < (int)tab_fd_stderr->length)
-        {
-          fd_tmp = *(int **)((unsigned char *)tab_fd_stderr->ptr + index * tab_fd_stderr->sizeof_elem);
-          if (!(fd_dup = malloc(sizeof(int))))
-          {
-            return (EXIT_FAILURE);
-          }
-          *fd_dup = *fd_tmp;
-          ft_arr_push(&tab_fd_stdout, fd_dup, -1);
-          index++;
-        }
-      }
-      else if (*fd == -1)
-      {
-        while (index < (int)tab_fd_stdout->length)
-        {
-          fd_tmp = *(int **)((unsigned char *)tab_fd_stdout->ptr + index * tab_fd_stdout->sizeof_elem);
-          if (!(fd_dup = malloc(sizeof(int))))
-          {
-            return (EXIT_FAILURE);
-          }
-          *fd_dup = *fd_tmp;
-          ft_arr_push(&tab_fd_stderr, fd_dup, -1);
-          index++;
-        }
-      }
-      else if (cmd[i] == STDOUT_STDERR_REDIRECT || cmd[i] == STDERR_REDIRECT || cmd[i] == D_STDERR_REDIRECT)
-      {
-        ft_arr_push(&tab_fd_stderr, fd, -1);
-        if (cmd[i] == STDOUT_STDERR_REDIRECT)
-        {
-          fd_err = malloc(sizeof(int));
-          *fd_err = *fd;
-          ft_arr_push(&tab_fd_stdout, fd_err, -1);
-        }
-      }
-      else if (cmd[i] == S_RIGHT_REDIRECT || cmd[i] == D_RIGHT_REDIRECT)
-      {
-        ft_arr_push(&tab_fd_stdout, fd, -1);
-      }
-      else if (cmd[i] == S_LEFT_REDIRECT)
-      {
-        ft_arr_push(&tab_fd_stdin, fd, -1);
-      }
-      cmd[i] = SPACE_SEPARATOR;
-    }
-    i++;
-  }
-  return (EXIT_SUCCESS);
-}
 
 /**
  * write on a list of fd
@@ -363,7 +93,7 @@ int  ft_fork_list_d_end_word(char **command, t_arr *tab_d_end_word)
 /**
  * create and test permission of file for cmd
  */
-int  ft_fork_list_fd_tmp(char **cmd, t_arr *tab_fd_stdout, t_arr *tab_fd_stderr, t_arr *tab_fd_stdin)
+int  ft_fork_list_fd_tmp(char **cmd, t_arr *tab_fd_stdout, t_arr *tab_fd_stderr, t_arr *tab_fd_stdin, char **error_ptr)
 {
   int i;
   int *fd;
@@ -373,7 +103,7 @@ int  ft_fork_list_fd_tmp(char **cmd, t_arr *tab_fd_stdout, t_arr *tab_fd_stderr,
   fd = NULL;
   while (cmd[i])
   {
-    if ((err = ft_fork_list_fd(&cmd[i], tab_fd_stdout, tab_fd_stderr, tab_fd_stdin) ))
+    if ((err = ft_fork_list_fd(&cmd[i], tab_fd_stdout, tab_fd_stderr, tab_fd_stdin, error_ptr) ))
     {
       ft_arr_close_fd(tab_fd_stdout);
       ft_arr_close_fd(tab_fd_stderr);
@@ -430,6 +160,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
   char **tab_path;
   t_arr *env_copy;
   char **cmd_tmp;
+  char *error_ptr;
 
   int err_fd;
 
@@ -445,17 +176,39 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
   tab_cmd = NULL;
   tab_path = NULL;
   envp = NULL;
-  tab_d_end_word = ft_arr_new(1, sizeof(char *));
-  tab_fd_stdout = ft_arr_new(1, sizeof(int *));
-  tab_fd_stderr = ft_arr_new(1, sizeof(int *));
-  tab_fd_stdin = ft_arr_new(1, sizeof(int *));
+  if (!(tab_d_end_word = ft_arr_new(1, sizeof(char *))))
+  {
+    return (EXIT_FAILURE);
+  }
+
+  if (!(tab_fd_stdin = ft_arr_new(1, sizeof(int *))))
+  {
+    return (EXIT_FAILURE);
+  }
+
+  if (!(tab_fd_stderr = ft_arr_new(1, sizeof(int *))))
+  {
+    return (EXIT_FAILURE);
+  }
+
+  if (!(tab_fd_stdout = ft_arr_new(1, sizeof(int *))))
+  {
+    return (EXIT_FAILURE);
+  }
+
   i = 0;
   err_fd = 0;
   cmd_tmp = NULL;
+  error_ptr = NULL;
   cmd_tmp = ft_array_str_dup((const char **)cmd);
-  err_fd = ft_fork_list_fd_tmp(cmd_tmp, tab_fd_stdout, tab_fd_stderr, tab_fd_stdin);
+  err_fd = ft_fork_list_fd_tmp(cmd_tmp, tab_fd_stdout, tab_fd_stderr, tab_fd_stdin, &error_ptr);
+  if (error_ptr)
+  {
+    free(error_ptr);
+    error_ptr = NULL;
+  }
   ft_array_free((void ***)&cmd_tmp);
-  while (i < nb_pipe + 1 && !err_fd)
+  while (i < nb_pipe + 1)
   {
     if (i)
     {
@@ -478,10 +231,15 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
     index_builtin = false;
     err = 0;
 
-
-    if ((err = ft_fork_list_fd(&cmd[i], tab_fd_stdout, tab_fd_stderr, tab_fd_stdin) ))
+    if (error_ptr)
     {
-      return (EXIT_FAILURE);
+      free(error_ptr);
+      error_ptr = NULL;
+    }
+    if ((err = ft_fork_list_fd(&cmd[i], tab_fd_stdout, tab_fd_stderr, tab_fd_stdin, &error_ptr) ))
+    {
+      //disabled
+      // return (EXIT_FAILURE);
     }
     if ((err = ft_fork_list_d_end_word(&cmd[i], tab_d_end_word) ))
     {
@@ -570,7 +328,19 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
       dup2(tube_fork_stdout_tmp[1], 1);
       close(tube_fork_stderr_tmp[0]);
       dup2(tube_fork_stderr_tmp[1], 2);
-
+      if (error_ptr)
+      {
+        ft_putstr_fd(error_ptr, STDERR);
+        if (error_ptr)
+        {
+          free(error_ptr);
+          error_ptr = NULL;
+        }
+        ft_arr_close_fd(tab_fd_stdout);
+        ft_arr_close_fd(tab_fd_stderr);
+        ft_arr_close_fd(tab_fd_stdin);
+        exit(EXIT_SUCCESS);
+      }
 
       path_tmp = NULL;
       if (!index_builtin && *tab_cmd)
@@ -603,7 +373,6 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
           free(path_ptr);
           path_ptr = NULL;
         }
-        // TODO segfault si !tab_cmd[0]
         index = 0;
         path_tmp = ft_strdup(*tab_cmd);
         while (tab_path[index] && (err = access(path_tmp, F_OK)) )
@@ -650,9 +419,9 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
 
       if (!index_builtin)
       {
-        ft_putstr("21sh: command not found: ");
-        ft_putstr(*tab_cmd);
-        ft_putstr("\n");
+        ft_putstr_fd("21sh: command not found: ", STDERR);
+        ft_putstr_fd(*tab_cmd, STDERR);
+        ft_putstr_fd("\n", STDERR);
         ft_arr_free(tab_fd_stdout);
         ft_arr_free(tab_fd_stderr);
         ft_arr_free(tab_fd_stdin);
@@ -824,7 +593,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
         }
         else if (!tab_fd_stderr->length)
         {
-          write(2, buff, len_stderr);
+          write(STDERR, buff, len_stderr);
         }
       }
       if (buff)
@@ -938,6 +707,11 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
   {
     free(end_word);
     end_word = NULL;
+  }
+  if (error_ptr)
+  {
+    free(error_ptr);
+    error_ptr = NULL;
   }
   return EXIT_SUCCESS;
 }

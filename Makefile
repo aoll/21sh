@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/02/06 12:25:47 by alex             ###   ########.fr        #
+#    Updated: 2017/02/07 11:51:00 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,6 +118,11 @@ C_BUILTIN= ft_is_builtin.c \
 					 ft_builtin_exit.c \
 					 ft_builtin_setenv_check_argument.c
 
+C_FORK= ft_fork_name_file.c \
+				ft_fork_env_arr_to_tab_str.c \
+				ft_fork_fd.c \
+				ft_fork_list_fd.c
+
 ST_SRC= ft_start.c ft_env_init.c ft_read_line.c ft_fork_test.c
 
 
@@ -130,14 +135,14 @@ else
 endif
 
 # VPATH= src
-VPATH= src:test_project/test_file/src:src/terminal:src/cursor:src/parse:src/builtin:src/read
+VPATH= src:test_project/test_file/src:src/terminal:src/cursor:src/parse:src/builtin:src/read:src/fork
 # VPATH= src/str:src/put:src/int:src/mem:src/char:src/file:src/lst
 
 
 OBJS= $(MC_SRC:%.c=$(O_DIR)/%.o) $(ST_SRC:%.c=$(O_DIR)/%.o) \
 			$(C_TERM:%.c=$(O_DIR)/%.o) $(C_CURSOR:%.c=$(O_DIR)/%.o) \
 			$(C_PARSE:%.c=$(O_DIR)/%.o) $(C_BUILTIN:%.c=$(O_DIR)/%.o) \
-			$(C_READ:%.c=$(O_DIR)/%.o)
+			$(C_READ:%.c=$(O_DIR)/%.o) $(C_FORK:%.c=$(O_DIR)/%.o)
 
 
 

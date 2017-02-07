@@ -260,7 +260,11 @@ int  ft_parse_pop_and_replace_and_check_error(t_arr *tab_cmds);
  */
  #include <fcntl.h>
 int  ft_fork_test(t_arr **env, t_arr *tab_cmds);
-
+char  *ft_fork_name_file(char **command, int i);
+int  ft_fork_env_arr_to_tab_str(t_arr *envp, char ***env_ptr);
+int  *ft_fork_fd(char *name_file, int token);
+int  ft_fork_list_fd(
+  char **command, t_arr *tab_fd_stdout, t_arr *tab_fd_stderr, t_arr *tab_fd_stdin, char **error_ptr);
 /**
  * builtin
  */
