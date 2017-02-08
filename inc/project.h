@@ -109,6 +109,12 @@ struct  s_cmd_line
   bool check;
 };
 
+typedef struct s_tube t_tube;
+struct s_tube
+{
+  int tube[2];
+};
+
 typedef struct s_arr_fd t_arr_fd;
 struct s_arr_fd
 {
@@ -304,7 +310,12 @@ int  ft_fork_close_array_tube(t_tab_tube *array_tube);
 int  ft_fork_set_tube(
   t_arr_fd *arr_fd, t_tab_tube *array_tube, int i, int nb_pipe);
 int  ft_fork_is_error_ptr(char **error_ptr, t_arr_fd *arr_fd);
-
+char  *ft_fork_init_path(t_arr *env_copy, char **tab_cmd, int *err);
+int  ft_fork_command_not_found(
+  char ***tab_cmd, int index_builtin, t_arr_fd *arr_fd);
+int  ft_fork_write_tube_stdin(
+  t_tube *tab_tube, t_tab_tube *array_tube, int i, int nb_pipe);
+int  ft_fork_read_stdin_file(t_arr_fd *arr_fd, t_tab_tube *array_tube);
 /**
  * builtin
  */

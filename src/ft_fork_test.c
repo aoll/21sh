@@ -9,10 +9,7 @@
 /* Pour perror() et errno */
 #include <errno.h>
 
-struct t_tube
-{
-  int tube[2];
-};
+
 
 /* La fonction create_process duplique le processus appelant et retourne
    le PID du processus fils ainsi créé */
@@ -45,7 +42,7 @@ int  ft_son(char *path_cmd, char **tab_cmd, char **envp)
 
 
 
-int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
+int ft_fork(char **cmd, t_tube *tab_tube, t_arr **env, int nb_pipe)
 {
   int i;
   pid_t pid;
@@ -217,44 +214,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
       /* case not index_builtin && *tab_cmd */
       if (!index_builtin && *tab_cmd)
       {
-        /*init tab_path with init path_ptr*/
-        /* init path_ptr */
-        index_path = ft_arr_indexof(env_copy, "PATH");
-        if (index_path > 0 & index_path < (int)env_copy->length)
-        {
-          kval = *(t_kval **)((unsigned char *)env_copy->ptr + index_path *env_copy->sizeof_elem);
-          path_ptr = kval->value;
-        }
-        else
-        {
-          path_ptr = ft_strnew(0);
-        }
-        /*end*/
-        /*init tab_path*/
-        /*free tab_path*/
-        ft_array_free(&tab_path);
-        /*end*/
-        tab_path = ft_strsplit(path_ptr, ':');
-        /*end*/
-        /*free path_ptr*/
-        ft_str_free(&path_ptr);
-        /*end*/
-        /*end*/
-        /*init path_tmp*/
-        index = 0;
-        path_tmp = ft_strdup(*tab_cmd);
-        while (tab_path[index] && (err = access(path_tmp, F_OK)) )
-        {
-          ft_str_free(&path_tmp);
-          path_tmp_ptr = ft_strjoin(tab_path[index], "/");
-          path_tmp = ft_strjoin(path_tmp_ptr, *tab_cmd);
-          ft_str_free(&path_tmp_ptr);
-          index++;
-        }
-        /*end*/
-        /*free tab_path */
-        ft_array_free(&tab_path);
-        /*end */
+        path_tmp = ft_fork_init_path(env_copy, tab_cmd, &err);
       }
       /*end */
 
@@ -266,15 +226,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
       /*end */
 
       /* case cmd not found or builtin */
-      ft_str_free(&path_tmp);
-
-      if (!index_builtin)
-      {
-        ft_putstr_fd("21sh: command not found: ", STDERR);
-        ft_putstr_fd(*tab_cmd, STDERR);
-        ft_putstr_fd("\n", STDERR);
-        ft_arr_free_arr_fd(&arr_fd);
-      }
+      ft_fork_command_not_found(&tab_cmd, index_builtin, &arr_fd);
       /*end */
       exit(EXIT_SUCCESS);
       /* end son */
@@ -288,81 +240,11 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
       {
 
         /* nb_pipe */
-        if (nb_pipe)
-        {
-          buff = ft_strnew(1);
-          while ((rd = read(tab_tube[i].tube[0], buff, 1)))
-          {
-            if (rd < 0)
-            break;
-            write(array_tube.tube_fork_stdin[1], buff, 1);
-          }
-          ft_str_free(&buff);
-        }
+        ft_fork_write_tube_stdin(tab_tube, &array_tube, i, nb_pipe);
         /* end */
         /* read the list of file or the STDIN */
-        index = 0;
-        while (index < (int)arr_fd.arr_fd_stdin->length)
-        {
-          fd = *(int **)((unsigned char *)arr_fd.arr_fd_stdin->ptr + index * arr_fd.arr_fd_stdin->sizeof_elem);
-          rd = 0;
-          buff = ft_strnew(1);
-
-          /* case *fd == D_LEFT_REDIRECT */
-          if (*fd == D_LEFT_REDIRECT)
-          {
-            line = NULL;
-            /*case !arr_fd.arr_d_end_word->length */
-            if (!arr_fd.arr_d_end_word->length)
-            {
-              index++;
-              continue;
-            }
-            /*end */
-
-            end_word = ft_arr_pop(arr_fd.arr_d_end_word, 0);
-            /* read the STDIN */
-            while (ft_strcmp(line, end_word) != 0 || arr_fd.arr_d_end_word->length)
-            {
-              /* case line == end_word */
-              if (ft_strcmp(line, end_word) == 0)
-              {
-                ft_str_free(&line);
-                ft_str_free(&end_word);
-                end_word = ft_arr_pop(arr_fd.arr_d_end_word, 0);
-              }
-              /* end */
-              /* case line */
-              if (line)
-              {
-                write(array_tube.tube_fork_stdin[1], line, ft_strlen(line));
-                *line = '\n';
-                write(array_tube.tube_fork_stdin[1], line, 1);
-                ft_str_free(&line);
-              }
-              /*end*/
-              get_next_line(0, &line);
-            }
-            /*end */
-            /* free char line and end_word */
-            ft_str_free(&line);
-            ft_str_free(&end_word);
-            /* end */
-          }
-          /* end */
-          /* case fd file */
-          else
-          {
-            while ((rd = read(*fd, buff, 1)))
-            {
-              if (rd < 0)
-              break;
-              write(array_tube.tube_fork_stdin[1], buff, 1);
-            }
-          }
-          /*end */
-          index++;
-        }
+        ft_fork_read_stdin_file(&arr_fd, &array_tube);
+        //ft_fork_read_stdin_file()
         /* end */
         ft_str_free(&buff);
         close(array_tube.tube_fork_stdin[1]);
@@ -564,7 +446,7 @@ char*  ft_fork_str_from_arr(t_arr *arr)
 int  ft_fork_split_pipe(char *str, int nb_pipe, t_arr **env_ptr)
 {
   char **cmds;
-  struct t_tube *tab_tube;
+  t_tube *tab_tube;
   int index;
   int index_path;
   t_kval *kval;
@@ -576,7 +458,7 @@ int  ft_fork_split_pipe(char *str, int nb_pipe, t_arr **env_ptr)
   tab_tube = NULL;
   if (nb_pipe)
   {
-    if (!(tab_tube = malloc(sizeof(struct t_tube) * nb_pipe)))
+    if (!(tab_tube = malloc(sizeof(t_tube) * nb_pipe)))
     {
       return (EXIT_FAILURE);
     }
