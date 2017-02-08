@@ -23,7 +23,7 @@ static int  ft_parse_pop_space_or_continue(t_cmd_line *line, t_arr *arr)
       (unsigned char *)arr->ptr + (line->index + 1) * arr->sizeof_elem);
     if (ft_isspace(*line->s_line))
     {
-      free(ft_arr_pop(&arr, line->index));
+      free(ft_arr_pop(arr, line->index));
     }
     else
     {
@@ -32,7 +32,7 @@ static int  ft_parse_pop_space_or_continue(t_cmd_line *line, t_arr *arr)
   }
   else
   {
-    free(ft_arr_pop(&arr, line->index));
+    free(ft_arr_pop(arr, line->index));
   }
   return (EXIT_SUCCESS);
 }

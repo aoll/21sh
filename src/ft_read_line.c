@@ -416,7 +416,7 @@ int  read_stdin(char **envp)
             {
               if (tab_cmds->length)
               {
-                ft_arr_free(ft_arr_pop(&tab_cmds, 0));
+                ft_arr_free(ft_arr_pop(tab_cmds, 0));
               }
               if (tab_cmds->ptr)
               {
@@ -473,7 +473,7 @@ int  read_stdin(char **envp)
       {
         while (arr->length)
         {
-          free(ft_arr_pop(&arr, 0));
+          free(ft_arr_pop(arr, 0));
         }
         ft_arr_str(arr, line);
         if (line)
@@ -494,7 +494,7 @@ int  read_stdin(char **envp)
         {
           if (tab_cmds->length)
           {
-            ft_arr_free(ft_arr_pop(&tab_cmds, 0));
+            ft_arr_free(ft_arr_pop(tab_cmds, 0));
 
           }
           if (tab_cmds->ptr)

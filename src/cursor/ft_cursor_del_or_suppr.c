@@ -73,7 +73,7 @@ static int  ft_cursor_arr_pop_elem(t_arr *arr, t_cursor *cursor,
     index_tab = -1;
     while (++index_tab < TABULATION_LEN)
     {
-      if ((s = ft_arr_pop(&arr, (index_line_tmp -= is_prev_char))))
+      if ((s = ft_arr_pop(arr, (index_line_tmp -= is_prev_char))))
         free(s);
     }
   }
@@ -87,7 +87,7 @@ static int  ft_cursor_arr_pop_elem(t_arr *arr, t_cursor *cursor,
         cursor->prev_chariot--;
       }
     }
-    if ((s = ft_arr_pop(&arr, (index_line_tmp -= is_prev_char))))
+    if ((s = ft_arr_pop(arr, (index_line_tmp -= is_prev_char))))
       free(s);
   }
   return (index_line_tmp);

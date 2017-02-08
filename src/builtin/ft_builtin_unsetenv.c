@@ -7,7 +7,7 @@ int  ft_builtin_unsetenv_pop_key(t_arr **env, int index)
 {
   t_kval *kval;
 
-  kval = ft_arr_pop(env, index);
+  kval = ft_arr_pop(*env, index);
   if (kval->key)
   {
     free(kval->key);

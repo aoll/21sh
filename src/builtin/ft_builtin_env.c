@@ -88,7 +88,7 @@ int  ft_builtin_env_set_var(char ***tab_cmd, t_arr *env, int fd_stdout, int fd_s
         //TODO free chaque element
         while (env->length)
         {
-          kval = ft_arr_pop(&env, 0);
+          kval = ft_arr_pop(env, 0);
           ft_kval_free(&kval);
           // ft_putstr("\nvalue:");
           // ft_putstr(kval->value);

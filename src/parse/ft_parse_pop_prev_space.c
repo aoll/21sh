@@ -30,7 +30,7 @@ int  ft_parse_pop_prev_space(t_arr *arr)
     }
     else
     {
-      free(ft_arr_pop(&arr, 0));
+      free(ft_arr_pop(arr, 0));
     }
   }
   return (EXIT_SUCCESS);

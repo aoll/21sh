@@ -27,7 +27,7 @@ static int  ft_parse_check_double_pop(
     {
       if (*line->s_line != PIPE && token == PIPE)
       {
-        free(ft_arr_pop(arr, index_tmp));
+        free(ft_arr_pop(*arr, index_tmp));
         line->index -= 1;
       }
       else

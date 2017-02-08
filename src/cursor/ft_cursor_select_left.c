@@ -26,7 +26,7 @@ static int  ft_cursor_select_overide_tab(t_cursor *cursor, t_arr *arr,
     }
     else if (select_line->length)
     {
-      free(ft_arr_pop(&select_line, select_line->length - 1));
+      free(ft_arr_pop(select_line, select_line->length - 1));
     }
     ft_putstr((const char *)s_line);
     index_tab++;
@@ -57,7 +57,7 @@ static int  ft_cursor_select_overide_char(t_cursor *cursor, t_arr *arr,
   }
   else
   {
-    free(ft_arr_pop(&select_line, select_line->length - 1));
+    free(ft_arr_pop(select_line, select_line->length - 1));
   }
   return (EXIT_SUCCESS);
 }

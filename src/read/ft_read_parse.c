@@ -239,9 +239,9 @@ int  ft_read_parse_eof(char **buff, t_cursor *cursor,
       index_current_free = 0;
       while (index_current_free < (int)current_line_free->length)
       {
-        ft_arr_free(ft_arr_pop(&current_line_free, index_current_free));
+        ft_arr_free(ft_arr_pop(current_line_free, index_current_free));
       }
-      ft_arr_free(ft_arr_pop(&history_line, index_history_free));
+      ft_arr_free(ft_arr_pop(history_line, index_history_free));
       // index_history_free++;
     }
     ft_arr_free(history_line);

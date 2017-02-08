@@ -14,7 +14,7 @@ static int  ft_arr_cancel_reverse_video(t_arr *arr, int index, t_arr *select_lin
     if (s_line[5] == 1)
     {
       s_line[5] = 0;
-      free(ft_arr_pop(&select_line, select_line->length - 1));
+      free(ft_arr_pop(select_line, select_line->length - 1));
     }
     index++;
   }

@@ -20,7 +20,7 @@ int  ft_cursor_cut(t_cursor *cursor, t_arr *arr, t_arr *select_line, t_arr **cop
   ft_cursor_copy_line(cursor, select_line, copy_line);
   while (select_line->length)
   {
-    free(ft_arr_pop(&select_line, 0));
+    free(ft_arr_pop(select_line, 0));
   }
   while (index < (int)arr->length)
   {
@@ -28,7 +28,7 @@ int  ft_cursor_cut(t_cursor *cursor, t_arr *arr, t_arr *select_line, t_arr **cop
     s_line = *(unsigned char **)s_line;
     if (s_line[5] == 1)
     {
-      free(ft_arr_pop(&arr, index));
+      free(ft_arr_pop(arr, index));
     }
     else
     {

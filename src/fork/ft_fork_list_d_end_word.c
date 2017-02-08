@@ -26,7 +26,7 @@ int  ft_fork_list_d_end_word(char **command, t_arr *arr_d_end_word)
   cmd = *command;
   while (arr_d_end_word->length)
   {
-    free(ft_arr_pop(&arr_d_end_word, 0));
+    free(ft_arr_pop(arr_d_end_word, 0));
   }
   while (cmd[++i])
   {

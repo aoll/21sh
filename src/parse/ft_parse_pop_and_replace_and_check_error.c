@@ -74,7 +74,7 @@ int  ft_parse_pop_and_replace_and_check_error(t_arr *tab_cmds)
     }
     if (!cmd->length)
     {
-      ft_arr_free(ft_arr_pop(&tab_cmds, index));
+      ft_arr_free(ft_arr_pop(tab_cmds, index));
     }
     index++;
   }

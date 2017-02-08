@@ -395,7 +395,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
               index++;
               continue;
             }
-            end_word = ft_arr_pop(&arr_d_end_word, 0);
+            end_word = ft_arr_pop(arr_d_end_word, 0);
             while (ft_strcmp(line, end_word) != 0 || arr_d_end_word->length)
             {
               if (ft_strcmp(line, end_word) == 0)
@@ -404,7 +404,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
                 line = NULL;
                 free(end_word);
                 end_word = NULL;
-                end_word = ft_arr_pop(&arr_d_end_word, 0);
+                end_word = ft_arr_pop(arr_d_end_word, 0);
               }
               if (line)
               {
@@ -548,7 +548,7 @@ int ft_fork(char **cmd, struct t_tube *tab_tube, t_arr **env, int nb_pipe)
       ft_arr_close_fd(arr_fd.arr_fd_stdin);
       while (arr_d_end_word->length)
       {
-        free(ft_arr_pop(&arr_d_end_word, 0));
+        free(ft_arr_pop(arr_d_end_word, 0));
       }
 
       i++;

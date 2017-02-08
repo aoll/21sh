@@ -26,7 +26,7 @@
          (unsigned char *)arr->ptr + (line->index + 1) * arr->sizeof_elem);
        if (*line->s_line == '>')
        {
-         free(ft_arr_pop(&arr, line->index));
+         free(ft_arr_pop(arr, line->index));
          *line->s_line = D_RIGHT_REDIRECT;
        }
      }
