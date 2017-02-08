@@ -39,56 +39,9 @@ int  ft_son(char *path_cmd, char **tab_cmd, char **envp)
 
 
 
-/**
- * write on a list of fd
- */
-int  ft_fork_write_list_fd(t_arr *arr, char *buff, int len)
-{
-  int index;
-  int *fd;
 
-  index = 0;
-  while (index < (int)arr->length)
-  {
-    fd = *(int **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
-    write(*fd, buff, len);
-    index++;
-  }
-  return (EXIT_SUCCESS);
-}
 
-/**
- * if some D_LEFT_REDIRECT are present push in arr_d_end_word the string present
- * for finish the read
- */
-int  ft_fork_list_d_end_word(char **command, t_arr *arr_d_end_word)
-{
-  int i;
-  char *end_word;
-  char *cmd;
 
-  i = 0;
-  cmd = *command;
-  while (arr_d_end_word->length)
-  {
-    free(ft_arr_pop(&arr_d_end_word, 0));
-  }
-
-  while (cmd[i])
-  {
-    if (cmd[i] == D_LEFT_REDIRECT)
-    {
-      if (!(end_word = ft_fork_name_file(&cmd, i + 1)))
-      {
-        return (EXIT_FAILURE);
-      }
-      ft_arr_push(&arr_d_end_word, end_word, -1);
-      cmd[i] = SPACE_SEPARATOR;
-    }
-    i++;
-  }
-  return (EXIT_SUCCESS);
-}
 
 
 

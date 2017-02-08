@@ -282,8 +282,10 @@ int  ft_fork_list_fd_stderr(
   t_arr *arr_fd_stderr, t_arr *arr_fd_stdout, int **fd_ptr, int c);
 int  ft_fork_list_fd_left_redirect(t_arr *arr_fd_stdin);
 int  ft_arr_close_arr_fd(t_arr_fd *arr_fd);
-//TODO
 int  ft_fork_list_fd_tmp(char **cmd, t_arr_fd *arr_fd, char **error_ptr);
+int  ft_fork_write_list_fd(t_arr *arr, char *buff, int len);
+int  ft_fork_list_d_end_word(char **command, t_arr *arr_d_end_word);
+
 
 /**
  * builtin
