@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/02/07 19:06:25 by alex             ###   ########.fr        #
+#    Updated: 2017/02/08 16:06:24 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -130,7 +130,13 @@ C_FORK= ft_fork_name_file.c \
 				ft_fork_list_fd_tmp.c \
 				ft_arr_close_arr_fd.c \
 				ft_fork_write_list_fd.c \
-				ft_fork_list_d_end_word.c
+				ft_fork_list_d_end_word.c \
+				ft_arr_free_arr_fd.c \
+				ft_fork_init_arr_fd.c \
+				ft_fork_close_array_tube.c \
+				ft_fork_pipe_array_tube.c \
+				ft_fork_set_tube.c \
+				ft_fork_is_error_ptr.c
 
 ST_SRC= ft_start.c ft_env_init.c ft_read_line.c ft_fork_test.c
 

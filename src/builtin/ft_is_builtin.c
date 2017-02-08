@@ -17,5 +17,7 @@ int  ft_is_builtin(char *command)
     return (B_CD);
   else if (!ft_strcmp("echo", command))
     return (B_ECHO);
+  else if (!ft_strcmp("exit", command))
+    return (B_EXIT);
   return (0);
 }

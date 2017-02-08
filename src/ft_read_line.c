@@ -411,7 +411,24 @@ int  read_stdin(char **envp)
               return (EXIT_FAILURE);
             }
             ft_putstr("\n");
-            ft_fork_test(&env, tab_cmds);
+            if (ft_fork_test(&env, tab_cmds) == B_EXIT)
+            {
+              if (tab_cmds)
+              {
+                if (tab_cmds->length)
+                {
+                  ft_arr_free(ft_arr_pop(tab_cmds, 0));
+                }
+                if (tab_cmds->ptr)
+                {
+                  free(tab_cmds->ptr);
+                }
+                free(tab_cmds);
+                tab_cmds = NULL;
+              }
+              ft_read_parse_eof(&buff, &cursor, arr, history_line, current_line, copy_line, select_line, &term, env, true);
+              return (0);
+            }
             if (tab_cmds)
             {
               if (tab_cmds->length)

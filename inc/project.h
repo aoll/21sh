@@ -118,6 +118,16 @@ struct s_arr_fd
   t_arr *arr_d_end_word;
 };
 
+typedef struct s_tab_tube t_tab_tube;
+struct s_tab_tube
+{
+  int tube_fork_stdout_tmp[2];
+  int tube_fork_stderr_tmp[2];
+  int tube_fork_stdout[2];
+  int tube_fork_stderr[2];
+  int tube_fork_stdin[2];
+};
+
 /**
  * PROTOTYPES
  */
@@ -282,10 +292,18 @@ int  ft_fork_list_fd_stderr(
   t_arr *arr_fd_stderr, t_arr *arr_fd_stdout, int **fd_ptr, int c);
 int  ft_fork_list_fd_left_redirect(t_arr *arr_fd_stdin);
 int  ft_arr_close_arr_fd(t_arr_fd *arr_fd);
+
+int  ft_arr_free_arr_fd(t_arr_fd *arr_fd);
 int  ft_fork_list_fd_tmp(char **cmd, t_arr_fd *arr_fd, char **error_ptr);
 int  ft_fork_write_list_fd(t_arr *arr, char *buff, int len);
 int  ft_fork_list_d_end_word(char **command, t_arr *arr_d_end_word);
 
+int  ft_fork_init_arr_fd(t_arr_fd *arr_fd);
+int  ft_fork_pipe_array_tube(t_tab_tube *array_tube);
+int  ft_fork_close_array_tube(t_tab_tube *array_tube);
+int  ft_fork_set_tube(
+  t_arr_fd *arr_fd, t_tab_tube *array_tube, int i, int nb_pipe);
+int  ft_fork_is_error_ptr(char **error_ptr, t_arr_fd *arr_fd);
 
 /**
  * builtin
