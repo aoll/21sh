@@ -36,7 +36,7 @@ int  ft_fork_list_d_end_word(char **command, t_arr *arr_d_end_word)
       {
         return (EXIT_FAILURE);
       }
-      ft_arr_push(&arr_d_end_word, end_word, -1);
+      ft_arr_push(arr_d_end_word, end_word, -1);
       cmd[i] = SPACE_SEPARATOR;
     }
   }

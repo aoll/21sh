@@ -328,9 +328,9 @@ int  read_stdin(char **envp)
   env = ft_env_init(envp);
   history_line = ft_arr_new(1, sizeof(t_arr *));
   current_line = ft_arr_new(1, sizeof(t_arr *));
-  ft_arr_push(&history_line, current_line, 0);
+  ft_arr_push(history_line, current_line, 0);
   arr = ft_arr_new(1, sizeof(char *));
-  ft_arr_push(&current_line, arr, 0);
+  ft_arr_push(current_line, arr, 0);
   arr->f_print = &ft_arr_putchar;
   arr->f_dup_elem = &ft_arr_strdup;
 
@@ -348,7 +348,7 @@ int  read_stdin(char **envp)
   copy_line = NULL;
   select_line->f_print = &ft_arr_putchar;
   select_line->f_dup_elem = &ft_arr_strdup;
-  // ft_arr_push(&history_line, arr, 0);
+  // ft_arr_push(history_line, arr, 0);
   nb_char = cursor.prompt_len;
 
   buff = ft_strnew(8); //need 3 but we are never to sure

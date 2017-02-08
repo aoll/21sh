@@ -58,11 +58,11 @@ static int  ft_fork_list_fd_switch_right_redirect(
   }
   else if (c == S_RIGHT_REDIRECT || c == D_RIGHT_REDIRECT)
   {
-    ft_arr_push(&arr_fd->arr_fd_stdout, *fd, -1);
+    ft_arr_push(arr_fd->arr_fd_stdout, *fd, -1);
   }
   else if (c == S_LEFT_REDIRECT)
   {
-    ft_arr_push(&arr_fd->arr_fd_stdin, *fd, -1);
+    ft_arr_push(arr_fd->arr_fd_stdin, *fd, -1);
   }
   return (EXIT_SUCCESS);
 }

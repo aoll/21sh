@@ -30,7 +30,7 @@ int  ft_fork_list_fd_dup(t_arr *dst, const t_arr *src)
       return (EXIT_FAILURE);
     }
     *fd_dup = *fd_tmp;
-    ft_arr_push(&dst, fd_dup, -1);
+    ft_arr_push(dst, fd_dup, -1);
     index++;
   }
   return (EXIT_SUCCESS);

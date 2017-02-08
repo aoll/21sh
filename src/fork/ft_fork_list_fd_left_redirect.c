@@ -24,6 +24,6 @@ int  ft_fork_list_fd_left_redirect(t_arr *arr_fd_stdin)
     return (EXIT_FAILURE);
   }
   *fd_dup = D_LEFT_REDIRECT;
-  ft_arr_push(&arr_fd_stdin, fd_dup, -1);
+  ft_arr_push(arr_fd_stdin, fd_dup, -1);
   return (EXIT_SUCCESS);
 }

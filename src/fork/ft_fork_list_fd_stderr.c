@@ -23,7 +23,7 @@ int  ft_fork_list_fd_stderr(
   int *fd;
 
   fd = *fd_ptr;
-  ft_arr_push(&arr_fd_stderr, fd, -1);
+  ft_arr_push(arr_fd_stderr, fd, -1);
   if (c == STDOUT_STDERR_REDIRECT)
   {
     if (!(fd_err = malloc(sizeof(int))))
@@ -31,7 +31,7 @@ int  ft_fork_list_fd_stderr(
       return (EXIT_FAILURE);
     }
     *fd_err = *fd;
-    ft_arr_push(&arr_fd_stdout, fd_err, -1);
+    ft_arr_push(arr_fd_stdout, fd_err, -1);
   }
   return (EXIT_SUCCESS);
 }

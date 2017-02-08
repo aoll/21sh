@@ -26,7 +26,7 @@ int  ft_builtin_cd_set_env(t_arr **envp, const char *key, const char *value, int
     }
     ft_kval_set_key(kval, key);
     ft_kval_set_value(kval, value);
-    ft_arr_push(&env, kval, -1);
+    ft_arr_push(env, kval, -1);
   }
   return (EXIT_SUCCESS);
 }

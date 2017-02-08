@@ -20,7 +20,7 @@
 static int  ft_parse_separate_cmd_push_new(t_arr **tab_cmds, t_arr **cmd)
 {
   ft_parse_init_new_arr_line(cmd);
-  ft_arr_push(tab_cmds, *cmd, -1);
+  ft_arr_push(*tab_cmds, *cmd, -1);
   return (EXIT_SUCCESS);
 }
 
@@ -37,7 +37,7 @@ static int  ft_parse_separate_cmd_is_new_cmd(
   }
   else if (*line->s_line != ';')
   {
-    ft_arr_push(cmd, ft_strdup((const char *)line->s_line), -1);
+    ft_arr_push(*cmd, ft_strdup((const char *)line->s_line), -1);
   }
   return (EXIT_SUCCESS);
 }

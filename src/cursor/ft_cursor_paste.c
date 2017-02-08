@@ -16,7 +16,7 @@ int  ft_cursor_paste(t_cursor *cursor, t_arr *arr, t_arr *copy_line)
   {
     s_line = (unsigned char*)copy_line->ptr + index * copy_line->sizeof_elem;
     s_line = *(unsigned char **)s_line;
-    ft_arr_push(&arr, ft_strdup((char *)s_line), cursor->index_line);
+    ft_arr_push(arr, ft_strdup((char *)s_line), cursor->index_line);
     index++;
     cursor->index_line++;
     cursor->pos_x++;

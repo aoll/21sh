@@ -55,7 +55,7 @@ static int  ft_builtin_setenv_add_var(
   {
       return (EXIT_FAILURE);
   }
-  if ((err = ft_arr_push(env, kval, -1)))
+  if ((err = ft_arr_push(*env, kval, -1)))
   {
     return (EXIT_FAILURE);
   }

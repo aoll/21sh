@@ -22,7 +22,7 @@ static int  ft_cursor_select_overide_tab(t_cursor *cursor, t_arr *arr,
     s_line[5] = is_will_reverse;
     if (is_will_reverse)
     {
-      ft_arr_push(&select_line, ft_strdup((char *)s_line), 0);
+      ft_arr_push(select_line, ft_strdup((char *)s_line), 0);
     }
     else if (select_line->length)
     {
@@ -53,7 +53,7 @@ static int  ft_cursor_select_overide_char(t_cursor *cursor, t_arr *arr,
   s_line[5] = is_will_reverse;
   if (is_will_reverse)
   {
-    ft_arr_push(&select_line, ft_strdup((const char *)s_line), 0);
+    ft_arr_push(select_line, ft_strdup((const char *)s_line), 0);
   }
   else
   {

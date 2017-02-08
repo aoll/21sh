@@ -50,7 +50,7 @@ t_arr  *ft_env_init(char **env)
   while (*env)
   {
       kv = ft_kval_init(*env);
-      ft_arr_push(&arr, kv, -1);
+      ft_arr_push(arr, kv, -1);
       env++;
   }
   return (arr);
