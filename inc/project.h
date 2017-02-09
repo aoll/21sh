@@ -115,6 +115,16 @@ struct s_tube
   int tube[2];
 };
 
+typedef struct s_fork t_fork;
+struct s_fork
+{
+  int i;
+  int nb_pipe;
+  int err;
+  int len_stdout;
+  int len_stderr;
+};
+
 typedef struct s_arr_fd t_arr_fd;
 struct s_arr_fd
 {
@@ -316,6 +326,12 @@ int  ft_fork_command_not_found(
 int  ft_fork_write_tube_stdin(
   t_tube *tab_tube, t_tab_tube *array_tube, int i, int nb_pipe);
 int  ft_fork_read_stdin_file(t_arr_fd *arr_fd, t_tab_tube *array_tube);
+int  ft_fork_write_tube(int dst_fd, int src_fd);
+int  ft_fork_write_fd_stdout(
+  t_tab_tube *array_tube, t_tube *tab_tube, t_arr_fd *arr_fd, t_fork *st_fork);
+int  ft_fork_write_fd_stderr(
+  t_tab_tube *array_tube, t_arr_fd *arr_fd, t_fork *st_fork);
+
 /**
  * builtin
  */

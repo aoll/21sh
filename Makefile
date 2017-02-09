@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/02/08 17:40:02 by alex             ###   ########.fr        #
+#    Updated: 2017/02/09 09:47:50 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -140,7 +140,10 @@ C_FORK= ft_fork_name_file.c \
 				ft_fork_init_path.c \
 				ft_fork_command_not_found.c \
 				ft_fork_write_tube_stdin.c \
-				ft_fork_read_stdin_file.c
+				ft_fork_read_stdin_file.c \
+				ft_fork_write_tube.c \
+				ft_fork_write_fd_stdout.c \
+				ft_fork_write_fd_stderr.c
 
 ST_SRC= ft_start.c ft_env_init.c ft_read_line.c ft_fork_test.c
 
