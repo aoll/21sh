@@ -28,7 +28,7 @@ pid_t create_process(void)
 }
 
 
-int  ft_son(char *path_cmd, char **tab_cmd, char **envp)
+int  ft_fork_son_exec(char *path_cmd, char **tab_cmd, char **envp)
 {
   execve(path_cmd, tab_cmd, envp);
   return (EXIT_SUCCESS);
@@ -44,274 +44,100 @@ int  ft_son(char *path_cmd, char **tab_cmd, char **envp)
 
 int ft_fork(char **cmd, t_tube *tab_tube, t_arr **env, int nb_pipe)
 {
-  // int st_fork.i;
-  pid_t pid;
-  int status;
-  int stdin_copy = dup(0);
-  int stdout_copy = dup(1);
-  // int st_fork.st_fork.err;
-  int index;
-  int index_builtin;
-
   t_tab_tube array_tube;
-
-
   t_arr_fd arr_fd;
-
-  int *fd;
-  int len_stdout;
-  int len_stderr = 0;
-  int index_end_word;
-  int index_path;
-  t_kval *kval;
-  t_arr *env_ptr;
-  int i_free;
-  char *path_tmp;
-  char *path_tmp_ptr;
-  char *buff;
-  char *line;
-  char *end_word;
-  char *path_ptr;
-
-  char **envp;
-  char **tab_cmd;
-  char **tab_path;
-  t_arr *env_copy;
-  char **cmd_tmp;
-  char *error_ptr;
-
-  int err_fd;
-
   t_fork st_fork;
 
-  env_copy = NULL;
-
-  path_tmp = NULL;
-  path_tmp_ptr = NULL;
-  buff = NULL;
-  line = NULL;
-  path_ptr = NULL;
-  end_word = NULL;
-
-  tab_cmd = NULL;
-  tab_path = NULL;
-  envp = NULL;
-  /* init arr_fd */
-//
-  st_fork.nb_pipe = nb_pipe;
-  if ((st_fork.err = ft_fork_init_arr_fd(&arr_fd)))
+  st_fork.env_copy = NULL;
+  st_fork.tab_cmd = NULL;
+  st_fork.envp = NULL;
+  st_fork.error_ptr = NULL;
+  st_fork.env = env;
+  st_fork.stdin_copy = dup(STDIN);
+  st_fork.stdout_copy = dup(STDOUT);
+  st_fork.stderr_copy = dup(STDERR);
+  /* init loop */
+  if ((st_fork.err = ft_fork_init_loop(
+    &st_fork, &arr_fd, (const char **)cmd, nb_pipe)))
   {
     return (EXIT_FAILURE);
   }
   /* end */
-  st_fork.i = 0;
-  err_fd = 0;
-  cmd_tmp = NULL;
-  error_ptr = NULL;
-  /* open file for all pipe */
-  cmd_tmp = ft_array_str_dup((const char **)cmd);
-  err_fd = ft_fork_list_fd_tmp(cmd_tmp, &arr_fd, &error_ptr);
-  ft_str_free(&error_ptr);
-  ft_array_free(&cmd_tmp);
-
-  /* end */
   while (st_fork.i < st_fork.nb_pipe + 1)
   {
-    /* close tube_tmp */
-    if (st_fork.i)
-    {
-      ft_fork_close_array_tube(&array_tube);
-    }
-    /* end */
-    /*pipe tmp */
-    ft_fork_pipe_array_tube(&array_tube);
-
-    /* end */
-    index_builtin = false;
-    st_fork.err = 0;
-
-    /* check error for open file */
-    ft_str_free(&error_ptr);
-    st_fork.err = ft_fork_list_fd(&cmd[st_fork.i], &arr_fd, &error_ptr);
-    /* end */
-    /* init arr_fd.arr_d_end_word */
-    if ((st_fork.err = ft_fork_list_d_end_word(&cmd[st_fork.i], arr_fd.arr_d_end_word) ))
+    if ((st_fork.err = ft_fork_set_tube_fd(
+      &st_fork, &array_tube, &arr_fd, &cmd[st_fork.i])))
     {
       return (EXIT_FAILURE);
     }
     /* end */
-    /* free tab_cmd  and init it*/
-    ft_array_free(&tab_cmd);
-    if (!(tab_cmd = ft_strsplit(cmd[st_fork.i], SPACE_SEPARATOR)))
+    /* free st_fork.tab_cmd  and init it*/
+    ft_array_free(&st_fork.tab_cmd);
+    if (!(st_fork.tab_cmd = ft_strsplit(cmd[st_fork.i], SPACE_SEPARATOR)))
     {
       break;
     }
-    if (!tab_cmd[0])
+    if (!st_fork.tab_cmd[0])
     {
       break;
     }
     /* end */
 
     /*check if cmd is a builtin */
-    // if (ft_is_builtin(tab_cmd[0]))
-    if ((index_builtin = ft_is_builtin(tab_cmd[0])))
+    // if (ft_is_builtin(st_fork.tab_cmd[0]))
+    if (ft_fork_check_is_builtin_exit(&st_fork, &arr_fd) == B_EXIT)
     {
-      if (index_builtin == B_EXIT)
-      {
-        if (env_copy)
-        {
-          ft_arr_free(env_copy);
-          env_copy = NULL;
-        }
-        ft_array_free(&envp);
-        ft_arr_free_arr_fd(&arr_fd);
-        ft_array_free(&tab_cmd);
-        return (B_EXIT);
-      }
+      return (B_EXIT);
     }
+
     /* end */
-    pid = 0;
 
     /* dup t_arr *env */
-    if (env_copy)
+    if (st_fork.env_copy)
     {
-      ft_arr_free(env_copy);
-      env_copy = NULL;
+      ft_arr_free(st_fork.env_copy);
+      st_fork.env_copy = NULL;
     }
 
-    env_copy = ft_arr_dup(*env);
+    st_fork.env_copy = ft_arr_dup(*env);
     /* end */
 
     /* if B_ENV set the copy of th env */
-    if (index_builtin == B_ENV)
+    if (st_fork.index_builtin == B_ENV)
     {
-      index_builtin = ft_builtin_env(&tab_cmd, &env_copy, array_tube.tube_fork_stdout_tmp[1], array_tube.tube_fork_stderr_tmp[1]);
+      st_fork.index_builtin = ft_builtin_env(
+        &st_fork.tab_cmd,
+        &st_fork.env_copy,
+        array_tube.tube_fork_stdout_tmp[1],
+        array_tube.tube_fork_stderr_tmp[1]);
     }
     /* end */
 
-    /* create a char *env with the seted copy t_arr *env_copy*/
-    ft_array_free(&envp);
-    ft_fork_env_arr_to_tab_str(env_copy, &envp);
+    /* create a char *env with the seted copy t_arr *st_fork.env_copy*/
+    ft_array_free(&st_fork.envp);
+    ft_fork_env_arr_to_tab_str(st_fork.env_copy, &st_fork.envp);
     /*end */
 
     /* create_process */
-    if ((pid = create_process()) == -1)
+    if ((st_fork.err = ft_fork_create_process(
+      &st_fork, &arr_fd, &array_tube, tab_tube)))
     {
       return (EXIT_FAILURE);
     }
-    /*end */
-    if (!pid)
-    {
-      /* son */
-      /* case read file */
-      ft_fork_set_tube(&arr_fd, &array_tube, st_fork.i, st_fork.nb_pipe);
-      /* end */
-      /*case error open file */
-      ft_fork_is_error_ptr(&error_ptr, &arr_fd);
-      /* end */
-
-      path_tmp = NULL;
-      /* case not index_builtin && *tab_cmd */
-      if (!index_builtin && *tab_cmd)
-      {
-        path_tmp = ft_fork_init_path(env_copy, tab_cmd, &st_fork.err);
-      }
-      /*end */
-
-      /* exec */
-      if (!index_builtin && !st_fork.err && *tab_cmd)
-      {
-        ft_son(path_tmp, tab_cmd, envp);
-      }
-      /*end */
-
-      /* case cmd not found or builtin */
-      ft_fork_command_not_found(&tab_cmd, index_builtin, &arr_fd);
-      /*end */
-      exit(EXIT_SUCCESS);
-      /* end son */
-    }
-    else if (pid)
-    {
-      /* father */
-
-      /* case arr_fd_stdin to read file or STDIN */
-      if (arr_fd.arr_fd_stdin->length)
-      {
-
-        /* st_fork.nb_pipe */
-        ft_fork_write_tube_stdin(tab_tube, &array_tube, st_fork.i, st_fork.nb_pipe);
-        /* end */
-        /* read the list of file or the STDIN */
-        ft_fork_read_stdin_file(&arr_fd, &array_tube);
-        //ft_fork_read_stdin_file()
-        /* end */
-        ft_str_free(&buff);
-        close(array_tube.tube_fork_stdin[1]);
-      }
-
-      /*end */
-
-      /*builtin*/
-      if (index_builtin > B_ENV)
-      {
-        ft_builtin_exec(index_builtin, tab_cmd, env, array_tube.tube_fork_stdout_tmp[1], array_tube.tube_fork_stderr_tmp[1]);
-      }
-      /*end*/
-      wait(&status);
-
-
-
-      close(array_tube.tube_fork_stdout_tmp[1]);
-      close(array_tube.tube_fork_stderr_tmp[1]);
-
-      /* write on tab_tube STDIN && SDTERR */
-      // une fonction pour les deux renvoyant un int
-      st_fork.len_stdout = ft_fork_write_tube(array_tube.tube_fork_stdout[1], array_tube.tube_fork_stdout_tmp[0]);
-      st_fork.len_stderr = ft_fork_write_tube(array_tube.tube_fork_stderr[1], array_tube.tube_fork_stderr_tmp[0]);
-
-      /*end*/
-
-
-      close(array_tube.tube_fork_stderr[1]);
-      close(array_tube.tube_fork_stdout[1]);
-
-      ft_fork_write_fd_stdout(&array_tube, tab_tube, &arr_fd, &st_fork);
-      ft_fork_write_fd_stderr(&array_tube, &arr_fd, &st_fork);
-
-      if (st_fork.i < st_fork.nb_pipe && !st_fork.err)
-      {
-        close(tab_tube[st_fork.i].tube[1]);
-        dup2(tab_tube[st_fork.i].tube[0], 0);
-      }
-
-
-
-      ft_arr_close_arr_fd(&arr_fd);
-
-      /*free arr->ptr*/
-      while (arr_fd.arr_d_end_word->length)
-      {
-        free(ft_arr_pop(arr_fd.arr_d_end_word, 0));
-      }
-      /*end*/
-      /*end */
-      st_fork.i++;
-
-    }
-
   }
   /*retablie les flux*/
-  dup2(stdin_copy, 0);
-  dup2(stdout_copy, 1);
-  close(stdin_copy);
-  close(stdout_copy);
+  dup2(st_fork.stdin_copy, STDIN);
+  dup2(st_fork.stdout_copy, STDOUT);
+  dup2(st_fork.stderr_copy, STDERR);
+  close(st_fork.stdin_copy);
+  close(st_fork.stdout_copy);
+  close(st_fork.stderr_copy);
   /*end*/
-  /*free env_copy*/
-  if (env_copy)
+  /*free st_fork.env_copy*/
+  if (st_fork.env_copy)
   {
-    ft_arr_free(env_copy);
-    env_copy = NULL;
+    ft_arr_free(st_fork.env_copy);
+    st_fork.env_copy = NULL;
   }
   /*end*/
   ft_arr_close_arr_fd(&arr_fd); //?
@@ -319,21 +145,14 @@ int ft_fork(char **cmd, t_tube *tab_tube, t_arr **env, int nb_pipe)
   ft_arr_free_arr_fd(&arr_fd);
   /*end*/
   /*free array*/
-  ft_array_free(&envp);
+  ft_array_free(&st_fork.envp);
   /*end */
-
   /*free array*/
-  ft_array_free(&tab_cmd);
-  ft_array_free(&tab_path);
+  ft_array_free(&st_fork.tab_cmd);
   /*end*/
   /*free str*/
-  ft_str_free(&path_tmp);
-  ft_str_free(&path_tmp_ptr);
-  ft_str_free(&buff);
-  ft_str_free(&line);
-  ft_str_free(&path_ptr);
-  ft_str_free(&end_word);
-  ft_str_free(&error_ptr);
+
+  ft_str_free(&st_fork.error_ptr);
   /*end*/
   return EXIT_SUCCESS;
 }

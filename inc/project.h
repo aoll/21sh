@@ -123,6 +123,17 @@ struct s_fork
   int err;
   int len_stdout;
   int len_stderr;
+  int index_builtin;
+  char *error_ptr;
+  t_arr *env_copy;
+  char **tab_cmd;
+  char **envp;
+  int status;
+  t_arr **env;
+  int stdin_copy;
+  int stdout_copy;
+  int stderr_copy;
+
 };
 
 typedef struct s_arr_fd t_arr_fd;
@@ -293,7 +304,8 @@ int  ft_parse_pop_and_replace_and_check_error(t_arr *tab_cmds);
 /**
  * fork test
  */
- #include <fcntl.h>
+#include <fcntl.h>
+#include <sys/wait.h>
 int  ft_fork_test(t_arr **env, t_arr *tab_cmds);
 char  *ft_fork_name_file(char **command, int i);
 int  ft_fork_env_arr_to_tab_str(t_arr *envp, char ***env_ptr);
@@ -331,13 +343,29 @@ int  ft_fork_write_fd_stdout(
   t_tab_tube *array_tube, t_tube *tab_tube, t_arr_fd *arr_fd, t_fork *st_fork);
 int  ft_fork_write_fd_stderr(
   t_tab_tube *array_tube, t_arr_fd *arr_fd, t_fork *st_fork);
+int  ft_fork_open_file(const char **cmd, t_arr_fd *arr_fd);
+int  ft_fork_init_loop(
+  t_fork *st_fork, t_arr_fd *arr_fd, const char **cmd, int nb_pipe);
+int  ft_fork_set_tube_fd(
+  t_fork *st_fork, t_tab_tube *array_tube, t_arr_fd *arr_fd, char **cmd);
+int  ft_fork_check_is_builtin_exit(t_fork *st_fork, t_arr_fd *arr_fd);
+int  ft_fork_pid_son(t_fork *st_fork, t_arr_fd *arr_fd, t_tab_tube *array_tube);
+int  ft_fork_son_exec(char *path_cmd, char **tab_cmd, char **envp);
+int  ft_fork_is_stdin_fd(
+  t_fork *st_fork, t_tube *tab_tube, t_arr_fd *arr_fd, t_tab_tube *array_tube);
+int  ft_fork_set_tube_father(
+  t_fork *st_fork, t_tab_tube *array_tube, t_tube *tab_tube, t_arr_fd *arr_fd);
+int  ft_fork_father(
+  t_fork *st_fork, t_tube *tab_tube, t_tab_tube *array_tube, t_arr_fd *arr_fd);
+int  ft_fork_create_process(
+  t_fork *st_fork, t_arr_fd *arr_fd, t_tab_tube *array_tube, t_tube *tab_tube);
 
 /**
  * builtin
  */
 int  ft_is_builtin(char *command);
 int  ft_builtin_exec(
-  int index_builtin,char **tab_cmd, t_arr **env, int fd_stdout, int fd_stderr);
+  t_fork *st_fork, t_arr **env, int fd_stdout, int fd_stderr);
 int  ft_builtin_env(char ***tab_cmd, t_arr **env, int fd_stdout, int fd_stderr);
 int  ft_builtin_setenv(const char **tab_cmd, t_arr **env, int fd_stderr);
 int  ft_builtin_unsetenv(const char **tab_cmd, t_arr **env, int fd_stderr);
