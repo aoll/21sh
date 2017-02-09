@@ -411,6 +411,7 @@ int  read_stdin(char **envp)
               return (EXIT_FAILURE);
             }
             ft_putstr("\n");
+            signal(SIGINT, ft_signal_sigint_chariot);
             if (ft_fork_loop(&env, tab_cmds) == B_EXIT)
             {
               if (tab_cmds)
@@ -429,6 +430,7 @@ int  read_stdin(char **envp)
               ft_read_parse_eof(&buff, &cursor, arr, history_line, current_line, copy_line, select_line, &term, env, true);
               return (0);
             }
+            signal(SIGINT, ft_signal_sigint_c);
             if (tab_cmds)
             {
               if (tab_cmds->length)
@@ -565,6 +567,7 @@ void  ft_loop(char **env)
 
 void  ft_read_line(char **env)
 {
+  ft_signal_init();
   ft_putstr("test du read_line\n");
   ft_loop(env);
   return;

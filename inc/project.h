@@ -44,6 +44,12 @@
 
 #define HOME                    "/home/alex"
 /**
+ * GLOBAL
+ */
+int g_is_ctrl_c_father;
+int g_is_ctrl_c_son;
+// pid_t pid;
+/**
  * STRUCT
  */
 
@@ -158,6 +164,14 @@ struct s_tab_tube
 /**
  * PROTOTYPES
  */
+
+/**
+ * Action on the signal
+ */
+int  ft_signal_init(void);
+int  ft_signal_restore(void);
+void  ft_signal_sigint_c(int num_sig);
+void  ft_signal_sigint_chariot(int num_sig);
 
 /**
  * Action to the terminal with termcaps

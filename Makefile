@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/02/09 14:16:18 by alex             ###   ########.fr        #
+#    Updated: 2017/02/09 16:59:15 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -166,6 +166,9 @@ C_FORK= ft_fork_name_file.c \
 				ft_fork_split_pipe.c \
 				ft_fork_loop.c
 
+C_SIGNAL= ft_signal_init.c \
+					ft_signal_restore.c
+
 ST_SRC= ft_start.c ft_env_init.c ft_read_line.c
 
 
@@ -178,14 +181,15 @@ else
 endif
 
 # VPATH= src
-VPATH= src:test_project/test_file/src:src/terminal:src/cursor:src/parse:src/builtin:src/read:src/fork
+VPATH= src:test_project/test_file/src:src/terminal:src/cursor:src/parse:src/builtin:src/read:src/fork:src/signal
 # VPATH= src/str:src/put:src/int:src/mem:src/char:src/file:src/lst
 
 
 OBJS= $(MC_SRC:%.c=$(O_DIR)/%.o) $(ST_SRC:%.c=$(O_DIR)/%.o) \
 			$(C_TERM:%.c=$(O_DIR)/%.o) $(C_CURSOR:%.c=$(O_DIR)/%.o) \
 			$(C_PARSE:%.c=$(O_DIR)/%.o) $(C_BUILTIN:%.c=$(O_DIR)/%.o) \
-			$(C_READ:%.c=$(O_DIR)/%.o) $(C_FORK:%.c=$(O_DIR)/%.o)
+			$(C_READ:%.c=$(O_DIR)/%.o) $(C_FORK:%.c=$(O_DIR)/%.o) \
+			$(C_SIGNAL:%.c=$(O_DIR)/%.o)
 
 
 
