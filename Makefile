@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/02/09 12:46:03 by alex             ###   ########.fr        #
+#    Updated: 2017/02/09 14:16:18 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -152,9 +152,21 @@ C_FORK= ft_fork_name_file.c \
 				ft_fork_is_stdin_fd.c \
 				ft_fork_set_tube_father.c \
 				ft_fork_father.c \
-				ft_fork_create_process.c
+				ft_fork_create_process.c \
+				ft_fork_init_st_fork.c \
+				ft_fork_back_std.c \
+				ft_fork_free_st_fork_and_arr_fd.c \
+				ft_fork_init_tab_cmd.c \
+				ft_fork_init_env_copy.c \
+				ft_fork_set_env_copy.c \
+				ft_fork.c \
+				ft_fork_son_exec.c \
+				ft_fork_nb_pipe.c \
+				ft_fork_str_from_arr.c \
+				ft_fork_split_pipe.c \
+				ft_fork_loop.c
 
-ST_SRC= ft_start.c ft_env_init.c ft_read_line.c ft_fork_test.c
+ST_SRC= ft_start.c ft_env_init.c ft_read_line.c
 
 
 UC_SRC = main_test.c

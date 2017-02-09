@@ -411,7 +411,7 @@ int  read_stdin(char **envp)
               return (EXIT_FAILURE);
             }
             ft_putstr("\n");
-            if (ft_fork_test(&env, tab_cmds) == B_EXIT)
+            if (ft_fork_loop(&env, tab_cmds) == B_EXIT)
             {
               if (tab_cmds)
               {
@@ -501,7 +501,7 @@ int  read_stdin(char **envp)
         tab_cmds = ft_parse_line(arr);
         if (tab_cmds)
         {
-          ft_fork_test(&env, tab_cmds);
+          ft_fork_loop(&env, tab_cmds);
         }
         else
         {

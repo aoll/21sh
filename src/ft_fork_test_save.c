@@ -108,7 +108,7 @@ int ft_fork(char **cmd, struct t_tube tab_tube[], int fd, char **env, char *path
 /**
  * fork test
  */
-int  ft_fork_test(char **env)
+int  ft_fork_loop(char **env)
 {
   char **cmd;
   struct t_tube tab_tube[3];

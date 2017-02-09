@@ -253,7 +253,17 @@ int  ft_cursor_down_history_line(
   t_cursor *cursor, t_arr *history_line, t_arr **current_line, t_arr **arr);
 int  ft_cursor_valide_line(
   t_cursor *cursor, t_arr **history_line, t_arr **current_line, t_arr **arr);
-
+int  ft_fork_init_st_fork(t_fork *st_fork, t_arr **env);
+int  ft_fork_back_std(t_fork *st_fork);
+int  ft_fork_free_st_fork_and_arr_fd(t_fork *st_fork, t_arr_fd *arr_fd);
+int  ft_fork_init_tab_cmd(t_fork *st_fork, char *cmd);
+int  ft_fork_init_env_copy(t_fork *st_fork, t_arr *env, t_tab_tube *array_tube);
+int  ft_fork_set_env_copy(t_fork *st_fork, t_arr *env, t_tab_tube *array_tube);
+int ft_fork(char **cmd, t_tube *tab_tube, t_arr **env, int nb_pipe);
+int  ft_fork_son_exec(char *path_cmd, char **tab_cmd, char **envp);
+int  ft_fork_nb_pipe(t_arr *arr);
+char  *ft_fork_str_from_arr(t_arr *arr);
+int  ft_fork_split_pipe(char *str, int nb_pipe, t_arr **env_ptr);
 /**
  * Parsing section
  */
@@ -306,7 +316,7 @@ int  ft_parse_pop_and_replace_and_check_error(t_arr *tab_cmds);
  */
 #include <fcntl.h>
 #include <sys/wait.h>
-int  ft_fork_test(t_arr **env, t_arr *tab_cmds);
+int  ft_fork_loop(t_arr **env, t_arr *tab_cmds);
 char  *ft_fork_name_file(char **command, int i);
 int  ft_fork_env_arr_to_tab_str(t_arr *envp, char ***env_ptr);
 int  *ft_fork_fd(char *name_file, int token);
