@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 16:24:59 by alex              #+#    #+#             */
-/*   Updated: 2017/02/08 16:45:22 by alex             ###   ########.fr       */
+/*   Updated: 2017/02/10 12:02:06 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char  *ft_fork_init_path_ptr(t_arr *env_copy)
   {
     kval = *(t_kval **)(
       (unsigned char *)env_copy->ptr + index_path *env_copy->sizeof_elem);
-    if (!(path_ptr = kval->value))
+    if (!(path_ptr = ft_strdup(kval->value)))
     {
       path_ptr = ft_strnew(0);
     }

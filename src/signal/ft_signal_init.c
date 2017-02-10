@@ -6,19 +6,19 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 16:47:00 by alex              #+#    #+#             */
-/*   Updated: 2017/02/10 10:11:32 by alex             ###   ########.fr       */
+/*   Updated: 2017/02/10 13:34:49 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
 
-static void  ft_signal_print(int num_sig)
-{
-  ft_putstr("\nsignal:");
-  ft_putnbr(num_sig);
-  ft_putstr(".\n");
-  return;
-}
+// static void  ft_signal_print(int num_sig)
+// {
+//   ft_putstr("\nsignal:");
+//   ft_putnbr(num_sig);
+//   ft_putstr(".\n");
+//   return;
+// }
 
 /**
  *
