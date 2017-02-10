@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 16:47:00 by alex              #+#    #+#             */
-/*   Updated: 2017/02/10 09:06:09 by alex             ###   ########.fr       */
+/*   Updated: 2017/02/10 10:11:32 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ static void  ft_signal_print(int num_sig)
 /**
  *
  */
+void  ft_signal_sigint_not_env(int num_sig)
+{
+  (void)num_sig;
+  g_is_ctrl_c_father++;
+  ft_putstr("\n$> ");
+  return;
+}
 void  ft_signal_sigint_chariot(int num_sig)
 {
   (void)num_sig;

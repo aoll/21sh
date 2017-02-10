@@ -36,7 +36,6 @@ t_arr  *ft_env_init(char **env)
 {
   size_t length;
   t_arr *arr;
-  t_kval *kv;
 
   arr = NULL;
   length = ft_array_len((const void **)env);
@@ -47,10 +46,13 @@ t_arr  *ft_env_init(char **env)
   arr->f_cmp = &ft_kval_cmp_key;
   arr->f_del = &ft_kval_free;
   arr->f_dup_elem = &ft_arr_kvaldup;
+  if (!env)
+    return (arr);
+  if (!*env)
+    return (arr);
   while (*env)
   {
-      kv = ft_kval_init(*env);
-      ft_arr_push(arr, kv, -1);
+      ft_arr_push(arr, ft_kval_init(*env), -1);
       env++;
   }
   return (arr);

@@ -171,7 +171,7 @@ int  ft_signal_init(void);
 int  ft_signal_restore(void);
 void  ft_signal_sigint_c(int num_sig);
 void  ft_signal_sigint_chariot(int num_sig);
-
+void  ft_signal_sigint_not_env(int num_sig);
 /**
  * Action to the terminal with termcaps
  */
@@ -205,6 +205,7 @@ int  ft_clear_down(void);
  /**
   * Functions for read the key
   */
+int  ft_read_ctrl_c_not_env(t_cursor *cursor, t_arr *arr);
 int  ft_read_ctrl_c_env(t_cursor *cursor, t_arr *arr);
 int  ft_read_parse(const char *buff, t_cursor *cursor, t_arr **arr_ptr,
   t_arr *history_line, t_arr **current_line,

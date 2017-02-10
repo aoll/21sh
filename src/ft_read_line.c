@@ -296,7 +296,6 @@ int  read_stdin(char **envp)
   int nb_char;
   t_arr *select_line;
   t_arr *copy_line;
-  // int cursor.index_history;
   struct winsize terminal_size_old;
   t_arr *history_line;
   t_arr *current_line;
@@ -311,6 +310,7 @@ int  read_stdin(char **envp)
   if (ft_get_term(&term))
   {
     cursor.is_env = false;
+    signal(SIGINT, ft_signal_sigint_not_env);
   }
   else
   {
@@ -367,15 +367,23 @@ int  read_stdin(char **envp)
     {
       ft_cursor_resize(&cursor, arr, &terminal_size_old);
     }
-    if (cursor.is_env)
+    if (g_is_ctrl_c_father)
     {
-      if (g_is_ctrl_c_father)
+
+      if (cursor.is_env)
       {
         ft_read_ctrl_c_env(&cursor, arr);
         ft_cursor_valide_line(&cursor, &history_line, &current_line, &arr);
         ft_bzero(buff, 8);
         continue;
       }
+      // else
+      // {
+      //   ft_read_ctrl_c_not_env(&cursor, arr);
+      // }
+    }
+    if (cursor.is_env)
+    {
       if ((rd = read(0, buff, 8)) > 0)
       {
         // ft_print_key(buff);
@@ -497,6 +505,12 @@ int  read_stdin(char **envp)
     {
       // line = ft_strnew(BUFF_SIZE);
       line = NULL;
+      if (g_is_ctrl_c_father)
+      {
+        g_is_ctrl_c_father = 0;
+        ft_str_free(&line);
+        continue;
+      }
       if (get_next_line(0, &line))
       {
         while (arr->length)
@@ -514,16 +528,11 @@ int  read_stdin(char **envp)
         {
           ft_fork_loop(&env, tab_cmds);
         }
-        else
-        {
-          ft_putstr("\n");
-        }
         if (tab_cmds)
         {
           if (tab_cmds->length)
           {
             ft_arr_free(ft_arr_pop(tab_cmds, 0));
-
           }
           if (tab_cmds->ptr)
           {
