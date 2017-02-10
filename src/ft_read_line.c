@@ -317,6 +317,8 @@ int  read_stdin(char **envp)
     cursor.is_env = true;
     term.c_lflag &= ~(ICANON);
     term.c_lflag &= ~(ECHO);
+    term.c_cc[VMIN] = 0;
+    term.c_cc[VTIME] = 1;
     if (tcsetattr(0, TCSADRAIN, &term) == -1)
     {
       return (EXIT_FAILURE);
@@ -367,13 +369,19 @@ int  read_stdin(char **envp)
     }
     if (cursor.is_env)
     {
+      if (g_is_ctrl_c_father)
+      {
+        ft_read_ctrl_c_env(&cursor, arr);
+        ft_cursor_valide_line(&cursor, &history_line, &current_line, &arr);
+        ft_bzero(buff, 8);
+        continue;
+      }
       if ((rd = read(0, buff, 8)) > 0)
       {
         // ft_print_key(buff);
         // continue;
         cursor.is_select = false;
         // cursor.prompt_len = ft_strlen(cursor.prompt); // maybe one function with the adress of promt a the change is do it only if a change has be do it an not a check every loop
-
 
         if (!(ft_read_parse((const char *)buff, &cursor, &arr, history_line, &current_line, &select_line, &copy_line)))
         {
@@ -389,13 +397,14 @@ int  read_stdin(char **envp)
           return (EXIT_SUCCESS);
         }
         //enter
-        else if (!cursor.dquote && !cursor.quote && buff[0] == 10 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6]  && !buff[7])
+        else if ((!cursor.dquote && !cursor.quote && buff[0] == 10 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6]  && !buff[7]))
         {
           /**
           * next step push arr dans arr :p :p
           * and not free actual but only a new
           * and maybe , yes only maybe exec the line ??
           */
+
           // tab_cmds = NULL;
           if (cursor.is_env)
           {

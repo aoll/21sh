@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/02/09 16:59:15 by alex             ###   ########.fr        #
+#    Updated: 2017/02/10 09:07:41 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,8 @@ C_TERM= ft_sup_char.c \
 				my_putchar.c \
 				ft_terminal_winsize.c
 
-C_READ= ft_read_parse.c
+C_READ= ft_read_parse.c \
+				ft_read_ctrl_c_env.c
 
 C_CURSOR= ft_cursor_left.c \
 					ft_cursor_right.c \
