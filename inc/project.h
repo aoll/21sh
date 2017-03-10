@@ -238,7 +238,6 @@ int  ft_cursor_deselect_all(t_cursor *cursor, t_arr *arr, t_arr *select_line);
 
 int  ft_cursor_del_or_suppr(t_cursor *cursor, t_arr *arr, int is_prev_char);
 
-
 int  ft_cursor_add_char(t_cursor *cursor, t_arr *arr, char *buff);
 
 int  ft_nb_char_between_two_chariot(t_arr *arr, int index);
