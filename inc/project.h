@@ -160,6 +160,18 @@ struct s_tab_tube
   int tube_fork_stdin[2];
 };
 
+typedef struct s_list_arr t_list arr;
+struct s_list_arr
+{
+  t_arr *env;
+  t_arr *tab_cmds;
+  t_arr *current_line_free;
+  t_arr *arr;
+  t_arr *current_line;
+  t_arr *history_line;
+  t_arr *select_line;
+}
+
 /**
  * PROTOTYPES
  */
@@ -213,6 +225,15 @@ int  ft_read_parse(const char *buff, t_cursor *cursor, t_arr **arr_ptr,
 int  ft_read_parse_eof(char **buff, t_cursor *cursor, t_arr *arr,
   t_arr *history_line, t_arr *current_line, t_arr *copy_line,
   t_arr *select_line, struct termios *term, t_arr *env, bool option);
+int  ft_read_parse_shift(
+  const char *buff, t_cursor *cursor, t_arr *arr, t_arr **select_line);
+int  ft_read_parse_ctrl(const char *buff, t_cursor *cursor, t_arr *arr);
+int  ft_read_parse_arrow(
+  const char *buff, t_cursor *cursor,
+  t_arr **arr, t_arr *history_line, t_arr **current_line);
+int  ft_read_parse_home_end(const char *buff, t_cursor *cursor, t_arr *arr);
+int  ft_read_parse_ctrl_arrow(const char *buff, t_cursor *cursor, t_arr *arr);
+
 /**
  * Action on the cursor
  */

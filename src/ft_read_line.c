@@ -225,26 +225,7 @@ int  ft_free_cursor(t_cursor *cursor)
   {
     free(cursor->prompt);
   }
-  // free(cursor->up);
-  // free(cursor->down);
-  // free(cursor->left);
-  // free(cursor->right);
-  // free(cursor->sup_char);
-  // free(cursor->move_x);
-  // free(cursor->clear_current_line);
-  // free(cursor->clear_down);
-  // free(cursor->mode_insertion);
-  // free(cursor->mode_insertion_end);
-  // free(cursor->mode_basic_video);
-  // free(cursor->mode_reverse_video);
-  // free(cursor->save_cursor_position);
-  // free(cursor->restore_cursor_position);
-  // free(cursor->scroll_down);
-  // free(cursor->scroll_up);
-  // free(cursor->left_corner_up);
-  // free(cursor->left_corner_down);
-  // free(cursor->clear_all_the_screen);
-  // free(cursor->marge);
+
   return (EXIT_SUCCESS);
 }
 
@@ -280,17 +261,18 @@ int  read_stdin(char **envp)
   char *buff;
   int rd;
   int nb_char;
-  t_arr *select_line;
   t_arr *copy_line;
   struct winsize terminal_size_old;
-  t_arr *history_line;
-  t_arr *current_line;
-  t_arr *arr;
-  t_arr *current_line_free;
-  t_arr *tab_cmds;
-  t_arr *env;
   struct termios term;
   char *line;
+  t_list_arr;
+  t_arr *env;
+  t_arr *tab_cmds;
+  t_arr *current_line_free;
+  t_arr *arr;
+  t_arr *current_line;
+  t_arr *history_line;
+  t_arr *select_line;
 
   cursor.is_env = false;
   if (ft_get_term(&term))
@@ -330,16 +312,15 @@ int  read_stdin(char **envp)
   ft_putstr("-");
   ft_putnbr(cursor.terminal_size.ws_row);
   ft_putchar('\n');
-  // history_line->f_print = &ft_arr_print; // mal construit !! doit eux pouvoir prendre des void
-  // history_line->f_dup_elem = &ft_arr_dup; //mal construit !! doit eux meme pouvoir prendre des void
+
   select_line = ft_arr_new(1, sizeof(char *));
   copy_line = NULL;
   select_line->f_print = &ft_arr_putchar;
   select_line->f_dup_elem = &ft_arr_strdup;
-  // ft_arr_push(history_line, arr, 0);
+
   nb_char = cursor.prompt_len;
 
-  buff = ft_strnew(8); //need 3 but we are never to sure
+  buff = ft_strnew(8);
   ft_bzero(buff, 8);
   ft_cursor_save_position();
   ft_putstr(cursor.prompt);
@@ -372,7 +353,7 @@ int  read_stdin(char **envp)
         // ft_print_key(buff);
         // continue;
         cursor.is_select = false;
-        // cursor.prompt_len = ft_strlen(cursor.prompt); // maybe one function with the adress of promt a the change is do it only if a change has be do it an not a check every loop
+
 
         if (!(ft_read_parse((const char *)buff, &cursor, &arr, history_line, &current_line, &select_line, &copy_line)))
         {
@@ -390,13 +371,7 @@ int  read_stdin(char **envp)
         //enter
         else if ((!cursor.dquote && !cursor.quote && buff[0] == 10 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6]  && !buff[7]))
         {
-          /**
-          * next step push arr dans arr :p :p
-          * and not free actual but only a new
-          * and maybe , yes only maybe exec the line ??
-          */
 
-          // tab_cmds = NULL;
           if (cursor.is_env)
           {
             ft_cursor_end(&cursor, arr);
@@ -454,8 +429,7 @@ int  read_stdin(char **envp)
                 return (EXIT_FAILURE);
               }
             }
-            // ft_init_terminal();
-            // ft_putstr("\n");
+
           }
           else
           {
@@ -558,8 +532,6 @@ int  read_stdin(char **envp)
 
 void  ft_loop(char **env)
 {
-
-  // ft_init_terminal();
 
   read_stdin(env);
   return;
