@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_builtin_env.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/10 09:05:25 by alex              #+#    #+#             */
+/*   Updated: 2017/03/10 10:42:30 by alex             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "project.h"
 
 
@@ -38,7 +50,6 @@ int  ft_builtin_env_setenv(t_arr *env, char *var, int fd_stderr)
   char **tab_cmd;
   int i;
 
-  i = 0;
   if (!(cmd = ft_strjoin("setenv ", var)))
   {
     ft_putstr_fd("21sh: error malloc\n", STDERR);
@@ -51,11 +62,9 @@ int  ft_builtin_env_setenv(t_arr *env, char *var, int fd_stderr)
   }
   ft_builtin_setenv((const char **)tab_cmd, &env, fd_stderr);
   free(cmd);
-  while (tab_cmd[i])
-  {
+  i = -1;
+  while (tab_cmd[++i])
     free(tab_cmd[i]);
-    i++;
-  }
   free(tab_cmd);
   return (EXIT_SUCCESS);
 }
@@ -87,48 +96,92 @@ int  ft_builtin_env_set_var_is_cmd(char **cmd, char ***tab_cmd)
   return (EXIT_SUCCESS);
 }
 
+
+/**
+ * free the kvals in a t_arr
+ */
+int  ft_builtin_env_free_kval(t_arr *env)
+{
+  void *kval;
+
+  while (env->length)
+  {
+    kval = ft_arr_pop(env, 0);
+    ft_kval_free(&kval);
+  }
+  return (EXIT_SUCCESS);
+}
+
+
+/**
+ *
+ */
+int  ft_builtin_env_set_var_cmd(char **cmd, t_arr *env, bool *is_env_prev)
+{
+  if (!(ft_strcmp(*cmd, "-i")) && *is_env_prev)
+  {
+    ft_builtin_env_free_kval(env);
+  }
+  else if ((ft_strcmp(*cmd, "env")))
+  {
+    return (1);
+  }
+  *is_env_prev = true;
+  return (EXIT_SUCCESS);
+}
+
+
+/**
+ * free and print the env
+ */
+int  ft_builtin_env_print_free(char ***tab_cmd, t_arr *env, int fd_stdout)
+{
+  free(*tab_cmd);
+  *tab_cmd = NULL;
+  ft_builtin_env_print(env, fd_stdout);
+  return (EXIT_SUCCESS);
+}
+
+/**
+ *
+ */
+int  ft_builtin_env_print_init(char ***cmd, char ***tab_cmd, bool *is_env_prev)
+{
+  if (!tab_cmd)
+    return (EXIT_FAILURE);
+  *is_env_prev = false;
+  *cmd = *tab_cmd;
+  return (EXIT_SUCCESS);
+}
+
+
 /**
  * set a list off var in the env before execute a commande or print the new env
  */
-int  ft_builtin_env_set_var(char ***tab_cmd, t_arr *env, int fd_stdout, int fd_stderr)
+int  ft_builtin_env_set_var(
+  char ***tab_cmd, t_arr *env, int fd_stdout, int fd_stderr)
 {
   char **cmd;
   bool is_env_prev;
-  void *kval;
 
-  if (!tab_cmd)
+  if (ft_builtin_env_print_init(&cmd, tab_cmd, &is_env_prev))
     return (EXIT_SUCCESS);
-  is_env_prev = false;
-  cmd = *tab_cmd;
   while (*cmd)
   {
     if (ft_indexof_first_char(*cmd, '=') < 0)
     {
-      if (!(ft_strcmp(*cmd, "-i")) && is_env_prev)
-      {
-        while (env->length)
-        {
-          kval = ft_arr_pop(env, 0);
-          ft_kval_free(&kval);
-        }
-      }
-      else if ((ft_strcmp(*cmd, "env")))
-      {
+      if (ft_builtin_env_set_var_cmd(cmd, env, &is_env_prev))
         return (ft_builtin_env_set_var_is_cmd(cmd, tab_cmd));
-      }
-      is_env_prev = true;
-      free(*cmd);
-      cmd++;
-      continue;
     }
-    ft_builtin_env_setenv(env, *cmd, fd_stderr);
+    else
+    {
+      ft_builtin_env_setenv(env, *cmd, fd_stderr);
+      is_env_prev = false;
+    }
     free(*cmd);
     cmd++;
-    is_env_prev = false;
   }
-  free(*tab_cmd);
-  *tab_cmd = NULL;
-  ft_builtin_env_print(env, fd_stdout);
+  ft_builtin_env_print_free(tab_cmd, env, fd_stdout);
   return (B_ENV);
 }
 
