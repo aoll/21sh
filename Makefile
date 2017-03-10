@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/02/10 09:07:41 by alex             ###   ########.fr        #
+#    Updated: 2017/03/10 15:31:53 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,14 +25,14 @@ NAME =project.exe
 
 LIBFT =libft/libft.a
 
-LIB_TEST_PROJECT= test_project/test_file/lib_test_project.a
+LIB_TEST_PROJECT=
 
-LIB_UNIT_TEST=test_project/unit_test/lib_unit_test.a
+LIB_UNIT_TEST=
 
 
 LIB=-lncurses
 
-I_DIR= -I inc/ -I./libft/inc -I./test_project/unit_test/inc -I./test_project/test_file/inc
+I_DIR= -I inc/ -I./libft/inc
 
 O_DIR= obj
 
@@ -175,15 +175,17 @@ ST_SRC= ft_start.c ft_env_init.c ft_read_line.c
 
 UC_SRC = main_test.c
 
-ifeq ($(DEBUG), yes)
-	MC_SRC = $(UC_SRC)
-else
-	MC_SRC = $(C_SRC)
-endif
+MC_SRC = $(C_SRC)
+#disabled
+# ifeq ($(DEBUG), yes)
+# 	MC_SRC = $(UC_SRC)
+# else
+# 	MC_SRC = $(C_SRC)
+# endif
 
 # VPATH= src
-VPATH= src:test_project/test_file/src:src/terminal:src/cursor:src/parse:src/builtin:src/read:src/fork:src/signal
-# VPATH= src/str:src/put:src/int:src/mem:src/char:src/file:src/lst
+VPATH= src:src/terminal:src/cursor:src/parse:src/builtin:src/read:src/fork:src/signal
+
 
 
 OBJS= $(MC_SRC:%.c=$(O_DIR)/%.o) $(ST_SRC:%.c=$(O_DIR)/%.o) \
@@ -198,7 +200,6 @@ OBJS= $(MC_SRC:%.c=$(O_DIR)/%.o) $(ST_SRC:%.c=$(O_DIR)/%.o) \
 
 all :
 	make -C libft
-	make -C test_project/test_file
 	make -j $(NAME)
 
 ifeq ($(DEBUG),yes)
@@ -208,7 +209,7 @@ else
 endif
 
 $(NAME):$(OBJS)
-				$(CC)  $(CFLAGS) $(I_DIR) $^ $(LIB_TEST_PROJECT) $(LIB_UNIT_TEST) $(LIBFT) -o $@ $(LIB)
+				$(CC)  $(CFLAGS) $(I_DIR) $^  $(LIBFT) -o $@ $(LIB)
 
 
 $(O_DIR)/%.o: %.c
@@ -221,13 +222,9 @@ $(O_DIR):
 clean :
 		rm -rf $(O_DIR)
 		make clean -C libft
-		make clean -C test_project/test_file
-		make clean -C test_project/unit_test
 
 fclean : clean
 		@rm -rf $(NAME)
 		make fclean -C libft
-		make fclean -C test_project/test_file
-		make fclean -C test_project/unit_test
 
 re : fclean all

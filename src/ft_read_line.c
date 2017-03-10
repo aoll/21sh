@@ -189,44 +189,30 @@ int  ft_cursor_move_x(int new_pos_x, char *cmd)
   return (EXIT_SUCCESS);
 }
 
-/**
- * PADDING_BUFFER
- */
-char *ft_cmd(char *cmd)
-{
-  // // return (ft_strjoin("1.3*5", cmd));
-  // char *new;
-  //
-  // new = ft_strnew(ft_strlen(cmd) + PADDING_BUFFER);
-  // ft_bzero(new, ft_strlen(cmd) + PADDING_BUFFER);
-  // ft_memcpy(new, cmd, ft_strlen(cmd));
-  return (cmd);
-}
+
 
 int  ft_init_cursor_cmd(t_cursor *cursor)
 {
-  // cursor->up = tgetstr("sr", NULL);
-  cursor->up = ft_cmd(tgetstr("up", NULL));
-  cursor->down = ft_cmd(tgetstr("do", NULL));
-  cursor->left = ft_cmd(tgetstr("le", NULL));
-  cursor->right = ft_cmd(tgetstr("nd", NULL));
-  cursor->sup_char = ft_cmd(tgetstr("dc", NULL));
+  cursor->up = tgetstr("up", NULL);
+  cursor->down = tgetstr("do", NULL);
+  cursor->left = tgetstr("le", NULL);
+  cursor->right = tgetstr("nd", NULL);
+  cursor->sup_char = tgetstr("dc", NULL);
   cursor->move_x = tgetstr("ch", NULL);
-  cursor->clear_current_line = ft_cmd(tgetstr("ce", NULL)); //ce
-  cursor->clear_down = ft_cmd(tgetstr("cd", NULL));
+  cursor->clear_current_line = tgetstr("ce", NULL); //e
+  cursor->clear_down = tgetstr("cd", NULL);
   cursor->mode_insertion = tgetstr("im", NULL);
-  cursor->mode_insertion_end = ft_cmd(tgetstr("ei", NULL));
-  cursor->mode_basic_video = ft_cmd(tgetstr("me", NULL));
-  cursor->mode_reverse_video = ft_cmd(tgetstr("mr", NULL));
-  cursor->save_cursor_position = ft_cmd(tgetstr("sc", NULL));
-  cursor->restore_cursor_position = ft_cmd(tgetstr("rc", NULL));
-  cursor->scroll_down = ft_cmd(tgetstr("sr", NULL));
-  cursor->scroll_up = ft_cmd(tgetstr("sf", NULL));
-  cursor->left_corner_up = ft_cmd(tgetstr("ho", NULL));
-  cursor->left_corner_down = ft_cmd(tgetstr("ll", NULL));
+  cursor->mode_insertion_end = tgetstr("ei", NULL);
+  cursor->mode_basic_video = tgetstr("me", NULL);
+  cursor->mode_reverse_video = tgetstr("mr", NULL);
+  cursor->save_cursor_position = tgetstr("sc", NULL);
+  cursor->restore_cursor_position = tgetstr("rc", NULL);
+  cursor->scroll_down = tgetstr("sr", NULL);
+  cursor->scroll_up = tgetstr("sf", NULL);
+  cursor->left_corner_up = tgetstr("ho", NULL);
+  cursor->left_corner_down = tgetstr("ll", NULL);
   cursor->clear_all_the_screen = tgetstr("cl", NULL);
   cursor->marge = tgetstr("am", NULL);
-
   return (EXIT_SUCCESS);
 }
 
@@ -377,10 +363,7 @@ int  read_stdin(char **envp)
         ft_bzero(buff, 8);
         continue;
       }
-      // else
-      // {
-      //   ft_read_ctrl_c_not_env(&cursor, arr);
-      // }
+
     }
     if (cursor.is_env)
     {
@@ -586,7 +569,6 @@ void  ft_loop(char **env)
 void  ft_read_line(char **env)
 {
   ft_signal_init();
-  ft_putstr("test du read_line\n");
   ft_loop(env);
   return;
 }
