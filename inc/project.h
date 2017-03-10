@@ -236,7 +236,6 @@ int  ft_cursor_select_left(t_cursor *cursor, t_arr *arr, t_arr *select_line);
 int  ft_cursor_select_right(t_cursor *cursor, t_arr *arr, t_arr *select_line);
 int  ft_cursor_deselect_all(t_cursor *cursor, t_arr *arr, t_arr *select_line);
 
-
 int  ft_cursor_del_or_suppr(t_cursor *cursor, t_arr *arr, int is_prev_char);
 
 
