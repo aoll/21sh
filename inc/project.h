@@ -160,17 +160,19 @@ struct s_tab_tube
   int tube_fork_stdin[2];
 };
 
-typedef struct s_list_arr t_list arr;
+typedef struct s_list_arr t_list_arr;
 struct s_list_arr
 {
-  t_arr *env;
-  t_arr *tab_cmds;
-  t_arr *current_line_free;
   t_arr *arr;
+  char *buff;
+  t_arr *copy_line;
+  t_arr *env;
+  // t_arr *current_line_free;
   t_arr *current_line;
   t_arr *history_line;
   t_arr *select_line;
-}
+  t_arr *tab_cmds;
+};
 
 /**
  * PROTOTYPES

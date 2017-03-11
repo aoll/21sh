@@ -258,21 +258,13 @@ int  ft_init_cursor_position(t_cursor *cursor)
 int  read_stdin(char **envp)
 {
   t_cursor cursor;
-  char *buff;
+  
   int rd;
-  int nb_char;
-  t_arr *copy_line;
+
   struct winsize terminal_size_old;
   struct termios term;
   char *line;
-  t_list_arr;
-  t_arr *env;
-  t_arr *tab_cmds;
-  t_arr *current_line_free;
-  t_arr *arr;
-  t_arr *current_line;
-  t_arr *history_line;
-  t_arr *select_line;
+  t_list_arr list_arr;
 
   cursor.is_env = false;
   if (ft_get_term(&term))
@@ -295,33 +287,30 @@ int  read_stdin(char **envp)
   }
 
 
-  env = ft_env_init(envp);
-  history_line = ft_arr_new(1, sizeof(t_arr *));
-  current_line = ft_arr_new(1, sizeof(t_arr *));
-  ft_arr_push(history_line, current_line, 0);
-  arr = ft_arr_new(1, sizeof(char *));
-  ft_arr_push(current_line, arr, 0);
-  arr->f_print = &ft_arr_putchar;
-  arr->f_dup_elem = &ft_arr_strdup;
+  list_arr.env = ft_env_init(envp);
+  list_arr.history_line = ft_arr_new(1, sizeof(t_arr *));
+  list_arr.current_line = ft_arr_new(1, sizeof(t_arr *));
+  ft_arr_push(list_arr.history_line, list_arr.current_line, 0);
+  list_arr.arr = ft_arr_new(1, sizeof(char *));
+  ft_arr_push(list_arr.current_line, list_arr.arr, 0);
+  list_arr.arr->f_print = &ft_arr_putchar;
+  list_arr.arr->f_dup_elem = &ft_arr_strdup;
 
 
   ft_init_cursor_position(&cursor);
   //chaque apel a malloc doit etre proteger soit dit au passage!!!
   ft_terminal_winsize(&(cursor.terminal_size)); // a checker le retour
-  ft_putnbr(cursor.terminal_size.ws_col);
-  ft_putstr("-");
-  ft_putnbr(cursor.terminal_size.ws_row);
-  ft_putchar('\n');
 
-  select_line = ft_arr_new(1, sizeof(char *));
-  copy_line = NULL;
-  select_line->f_print = &ft_arr_putchar;
-  select_line->f_dup_elem = &ft_arr_strdup;
 
-  nb_char = cursor.prompt_len;
+  list_arr.select_line = ft_arr_new(1, sizeof(char *));
+  list_arr.copy_line = NULL;
+  list_arr.select_line->f_print = &ft_arr_putchar;
+  list_arr.select_line->f_dup_elem = &ft_arr_strdup;
 
-  buff = ft_strnew(8);
-  ft_bzero(buff, 8);
+
+
+  list_arr.buff = ft_strnew(8);
+  ft_bzero(list_arr.buff, 8);
   ft_cursor_save_position();
   ft_putstr(cursor.prompt);
   ft_terminal_winsize(&terminal_size_old); // a checker le retour
@@ -332,52 +321,52 @@ int  read_stdin(char **envp)
     ft_terminal_winsize(&terminal_size_old); // a checker le retour
     if (cursor.terminal_size.ws_col != terminal_size_old.ws_col || cursor.terminal_size.ws_row != terminal_size_old.ws_row)
     {
-      ft_cursor_resize(&cursor, arr, &terminal_size_old);
+      ft_cursor_resize(&cursor, list_arr.arr, &terminal_size_old);
     }
     if (g_is_ctrl_c_father)
     {
 
       if (cursor.is_env)
       {
-        ft_read_ctrl_c_env(&cursor, arr);
-        ft_cursor_valide_line(&cursor, &history_line, &current_line, &arr);
-        ft_bzero(buff, 8);
+        ft_read_ctrl_c_env(&cursor, list_arr.arr);
+        ft_cursor_valide_line(&cursor, &list_arr.history_line, &list_arr.current_line, &list_arr.arr);
+        ft_bzero(list_arr.buff, 8);
         continue;
       }
 
     }
     if (cursor.is_env)
     {
-      if ((rd = read(0, buff, 8)) > 0)
+      if ((rd = read(0, list_arr.buff, 8)) > 0)
       {
-        // ft_print_key(buff);
+        // ft_print_key(list_arr.buff);
         // continue;
         cursor.is_select = false;
 
 
-        if (!(ft_read_parse((const char *)buff, &cursor, &arr, history_line, &current_line, &select_line, &copy_line)))
+        if (!(ft_read_parse((const char *)list_arr.buff, &cursor, &list_arr.arr, list_arr.history_line, &list_arr.current_line, &list_arr.select_line, &list_arr.copy_line)))
         {
-          ft_bzero(buff, 8);
-          if (!cursor.is_select && select_line->length && arr->length)
+          ft_bzero(list_arr.buff, 8);
+          if (!cursor.is_select && list_arr.select_line->length && list_arr.arr->length)
           {
-            ft_cursor_deselect_all(&cursor, arr, select_line);
+            ft_cursor_deselect_all(&cursor, list_arr.arr, list_arr.select_line);
           }
           continue;
         }
-        else if (!(ft_read_parse_eof(&buff, &cursor, arr, history_line, current_line, copy_line, select_line, &term, env, false)))
+        else if (!(ft_read_parse_eof(&list_arr.buff, &cursor, list_arr.arr, list_arr.history_line, list_arr.current_line, list_arr.copy_line, list_arr.select_line, &term, list_arr.env, false)))
         {
           return (EXIT_SUCCESS);
         }
         //enter
-        else if ((!cursor.dquote && !cursor.quote && buff[0] == 10 && !buff[1] && !buff[2] && !buff[3] && !buff[4] && !buff[5] && !buff[6]  && !buff[7]))
+        else if ((!cursor.dquote && !cursor.quote && list_arr.buff[0] == 10 && !list_arr.buff[1] && !list_arr.buff[2] && !list_arr.buff[3] && !list_arr.buff[4] && !list_arr.buff[5] && !list_arr.buff[6]  && !list_arr.buff[7]))
         {
 
           if (cursor.is_env)
           {
-            ft_cursor_end(&cursor, arr);
+            ft_cursor_end(&cursor, list_arr.arr);
           }
-          tab_cmds = ft_parse_line(arr);
-          if (tab_cmds)
+          list_arr.tab_cmds = ft_parse_line(list_arr.arr);
+          if (list_arr.tab_cmds)
           {
             if (cursor.is_env)
             {
@@ -387,37 +376,37 @@ int  read_stdin(char **envp)
             }
             ft_putstr("\n");
             signal(SIGINT, ft_signal_sigint_chariot);
-            if (ft_fork_loop(&env, tab_cmds) == B_EXIT)
+            if (ft_fork_loop(&list_arr.env, list_arr.tab_cmds) == B_EXIT)
             {
-              if (tab_cmds)
+              if (list_arr.tab_cmds)
               {
-                if (tab_cmds->length)
+                if (list_arr.tab_cmds->length)
                 {
-                  ft_arr_free(ft_arr_pop(tab_cmds, 0));
+                  ft_arr_free(ft_arr_pop(list_arr.tab_cmds, 0));
                 }
-                if (tab_cmds->ptr)
+                if (list_arr.tab_cmds->ptr)
                 {
-                  free(tab_cmds->ptr);
+                  free(list_arr.tab_cmds->ptr);
                 }
-                free(tab_cmds);
-                tab_cmds = NULL;
+                free(list_arr.tab_cmds);
+                list_arr.tab_cmds = NULL;
               }
-              ft_read_parse_eof(&buff, &cursor, arr, history_line, current_line, copy_line, select_line, &term, env, true);
+              ft_read_parse_eof(&list_arr.buff, &cursor, list_arr.arr, list_arr.history_line, list_arr.current_line, list_arr.copy_line, list_arr.select_line, &term, list_arr.env, true);
               return (0);
             }
             signal(SIGINT, ft_signal_sigint_c);
-            if (tab_cmds)
+            if (list_arr.tab_cmds)
             {
-              if (tab_cmds->length)
+              if (list_arr.tab_cmds->length)
               {
-                ft_arr_free(ft_arr_pop(tab_cmds, 0));
+                ft_arr_free(ft_arr_pop(list_arr.tab_cmds, 0));
               }
-              if (tab_cmds->ptr)
+              if (list_arr.tab_cmds->ptr)
               {
-                free(tab_cmds->ptr);
+                free(list_arr.tab_cmds->ptr);
               }
-              free(tab_cmds);
-              tab_cmds = NULL;
+              free(list_arr.tab_cmds);
+              list_arr.tab_cmds = NULL;
             }
             if (cursor.is_env)
             {
@@ -435,7 +424,7 @@ int  read_stdin(char **envp)
           {
             ft_putstr("\n");
           }
-          ft_cursor_valide_line(&cursor, &history_line, &current_line, &arr);
+          ft_cursor_valide_line(&cursor, &list_arr.history_line, &list_arr.current_line, &list_arr.arr);
 
 
         }
@@ -443,17 +432,17 @@ int  read_stdin(char **envp)
 
         else //everithing else the previous command and past cmd - v
         {
-          ft_cursor_add_char(&cursor, arr, buff);
+          ft_cursor_add_char(&cursor, list_arr.arr, list_arr.buff);
         }
 
 
         // delete all char reverse video and normal and rewrite in normal video
-        if (!cursor.is_select && select_line->length && arr->length)
+        if (!cursor.is_select && list_arr.select_line->length && list_arr.arr->length)
         {
-          ft_cursor_deselect_all(&cursor, arr, select_line);
+          ft_cursor_deselect_all(&cursor, list_arr.arr, list_arr.select_line);
         }
 
-        ft_bzero(buff, 8);
+        ft_bzero(list_arr.buff, 8);
 
       }
 
@@ -470,33 +459,33 @@ int  read_stdin(char **envp)
       }
       if (get_next_line(0, &line))
       {
-        while (arr->length)
+        while (list_arr.arr->length)
         {
-          free(ft_arr_pop(arr, 0));
+          free(ft_arr_pop(list_arr.arr, 0));
         }
-        ft_arr_str(arr, line);
+        ft_arr_str(list_arr.arr, line);
         if (line)
         {
           free(line);
           line = NULL;
         }
-        tab_cmds = ft_parse_line(arr);
-        if (tab_cmds)
+        list_arr.tab_cmds = ft_parse_line(list_arr.arr);
+        if (list_arr.tab_cmds)
         {
-          ft_fork_loop(&env, tab_cmds);
+          ft_fork_loop(&list_arr.env, list_arr.tab_cmds);
         }
-        if (tab_cmds)
+        if (list_arr.tab_cmds)
         {
-          if (tab_cmds->length)
+          if (list_arr.tab_cmds->length)
           {
-            ft_arr_free(ft_arr_pop(tab_cmds, 0));
+            ft_arr_free(ft_arr_pop(list_arr.tab_cmds, 0));
           }
-          if (tab_cmds->ptr)
+          if (list_arr.tab_cmds->ptr)
           {
-            free(tab_cmds->ptr);
+            free(list_arr.tab_cmds->ptr);
           }
-          free(tab_cmds);
-          tab_cmds = NULL;
+          free(list_arr.tab_cmds);
+          list_arr.tab_cmds = NULL;
         }
         ft_putstr(cursor.prompt);
 
@@ -508,7 +497,7 @@ int  read_stdin(char **envp)
           free(line);
           line = NULL;
         }
-        if (!(ft_read_parse_eof(&buff, &cursor, arr, history_line, current_line, copy_line, select_line, &term, env, true)))
+        if (!(ft_read_parse_eof(&list_arr.buff, &cursor, list_arr.arr, list_arr.history_line, list_arr.current_line, list_arr.copy_line, list_arr.select_line, &term, list_arr.env, true)))
         {
           return (EXIT_SUCCESS);
         }
