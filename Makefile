@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/03/12 12:29:16 by alex             ###   ########.fr        #
+#    Updated: 2017/03/12 17:56:14 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,7 +85,15 @@ C_CURSOR= ft_cursor_left.c \
 					ft_cursor_valide_line.c \
 					ft_cursor_valide_line_init_cursor_prompt.c \
 					ft_cursor_valide_line_with_line.c \
-					ft_cursor_valide_line_without_line.c
+					ft_cursor_valide_line_without_line.c \
+					ft_cursor_clear_up.c \
+					ft_cursor_clear_down.c \
+					ft_arr_add_char.c \
+					ft_arr_index_line_start_showed.c \
+					ft_cursor_print_char.c \
+					ft_cursor_print_chariot.c \
+					ft_cursor_print_overide_line.c \
+					ft_cusor_clear_down_line.c
 
 C_PARSE= ft_parse_line.c \
 				 ft_parse_separate_cmd.c \

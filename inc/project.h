@@ -310,7 +310,15 @@ int  ft_cursor_valide_line_init_cursor_prompt(
   t_cursor *cursor, int len_history);
 int  ft_cursor_valide_line_with_line(
   t_arr  *tmp_arr, t_arr *tmp_current_line, t_arr *tmp_history_line);
-int  ft_cursor_valide_line_without_line(t_arr *tmp_history_line);    
+int  ft_cursor_valide_line_without_line(t_arr *tmp_history_line);
+int  ft_cursor_clear_up(t_cursor *cursor);
+int  ft_cursor_clear_down(t_cursor *cursor);
+int  ft_arr_add_char(t_cursor *cursor, t_arr *arr, char c, int is_tab);
+int  ft_arr_index_line_start_showed(t_cursor *cursor, t_arr *arr, int line_off);
+int  ft_cursor_print_char(t_cursor *cursor, char c, t_arr *arr);
+int  ft_cursor_print_chariot(t_cursor *cursor, t_arr *arr);
+int  ft_cursor_print_overide_line(t_cursor *cursor, t_arr *arr);
+int  ft_cusor_clear_down_line(t_cursor *cursor, t_arr *arr);
 /**
  * Parsing section
  */
