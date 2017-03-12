@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 15:47:41 by alex              #+#    #+#             */
-/*   Updated: 2017/03/10 15:54:10 by alex             ###   ########.fr       */
+/*   Updated: 2017/03/11 16:54:26 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,22 +75,23 @@ int  ft_read_parse_ctrl(const char *buff, t_cursor *cursor, t_arr *arr)
  * else return 1
  */
 int  ft_read_parse_arrow(
-  const char *buff, t_cursor *cursor,
-  t_arr **arr, t_arr *history_line, t_arr **current_line)
+  const char *buff, t_cursor *cursor, t_list_arr *list_arr)
 {
   if (buff[0] == 27 && buff[1] == 91 && (buff[2] == 65 || buff[2] == 66
     || buff[2] == 67 || buff[2] == 68) && !buff[3] && !buff[4] && !buff[5]
     && !buff[6] && !buff[7])
   {
     if (buff[2] == 65 && cursor->index_history - 1 >= 0 && cursor->is_env)
-      ft_cursor_up_history_line(cursor, history_line, current_line, arr);
+      ft_cursor_up_history_line(cursor, list_arr->history_line,
+        &list_arr->current_line, &list_arr->arr);
     else if (buff[2] == 66 && cursor->index_history +  1
-      < (int)history_line->length && cursor->is_env)
-      ft_cursor_down_history_line(cursor, history_line, current_line, arr);
+      < (int)list_arr->history_line->length && cursor->is_env)
+      ft_cursor_down_history_line(cursor, list_arr->history_line,
+        &list_arr->current_line, &list_arr->arr);
     else if (buff[1] == 91 && buff[2] == 68 && cursor->is_env)
-      ft_cursor_left(cursor, *arr);
+      ft_cursor_left(cursor, list_arr->arr);
     else if (buff[1] == 91 && buff[2] == 67 && cursor->is_env)
-      ft_cursor_right(cursor, *arr);
+      ft_cursor_right(cursor, list_arr->arr);
     return (EXIT_SUCCESS);
   }
   return (EXIT_FAILURE);

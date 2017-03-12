@@ -221,20 +221,22 @@ int  ft_clear_down(void);
   */
 int  ft_read_ctrl_c_not_env(t_cursor *cursor, t_arr *arr);
 int  ft_read_ctrl_c_env(t_cursor *cursor, t_arr *arr);
-int  ft_read_parse(const char *buff, t_cursor *cursor, t_arr **arr_ptr,
-  t_arr *history_line, t_arr **current_line,
-  t_arr **select_line, t_arr **copy_line);
-int  ft_read_parse_eof(char **buff, t_cursor *cursor, t_arr *arr,
-  t_arr *history_line, t_arr *current_line, t_arr *copy_line,
-  t_arr *select_line, struct termios *term, t_arr *env, bool option);
+int  ft_read_parse(const char *buff, t_cursor *cursor, t_list_arr *list_arr);
+
+int  ft_read_parse_eof(t_cursor *cursor, t_list_arr *list_arr,
+  struct termios *term, bool option);
+
+
 int  ft_read_parse_shift(
   const char *buff, t_cursor *cursor, t_arr *arr, t_arr **select_line);
 int  ft_read_parse_ctrl(const char *buff, t_cursor *cursor, t_arr *arr);
+
 int  ft_read_parse_arrow(
-  const char *buff, t_cursor *cursor,
-  t_arr **arr, t_arr *history_line, t_arr **current_line);
+  const char *buff, t_cursor *cursor, t_list_arr *list_arr);
+
 int  ft_read_parse_home_end(const char *buff, t_cursor *cursor, t_arr *arr);
 int  ft_read_parse_ctrl_arrow(const char *buff, t_cursor *cursor, t_arr *arr);
+
 
 /**
  * Action on the cursor
@@ -303,6 +305,12 @@ int  ft_fork_son_exec(char *path_cmd, char **tab_cmd, char **envp);
 int  ft_fork_nb_pipe(t_arr *arr);
 char  *ft_fork_str_from_arr(t_arr *arr);
 int  ft_fork_split_pipe(char *str, int nb_pipe, t_arr **env_ptr);
+
+int  ft_cursor_valide_line_init_cursor_prompt(
+  t_cursor *cursor, int len_history);
+int  ft_cursor_valide_line_with_line(
+  t_arr  *tmp_arr, t_arr *tmp_current_line, t_arr *tmp_history_line);
+int  ft_cursor_valide_line_without_line(t_arr *tmp_history_line);    
 /**
  * Parsing section
  */
