@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cursor_end.c                                    :+:      :+:    :+:   */
+/*   ft_cursor_right_line_more_up.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/13 08:47:25 by alex              #+#    #+#             */
-/*   Updated: 2017/03/13 08:47:40 by alex             ###   ########.fr       */
+/*   Created: 2017/03/13 11:25:18 by alex              #+#    #+#             */
+/*   Updated: 2017/03/13 11:25:45 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
 
-/**
- * move the cursor to end of the line even if it's a multi-ligne
- */
-int  ft_cursor_end(t_cursor *cursor, t_arr *arr)
+int  ft_cursor_right_line_more_up(
+  t_cursor *cursor, void *ptr_tmp, t_arr *arr)
 {
-  while (cursor->index_line != (int)arr->length)
+  unsigned char *s_line;
+
+  s_line = (unsigned char *)ptr_tmp + arr->sizeof_elem * cursor->index_line;
+  s_line = *(unsigned char **)s_line;
+  if ( *s_line == 10)
   {
-    ft_cursor_right(cursor, arr);
+    ft_term_apply_cmd(cursor->up, 1);
   }
+  ft_cursor_move_x(cursor->pos_x, cursor->move_x);
   return (EXIT_SUCCESS);
 }

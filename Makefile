@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/03/12 17:56:14 by alex             ###   ########.fr        #
+#    Updated: 2017/03/13 11:27:09 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,7 +93,23 @@ C_CURSOR= ft_cursor_left.c \
 					ft_cursor_print_char.c \
 					ft_cursor_print_chariot.c \
 					ft_cursor_print_overide_line.c \
-					ft_cusor_clear_down_line.c
+					ft_cusor_clear_down_line.c \
+					ft_cursor_left_tab.c \
+					ft_cursor_left_same_line.c \
+					ft_nb_char_between_two_chariot.c \
+					ft_cursor_left_chariot.c \
+					ft_cursor_index_prev_line_end.c \
+					ft_cursor_nb_line_displayed.c \
+					ft_cursor_restore_y_x.c \
+					ft_cursor_right_tab.c \
+					ft_cursor_right_chariot.c \
+					ft_cursor_right_same_line.c \
+					ft_clear_up_from_bottom.c \
+					ft_index_line_end_showed.c \
+					ft_index_line_start_showed.c \
+					ft_cursor_right_line_more.c \
+					ft_cursor_right_line_more_up.c \
+					ft_cursor_y_screen.c
 
 C_PARSE= ft_parse_line.c \
 				 ft_parse_separate_cmd.c \
@@ -183,7 +199,7 @@ C_FORK= ft_fork_name_file.c \
 C_SIGNAL= ft_signal_init.c \
 					ft_signal_restore.c
 
-ST_SRC= ft_start.c ft_env_init.c ft_read_line.c
+ST_SRC= ft_start.c ft_env_init.c ft_read_line.c ft_check_is_char.c
 
 
 UC_SRC = main_test.c

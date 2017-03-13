@@ -6,11 +6,20 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/12 17:53:30 by alex              #+#    #+#             */
-/*   Updated: 2017/03/12 17:53:54 by alex             ###   ########.fr       */
+/*   Updated: 2017/03/13 09:23:06 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
+
+static int  ft_cursor_print_chariot_set_cursor(t_cursor *cursor)
+{
+  cursor->pos_x = 0;
+  cursor->pos_y++;
+  cursor->y_total++;
+  ft_cursor_move_x(cursor->pos_x, cursor->move_x);
+  return (EXIT_SUCCESS);
+}
 /**
  * print a return chariot
  */
@@ -36,9 +45,6 @@ int  ft_cursor_print_chariot(t_cursor *cursor, t_arr *arr)
     arr->length = len_tmp;
   }
   ft_putchar('\n');
-  cursor->pos_x = 0;
-  cursor->pos_y++;
-  cursor->y_total++;
-  ft_cursor_move_x(cursor->pos_x, cursor->move_x);
+  ft_cursor_print_chariot_set_cursor(cursor);
   return (EXIT_SUCCESS);
 }

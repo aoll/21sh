@@ -6,38 +6,11 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/12 18:39:15 by alex              #+#    #+#             */
-/*   Updated: 2017/03/12 18:48:46 by alex             ###   ########.fr       */
+/*   Updated: 2017/03/13 08:32:44 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
-
-/**
- *
- */
-static int  ft_check_is_char(t_arr *arr, char c)
-{
-  int i;
-  char *s_line;
-  int nb;
-
-  i = 0;
-  nb = 0;
-  while (i < (int)arr->length)
-  {
-    s_line = *(char **)((unsigned char *)arr->ptr + i * arr->sizeof_elem);
-    if (*s_line == c)
-    {
-      nb++;
-    }
-    i++;
-  }
-  if (nb)
-  {
-    return (nb % 2);
-  }
-  return (EXIT_SUCCESS);
-}
 
 static int  ft_cursor_arr_pop_elem_set_cursor(
   t_cursor *cursor, t_arr *arr, char *s_line)
@@ -134,34 +107,26 @@ static int  ft_cursor_del_or_suppr_set_cursor(
  */
 int  ft_cursor_del_or_suppr(t_cursor *cursor, t_arr *arr, int is_prev_char)
 {
-  int index_line_tmp;
-  int y_tmp;
-  int x_tmp;
-  int chariot_tmp;
   t_cursor cursor_tmp;
   int err;
 
   ft_cursor_del_or_suppr_set_cursor(cursor, arr, &is_prev_char);
-  index_line_tmp = cursor->index_line;
-
-  y_tmp = cursor->pos_y;
-  x_tmp = cursor->pos_x;
-  chariot_tmp = cursor->chariot;
+  cursor_tmp.index_line = cursor->index_line;
+  cursor_tmp.pos_y = cursor->pos_y;
+  cursor_tmp.pos_x = cursor->pos_x;
+  cursor_tmp.chariot = cursor->chariot;
   if (!cursor || (cursor->index_line - is_prev_char) < 0 ||
   !cursor->clear_down || !cursor->left)
-  {
     return (EXIT_FAILURE);
-  }
   if ((err = ft_cursor_move_to_start(cursor, arr))
   || (err = ft_term_apply_cmd(cursor->clear_down, 1)))
-  {
     return (EXIT_FAILURE);
-  }
-  index_line_tmp = ft_cursor_arr_pop_elem(arr, cursor, index_line_tmp, is_prev_char);
+  cursor_tmp.index_line = ft_cursor_arr_pop_elem(
+    arr, cursor, cursor_tmp.index_line, is_prev_char);
   ft_restore_prompt_and_line(cursor, arr);
-  cursor->index_line = index_line_tmp;
-  cursor->pos_x = x_tmp;
-  cursor->pos_y = y_tmp;
+  cursor->index_line = cursor_tmp.index_line;
+  cursor->pos_x = cursor_tmp.pos_x;
+  cursor->pos_y = cursor_tmp.pos_y;
   ft_term_apply_cmd(cursor->restore_cursor_position, 1);
   return (EXIT_SUCCESS);
 }

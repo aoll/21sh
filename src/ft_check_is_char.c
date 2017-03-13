@@ -1,25 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cursor_end.c                                    :+:      :+:    :+:   */
+/*   ft_check_is_char.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/13 08:47:25 by alex              #+#    #+#             */
-/*   Updated: 2017/03/13 08:47:40 by alex             ###   ########.fr       */
+/*   Created: 2017/03/12 18:55:26 by alex              #+#    #+#             */
+/*   Updated: 2017/03/12 18:57:30 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
-
 /**
- * move the cursor to end of the line even if it's a multi-ligne
+ * check if char c is present as the first char of str from a t_arr *arr of str
  */
-int  ft_cursor_end(t_cursor *cursor, t_arr *arr)
+int  ft_check_is_char(t_arr *arr, char c)
 {
-  while (cursor->index_line != (int)arr->length)
+  int i;
+  char *s_line;
+  int nb;
+
+  i = 0;
+  nb = 0;
+  while (i < (int)arr->length)
   {
-    ft_cursor_right(cursor, arr);
+    s_line = *(char **)((unsigned char *)arr->ptr + i * arr->sizeof_elem);
+    if (*s_line == c)
+    {
+      nb++;
+    }
+    i++;
+  }
+  if (nb)
+  {
+    return (nb % 2);
   }
   return (EXIT_SUCCESS);
 }

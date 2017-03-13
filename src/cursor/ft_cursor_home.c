@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cursor_home.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/13 08:47:35 by alex              #+#    #+#             */
+/*   Updated: 2017/03/13 08:47:38 by alex             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "project.h"
 
 /**
@@ -13,11 +25,5 @@ int  ft_cursor_home(t_cursor *cursor, t_arr *arr)
   {
     ft_cursor_left(cursor, arr);
   }
-  // ft_term_apply_cmd(cursor->up, cursor->pos_y);
-  // cursor->pos_y = 0;
-  // cursor->index_line = 0;
-  // cursor->prev_chariot = 0;
-  // cursor->pos_x = cursor->prompt_len;
-  // ft_cursor_move_x(cursor->pos_x, cursor->move_x);
   return (EXIT_SUCCESS);
 }

@@ -1,33 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cursor_move_to_start.c                          :+:      :+:    :+:   */
+/*   ft_cursor_right_same_line.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/13 09:16:00 by alex              #+#    #+#             */
-/*   Updated: 2017/03/13 09:16:05 by alex             ###   ########.fr       */
+/*   Created: 2017/03/13 10:35:20 by alex              #+#    #+#             */
+/*   Updated: 2017/03/13 10:35:35 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
-
 /**
- * move the cursor to the start of the line, col 0 and raw 0 (before the prompt
- * not raw 0 of the screen) even if it is a multiple line
+ * next char is on the same line as the cursor
  */
-int  ft_cursor_move_to_start(t_cursor *cursor, t_arr *arr)
+int  ft_cursor_right_same_line(t_cursor *cursor, t_arr *arr,
+  unsigned char *s_line)
 {
-  int err;
-
-  if (!cursor)
+  if (cursor->index_line + 1 == (int)arr->length)
   {
-    return (EXIT_FAILURE);
+    ft_term_apply_cmd(cursor->right, 1);
+    cursor->pos_x++;
+    cursor->index_line++;
   }
-  if ((err = ft_cursor_home(cursor, arr))
-  || (err = ft_term_apply_cmd(cursor->left, cursor->prompt_len)))
+  else
   {
-    return (EXIT_FAILURE);
+    if (s_line[4] == 1)
+    {
+      ft_cursor_right_tab(cursor, 0);
+    }
+    else
+    {
+      ft_term_apply_cmd(cursor->right, 1);
+      cursor->pos_x++;
+      cursor->index_line++;
+    }
   }
   return (EXIT_SUCCESS);
 }

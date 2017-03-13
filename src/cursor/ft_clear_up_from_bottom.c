@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cursor_end.c                                    :+:      :+:    :+:   */
+/*   ft_clear_up_from_bottom.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/13 08:47:25 by alex              #+#    #+#             */
-/*   Updated: 2017/03/13 08:47:40 by alex             ###   ########.fr       */
+/*   Created: 2017/03/13 10:36:09 by alex              #+#    #+#             */
+/*   Updated: 2017/03/13 10:36:20 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
-
 /**
- * move the cursor to end of the line even if it's a multi-ligne
+ * clear the screen from the bottom line
  */
-int  ft_cursor_end(t_cursor *cursor, t_arr *arr)
+int  ft_clear_up_from_bottom(t_cursor *cursor)
 {
-  while (cursor->index_line != (int)arr->length)
+  int i;
+
+  i = 0;
+  ft_cursor_move_x(0, cursor->move_x);
+  while (i < cursor->terminal_size.ws_row)
   {
-    ft_cursor_right(cursor, arr);
+    ft_term_apply_cmd(cursor->clear_current_line, 1);
+    ft_term_apply_cmd(cursor->up, 1);
+    i++;
   }
   return (EXIT_SUCCESS);
 }

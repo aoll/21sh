@@ -215,6 +215,7 @@ int  ft_clear_down(void);
  */
  void  *ft_arr_strdup(const void *s, size_t n);
  void  ft_arr_putchar(const void *s);
+ int  ft_check_is_char(t_arr *arr, char c);
 
  /**
   * Functions for read the key
@@ -319,6 +320,25 @@ int  ft_cursor_print_char(t_cursor *cursor, char c, t_arr *arr);
 int  ft_cursor_print_chariot(t_cursor *cursor, t_arr *arr);
 int  ft_cursor_print_overide_line(t_cursor *cursor, t_arr *arr);
 int  ft_cusor_clear_down_line(t_cursor *cursor, t_arr *arr);
+int  ft_cursor_left_tab(t_cursor *cursor, int same_line);
+int  ft_cursor_left_same_line(t_cursor *cursor, unsigned char *s_line);
+int  ft_nb_char_between_two_chariot(t_arr *arr, int index);
+int  ft_cursor_left_chariot(t_cursor *cursor, t_arr *arr);
+int  ft_cursor_index_prev_line_end(t_cursor *cursor, t_arr *arr, int start);
+int  ft_cursor_nb_line_displayed(
+  t_cursor *cursor, t_arr *arr, int index_start_showed, int is_total);
+int  ft_cursor_restore_y_x(t_cursor *cursor, t_arr *arr, int nb_line_displayed);
+int  ft_cursor_right_tab(t_cursor *cursor, int same_line);
+int  ft_cursor_right_chariot(t_cursor *cursor);
+int  ft_cursor_right_same_line(t_cursor *cursor, t_arr *arr,
+  unsigned char *s_line);
+int  ft_clear_up_from_bottom(t_cursor *cursor);
+int  ft_index_line_end_showed(t_cursor *cursor, t_arr *arr);
+int  ft_index_line_start_showed(t_cursor *cursor, t_arr *arr);
+int  ft_cursor_right_line_more(t_cursor *cursor, t_arr *arr);
+int  ft_cursor_right_line_more_up(
+  t_cursor *cursor, void *ptr_tmp, t_arr *arr);
+int  ft_cursor_y_screen(t_cursor *cursor, t_arr *arr);
 /**
  * Parsing section
  */
