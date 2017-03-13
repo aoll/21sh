@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cursor_select_right.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/13 12:28:38 by alex              #+#    #+#             */
+/*   Updated: 2017/03/13 12:31:02 by alex             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "project.h"
 
 /**
@@ -63,6 +75,17 @@ static int  ft_cursor_select_overide_char_right(t_cursor *cursor, t_arr *arr,
   return (EXIT_SUCCESS);
 }
 
+static int  ft_cursor_select_right_set_mode(
+  t_cursor *cursor, unsigned char *s_line, int *is_will_reverse)
+{
+  if (s_line[5] != 1)
+  {
+    ft_term_apply_cmd(cursor->mode_reverse_video, 1);
+    *is_will_reverse = 1;
+  }
+  ft_term_apply_cmd(cursor->mode_insertion_end, 1);
+  return (EXIT_SUCCESS);
+}
 /**
  * select the char right to the cursor
  */
@@ -75,12 +98,7 @@ int  ft_cursor_select_right(t_cursor *cursor, t_arr *arr, t_arr *select_line)
   ft_term_apply_cmd(cursor->save_cursor_position, 1);
   s_line = (unsigned char *)arr->ptr + arr->sizeof_elem * (cursor->index_line);
   s_line = *(unsigned char **)s_line;
-  if (s_line[5] != 1)
-  {
-    ft_term_apply_cmd(cursor->mode_reverse_video, 1);
-    is_will_reverse = 1;
-  }
-  ft_term_apply_cmd(cursor->mode_insertion_end, 1);
+  ft_cursor_select_right_set_mode(cursor, s_line, &is_will_reverse);
   if (s_line[4] == 1)
   {
     ft_cursor_select_overide_tab_right(cursor, arr, select_line,

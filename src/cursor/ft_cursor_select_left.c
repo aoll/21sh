@@ -1,100 +1,70 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cursor_select_left.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/13 12:03:38 by alex              #+#    #+#             */
+/*   Updated: 2017/03/13 12:26:59 by alex             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "project.h"
 
-/**
- * if is_will_reverse = 1
- * add to select_line four space and overide in reverse video the four space
- * present on the screen
- * or
- * if is_will_reverse = 0 pop and free to select_line four space and overide
- * the four space presenet on the screen in basic video mode
- */
-static int  ft_cursor_select_overide_tab(t_cursor *cursor, t_arr *arr,
-  t_arr *select_line, int is_will_reverse)
+static int  ft_cursor_select_left_copy_cursor(t_cursor *new, t_cursor *old)
 {
-  int index_tab;
-  unsigned char *s_line;
-
-  index_tab = 0;
-  while (index_tab < TABULATION_LEN)
-  {
-    s_line = (unsigned char *)arr->ptr + arr->sizeof_elem * (cursor->index_line + index_tab);
-    s_line = *(unsigned char **)s_line;
-    s_line[5] = is_will_reverse;
-    if (is_will_reverse)
-    {
-      ft_arr_push(select_line, ft_strdup((char *)s_line), 0);
-    }
-    else if (select_line->length)
-    {
-      free(ft_arr_pop(select_line, select_line->length - 1));
-    }
-    ft_putstr((const char *)s_line);
-    index_tab++;
-  }
+  new->index_line = old->index_line;
+  new->pos_x = old->pos_x;
+  new->pos_y = old->pos_y;
+  new->y_start = old->y_start;
+  new->prev_chariot = old->prev_chariot;
   return (EXIT_SUCCESS);
 }
 
-/**
- * if is_will_reverse = 1
- * add to select_line the char and overide in reverse video the char
- * present on the screen
- * or
- * if is_will_reverse = 0 pop and free to select_line a char and overide
- * the char present on the screen in basic video mode
- */
-static int  ft_cursor_select_overide_char(t_cursor *cursor, t_arr *arr,
-  t_arr *select_line, int is_will_reverse)
+static int  ft_cursor_select_left_restore_cursor(
+  t_cursor *cursor, t_cursor *cursor_tmp, t_arr *arr, char *s_line)
 {
-  unsigned char *s_line;
-
-  s_line = (unsigned char *)arr->ptr + arr->sizeof_elem * (cursor->index_line);
-  s_line = *(unsigned char **)s_line;
-  ft_putstr((const char *)s_line);
-  s_line[5] = is_will_reverse;
-  if (is_will_reverse)
+  ft_term_apply_cmd(cursor->mode_insertion, 1);
+  ft_term_apply_cmd(cursor->mode_basic_video, 1);
+  ft_cursor_select_left_copy_cursor(cursor, cursor_tmp);
+  if (!cursor->pos_x && *s_line != 10)
   {
-    ft_arr_push(select_line, ft_strdup((const char *)s_line), 0);
+    ft_cursor_move_x(cursor->pos_x, cursor->move_x);
+    ft_term_apply_cmd(cursor->down, 1);
   }
-  else
-  {
-    free(ft_arr_pop(select_line, select_line->length - 1));
-  }
+  ft_cursor_left(cursor, arr);
   return (EXIT_SUCCESS);
 }
 
+static int  ft_cursor_select_left_set_mode(
+  t_cursor *cursor, char *s_line, int *is_will_reverse)
+{
+  if (s_line[5] != 1)
+  {
+    *is_will_reverse = 1;
+    ft_term_apply_cmd(cursor->mode_reverse_video, 1);
+  }
+  ft_term_apply_cmd(cursor->mode_insertion_end, 1);
+  return (EXIT_SUCCESS);
+}
 /**
  * select the char left to the cursor
  */
 int  ft_cursor_select_left(t_cursor *cursor, t_arr *arr, t_arr *select_line)
 {
-  unsigned char *s_line;
+  char *s_line;
   int err;
   int is_will_reverse;
-  int pos_x_tmp;
-  int pos_y_tmp;
-  int y_start_tmp;
-  int index_line_tmp;
-  int prev_chariot_tmp;
+  t_cursor cursor_tmp;
 
-  index_line_tmp = cursor->index_line;
-  pos_x_tmp = cursor->pos_x;
-  pos_y_tmp = cursor->pos_y;
-  y_start_tmp = cursor->y_start;
-  prev_chariot_tmp = cursor->prev_chariot;
+  ft_cursor_select_left_copy_cursor(&cursor_tmp, cursor);
   is_will_reverse = 0;
-  {
-    if ((err = ft_cursor_left(cursor, arr)))
+  if ((err = ft_cursor_left(cursor, arr)))
     return (EXIT_FAILURE);
-  }
-  // ft_term_apply_cmd(cursor->save_cursor_position, 1);
-  s_line = (unsigned char *)arr->ptr + arr->sizeof_elem * (cursor->index_line);
-  s_line = *(unsigned char **)s_line;
-  if (s_line[5] != 1)
-  {
-    is_will_reverse = 1;
-    ft_term_apply_cmd(cursor->mode_reverse_video, 1);
-  }
-  ft_term_apply_cmd(cursor->mode_insertion_end, 1);
+  s_line = *(char **)((
+    unsigned char *)arr->ptr + arr->sizeof_elem * (cursor->index_line));
+  ft_cursor_select_left_set_mode(cursor, s_line, &is_will_reverse);
   if (s_line[4] == 1)
   {
     ft_cursor_select_overide_tab(cursor, arr, select_line, is_will_reverse);
@@ -103,20 +73,6 @@ int  ft_cursor_select_left(t_cursor *cursor, t_arr *arr, t_arr *select_line)
   {
     ft_cursor_select_overide_char(cursor, arr, select_line, is_will_reverse);
   }
-  ft_term_apply_cmd(cursor->mode_insertion, 1);
-  ft_term_apply_cmd(cursor->mode_basic_video, 1);
-  cursor->pos_x = pos_x_tmp;
-  cursor->pos_y = pos_y_tmp;
-  cursor->y_start = y_start_tmp;
-  cursor->prev_chariot = prev_chariot_tmp;
-  cursor->index_line = index_line_tmp;
-  // sleep(2);
-  if (!cursor->pos_x && *s_line != 10)
-  {
-    ft_cursor_move_x(cursor->pos_x, cursor->move_x);
-    ft_term_apply_cmd(cursor->down, 1);
-  }
-  ft_cursor_left(cursor, arr);
-  // ft_term_apply_cmd(cursor->restore_cursor_position, 1);
+  ft_cursor_select_left_restore_cursor(cursor, &cursor_tmp, arr, s_line);
   return (EXIT_SUCCESS);
 }

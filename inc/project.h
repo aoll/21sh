@@ -339,6 +339,11 @@ int  ft_cursor_right_line_more(t_cursor *cursor, t_arr *arr);
 int  ft_cursor_right_line_more_up(
   t_cursor *cursor, void *ptr_tmp, t_arr *arr);
 int  ft_cursor_y_screen(t_cursor *cursor, t_arr *arr);
+int  ft_cursor_select_overide_tab(t_cursor *cursor, t_arr *arr,
+  t_arr *select_line, int is_will_reverse);
+int  ft_cursor_select_overide_char(t_cursor *cursor, t_arr *arr,
+  t_arr *select_line, int is_will_reverse);
+
 /**
  * Parsing section
  */

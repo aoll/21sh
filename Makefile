@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/03/13 11:27:09 by alex             ###   ########.fr        #
+#    Updated: 2017/03/13 12:05:08 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,7 +109,9 @@ C_CURSOR= ft_cursor_left.c \
 					ft_index_line_start_showed.c \
 					ft_cursor_right_line_more.c \
 					ft_cursor_right_line_more_up.c \
-					ft_cursor_y_screen.c
+					ft_cursor_y_screen.c \
+					ft_cursor_select_overide_tab.c \
+					ft_cursor_select_overide_char.c
 
 C_PARSE= ft_parse_line.c \
 				 ft_parse_separate_cmd.c \
