@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * replace all pipe outside quote and dquote
  */
 int  ft_parse_replace_pipe(t_arr *arr)

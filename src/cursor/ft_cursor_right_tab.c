@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * if the next char is a tabulation, the cursor must move the TABULATION_LEN
  * if the the first space is on the same line than the cursor before mouve
  * same_line = 0 else same_line = 1

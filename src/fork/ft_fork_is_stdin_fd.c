@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * check if some fd is present and read and write if is the case
  */
 int  ft_fork_is_stdin_fd(

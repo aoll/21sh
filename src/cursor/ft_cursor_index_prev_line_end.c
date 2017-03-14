@@ -21,7 +21,7 @@ static int  ft_cursor_index_prev_line_end_init(
   *y_line = 0;
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * return the index to the last line showed - 1
  */
 int  ft_cursor_index_prev_line_end(t_cursor *cursor, t_arr *arr, int start)

@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * after enter, set the cursor to the begin of the line with his history++
  */
 int  ft_cursor_valide_line_init_cursor_prompt(t_cursor *cursor, int len_history)

@@ -1,6 +1,6 @@
 #include "project.h"
 
-/**
+/*
  * move the cursor to a new position x
  */
 int  ft_move_x(int new_pos_x)

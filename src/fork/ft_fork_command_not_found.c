@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * if command not found print the correct message
  */
 int  ft_fork_command_not_found(

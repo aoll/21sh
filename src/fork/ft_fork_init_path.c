@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  *
  */
 static char  *ft_fork_init_path_ptr(t_arr *env_copy)

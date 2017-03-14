@@ -1,6 +1,6 @@
 #include "project.h"
 
-/**
+/*
  * move the cursor to a actual position x - 1 (left)
  */
 

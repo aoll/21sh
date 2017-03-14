@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * loop for move the cursor to the begin of a word if the cursor is on a word
  * and not on the begining is_on_words = 1;
  * or
@@ -41,7 +41,7 @@ static int  ft_cursor_move_word(t_cursor *cursor, t_arr *arr,
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * move the cursor word to word on the left direction
  * if the cursor position is on a space move the cursor
  * on the last space before of the last char of a word (end of the word)

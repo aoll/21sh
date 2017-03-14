@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  *
  */
 int  ft_cursor_valide_line_second_line(
@@ -37,7 +37,7 @@ int  ft_cursor_valide_line_second_line(
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  *
  */
 int  ft_cursor_valide_line_second_without_line(t_arr *tmp_history_line)
@@ -54,7 +54,7 @@ int  ft_cursor_valide_line_second_without_line(t_arr *tmp_history_line)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  *
  */
 int  ft_cursor_valide_line_free(
@@ -79,7 +79,7 @@ int  ft_cursor_valide_line_free(
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  *
  */
 int  ft_cursor_valide_line_switch(
@@ -105,7 +105,7 @@ int  ft_cursor_valide_line_switch(
   }
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * add the current_line to the history_line (history command)
  * exec the current_line
  * show a new prompt

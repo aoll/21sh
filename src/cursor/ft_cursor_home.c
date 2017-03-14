@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * move the cursor of the begin of the line even if it's a multiple line
  */
 int  ft_cursor_home(t_cursor *cursor, t_arr *arr)

@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * close the fd of a list of t_arr
  */
 int  ft_arr_close_arr_fd(t_arr_fd *arr_fd)

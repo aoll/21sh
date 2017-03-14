@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * create and test permission of file for cmd
  */
 int  ft_fork_list_fd_tmp(char **cmd, t_arr_fd *arr_fd, char **error_ptr)

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * clear all the screen below the cursor position line , including the current line
  */
 int  ft_cursor_clear_down(t_cursor *cursor)

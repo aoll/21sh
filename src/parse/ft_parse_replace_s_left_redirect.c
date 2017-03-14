@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * replace all simple left redirection outside quote and dquote
  */
 int  ft_parse_replace_s_left_redirect(t_arr *arr)

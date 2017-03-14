@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * return the index of the first char print with line + 1
  * from the index in parameter
  * this function calcul the number of char can be dysplayed

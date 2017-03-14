@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * dup the copy of std[IN, OUT, ERR] to restore the std
  */
 int  ft_fork_back_std(t_fork *st_fork)

@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * itere every line and aply function who pop every usless space
  * replace char by token
  * check error

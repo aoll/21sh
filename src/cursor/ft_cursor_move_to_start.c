@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * move the cursor to the start of the line, col 0 and raw 0 (before the prompt
  * not raw 0 of the screen) even if it is a multiple line
  */

@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * pop usless space outside quote or dquote
  */
 static int  ft_parse_pop_space_or_continue(t_cmd_line *line, t_arr *arr)

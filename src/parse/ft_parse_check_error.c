@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * iter every line and apply a batery of function to check the good grammar
  * of different command
  */

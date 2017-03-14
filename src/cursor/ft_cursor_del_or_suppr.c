@@ -37,7 +37,7 @@ static int  ft_cursor_arr_pop_elem_set_cursor(
     }
   return (EXIT_SUCCESS);
 }
-/**
+/*
  *
  */
 static int  ft_cursor_arr_pop_elem_tabulation(
@@ -54,7 +54,7 @@ static int  ft_cursor_arr_pop_elem_tabulation(
   }
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * pop a elem to arr and four elem if the elem at the index in parameter is
  * marked like a tab
  * is_prev_char is equal to 1 if is the elem before, 0 if is the pointed by the
@@ -87,7 +87,7 @@ static int  ft_cursor_arr_pop_elem(t_arr *arr, t_cursor *cursor,
   }
   return (index_line_tmp);
 }
-/**
+/*
  *
  */
 static int  ft_cursor_del_or_suppr_set_cursor(
@@ -101,7 +101,7 @@ static int  ft_cursor_del_or_suppr_set_cursor(
   ft_term_apply_cmd(cursor->save_cursor_position, 1);
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * delete the prev char if is_prev_char is equal to 1
  * delete the actual char if is_prev_char is equal to 0
  */

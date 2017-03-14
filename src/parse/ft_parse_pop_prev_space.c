@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * pop usles space on the begin of the command
  */
 int  ft_parse_pop_prev_space(t_arr *arr)

@@ -1,6 +1,6 @@
 #include "project.h"
 
-/**
+/*
  * set name and value if = is present
  * print the adequate message
  * return if no error 0 and 1 if error
@@ -33,7 +33,7 @@ static int  ft_builtin_setenv_set_name_value(
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * add a new var to the env
  * return EXIT_SUCCESS or EXIT_FAILURE
  */
@@ -62,7 +62,7 @@ static int  ft_builtin_setenv_add_var(
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * edit the value of a present var in env
  */
 static int  ft_builtin_setenv_edit_var(
@@ -85,7 +85,7 @@ static int  ft_builtin_setenv_edit_var(
   return (err);
 }
 
-/**
+/*
  * add or edit a variable to the env
  * return EXIT_SUCCESS or EXIT_FAILURE
  */
@@ -115,7 +115,7 @@ static int  ft_builtin_setenv_add_or_edit_var(
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * free name and value
  */
 int  ft_free_name_value(char **name, char **value)
@@ -131,7 +131,7 @@ int  ft_free_name_value(char **name, char **value)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * change or add a env variable
  * 0 if succes
  * 1 if error

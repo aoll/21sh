@@ -1,6 +1,6 @@
 #include "project.h"
 
-/**
+/*
  * move the cursor to a one down line
  */
  int  ft_move_down(void)

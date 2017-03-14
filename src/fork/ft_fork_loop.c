@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * fork
  */
 int  ft_fork_loop(t_arr **env, t_arr *tab_cmds)

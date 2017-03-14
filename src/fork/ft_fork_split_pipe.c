@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * split the command line with the PIPE
  * create a array of tube[2]
  */

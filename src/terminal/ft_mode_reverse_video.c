@@ -1,6 +1,6 @@
 #include "project.h"
 
-/**
+/*
  * every output after this function will be in reverse mode video
  */
 int  ft_mode_reverse_video(void)

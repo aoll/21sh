@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * restore the std[IN,OUT,ERR]
  * free the pointeur of the struct st_fork
  * free the pointeur of the structure arr_fd

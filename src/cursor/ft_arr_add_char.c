@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
- * add a char to arr a marke if is a element to a tabulation
- */
+/*
+** add a char to arr a marke if is a element to a tabulation
+*/
 int  ft_arr_add_char(t_cursor *cursor, t_arr *arr, char c, int is_tab)
 {
   char *char_line;

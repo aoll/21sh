@@ -1,7 +1,7 @@
 #include "project.h"
 
 #include <signal.h>
-/**
+/*
  * print the key
  */
 int  ft_print_key(char *buff)
@@ -123,7 +123,7 @@ void  *ft_arr_strdup(const void *s, size_t n)
   return (new);
 }
 
-/**
+/*
  * return a fresh pointeur on a copy of a kval *
  * in case of fail NULL is returned
  */
@@ -159,7 +159,7 @@ void  *ft_arr_kvaldup(const void *s, size_t n)
   return (new);
 }
 
-/**
+/*
  *  Apply n time the command given in param
  */
 int  ft_term_apply_cmd(char *cmd, int n)
@@ -176,7 +176,7 @@ int  ft_term_apply_cmd(char *cmd, int n)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * move the cursor to a new position x
  */
 int  ft_cursor_move_x(int new_pos_x, char *cmd)
@@ -216,7 +216,7 @@ int  ft_init_cursor_cmd(t_cursor *cursor)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * free all command save in struct cursor
  */
 int  ft_free_cursor(t_cursor *cursor)
@@ -228,7 +228,7 @@ int  ft_free_cursor(t_cursor *cursor)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * init the cursor position
  */
 int  ft_init_cursor_position(t_cursor *cursor)

@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * if some D_LEFT_REDIRECT are present push in arr_d_end_word the string present
  * for finish the read
  */

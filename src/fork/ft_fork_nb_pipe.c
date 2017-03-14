@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * return the number of pipe
  */
 int  ft_fork_nb_pipe(t_arr *arr)

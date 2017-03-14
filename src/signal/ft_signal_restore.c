@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * restore the signal
  */
 

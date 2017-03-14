@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * dup the fd from a arr to a other
  */
 int  ft_fork_list_fd_dup(t_arr *dst, const t_arr *src)

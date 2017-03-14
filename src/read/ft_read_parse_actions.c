@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * function if a key with shift is pressed
  * if true return 0 else 1
  */
@@ -43,7 +43,7 @@ int  ft_read_parse_shift(
 }
 
 
-/**
+/*
  * funcion if ctrl-up or ctrl-down is pressed
  * true return 0 else return 1
  */
@@ -70,7 +70,7 @@ int  ft_read_parse_ctrl(const char *buff, t_cursor *cursor, t_arr *arr)
   return (EXIT_FAILURE);
 }
 
-/**
+/*
  * up or down or key left or right return 0
  * else return 1
  */
@@ -97,7 +97,7 @@ int  ft_read_parse_arrow(
   return (EXIT_FAILURE);
 }
 
-/**
+/*
  * key home or end
  */
 int  ft_read_parse_home_end(const char *buff, t_cursor *cursor, t_arr *arr)
@@ -125,7 +125,7 @@ int  ft_read_parse_home_end(const char *buff, t_cursor *cursor, t_arr *arr)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * return 0 if is ctrl-left arrow or ctrl-rigth arrow
  */
 int  ft_read_parse_ctrl_arrow(const char *buff, t_cursor *cursor, t_arr *arr)

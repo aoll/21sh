@@ -1,9 +1,8 @@
 #include "project.h"
 
-/**
- * set the OLDPWD and PWD to the env
- */
-// int  ft_builtin_cd_set_env(t_arr *envp, const char *old_path, const char *new_path)
+/*
+** set the OLDPWD and PWD to the env
+*/
 int  ft_builtin_cd_set_env(t_arr **envp, const char *key, const char *value, int fd_stderr)
 {
   int index;
@@ -31,7 +30,7 @@ int  ft_builtin_cd_set_env(t_arr **envp, const char *key, const char *value, int
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * return a string with the absolute new path
  * NULL in case of faillure
  */
@@ -63,7 +62,7 @@ char  *ft_builtin_cd_absolute_path(const char *old_path, const char *new_path)
   return (path_absolute);
 }
 
-/**
+/*
  * check if the file exist
  * 0 if succed or 1 if faillure
  */
@@ -82,7 +81,7 @@ int  ft_builtin_cd_is_existing_file(
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * change the current directory of the actual processus
  * if sucess set the PWD and OLDPWD off the env
  */
@@ -137,7 +136,7 @@ int  ft_builtin_cd_change_directory(
 }
 
 
-/**
+/*
  * if old pwd is present in the env change the current directory to the old
  * else nothing append
  */
@@ -164,7 +163,7 @@ int  ft_builtin_cd_old_pwd(t_arr **envp, const char *actual_pwd, int fd_stderr)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  *
  */
 static int  ft_builtin_cd_path(
@@ -189,7 +188,7 @@ static int  ft_builtin_cd_path(
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * change the current path
  * change the current pwd and the old pwd
  */

@@ -1,6 +1,6 @@
 #include "project.h"
 
-/**
+/*
  * move the cursor to a one up line
  */
  int  ft_move_up(void)

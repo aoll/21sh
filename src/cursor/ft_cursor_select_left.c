@@ -48,7 +48,7 @@ static int  ft_cursor_select_left_set_mode(
   ft_term_apply_cmd(cursor->mode_insertion_end, 1);
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * select the char left to the cursor
  */
 int  ft_cursor_select_left(t_cursor *cursor, t_arr *arr, t_arr *select_line)

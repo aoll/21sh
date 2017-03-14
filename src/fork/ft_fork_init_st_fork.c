@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * init the pointeur to NULL of struct st_fork,
  * init the pointeur env
  * and dup the STD[IN, OUT, ERR] for back afer the finished process

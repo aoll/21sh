@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * parsing
  */
 t_arr  *ft_parse_line(t_arr *arr)

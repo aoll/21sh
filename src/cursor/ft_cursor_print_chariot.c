@@ -20,7 +20,7 @@ static int  ft_cursor_print_chariot_set_cursor(t_cursor *cursor)
   ft_cursor_move_x(cursor->pos_x, cursor->move_x);
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * print a return chariot
  */
 int  ft_cursor_print_chariot(t_cursor *cursor, t_arr *arr)

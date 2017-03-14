@@ -1,6 +1,6 @@
 #include "project.h"
 
-/**
+/*
  * print the argument after echo
  */
 int  ft_builtin_echo(const char **tab_cmd, t_arr **env)

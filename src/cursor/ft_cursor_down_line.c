@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * if it's possible move the cursor to a position line + 1
  */
 int  ft_cursor_down_line(t_cursor *cursor, t_arr *arr)

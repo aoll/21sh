@@ -64,7 +64,7 @@ static int  ft_cursor_right_line_more_init_index(
   ft_arr_print(arr);
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * clean the screen
  * print the command with line + 1
  */

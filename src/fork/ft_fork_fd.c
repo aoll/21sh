@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  *  return a case of sucess a fd with the good permission
  * -1 if error like not have the permission
  */

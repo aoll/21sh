@@ -1,6 +1,6 @@
 #include "project.h"
 
-/**
+/*
  * compare a string to a list of builtin a return the index if is present or 0 if not
  */
 int  ft_is_builtin(char *command)

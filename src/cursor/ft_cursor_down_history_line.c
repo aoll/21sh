@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * set the cursor to the begin of the line, increment history line
  */
 int  ft_cursor_down_history_line_set_cursor(t_cursor *cursor)
@@ -26,7 +26,7 @@ int  ft_cursor_down_history_line_set_cursor(t_cursor *cursor)
   cursor->index_history++;
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * print and restore cursor
  */
 static int  ft_cursor_down_history_line_print_restore_cursor(
@@ -40,7 +40,7 @@ static int  ft_cursor_down_history_line_print_restore_cursor(
   ft_cursor_restore_index(cursor, tmp_arr, cursor->index_line);
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * clear the current line and show the command + 1
  */
 int  ft_cursor_down_history_line(

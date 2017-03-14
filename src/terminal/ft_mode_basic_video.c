@@ -1,6 +1,6 @@
 #include "project.h"
 
-/**
+/*
  * turn off all alternative mode
  */
 int  ft_mode_basic_video(void)

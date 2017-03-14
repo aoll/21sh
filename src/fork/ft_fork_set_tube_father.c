@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  *
  */
 int  ft_fork_set_tube_father(

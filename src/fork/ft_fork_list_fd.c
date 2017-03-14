@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * in case in sucess return EXIT_SUCCESS else EXIT_FAILURE
  * give a list of fd with good right and position cursor
  * error if the file can be open

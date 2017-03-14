@@ -14,7 +14,7 @@
 
 
 
-/**
+/*
  * checck if the env is present with termcaps and swicth
  */
 int  ft_read_parse_cut(t_cursor *cursor, t_list_arr *list_arr)
@@ -29,7 +29,7 @@ int  ft_read_parse_cut(t_cursor *cursor, t_list_arr *list_arr)
 }
 
 
-/**
+/*
  * checck if the env is present with termcaps and swicth
  */
 int  ft_read_parse_copy(t_cursor *cursor, t_list_arr *list_arr)
@@ -43,7 +43,7 @@ int  ft_read_parse_copy(t_cursor *cursor, t_list_arr *list_arr)
   return (EXIT_FAILURE);
 }
 
-/**
+/*
  * return 0 if ctrl-x or ctrl-w or ctrl-v
  * else 1
  */
@@ -71,7 +71,7 @@ int  ft_read_parse_copy_cut_paste(
   return (EXIT_FAILURE);
 }
 
-/**
+/*
  * is del or suppr return 0
  * else return 1
  */
@@ -99,7 +99,7 @@ int  ft_read_parse_del_or_suppr(const char *buff, t_cursor *cursor, t_arr *arr)
 }
 
 
-/**
+/*
  * orient in funtion of the pressed key different funtion
  */
 int  ft_read_parse(

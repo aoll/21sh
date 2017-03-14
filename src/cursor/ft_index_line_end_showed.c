@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * return the index of the last char print with line + 1
  */
 int  ft_index_line_end_showed(t_cursor *cursor, t_arr *arr)

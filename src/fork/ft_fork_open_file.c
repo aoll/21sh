@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * open or create file
  */
 int  ft_fork_open_file(const char **cmd, t_arr_fd *arr_fd)

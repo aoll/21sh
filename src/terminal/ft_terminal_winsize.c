@@ -1,5 +1,5 @@
 #include "project.h"
-/**
+/*
  * take the adress of a struct winsize and if success git it the informations
  * of the terminal size
  */

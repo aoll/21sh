@@ -1,6 +1,6 @@
 #include "project.h"
 
-/**
+/*
  * exec a builtin in function of the index
  * return 0 if sucess 1 if error
  */

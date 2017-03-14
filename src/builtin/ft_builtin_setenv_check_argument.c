@@ -1,6 +1,6 @@
 #include "project.h"
 
-/**
+/*
  * check the number of argument for setenv
  * if error print the adequat message
  * return 0 if is correct and 1 if != 2 (setenv including)

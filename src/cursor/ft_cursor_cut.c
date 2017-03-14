@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  *
  */
 static int  ft_cursor_cut_init(
@@ -23,7 +23,7 @@ static int  ft_cursor_cut_init(
   ft_cursor_clear_up(cursor);
   return (EXIT_SUCCESS);
 }
-/**
+/*
  *
  */
 static int  ft_cursor_cut_process(t_arr *arr)
@@ -46,7 +46,7 @@ static int  ft_cursor_cut_process(t_arr *arr)
   }
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * dup the selection in a new arr copy_line, and reprint the line without
  * the selection
  */

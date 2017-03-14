@@ -1,6 +1,6 @@
 #include "project.h"
 
-/**
+/*
  * delete n character from the current cursor's position
  */
 int  ft_sup_char(int n)

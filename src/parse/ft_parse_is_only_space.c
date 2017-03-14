@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * check if the charactere are only space
  * if a not space if found return 0
  */

@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * init a t_cmd_line with
  * init a index to 0 and two bool to false
  */

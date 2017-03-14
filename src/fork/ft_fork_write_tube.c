@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * read a file to write on a other
  * return the len read
  */

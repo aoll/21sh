@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * restore the cursor postion in function of the index give in parameter
  */
 int  ft_cursor_restore_index(t_cursor *cursor, t_arr *arr, int index)
@@ -24,7 +24,7 @@ int  ft_cursor_restore_index(t_cursor *cursor, t_arr *arr, int index)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * clean only the line
  */
 int  ft_cursor_clear_only_the_line(t_cursor *cursor, t_arr *arr)
@@ -34,7 +34,7 @@ int  ft_cursor_clear_only_the_line(t_cursor *cursor, t_arr *arr)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * reprint the line with the new size
  */
 int  ft_cursor_print_after_resize(
@@ -52,7 +52,7 @@ int  ft_cursor_print_after_resize(
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * reprint the line in function of the size screen
  */
 int  ft_cursor_resize(

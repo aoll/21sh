@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * if is_will_reverse = 1
  * add to select_line the char and overide in reverse video the char
  * present on the screen

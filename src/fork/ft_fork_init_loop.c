@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * init the var the fork'loop and create the file for the redirection
  */
 int  ft_fork_init_loop(

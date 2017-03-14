@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * the cursor is on the last col after a return chariot
  * il will be just after the char on the return chariot
  */

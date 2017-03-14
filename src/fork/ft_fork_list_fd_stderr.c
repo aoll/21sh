@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * push a fd in a t_arr who contain list of fd for write the stderr
  * and if condition on the t_arr for the stdout
  */

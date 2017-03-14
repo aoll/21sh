@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * return a name file
  */
 static int ft_fork_name_file_set_int_different(char *s, int i, int c)

@@ -21,7 +21,7 @@ static int  ft_cursor_right_down_line_set_cursor(t_cursor *cursor)
   cursor->index_line++;
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * the current position of the cursor is the last col, the next char is one
  * down line
  */
@@ -49,7 +49,7 @@ static int  ft_cursor_right_down_line(
   }
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * move the cursor to current position + 1 on the same line or line + 1 if
  * actual position is col max
  */

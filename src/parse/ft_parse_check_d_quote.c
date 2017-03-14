@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * check if the the current char is a quote or a dquote
  * if is true set the bool quote and dquote
  */

@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * check if duble & exist outside quote and dquote
  * return 1 if is true
  */

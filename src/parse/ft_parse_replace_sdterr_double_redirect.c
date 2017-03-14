@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * replace all 2>> and 2&>> outside quote and dquote
  */
 

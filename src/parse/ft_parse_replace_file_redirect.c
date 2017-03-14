@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * replace all & outside quote and dquote
  */
 int  ft_parse_replace_file_redirect(t_arr *arr)

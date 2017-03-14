@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * push in t_arr a int * telling is a left redirect
  */
 int  ft_fork_list_fd_left_redirect(t_arr *arr_fd_stdin)

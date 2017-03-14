@@ -13,7 +13,7 @@
 #include "project.h"
 
 
-/**
+/*
  * free some arr and the cursor
  */
 static int  ft_read_parse_eof_free_arr(t_cursor *cursor, t_list_arr *list_arr)
@@ -34,7 +34,7 @@ static int  ft_read_parse_eof_free_arr(t_cursor *cursor, t_list_arr *list_arr)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * free arr history_line and inside elem and buff
  */
 int  ft_read_parse_eof_free(t_cursor *cursor, t_list_arr *list_arr)
@@ -63,7 +63,7 @@ int  ft_read_parse_eof_free(t_cursor *cursor, t_list_arr *list_arr)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * if ctrl-d eof return 0
  * else return 1
  */

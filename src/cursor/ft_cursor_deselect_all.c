@@ -1,6 +1,6 @@
 #include "project.h"
 
-/**
+/*
  * cancel all reverse char marked after the index
  */
 static int  ft_arr_cancel_reverse_video(t_arr *arr, int index, t_arr *select_line)
@@ -20,7 +20,7 @@ static int  ft_arr_cancel_reverse_video(t_arr *arr, int index, t_arr *select_lin
   }
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * set a tmp cursor
  */
 static int  ft_cursor_deselect_all_set_tmp_cursor(t_cursor *end, t_cursor *cursor)
@@ -33,7 +33,7 @@ static int  ft_cursor_deselect_all_set_tmp_cursor(t_cursor *end, t_cursor *curso
   end->chariot = cursor->chariot;
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * deselect all char and clean the t_arr select_line
  * overide the line with a new line in basic video mode
  */

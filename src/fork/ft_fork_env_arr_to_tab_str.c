@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * return a new pointeur to a char **
  */
 static int  ft_fork_env_arr_to_tab_str_init(t_arr *envp, char ***env_ptr)

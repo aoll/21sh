@@ -41,7 +41,7 @@ static int  ft_cursor_up_history_line_set_arr(
   }
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * clear the current line and reprint the command - 1
  */
 int  ft_cursor_up_history_line(

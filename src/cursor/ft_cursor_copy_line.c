@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * free the old the copy line and return a new fresh copy from select_line
  */
 int  ft_cursor_copy_line(

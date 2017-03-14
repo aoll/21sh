@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  *
  */
 static int  ft_cusor_clear_down_line_init(
@@ -24,7 +24,7 @@ static int  ft_cusor_clear_down_line_init(
   ft_term_apply_cmd(cursor->clear_current_line, 1);
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * print the down line
  */
 int  ft_cusor_clear_down_line(t_cursor *cursor, t_arr *arr)

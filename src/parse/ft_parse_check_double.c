@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * check if the token past in parameter in present in double succecsive
  * return 1 if is true or 0 if not
  */

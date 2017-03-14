@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * nombre de char between two '\n' from the index in parameter to the first '\n'
  * founded or the begin of the line
  */

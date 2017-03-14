@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * move the cursor to index_line position from start position
  */
 int  ft_cursor_move_to_index_line_from_start(t_cursor *cursor)

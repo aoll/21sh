@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * if is_will_reverse = 1
  * add to select_line four space and overide in reverse video the four space
  * present on the screen

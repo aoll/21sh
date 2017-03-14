@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * move the cursor to the begin of a word if the actual position is on a space
  * is_on_words = 0
  * or
@@ -42,7 +42,7 @@ int  ft_cursor_move_begin_or_start(t_cursor *cursor, t_arr *arr,
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * move the cursor words to words to the right direction
  * if the cursor position is on a space move the cursor
  * on the first char (begin of the word)

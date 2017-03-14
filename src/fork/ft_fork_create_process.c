@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * create_process and exec commande
  */
 int  ft_fork_create_process(

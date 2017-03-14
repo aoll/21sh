@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * cursor is actually on a '\n' move down one time and place the cursor and the
  * first col
  */

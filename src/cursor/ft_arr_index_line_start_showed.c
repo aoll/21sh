@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
- * return the index to start the arr with show n - line_off line
- */
+/*
+** return the index to start the arr with show n - line_off line
+*/
 int  ft_arr_index_line_start_showed(t_cursor *cursor, t_arr *arr, int line_off)
 {
   int index;

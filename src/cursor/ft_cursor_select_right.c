@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * if is_will_reverse = 1
  * add to select_line four space and overide in reverse video the four space
  * present on the screen
@@ -47,7 +47,7 @@ static int  ft_cursor_select_overide_tab_right(t_cursor *cursor, t_arr *arr,
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * if is_will_reverse = 1
  * add to select_line the char and overide in reverse video the char
  * present on the screen
@@ -86,7 +86,7 @@ static int  ft_cursor_select_right_set_mode(
   ft_term_apply_cmd(cursor->mode_insertion_end, 1);
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * select the char right to the cursor
  */
 int  ft_cursor_select_right(t_cursor *cursor, t_arr *arr, t_arr *select_line)

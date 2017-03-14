@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  *
  */
 static int  ft_fork_read_file(t_tab_tube *array_tube, int *fd)

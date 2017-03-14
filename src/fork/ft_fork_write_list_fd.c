@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * write on a list of fd
  */
 int  ft_fork_write_list_fd(t_arr *arr, char *buff, int len)

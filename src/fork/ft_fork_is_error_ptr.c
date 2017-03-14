@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * check if error_ptr is set and write it on stderr and exit process
  */
 int  ft_fork_is_error_ptr(char **error_ptr, t_arr_fd *arr_fd)

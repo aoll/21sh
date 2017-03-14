@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * replace all double left redirection outside quote and dquote
  */
 static int  ft_parse_replace_d_left_redirect_line(t_cmd_line *line, t_arr *arr)

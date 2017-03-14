@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * move x_time the cursor tho the left side
  */
 static int  ft_cursor_mvt_left(t_cursor *cursor, t_arr *arr, int mvt_x)
@@ -24,7 +24,7 @@ static int  ft_cursor_mvt_left(t_cursor *cursor, t_arr *arr, int mvt_x)
   }
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * if it's possible move the cursor to a position line - 1
  */
 int  ft_cursor_up_line(t_cursor *cursor, t_arr *arr)

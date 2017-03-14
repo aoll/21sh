@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * replace all &> outside quote and dquote
  */
 

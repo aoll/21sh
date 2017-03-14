@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * dup and close flux in function of the arr fd
  */
 static int  ft_fork_set_tube_stdout(

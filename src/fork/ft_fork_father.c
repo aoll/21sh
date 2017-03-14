@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * processus father after a fork write in different tube for redirection and
  * next command after pipe
  */

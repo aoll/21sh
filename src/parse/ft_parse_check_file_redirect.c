@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * check if a token is not the end of the command (space not included)
  * return 1 if is true or 0 if not
  */

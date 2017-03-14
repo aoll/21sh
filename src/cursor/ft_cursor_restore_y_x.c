@@ -28,7 +28,7 @@ static int  ft_cursor_restore_y_x_set_cursor(
   }
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * restore the pos_y and pos_y of the cursor
  */
 int  ft_cursor_restore_y_x(t_cursor *cursor, t_arr *arr, int nb_line_displayed)

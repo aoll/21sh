@@ -1,6 +1,6 @@
 #include "project.h"
 
-/**
+/*
 * autorize the insertion between caracteres x and x - 1, the cursor don't move
 */
 int  ft_mode_insertion(void)

@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * output the prompt and the line, from the start position with a clean empty
  * line
  * the cursor will be at the end of the line

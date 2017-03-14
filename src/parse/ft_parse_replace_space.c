@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * replace space outside quote or dquote
  */
 int  ft_parse_replace_space(t_arr *arr)

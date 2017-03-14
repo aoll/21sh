@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * init the env_copy by a dup to the env
  * set the copy if is B_ENV
  * create a char *env with the seted copy t_arr *st_fork.env_copy

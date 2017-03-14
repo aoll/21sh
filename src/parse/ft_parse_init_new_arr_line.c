@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * init a t_arr *arr with char *s as elem
  */
 int  ft_parse_init_new_arr_line(t_arr **arr)

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * clear all the screen and restore the position of the cursor
  */
 int  ft_cursor_clear_all_screen(t_cursor *cursor, int is_up)
@@ -34,7 +34,7 @@ int  ft_cursor_clear_all_screen(t_cursor *cursor, int is_up)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * clear the actual line and reprint from line - 1 to line - 1
  */
 int  ft_cursor_scroll_up(t_cursor *cursor, t_arr *arr)
@@ -80,7 +80,7 @@ static int  ft_cursor_left_up_line_set_cursor(
   }
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * if the cursor position is on the first col
  */
 static int  ft_cursor_left_up_line(
@@ -104,7 +104,7 @@ static int  ft_cursor_left_up_line(
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * move the cursor to current position - 1 on the same line or line - 1 if
  * actual position is 0
  */

@@ -1,6 +1,6 @@
 #include "project.h"
 
-/**
+/*
  * String of commands to make the terminal restore the last saved cursor
  * position. If this capability is present, `sc' should be provided also.
  * Most terminals have neither.

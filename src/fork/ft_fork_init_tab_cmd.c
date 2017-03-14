@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * init a char ** by split with SPACE_SEPARATOR
  */
 int  ft_fork_init_tab_cmd(t_fork *st_fork, char *cmd)

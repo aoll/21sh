@@ -20,7 +20,7 @@
 //   return;
 // }
 
-/**
+/*
  *
  */
 void  ft_signal_sigint_not_env(int num_sig)
@@ -43,7 +43,7 @@ void  ft_signal_sigint_c(int num_sig)
   g_is_ctrl_c_father++;
   return;
 }
-/**
+/*
  * init the signal
  */
 int  ft_signal_init(void)

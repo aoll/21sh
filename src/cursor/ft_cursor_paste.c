@@ -31,7 +31,7 @@ static int  ft_cursor_paste_switch(t_cursor *cursor, t_arr *arr, char *s_line)
   }
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * print the arr (copy_line) and push in the arr (current line) the elements
  */
 int  ft_cursor_paste(t_cursor *cursor, t_arr *arr, t_arr *copy_line)

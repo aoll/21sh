@@ -1,6 +1,6 @@
 #include "project.h"
 
-/**
+/*
  * pop and free the kval
  */
 int  ft_builtin_unsetenv_pop_key(t_arr **env, int index)
@@ -23,7 +23,7 @@ int  ft_builtin_unsetenv_pop_key(t_arr **env, int index)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * if the var is present in the env it will be delete else sucess is returned
  * and the env stay the same
  */

@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  *
  */
 int  ft_fork_write_fd_stdout(

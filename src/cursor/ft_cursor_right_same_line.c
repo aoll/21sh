@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * next char is on the same line as the cursor
  */
 int  ft_cursor_right_same_line(t_cursor *cursor, t_arr *arr,

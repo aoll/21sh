@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * print from the cursor of the line and overide the old line
  */
 int  ft_cursor_print_overide_line(t_cursor *cursor, t_arr *arr)

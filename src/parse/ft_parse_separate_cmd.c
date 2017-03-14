@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * separate the line on a multiple line whitout "free ;" (; not inside quote or
  * dquote)
  * return null if line lenght == 0

@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * print the line after the cursor and reposition the cursor
  */
 static int  ft_cursor_print_line(t_cursor *cursor, t_arr *arr, int index)
@@ -25,7 +25,7 @@ static int  ft_cursor_print_line(t_cursor *cursor, t_arr *arr, int index)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * add the new elem to arr and print
  */
 static int  ft_add_char_isprint(t_cursor *cursor, t_arr *arr, char c)
@@ -47,7 +47,7 @@ static int  ft_add_char_isprint(t_cursor *cursor, t_arr *arr, char c)
   }
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * add the new elem  return chariot to arr and print
  */
 static int  ft_add_char_chariot(t_cursor *cursor, t_arr *arr)
@@ -71,7 +71,7 @@ static int  ft_add_char_chariot(t_cursor *cursor, t_arr *arr)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * add four space to arr like a tabulation and print
  */
 static int  ft_add_char_tab(t_cursor *cursor, t_arr *arr)
@@ -100,7 +100,7 @@ static int  ft_add_char_tab(t_cursor *cursor, t_arr *arr)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * add char to t_arr *arr (current line)
  * print the char
  * fail if is not a printable char

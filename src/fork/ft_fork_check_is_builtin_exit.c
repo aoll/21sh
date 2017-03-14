@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  *
  */
 int  ft_fork_check_is_builtin_exit(t_fork *st_fork, t_arr_fd *arr_fd)

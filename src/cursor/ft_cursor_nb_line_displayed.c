@@ -33,7 +33,7 @@ static int  ft_cursor_nb_line_init(
     *index_line = cursor->prompt_len;
   return (EXIT_SUCCESS);
 }
-/**
+/*
  * return the number of the line actualy displayed
  */
 int  ft_cursor_nb_line_displayed(

@@ -1,6 +1,6 @@
 #include "project.h"
 
-/**
+/*
  *  move the cursor to a actual position x + 1 (right)
  */
 int  ft_move_right(void)

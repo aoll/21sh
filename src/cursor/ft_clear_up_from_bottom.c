@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * clear the screen from the bottom line
  */
 int  ft_clear_up_from_bottom(t_cursor *cursor)

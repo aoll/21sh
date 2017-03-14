@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * is the processus son, set the tube for processus comminucation
  * execute the command
  */

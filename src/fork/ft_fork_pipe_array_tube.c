@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * pipe a liste of tube from a struct
  */
 int  ft_fork_pipe_array_tube(t_tab_tube *array_tube)

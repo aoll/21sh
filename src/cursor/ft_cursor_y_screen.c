@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * return the y position of the cursor compare to the screen
  */
 int  ft_cursor_y_screen(t_cursor *cursor, t_arr *arr)

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/**
+/*
  * if the cursor postion is not on the first col
  */
 int  ft_cursor_left_same_line(t_cursor *cursor, unsigned char *s_line)

@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * close the fd from a list of tube
  */
 int  ft_fork_close_array_tube(t_tab_tube *array_tube)

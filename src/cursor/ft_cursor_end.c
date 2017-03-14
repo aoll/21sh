@@ -12,7 +12,7 @@
 
 #include "project.h"
 
-/**
+/*
  * move the cursor to end of the line even if it's a multi-ligne
  */
 int  ft_cursor_end(t_cursor *cursor, t_arr *arr)

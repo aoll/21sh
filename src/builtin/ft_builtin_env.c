@@ -13,7 +13,7 @@
 #include "project.h"
 
 
-/**
+/*
  * print the env on a fd give in parameter
  */
 static int  ft_builtin_env_print(t_arr *env, int fd_stdout)
@@ -41,7 +41,7 @@ static int  ft_builtin_env_print(t_arr *env, int fd_stdout)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  * add or edit a var of the env
  */
 int  ft_builtin_env_setenv(t_arr *env, char *var, int fd_stderr)
@@ -70,7 +70,7 @@ int  ft_builtin_env_setenv(t_arr *env, char *var, int fd_stderr)
 }
 
 
-/**
+/*
  *
  */
 int  ft_builtin_env_set_var_is_cmd(char **cmd, char ***tab_cmd)
@@ -97,7 +97,7 @@ int  ft_builtin_env_set_var_is_cmd(char **cmd, char ***tab_cmd)
 }
 
 
-/**
+/*
  * free the kvals in a t_arr
  */
 int  ft_builtin_env_free_kval(t_arr *env)
@@ -113,7 +113,7 @@ int  ft_builtin_env_free_kval(t_arr *env)
 }
 
 
-/**
+/*
  *
  */
 int  ft_builtin_env_set_var_cmd(char **cmd, t_arr *env, bool *is_env_prev)
@@ -131,7 +131,7 @@ int  ft_builtin_env_set_var_cmd(char **cmd, t_arr *env, bool *is_env_prev)
 }
 
 
-/**
+/*
  * free and print the env
  */
 int  ft_builtin_env_print_free(char ***tab_cmd, t_arr *env, int fd_stdout)
@@ -142,7 +142,7 @@ int  ft_builtin_env_print_free(char ***tab_cmd, t_arr *env, int fd_stdout)
   return (EXIT_SUCCESS);
 }
 
-/**
+/*
  *
  */
 int  ft_builtin_env_print_init(char ***cmd, char ***tab_cmd, bool *is_env_prev)
@@ -155,7 +155,7 @@ int  ft_builtin_env_print_init(char ***cmd, char ***tab_cmd, bool *is_env_prev)
 }
 
 
-/**
+/*
  * set a list off var in the env before execute a commande or print the new env
  */
 int  ft_builtin_env_set_var(
@@ -185,7 +185,7 @@ int  ft_builtin_env_set_var(
   return (B_ENV);
 }
 
-/**
+/*
  * if not other arguments for env, print the env
  * else set the variable for a temporaire env before execute a commande
  * if not commande print the new env
