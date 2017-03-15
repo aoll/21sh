@@ -1,34 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_builtin_echo.c                                  :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/15 11:21:32 by alex              #+#    #+#             */
-/*   Updated: 2017/03/15 11:27:54 by alex             ###   ########.fr       */
+/*   Created: 2017/03/15 12:17:26 by alex              #+#    #+#             */
+/*   Updated: 2017/03/15 12:36:10 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
+/**
+*
+*/
 
-/*
- * print the argument after echo
- */
-int  ft_builtin_echo(const char **tab_cmd, t_arr **env)
+int  ()
 {
-  int i;
+	int a;
+	int b;
 
-  i = 1;
-  while (tab_cmd[i])
-  {
-    ft_putstr(tab_cmd[i]);
-    i++;
-    if (tab_cmd[i])
-    {
-      ft_putstr(" ");
-    }
-  }
-  ft_putstr("\n");
-  return (EXIT_SUCCESS);
+	while ()
+	{
+	}
+	if ()
+	{
+	}
+	if ()
+	{
+	}
+	if ()
+	{
+	}
+	if ()
+	{
+	}
+	return (EXIT_SUCCESS);
+}
+/*
+**
+*/
+
+int ()
+{
+	int a;
+	int b;
+
+	if ()
+	{
+	}
+	return (EXIT_SUCCESS);
 }

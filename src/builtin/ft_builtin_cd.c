@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_builtin_cd.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/15 08:51:49 by alex              #+#    #+#             */
+/*   Updated: 2017/03/15 08:52:09 by alex             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "project.h"
 
 /*
 ** set the OLDPWD and PWD to the env
 */
-int  ft_builtin_cd_set_env(t_arr **envp, const char *key, const char *value, int fd_stderr)
+int  ft_builtin_cd_set_env(
+  t_arr **envp, const char *key, const char *value, int fd_stderr)
 {
   int index;
   t_kval *kval;
