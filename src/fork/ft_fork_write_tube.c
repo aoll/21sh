@@ -13,24 +13,25 @@
 #include "project.h"
 
 /*
- * read a file to write on a other
- * return the len read
- */
-int  ft_fork_write_tube(int dst_fd, int src_fd)
-{
-  int rd;
-  int len;
-  char *buff;
+** read a file to write on a other
+** return the len read
+*/
 
-  len = 0;
-  buff = ft_strnew(1);
-  while ((rd = read(src_fd, buff, 1)))
-  {
-    if (rd < 0)
-      break;
-    write(dst_fd, buff, 1);
-    len++;
-  }
-  ft_str_free(&buff);
-  return (len);
+int	ft_fork_write_tube(int dst_fd, int src_fd)
+{
+	int				rd;
+	int				len;
+	char			*buff;
+
+	len = 0;
+	buff = ft_strnew(1);
+	while ((rd = read(src_fd, buff, 1)))
+	{
+		if (rd < 0)
+			break;
+		write(dst_fd, buff, 1);
+		len++;
+	}
+	ft_str_free(&buff);
+	return (len);
 }

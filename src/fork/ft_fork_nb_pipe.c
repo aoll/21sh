@@ -13,25 +13,26 @@
 #include "project.h"
 
 /*
- * return the number of pipe
- */
-int  ft_fork_nb_pipe(t_arr *arr)
-{
-  int index;
-  int nb_pipe;
-  char *s_line;
+** return the number of pipe
+*/
 
-  index = 0;
-  nb_pipe = 0;
-  while (index < (int)arr->length)
-  {
-    s_line = *(char **)(
-      (unsigned char *)arr->ptr + index * arr->sizeof_elem);
-    if (*s_line == PIPE)
-    {
-      nb_pipe++;
-    }
-    index++;
-  }
-  return (nb_pipe);
+int	ft_fork_nb_pipe(t_arr *arr)
+{
+	int				index;
+	int				nb_pipe;
+	char			*s_line;
+
+	index = 0;
+	nb_pipe = 0;
+	while (index < (int)arr->length)
+	{
+		s_line = *(char **)(
+			(unsigned char *)arr->ptr + index * arr->sizeof_elem);
+		if (*s_line == PIPE)
+		{
+			nb_pipe++;
+		}
+		index++;
+	}
+	return (nb_pipe);
 }

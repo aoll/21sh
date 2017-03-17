@@ -13,15 +13,16 @@
 #include "project.h"
 
 /*
- * dup the copy of std[IN, OUT, ERR] to restore the std
- */
-int  ft_fork_back_std(t_fork *st_fork)
+** dup the copy of std[IN, OUT, ERR] to restore the std
+*/
+
+int	ft_fork_back_std(t_fork *st_fork)
 {
-  dup2(st_fork->stdin_copy, STDIN);
-  dup2(st_fork->stdout_copy, STDOUT);
-  dup2(st_fork->stderr_copy, STDERR);
-  close(st_fork->stdin_copy);
-  close(st_fork->stdout_copy);
-  close(st_fork->stderr_copy);
-  return (EXIT_SUCCESS);
+	dup2(st_fork->stdin_copy, STDIN);
+	dup2(st_fork->stdout_copy, STDOUT);
+	dup2(st_fork->stderr_copy, STDERR);
+	close(st_fork->stdin_copy);
+	close(st_fork->stdout_copy);
+	close(st_fork->stderr_copy);
+	return (EXIT_SUCCESS);
 }

@@ -13,14 +13,15 @@
 #include "project.h"
 
 /*
- * pipe a liste of tube from a struct
- */
-int  ft_fork_pipe_array_tube(t_tab_tube *array_tube)
+** pipe a liste of tube from a struct
+*/
+
+int	ft_fork_pipe_array_tube(t_tab_tube *array_tube)
 {
-  pipe(array_tube->tube_fork_stdin);
-  pipe(array_tube->tube_fork_stdout);
-  pipe(array_tube->tube_fork_stderr);
-  pipe(array_tube->tube_fork_stdout_tmp);
-  pipe(array_tube->tube_fork_stderr_tmp);
-  return (EXIT_SUCCESS);
+	pipe(array_tube->tube_fork_stdin);
+	pipe(array_tube->tube_fork_stdout);
+	pipe(array_tube->tube_fork_stderr);
+	pipe(array_tube->tube_fork_stdout_tmp);
+	pipe(array_tube->tube_fork_stderr_tmp);
+	return (EXIT_SUCCESS);
 }

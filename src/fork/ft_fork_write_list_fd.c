@@ -13,19 +13,20 @@
 #include "project.h"
 
 /*
- * write on a list of fd
- */
-int  ft_fork_write_list_fd(t_arr *arr, char *buff, int len)
-{
-  int index;
-  int *fd;
+** write on a list of fd
+*/
 
-  index = 0;
-  while (index < (int)arr->length)
-  {
-    fd = *(int **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
-    write(*fd, buff, len);
-    index++;
-  }
-  return (EXIT_SUCCESS);
+int	ft_fork_write_list_fd(t_arr *arr, char *buff, int len)
+{
+	int				index;
+	int				*fd;
+
+	index = 0;
+	while (index < (int)arr->length)
+	{
+		fd = *(int **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
+		write(*fd, buff, len);
+		index++;
+	}
+	return (EXIT_SUCCESS);
 }

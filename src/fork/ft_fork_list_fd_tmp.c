@@ -13,25 +13,26 @@
 #include "project.h"
 
 /*
- * create and test permission of file for cmd
- */
-int  ft_fork_list_fd_tmp(char **cmd, t_arr_fd *arr_fd, char **error_ptr)
-{
-  int i;
-  int *fd;
-  int err;
+** create and test permission of file for cmd
+*/
 
-  i = 0;
-  fd = NULL;
-  while (cmd[i])
-  {
-    if ((err = ft_fork_list_fd(&cmd[i], arr_fd, error_ptr) ))
-    {
-      ft_arr_close_arr_fd(arr_fd);
-      return (EXIT_FAILURE);
-    }
-    i++;
-  }
-  ft_arr_close_arr_fd(arr_fd);
-  return (EXIT_SUCCESS);
+int	ft_fork_list_fd_tmp(char **cmd, t_arr_fd *arr_fd, char **error_ptr)
+{
+	int				i;
+	int				*fd;
+	int				err;
+
+	i = 0;
+	fd = NULL;
+	while (cmd[i])
+	{
+		if ((err = ft_fork_list_fd(&cmd[i], arr_fd, error_ptr)))
+		{
+			ft_arr_close_arr_fd(arr_fd);
+			return (EXIT_FAILURE);
+		}
+		i++;
+	}
+	ft_arr_close_arr_fd(arr_fd);
+	return (EXIT_SUCCESS);
 }

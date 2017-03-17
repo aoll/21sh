@@ -13,19 +13,20 @@
 #include "project.h"
 
 /*
- * init the pointeur to NULL of struct st_fork,
- * init the pointeur env
- * and dup the STD[IN, OUT, ERR] for back afer the finished process
- */
-int  ft_fork_init_st_fork(t_fork *st_fork, t_arr **env)
+** init the pointeur to NULL of struct st_fork,
+** init the pointeur env
+** and dup the STD[IN, OUT, ERR] for back afer the finished process
+*/
+
+int	ft_fork_init_st_fork(t_fork *st_fork, t_arr **env)
 {
-  st_fork->env_copy = NULL;
-  st_fork->tab_cmd = NULL;
-  st_fork->envp = NULL;
-  st_fork->error_ptr = NULL;
-  st_fork->env = env;
-  st_fork->stdin_copy = dup(STDIN);
-  st_fork->stdout_copy = dup(STDOUT);
-  st_fork->stderr_copy = dup(STDERR);
-  return (EXIT_SUCCESS);
+	st_fork->env_copy = NULL;
+	st_fork->tab_cmd = NULL;
+	st_fork->envp = NULL;
+	st_fork->error_ptr = NULL;
+	st_fork->env = env;
+	st_fork->stdin_copy = dup(STDIN);
+	st_fork->stdout_copy = dup(STDOUT);
+	st_fork->stderr_copy = dup(STDERR);
+	return (EXIT_SUCCESS);
 }

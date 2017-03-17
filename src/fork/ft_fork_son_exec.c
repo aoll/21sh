@@ -12,8 +12,8 @@
 
 #include "project.h"
 
-int  ft_fork_son_exec(char *path_cmd, char **tab_cmd, char **envp)
+int	ft_fork_son_exec(char *path_cmd, char **tab_cmd, char **envp)
 {
-  execve(path_cmd, tab_cmd, envp);
-  return (EXIT_SUCCESS);
+	execve(path_cmd, tab_cmd, envp);
+	return (EXIT_SUCCESS);
 }
