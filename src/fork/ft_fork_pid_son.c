@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 11:38:59 by alex              #+#    #+#             */
-/*   Updated: 2017/02/10 12:33:57 by alex             ###   ########.fr       */
+/*   Updated: 2017/03/15 21:43:57 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * is the processus son, set the tube for processus comminucation
  * execute the command
  */
-int  ft_fork_pid_son(t_fork *st_fork, t_arr_fd *arr_fd, t_tab_tube *array_tube)
+int	ft_fork_pid_son(t_fork *st_fork, t_arr_fd *arr_fd, t_tab_tube *array_tube)
 {
   char *path_tmp;
 
@@ -30,9 +30,7 @@ int  ft_fork_pid_son(t_fork *st_fork, t_arr_fd *arr_fd, t_tab_tube *array_tube)
       st_fork->env_copy, st_fork->tab_cmd, &st_fork->err);
   }
   if (!st_fork->index_builtin && !st_fork->err && *st_fork->tab_cmd)
-  {
     ft_fork_son_exec(path_tmp, st_fork->tab_cmd, st_fork->envp);
-  }
   ft_str_free(&path_tmp);
   ft_fork_command_not_found(&st_fork->tab_cmd, st_fork->index_builtin, arr_fd);
   exit(EXIT_SUCCESS);

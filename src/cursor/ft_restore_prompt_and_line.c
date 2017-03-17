@@ -13,19 +13,20 @@
 #include "project.h"
 
 /*
- * output the prompt and the line, from the start position with a clean empty
- * line
- * the cursor will be at the end of the line
- */
-int  ft_restore_prompt_and_line(t_cursor *cursor, t_arr *arr)
-{
-  int nb_char;
+** output the prompt and the line, from the start position with a clean empty
+** line
+** the cursor will be at the end of the line
+*/
 
-  if (!cursor)
-  {
-    return (EXIT_FAILURE);
-  }
-  ft_putstr(cursor->prompt);
-  ft_arr_print(arr);
-  return (EXIT_SUCCESS);
+int	ft_restore_prompt_and_line(t_cursor *cursor, t_arr *arr)
+{
+	int				nb_char;
+
+	if (!cursor)
+	{
+		return (EXIT_FAILURE);
+	}
+	ft_putstr(cursor->prompt);
+	ft_arr_print(arr);
+	return (EXIT_SUCCESS);
 }

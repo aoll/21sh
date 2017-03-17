@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 11:51:20 by alex              #+#    #+#             */
-/*   Updated: 2017/02/07 18:57:26 by alex             ###   ########.fr       */
+/*   Updated: 2017/03/15 21:42:51 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
  * give a list of fd with good right and position cursor
  * error if the file can be open
  */
-
 
 static int  ft_fork_list_fd_switch_right_dup(int fd, t_arr_fd *arr_fd)
 {

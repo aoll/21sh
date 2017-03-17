@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 12:02:21 by alex              #+#    #+#             */
-/*   Updated: 2017/02/06 12:16:14 by alex             ###   ########.fr       */
+/*   Updated: 2017/03/15 21:49:15 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static int  ft_parse_check_file_redirect_check_end_line(
   }
   return (EXIT_SUCCESS);
 }
-
 
 static int  ft_parse_check_file_redirect_switch(t_cmd_line *line, t_arr *arr)
 {

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 11:55:56 by alex              #+#    #+#             */
-/*   Updated: 2017/02/06 11:57:55 by alex             ###   ########.fr       */
+/*   Updated: 2017/03/15 21:48:38 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
  * check if a token is not the end of the command (space not included)
  * return 1 if is true or 0 if not
  */
+
 int  ft_parse_check_end_space(t_arr *arr)
 {
   t_cmd_line line;

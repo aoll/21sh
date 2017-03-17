@@ -13,13 +13,14 @@
 #include "project.h"
 
 /*
- * move the cursor to end of the line even if it's a multi-ligne
- */
-int  ft_cursor_end(t_cursor *cursor, t_arr *arr)
+** move the cursor to end of the line even if it's a multi-ligne
+*/
+
+int	ft_cursor_end(t_cursor *cursor, t_arr *arr)
 {
-  while (cursor->index_line != (int)arr->length)
-  {
-    ft_cursor_right(cursor, arr);
-  }
-  return (EXIT_SUCCESS);
+	while (cursor->index_line != (int)arr->length)
+	{
+		ft_cursor_right(cursor, arr);
+	}
+	return (EXIT_SUCCESS);
 }

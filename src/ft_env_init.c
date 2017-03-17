@@ -14,14 +14,14 @@
 
 void	ft_kval_print(const void *ptr)
 {
-	t_kval *tmp;
+	t_kval			*tmp;
 
 	tmp = *((t_kval **)ptr);
 	ft_putstr(tmp->key);
 	ft_putstr("=");
 	ft_putstr(tmp->value);
 	ft_putstr("\n");
-	return ;
+	return;
 }
 
 t_kval	*ft_kval_init(const char *env_line)

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 12:17:21 by alex              #+#    #+#             */
-/*   Updated: 2017/02/06 12:24:22 by alex             ###   ########.fr       */
+/*   Updated: 2017/03/15 21:48:58 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int  ft_parse_check_error_redirect(t_arr *cmd)
 static int  ft_parse_check_error_stdout_sdterr_pipe(t_arr *cmd)
 {
   int err;
-  
+
   if ((err = ft_parse_check_double(cmd, STDOUT_STDERR_REDIRECT)))
   {
     ft_putstr_fd("\n21sh: parse error near `>'", STDERR);

@@ -2,6 +2,6 @@
 
 void  ft_start(void)
 {
-  ft_putstr("test du start\n");
-  return;
+	ft_putstr("test du start\n");
+	return;
 }

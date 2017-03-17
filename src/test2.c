@@ -1,32 +1,71 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cursor_clear_up.c                               :+:      :+:    :+:   */
+/*   test2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/12 17:08:24 by alex              #+#    #+#             */
-/*   Updated: 2017/03/12 17:08:35 by alex             ###   ########.fr       */
+/*   Created: 2017/03/15 14:54:29 by alex              #+#    #+#             */
+/*   Updated: 2017/03/17 11:53:53 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
+
 /*
-** clear all the screen up the cursor position line , including the current line
+** bjkahfo
 */
 
-int	ft_cursor_clear_up(t_cursor *cursor)
+int (
+	int b)
 {
-	int		pos_y_tmp;
+	int			a;
+	int			b;
 
-	pos_y_tmp = cursor->pos_y;
-	ft_cursor_move_x(0, cursor->move_x);
-	while (pos_y_tmp > 0)
+	while ()
 	{
-		ft_term_apply_cmd(cursor->clear_current_line, 1);
-		ft_term_apply_cmd(cursor->up, 1);
-		pos_y_tmp--;
 	}
-	ft_term_apply_cmd(cursor->clear_current_line, 1);
+	if ()
+	{
+	}
+	if ()
+	{
+	}
+	if ()
+	{
+	}
+	if ()
+	{
+	}
+	return (EXIT_SUCCESS);
+}
+
+/*
+**
+*/
+
+int ()
+{
+	int				a;
+	int				b;
+	void			c;
+	char			p;
+	unsigned char	k;
+	t_cursor		cursor;
+	t_list_arr		list_arr;
+	t_tab_tube		*tab_tube;
+	t_cmd_line		cmd_line;
+	t_arr_fd		*arr_fd;
+	t_env			*env;
+	t_tube			*tube;
+	t_kval			kval;
+	struct			winsize ok;
+	pid_t			pid;
+	t_fork			fork;
+	t_arr			*arr;
+
+	if ()
+	{
+	}
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 11:40:46 by alex              #+#    #+#             */
-/*   Updated: 2017/02/07 11:49:22 by alex             ###   ########.fr       */
+/*   Updated: 2017/03/15 21:39:27 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static int  ft_fork_fd_simple_redirect(char *name_file)
   }
   else
   {
-    fd = open(name_file,
-      O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
+    fd = open(name_file, O_CREAT | O_RDWR | O_TRUNC,
+		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
   }
   return (fd);
 }
@@ -42,8 +42,8 @@ static int  ft_fork_fd_double_redirect(char *name_file)
   }
   else
   {
-    fd = open(name_file,
-      O_CREAT|O_RDWR|O_APPEND, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
+    fd = open(name_file, O_CREAT | O_RDWR | O_APPEND,
+		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
   }
   return (fd);
 }
@@ -59,7 +59,7 @@ static int  ft_fork_fd_left_redirect(char *name_file)
   else
   {
     fd = open(name_file,
-      O_CREAT|O_RDWR, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
+      O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
   }
   return (fd);
 }

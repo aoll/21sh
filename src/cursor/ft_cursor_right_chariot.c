@@ -11,17 +11,19 @@
 /* ************************************************************************** */
 
 #include "project.h"
+
 /*
- * cursor is actually on a '\n' move down one time and place the cursor and the
- * first col
- */
-int  ft_cursor_right_chariot(t_cursor *cursor)
+** cursor is actually on a '\n' move down one time and place the cursor and the
+** first col
+*/
+
+int	ft_cursor_right_chariot(t_cursor *cursor)
 {
-  cursor->prev_chariot++;
-  cursor->pos_y++;
-  cursor->pos_x = 0;
-  cursor->index_line++;
-  ft_term_apply_cmd(cursor->down, 1);
-  ft_cursor_move_x(cursor->pos_x, cursor->move_x);
-  return (EXIT_SUCCESS);
+	cursor->prev_chariot++;
+	cursor->pos_y++;
+	cursor->pos_x = 0;
+	cursor->index_line++;
+	ft_term_apply_cmd(cursor->down, 1);
+	ft_cursor_move_x(cursor->pos_x, cursor->move_x);
+	return (EXIT_SUCCESS);
 }
