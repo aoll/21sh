@@ -51,3 +51,4 @@ sed -i 's/^\* /\** /g' $file; # format comment * -> **
 
 sed -i 's/\t /\t\t/g' $file;
 sed -i 's/\t\t /\t\t\t/g' $file;
+sed -i 's/\t /\t\t/g' $file;
