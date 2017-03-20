@@ -1,6 +1,6 @@
 #!/bin/bash
-file=`ls`
-# file=$1
+# file=`ls`
+file=$1
 SIZE_HEADER=12
 
 sed -i  's/^  /	/g'  $file; #remplace 2 espace par des tabulation ne doit pas prendre le header

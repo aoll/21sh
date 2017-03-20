@@ -53,7 +53,7 @@ static int	ft_parse_check_file_redirect_switch(t_cmd_line *line, t_arr *arr)
 		{
 			if ((err = ft_parse_check_file_redirect_check_end_line(line, arr)))
 			{
-			 return (EXIT_FAILURE);
+				return (EXIT_FAILURE);
 			}
 			if (line->index - 1 >= 0)
 			{

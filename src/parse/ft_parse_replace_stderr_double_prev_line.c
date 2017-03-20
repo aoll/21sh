@@ -87,7 +87,7 @@ int	ft_parse_replace_stderr_double_prev_prev_line(
 		if (ft_isspace(*s_prev_prev_prev_line))
 		{
 			return (ft_replace_double_stderr_prev_prev_set_line(
-			 line, s_prev_line, s_prev_prev_line));
+				line, s_prev_line, s_prev_prev_line));
 		}
 	}
 	return (EXIT_SUCCESS);

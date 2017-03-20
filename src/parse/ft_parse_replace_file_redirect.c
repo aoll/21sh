@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/05 20:00:51 by alex              #+#    #+#             */
-/*   Updated: 2017/02/05 20:01:53 by alex             ###   ########.fr       */
+/*   Updated: 2017/03/18 10:30:34 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	ft_parse_replace_file_redirect(t_arr *arr)
 	ft_parse_init_cmd_line(&line);
 	while (line.index < (int)arr->length)
 	{
-		line.s_line = *(char **)((unsigned char *)arr->ptr + line.index * arr->sizeof_elem);
+		line.s_line = *(char **)((unsigned char *)arr->ptr
+		+ line.index * arr->sizeof_elem);
 		ft_parse_check_d_quote(&line);
 		if (!line.dquote && !line.quote && *line.s_line == '&')
 		{

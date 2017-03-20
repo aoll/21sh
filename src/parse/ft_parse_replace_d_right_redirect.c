@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/05 19:41:16 by alex              #+#    #+#             */
-/*   Updated: 2017/02/05 19:46:33 by alex             ###   ########.fr       */
+/*   Updated: 2017/03/18 10:30:36 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ static int	ft_parse_replace_d_right_redirect_line(
 		{
 			if (*line->s_line == '>' && line->index + 1 < (int)arr->length)
 			{
-			 line->s_line = *(char **)(
-			  (unsigned char *)arr->ptr + (line->index + 1) * arr->sizeof_elem);
-			 if (*line->s_line == '>')
-			 {
-			  free(ft_arr_pop(arr, line->index));
-			  *line->s_line = D_RIGHT_REDIRECT;
-			 }
+				line->s_line = *(char **)((unsigned char *)arr->ptr
+				+ (line->index + 1) * arr->sizeof_elem);
+				if (*line->s_line == '>')
+				{
+					free(ft_arr_pop(arr, line->index));
+					*line->s_line = D_RIGHT_REDIRECT;
+				}
 			}
 		}
 		return (EXIT_SUCCESS);

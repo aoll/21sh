@@ -29,9 +29,9 @@ t_arr *ft_parse_line(t_arr *arr)
 		if (tab_cmds)
 		{
 			if (tab_cmds->length)
-			 ft_arr_free(ft_arr_pop(tab_cmds, 0));
+				ft_arr_free(ft_arr_pop(tab_cmds, 0));
 			if (tab_cmds->ptr)
-			 free(tab_cmds->ptr);
+				free(tab_cmds->ptr);
 			free(tab_cmds);
 			tab_cmds = NULL;
 		}

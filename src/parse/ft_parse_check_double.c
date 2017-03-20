@@ -30,12 +30,12 @@ static int	ft_parse_check_double_pop(
 		{
 			if (*line->s_line != PIPE && token == PIPE)
 			{
-			 free(ft_arr_pop(*arr, index_tmp));
-			 line->index -= 1;
+				free(ft_arr_pop(*arr, index_tmp));
+				line->index -= 1;
 			}
 			else
 			{
-			 return (EXIT_FAILURE);
+				return (EXIT_FAILURE);
 			}
 		}
 	}
@@ -72,13 +72,13 @@ static int	ft_parse_check_double_check_error(
 		{
 			if ((err = ft_parse_check_double_pop(line, arr, token, *index_tmp)))
 			{
-			 return (EXIT_FAILURE);
+				return (EXIT_FAILURE);
 			}
 		}
 		if ((err = ft_parse_check_double_set_check(
 			line, token, index_tmp)))
 			{
-			 return (EXIT_FAILURE);
+				return (EXIT_FAILURE);
 			}
 	}
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 10:07:30 by alex              #+#    #+#             */
-/*   Updated: 2017/02/06 10:08:46 by alex             ###   ########.fr       */
+/*   Updated: 2017/03/18 10:30:46 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	ft_parse_replace_prev_prev_line_stderr(
 		if (ft_isspace(*s_prev_prev_prev_line))
 		{
 			return (ft_parse_replace_prev_prev_set_line(
-			 line, s_prev_line, s_prev_prev_line));
+				line, s_prev_line, s_prev_prev_line));
 		}
 	}
 	return (EXIT_SUCCESS);

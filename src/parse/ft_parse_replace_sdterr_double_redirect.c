@@ -93,10 +93,10 @@ int	ft_parse_replace_sdterr_double_redirect(t_arr *arr)
 			&& line.index - 1 >= 0)
 		{
 			s_prev_line = *(char **)(
-			 (unsigned char *)arr->ptr + (line.index - 1) * arr->sizeof_elem);
+				(unsigned char *)arr->ptr + (line.index - 1) * arr->sizeof_elem);
 			if (ft_parse_replace_sdterr_double_redirect_switch(
-			 &line, &s_prev_line, &s_prev_prev_line, arr))
-			 continue;
+				&line, &s_prev_line, &s_prev_prev_line, arr))
+				continue;
 		}
 		line.index++;
 	}
