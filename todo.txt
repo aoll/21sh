@@ -1,0 +1,21 @@
+$> ls; ls leaks
+"ls erlmgk . 1>&2 | cat -e"  -> chelou?
+- env -i ./project.exe, up up up , enter , le cursor remonte apres le enter
+- exit , un \n de trop apres que la main soit rendu
+- " and ' for env -i ./project
+
+- wc < tutu < toto (toto n'etant pas existant)
+zsh: aucun fichier ou dossier de ce type: toto
+- wc <&3 || wc <&tutu
+zsh: 3: mauvais descripteur de fichier
+- wc <&-
+- 			EXIT !!!!!!!!!!!!!!!!!!!!!!! -----------
+- rajouter un check '&' doit avoir soit a sa droite soit a sa gauche un '>'
+
+- // si une ligne de commande est en cours exec ligne; ft_putstr("$> "); pour le ctrl-D
+- avant execve restaurer toutes les modes termcaps a la normal et cela fonctionnera
+- echo ls | ./project.exe
+- rm: remove write-protected regular empty file 'a'? $> y
+- rajouter une limite a la ligne ex: 10 char max
+- pour les Z intempestifs lors d'un resize look ft_add_char (resize que si nouvel touche tape)
+-- mutli commande , certaines pas efface apres resize
