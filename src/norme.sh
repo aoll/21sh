@@ -1,6 +1,6 @@
 #!/bin/bash
-# file=`ls`
-file=$1
+file=`ls`
+# file=$1
 SIZE_HEADER=12
 
 sed -i ''  's/^  /	/g'  $file; #remplace 2 espace par des tabulation ne doit pas prendre le header
@@ -45,7 +45,7 @@ sed -i '' 's/\(\tt_cmd_line \)\(.*;\)/\tt_cmd_line\t\t\2/g' $file;
 sed -i '' 's/\(\tunsigned char \)\(.*;\)/\tunsigned char\t\2/g' $file;
 # # 								 #
 
-sed -i '' 's/int f/int\tf/g' $file; # add \t for prototype function
+sed -i '' 's/int f/int	f/g' $file; # add \t for prototype function
 
 sed -i '' 's/^\* /\** /g' $file; # format comment * -> **
 
