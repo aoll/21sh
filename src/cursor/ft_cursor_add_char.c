@@ -111,7 +111,7 @@ static int	ft_add_char_tab(t_cursor *cursor, t_arr *arr)
 ** fail if is not a printable char
 */
 
-int	ft_cursor_add_char(t_cursor *cursor, t_arr *arr, char *buff)
+int			ft_cursor_add_char(t_cursor *cursor, t_arr *arr, char *buff)
 {
 	char		*buff_tmp;
 

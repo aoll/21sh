@@ -27,8 +27,8 @@ static int	ft_arr_cancel_reverse_video(
 		s_line = *(unsigned char **)s_line;
 		if (s_line[5] == 1)
 		{
-		 s_line[5] = 0;
-		 free(ft_arr_pop(select_line, select_line->length - 1));
+			s_line[5] = 0;
+			free(ft_arr_pop(select_line, select_line->length - 1));
 		}
 		index++;
 	}
@@ -56,7 +56,8 @@ static int	ft_cursor_deselect_all_set_tmp_cursor(
 ** overide the line with a new line in basic video mode
 */
 
-int	ft_cursor_deselect_all(t_cursor *cursor, t_arr *arr, t_arr *select_line)
+int			ft_cursor_deselect_all(
+	t_cursor *cursor, t_arr *arr, t_arr *select_line)
 {
 	t_cursor		end;
 	int				nb_line_displayed;

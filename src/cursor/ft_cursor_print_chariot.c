@@ -25,7 +25,7 @@ static int	ft_cursor_print_chariot_set_cursor(t_cursor *cursor)
 ** print a return chariot
 */
 
-int	ft_cursor_print_chariot(t_cursor *cursor, t_arr *arr)
+int			ft_cursor_print_chariot(t_cursor *cursor, t_arr *arr)
 {
 	unsigned char	*s_line;
 	int				len_tmp;

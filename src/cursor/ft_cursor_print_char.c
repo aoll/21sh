@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/*
-*
-*/
 
 static int	ft_cursor_print_char_new_line(t_cursor *cursor)
 {
@@ -25,9 +22,6 @@ static int	ft_cursor_print_char_new_line(t_cursor *cursor)
 	cursor->y_total++;
 	return (EXIT_SUCCESS);
 }
-/*
-*
-*/
 
 static int	ft_cursor_print_char_process(
 	t_cursor *cursor, t_arr *arr, unsigned char *s_line, int len_tmp)
@@ -46,11 +40,12 @@ static int	ft_cursor_print_char_process(
 	arr->length = len_tmp;
 	return (EXIT_SUCCESS);
 }
+
 /*
 ** print a char
 */
 
-int	ft_cursor_print_char(t_cursor *cursor, char c, t_arr *arr)
+int			ft_cursor_print_char(t_cursor *cursor, char c, t_arr *arr)
 {
 	unsigned char	*s_line;
 	int				len_tmp;

@@ -12,10 +12,6 @@
 
 #include "project.h"
 
-/*
-*
-*/
-
 int	ft_cursor_valide_line_second_line(
 	t_arr *tmp_arr, t_arr *tmp_current_line, t_arr *tmp_history_line)
 {
@@ -39,10 +35,6 @@ int	ft_cursor_valide_line_second_line(
 	return (EXIT_SUCCESS);
 }
 
-/*
-*
-*/
-
 int	ft_cursor_valide_line_second_without_line(t_arr *tmp_history_line)
 {
 	t_arr			*invalide_line;
@@ -56,10 +48,6 @@ int	ft_cursor_valide_line_second_without_line(t_arr *tmp_history_line)
 	}
 	return (EXIT_SUCCESS);
 }
-
-/*
-*
-*/
 
 int	ft_cursor_valide_line_free(
 	t_cursor *cursor, t_arr *tmp_arr, t_arr *tmp_history_line)
@@ -82,10 +70,6 @@ int	ft_cursor_valide_line_free(
 	}
 	return (EXIT_SUCCESS);
 }
-
-/*
-*
-*/
 
 int	ft_cursor_valide_line_switch(
 	t_arr *tmp_arr, t_arr *tmp_current_line, t_arr *tmp_history_line)

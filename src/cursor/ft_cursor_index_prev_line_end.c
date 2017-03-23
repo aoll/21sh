@@ -26,16 +26,15 @@ static int	ft_cursor_index_prev_line_end_init(
 ** return the index to the last line showed - 1
 */
 
-int	ft_cursor_index_prev_line_end(t_cursor *cursor, t_arr *arr, int start)
+int			ft_cursor_index_prev_line_end(
+	t_cursor *cursor, t_arr *arr, int start)
 {
 	char		*s_line;
 	int			index_line;
 	int			y_line;
-	int			arr_len;
 
 	ft_cursor_index_prev_line_end_init(cursor, &index_line, &y_line);
-	arr_len = (int)arr->length;
-	while (start < arr_len)
+	while (start < (int)arr->length)
 	{
 		if (y_line == cursor->terminal_size.ws_row)
 			return (start - 1);
@@ -43,9 +42,9 @@ int	ft_cursor_index_prev_line_end(t_cursor *cursor, t_arr *arr, int start)
 			(unsigned char *)arr->ptr + arr->sizeof_elem * start);
 		if (index_line == cursor->terminal_size.ws_col - 1 || *s_line == 10)
 		{
-		 index_line = -1;
-		 if (++y_line == cursor->terminal_size.ws_row && *s_line == 10)
-			return (start - 1);
+			index_line = -1;
+			if (++y_line == cursor->terminal_size.ws_row && *s_line == 10)
+				return (start - 1);
 		}
 		index_line++;
 		start++;

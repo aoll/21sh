@@ -24,9 +24,9 @@ int	ft_clear_up_from_bottom(t_cursor *cursor)
 	ft_cursor_move_x(0, cursor->move_x);
 	while (i < cursor->terminal_size.ws_row)
 	{
-	 ft_term_apply_cmd(cursor->clear_current_line, 1);
-	 ft_term_apply_cmd(cursor->up, 1);
-	 i++;
+		ft_term_apply_cmd(cursor->clear_current_line, 1);
+		ft_term_apply_cmd(cursor->up, 1);
+		i++;
 	}
 	return (EXIT_SUCCESS);
 }

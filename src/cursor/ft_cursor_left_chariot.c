@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
+
 /*
 ** the cursor is on the last col after a return chariot
 ** il will be just after the char on the return chariot
@@ -26,10 +27,10 @@ int	ft_cursor_left_chariot(t_cursor *cursor, t_arr *arr)
 	{
 		nb_char = ft_nb_char_between_two_chariot(arr, cursor->index_line - 1);
 		if (nb_char > cursor->terminal_size.ws_col)
-		 nb_char = nb_char % cursor->terminal_size.ws_col;
+			nb_char = nb_char % cursor->terminal_size.ws_col;
 		if (!cursor->pos_y)
 		{
-		 nb_char += cursor->prompt_len;
+			nb_char += cursor->prompt_len;
 		}
 	}
 	else

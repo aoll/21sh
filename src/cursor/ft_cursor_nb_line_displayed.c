@@ -38,7 +38,7 @@ static int	ft_cursor_nb_line_init(
 ** return the number of the line actualy displayed
 */
 
-int	ft_cursor_nb_line_displayed(
+int			ft_cursor_nb_line_displayed(
 	t_cursor *cursor, t_arr *arr, int index_start_showed, int is_total)
 {
 	int						index_line;

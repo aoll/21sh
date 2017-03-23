@@ -53,8 +53,8 @@ static int	ft_cursor_select_left_set_mode(
 ** select the char left to the cursor
 */
 
-
-int	ft_cursor_select_left(t_cursor *cursor, t_arr *arr, t_arr *select_line)
+int			ft_cursor_select_left(
+	t_cursor *cursor, t_arr *arr, t_arr *select_line)
 {
 	char			*s_line;
 	int				err;
@@ -74,7 +74,8 @@ int	ft_cursor_select_left(t_cursor *cursor, t_arr *arr, t_arr *select_line)
 	}
 	else
 	{
-		ft_cursor_select_overide_char(cursor, arr, select_line, is_will_reverse);
+		ft_cursor_select_overide_char(
+			cursor, arr, select_line, is_will_reverse);
 	}
 	ft_cursor_select_left_restore_cursor(cursor, &cursor_tmp, arr, s_line);
 	return (EXIT_SUCCESS);

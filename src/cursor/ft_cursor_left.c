@@ -16,7 +16,7 @@
 ** clear all the screen and restore the position of the cursor
 */
 
-int	ft_cursor_clear_all_screen(t_cursor *cursor, int is_up)
+int			ft_cursor_clear_all_screen(t_cursor *cursor, int is_up)
 {
 	int		pos_y;
 
@@ -40,7 +40,7 @@ int	ft_cursor_clear_all_screen(t_cursor *cursor, int is_up)
 ** clear the actual line and reprint	from line - 1 to line - 1
 */
 
-int	ft_cursor_scroll_up(t_cursor *cursor, t_arr *arr)
+int			ft_cursor_scroll_up(t_cursor *cursor, t_arr *arr)
 {
 	void		*s_line;
 	int			index_start_showed;
@@ -115,7 +115,7 @@ static int	ft_cursor_left_up_line(
 ** actual position is 0
 */
 
-int	ft_cursor_left(t_cursor *cursor, t_arr *arr)
+int			ft_cursor_left(t_cursor *cursor, t_arr *arr)
 {
 	unsigned char	*s_line;
 

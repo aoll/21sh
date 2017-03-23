@@ -57,7 +57,7 @@ static int	ft_cursor_right_down_line(
 ** actual position is col max
 */
 
-int	ft_cursor_right(t_cursor *cursor, t_arr *arr)
+int			ft_cursor_right(t_cursor *cursor, t_arr *arr)
 {
 	unsigned char	*s_line;
 

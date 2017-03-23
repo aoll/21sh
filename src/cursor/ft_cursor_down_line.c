@@ -31,7 +31,7 @@ int	ft_cursor_down_line(t_cursor *cursor, t_arr *arr)
 	{
 		ft_cursor_right(cursor, arr);
 		if (cursor->pos_y == pos_y_old + 1)
-			break;
+			break ;
 	}
 	while (cursor->index_line < (int)arr->length && mvt_x)
 	{

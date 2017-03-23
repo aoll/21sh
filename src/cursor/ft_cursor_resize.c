@@ -66,7 +66,7 @@ int	ft_cursor_resize(
 	int				index_start_showed;
 	int				nb_line_displayed_old;
 	int				nb_line_displayed_new;
-	struct			winsize terminal_size_tmp;
+	struct winsize	terminal_size_tmp;
 
 	terminal_size_tmp = cursor->terminal_size;
 	index_start_showed = ft_index_line_start_showed(cursor, arr);

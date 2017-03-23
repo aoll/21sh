@@ -24,8 +24,8 @@ int	ft_cursor_copy_line(
 	{
 		if (*copy_line)
 		{
-		 ft_arr_free(*copy_line);
-		 *copy_line = NULL;
+			ft_arr_free(*copy_line);
+			*copy_line = NULL;
 		}
 		*copy_line = ft_arr_dup(select_line);
 	}

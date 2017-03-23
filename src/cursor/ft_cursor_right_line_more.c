@@ -71,7 +71,7 @@ static int	ft_cursor_right_line_more_init_index(
 ** print the command with line + 1
 */
 
-int	ft_cursor_right_line_more(t_cursor *cursor, t_arr *arr)
+int			ft_cursor_right_line_more(t_cursor *cursor, t_arr *arr)
 {
 	int				index_start_showed;
 	int				index_end_showed;

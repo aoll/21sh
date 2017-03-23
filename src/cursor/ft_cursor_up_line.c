@@ -20,16 +20,17 @@ static int	ft_cursor_mvt_left(t_cursor *cursor, t_arr *arr, int mvt_x)
 {
 	while (cursor->index_line && mvt_x)
 	{
-		ft_cursor_left(cursor , arr);
+		ft_cursor_left(cursor, arr);
 		mvt_x--;
 	}
 	return (EXIT_SUCCESS);
 }
+
 /*
 ** if it's possible move the cursor to a position line - 1
 */
 
-int	ft_cursor_up_line(t_cursor *cursor, t_arr *arr)
+int			ft_cursor_up_line(t_cursor *cursor, t_arr *arr)
 {
 	int				pos_y_old;
 	int				pos_x_old;

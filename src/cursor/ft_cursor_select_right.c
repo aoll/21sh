@@ -62,7 +62,8 @@ static int	ft_cursor_select_overide_char_right(t_cursor *cursor, t_arr *arr,
 {
 	unsigned char	*s_line;
 
-	s_line = (unsigned char *)arr->ptr + arr->sizeof_elem * (cursor->index_line);
+	s_line = (
+		unsigned char *)arr->ptr + arr->sizeof_elem * (cursor->index_line);
 	s_line = *(unsigned char **)s_line;
 	ft_putstr((const char *)s_line);
 	s_line[5] = is_will_reverse;
@@ -88,18 +89,21 @@ static int	ft_cursor_select_right_set_mode(
 	ft_term_apply_cmd(cursor->mode_insertion_end, 1);
 	return (EXIT_SUCCESS);
 }
+
 /*
 ** select the char right to the cursor
 */
 
-int	ft_cursor_select_right(t_cursor *cursor, t_arr *arr, t_arr *select_line)
+int			ft_cursor_select_right(
+	t_cursor *cursor, t_arr *arr, t_arr *select_line)
 {
 	unsigned char	*s_line;
 	int				is_will_reverse;
 
 	is_will_reverse = 0;
 	ft_term_apply_cmd(cursor->save_cursor_position, 1);
-	s_line = (unsigned char *)arr->ptr + arr->sizeof_elem * (cursor->index_line);
+	s_line = (
+		unsigned char *)arr->ptr + arr->sizeof_elem * (cursor->index_line);
 	s_line = *(unsigned char **)s_line;
 	ft_cursor_select_right_set_mode(cursor, s_line, &is_will_reverse);
 	if (s_line[4] == 1)

@@ -12,10 +12,6 @@
 
 #include "project.h"
 
-/*
-*
-*/
-
 int	ft_cursor_valide_line_without_line(t_arr *tmp_history_line)
 {
 	t_arr			*invalide_line;

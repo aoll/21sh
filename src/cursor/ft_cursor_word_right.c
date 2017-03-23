@@ -23,11 +23,11 @@
 int	ft_cursor_move_begin_or_start(t_cursor *cursor, t_arr *arr,
 	unsigned char *s_line, int is_on_words)
 {
+	int err;
+
 	while (cursor->index_line < (int)arr->length
 	&& (ft_isspace(*(s_line)) == is_on_words))
 	{
-		int err;
-
 		if ((err = ft_cursor_right(cursor, arr)))
 		{
 			return (EXIT_FAILURE);
@@ -63,6 +63,5 @@ int	ft_cursor_word_right(t_cursor *cursor, t_arr *arr)
 	+ arr->sizeof_elem * (cursor->index_line);
 	s_line = *(unsigned char **)s_line;
 	ft_cursor_move_begin_or_start(cursor, arr, s_line, ft_isspace(*s_line));
-
 	return (EXIT_SUCCESS);
 }

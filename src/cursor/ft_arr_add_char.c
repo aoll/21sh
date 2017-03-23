@@ -18,7 +18,7 @@
 
 int	ft_arr_add_char(t_cursor *cursor, t_arr *arr, char c, int is_tab)
 {
-	char *char_line;
+	char	*char_line;
 
 	if (c == '"' && !cursor->quote)
 	{

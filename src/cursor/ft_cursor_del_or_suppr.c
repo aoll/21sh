@@ -38,10 +38,6 @@ static int	ft_cursor_arr_pop_elem_set_cursor(
 	return (EXIT_SUCCESS);
 }
 
-/*
-*
-*/
-
 static int	ft_cursor_arr_pop_elem_tabulation(
 	t_arr *arr, int index_line_tmp, int is_prev_char)
 {
@@ -52,7 +48,7 @@ static int	ft_cursor_arr_pop_elem_tabulation(
 	while (++index_tab < TABULATION_LEN)
 	{
 		if ((s = ft_arr_pop(arr, (index_line_tmp -= is_prev_char))))
-		 free(s);
+			free(s);
 	}
 	return (EXIT_SUCCESS);
 }
@@ -92,10 +88,6 @@ static int	ft_cursor_arr_pop_elem(t_arr *arr, t_cursor *cursor,
 	return (index_line_tmp);
 }
 
-/*
-*
-*/
-
 static int	ft_cursor_del_or_suppr_set_cursor(
 	t_cursor *cursor, t_arr *arr, int *is_prev_char)
 {
@@ -113,7 +105,8 @@ static int	ft_cursor_del_or_suppr_set_cursor(
 ** delete the actual char		if is_prev_char		is equal to 0
 */
 
-int	ft_cursor_del_or_suppr(t_cursor *cursor, t_arr *arr, int is_prev_char)
+int			ft_cursor_del_or_suppr(
+	t_cursor *cursor, t_arr *arr, int is_prev_char)
 {
 	t_cursor	cursor_tmp;
 	int			err;

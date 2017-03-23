@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/*
-**
-*/
 
 static int	ft_cusor_clear_down_line_init(
 	t_cursor *cursor, t_arr *arr, int *index, int *pos_y)

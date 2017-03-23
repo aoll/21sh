@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "project.h"
-/*
-*
-*/
 
 int	ft_cursor_valide_line_with_line(
 	t_arr *tmp_arr, t_arr *tmp_current_line, t_arr *tmp_history_line)

@@ -12,10 +12,6 @@
 
 #include "project.h"
 
-/*
-*
-*/
-
 static int	ft_cursor_cut_init(
 	t_cursor *cursor, t_arr *arr, int *index_line_tmp, int *nb_line_displayed)
 {
@@ -25,10 +21,6 @@ static int	ft_cursor_cut_init(
 	ft_cursor_clear_up(cursor);
 	return (EXIT_SUCCESS);
 }
-
-/*
-*
-*/
 
 static int	ft_cursor_cut_process(t_arr *arr)
 {
@@ -57,7 +49,7 @@ static int	ft_cursor_cut_process(t_arr *arr)
 ** the selection
 */
 
-int	ft_cursor_cut(
+int			ft_cursor_cut(
 	t_cursor *cursor, t_arr *arr, t_arr *select_line, t_arr **copy_line)
 {
 	int		index_line_tmp;

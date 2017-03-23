@@ -33,7 +33,7 @@ static int	ft_cursor_move_word(t_cursor *cursor, t_arr *arr,
 		}
 		if (cursor->index_line - 1 < 0)
 		{
-			break;
+			break ;
 		}
 		s_line = (unsigned char *)arr->ptr + arr->sizeof_elem *
 		(cursor->index_line - 1);
@@ -50,7 +50,7 @@ static int	ft_cursor_move_word(t_cursor *cursor, t_arr *arr,
 ** move to the beginig of the word
 */
 
-int	ft_cursor_word_left(t_cursor *cursor, t_arr *arr)
+int			ft_cursor_word_left(t_cursor *cursor, t_arr *arr)
 {
 	unsigned char	*s_line;
 

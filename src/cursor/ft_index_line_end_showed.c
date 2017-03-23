@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
+
 /*
 ** return the index of the last char print with line + 1
 */
@@ -21,7 +22,7 @@ int	ft_index_line_end_showed(t_cursor *cursor, t_arr *arr)
 	unsigned char	*s_line;
 	int				index_line;
 
-	index = cursor->index_line + 1; // not sure
+	index = cursor->index_line + 1;
 	index_line = 0;
 	while (index < (int)arr->length)
 	{
@@ -31,7 +32,7 @@ int	ft_index_line_end_showed(t_cursor *cursor, t_arr *arr)
 		{
 			if (*s_line == 10)
 			{
-			 return (index - 1);
+				return (index - 1);
 			}
 			return (index);
 		}
