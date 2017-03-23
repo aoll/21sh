@@ -43,7 +43,7 @@ static int	ft_parse_separate_cmd_is_new_cmd(
 	return (EXIT_SUCCESS);
 }
 
-t_arr *ft_parse_separate_cmd(t_arr *arr)
+t_arr		*ft_parse_separate_cmd(t_arr *arr)
 {
 	t_arr			*tab_cmds;
 	t_arr			*cmd;

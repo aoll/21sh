@@ -60,7 +60,7 @@ static int	ft_parse_replace_sdterr_redirect_switch(
 	return (EXIT_SUCCESS);
 }
 
-int	ft_parse_replace_sdterr_redirect(t_arr *arr)
+int			ft_parse_replace_sdterr_redirect(t_arr *arr)
 {
 	char			*s_prev_line;
 	char			*s_prev_prev_line;
@@ -82,7 +82,7 @@ int	ft_parse_replace_sdterr_redirect(t_arr *arr)
 				&line, &s_prev_line, &s_prev_prev_line, arr))
 				continue;
 		}
-	line.index++;
+		line.index++;
 	}
 	return (EXIT_SUCCESS);
 }

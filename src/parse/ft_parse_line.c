@@ -16,14 +16,13 @@
 ** parsing
 */
 
-t_arr *ft_parse_line(t_arr *arr)
+t_arr	*ft_parse_line(t_arr *arr)
 {
 	t_arr			*tab_cmds;
 	int				err;
 
 	if (!(tab_cmds = ft_parse_separate_cmd(arr)))
 		return (NULL);
-
 	if ((err = ft_parse_pop_and_replace_and_check_error(tab_cmds)))
 	{
 		if (tab_cmds)

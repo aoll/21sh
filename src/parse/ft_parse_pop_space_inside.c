@@ -38,7 +38,7 @@ static int	ft_parse_pop_space_or_continue(t_cmd_line *line, t_arr *arr)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_parse_pop_space_inside(t_arr *arr)
+int			ft_parse_pop_space_inside(t_arr *arr)
 {
 	t_cmd_line		line;
 

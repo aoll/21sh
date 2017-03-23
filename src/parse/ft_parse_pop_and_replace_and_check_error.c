@@ -58,7 +58,7 @@ static int	ft_parse_pop_and_replace_and_check_error_switch(t_arr *cmd)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_parse_pop_and_replace_and_check_error(t_arr *tab_cmds)
+int			ft_parse_pop_and_replace_and_check_error(t_arr *tab_cmds)
 {
 	int				index;
 	t_arr			*cmd;

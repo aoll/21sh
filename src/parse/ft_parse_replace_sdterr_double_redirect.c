@@ -57,7 +57,7 @@ static int	ft_parse_replace_sdterr_double_redirect_switch_prev_prev_line(
 	return (EXIT_SUCCESS);
 }
 
-int	ft_parse_replace_sdterr_double_redirect_switch(
+int			ft_parse_replace_sdterr_double_redirect_switch(
 	t_cmd_line *line, char **s_prev_line, char **s_prev_prev_line, t_arr *arr)
 {
 	if (ft_parse_replace_sdterr_double_redirect_switch_prev_line(
@@ -65,7 +65,6 @@ int	ft_parse_replace_sdterr_double_redirect_switch(
 	{
 		return (1);
 	}
-
 	if (**s_prev_line == '&')
 	{
 		if (ft_parse_replace_sdterr_double_redirect_switch_prev_prev_line(
@@ -77,7 +76,7 @@ int	ft_parse_replace_sdterr_double_redirect_switch(
 	return (EXIT_SUCCESS);
 }
 
-int	ft_parse_replace_sdterr_double_redirect(t_arr *arr)
+int			ft_parse_replace_sdterr_double_redirect(t_arr *arr)
 {
 	char			*s_prev_line;
 	char			*s_prev_prev_line;
@@ -92,8 +91,8 @@ int	ft_parse_replace_sdterr_double_redirect(t_arr *arr)
 		if (!line.dquote && !line.quote && *line.s_line == D_RIGHT_REDIRECT
 			&& line.index - 1 >= 0)
 		{
-			s_prev_line = *(char **)(
-				(unsigned char *)arr->ptr + (line.index - 1) * arr->sizeof_elem);
+			s_prev_line = *(char **)((unsigned char *)arr->ptr
+				+ (line.index - 1) * arr->sizeof_elem);
 			if (ft_parse_replace_sdterr_double_redirect_switch(
 				&line, &s_prev_line, &s_prev_prev_line, arr))
 				continue;

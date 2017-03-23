@@ -35,7 +35,7 @@ static int	ft_parse_replace_in_line(t_cmd_line *line, t_arr *arr)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_parse_replace_stdin_sdterr_redirect(t_arr *arr)
+int			ft_parse_replace_stdin_sdterr_redirect(t_arr *arr)
 {
 	t_cmd_line		line;
 

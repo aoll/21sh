@@ -70,7 +70,7 @@ static int	ft_parse_check_error_stdout_sdterr_pipe(t_arr *cmd)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_parse_check_error(t_arr *cmd)
+int			ft_parse_check_error(t_arr *cmd)
 {
 	int				err;
 

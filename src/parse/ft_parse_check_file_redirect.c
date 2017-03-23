@@ -70,7 +70,7 @@ static int	ft_parse_check_file_redirect_switch(t_cmd_line *line, t_arr *arr)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_parse_check_file_redirect(t_arr *arr)
+int			ft_parse_check_file_redirect(t_arr *arr)
 {
 	t_cmd_line		line;
 	int				err;

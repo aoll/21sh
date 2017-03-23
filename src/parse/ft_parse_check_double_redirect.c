@@ -31,10 +31,10 @@ int	ft_parse_check_double_redirect(t_arr *arr)
 		{
 			if (line.index + 1 < (int)arr->length)
 			{
-				line.s_line = *(char **)(
-				(unsigned char *)arr->ptr + (line.index + 1) * arr->sizeof_elem);
+				line.s_line = *(char **)((unsigned char *)arr->ptr
+						+ (line.index + 1) * arr->sizeof_elem);
 				if (*line.s_line == '&')
-				return (EXIT_FAILURE);
+					return (EXIT_FAILURE);
 			}
 		}
 		line.index++;

@@ -77,14 +77,14 @@ static int	ft_parse_check_double_check_error(
 		}
 		if ((err = ft_parse_check_double_set_check(
 			line, token, index_tmp)))
-			{
-				return (EXIT_FAILURE);
-			}
+		{
+			return (EXIT_FAILURE);
+		}
 	}
 	return (EXIT_SUCCESS);
 }
 
-int	ft_parse_check_double(t_arr *arr, int token)
+int			ft_parse_check_double(t_arr *arr, int token)
 {
 	int				index_tmp;
 	t_cmd_line		line;
