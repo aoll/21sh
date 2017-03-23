@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/03/13 12:05:08 by alex             ###   ########.fr        #
+#    Updated: 2017/03/23 13:23:11 by aollivie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -148,7 +148,11 @@ C_BUILTIN= ft_is_builtin.c \
 					 ft_builtin_echo.c \
 					 ft_builtin_cd.c \
 					 ft_builtin_exit.c \
-					 ft_builtin_setenv_check_argument.c
+					 ft_builtin_setenv_check_argument.c \
+					 ft_builtin_cd_set_env.c \
+					 ft_builtin_cd_absolute_path.c \
+					 ft_builtin_cd_is_existing_file.c \
+					 ft_builtin_cd_change_directory.c
 
 C_FORK= ft_fork_name_file.c \
 				ft_fork_env_arr_to_tab_str.c \

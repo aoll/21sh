@@ -1,7 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   project.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/23 13:17:39 by aollivie          #+#    #+#             */
+/*   Updated: 2017/03/23 13:23:44 by aollivie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PROJECT_H
 #define PROJECT_H
-
-
 
 /*
 ** INCLUDE
@@ -18,7 +28,7 @@
 
 /**
  * DEFINE
- */
+*/
 
 #define TABULATION_LEN 4
 #define PADDING_BUFFER 30
@@ -43,14 +53,15 @@
 #define B_EXIT                  6
 
 #define HOME                    "/home/alex"
-/**
- * GLOBAL
- */
+/*
+** GLOBAL
+*/
+
 int g_is_ctrl_c_father;
-// pid_t pid;
-/**
- * STRUCT
- */
+
+/*
+** STRUCT
+*/
 
 typedef struct s_cursor t_cursor;
 struct  s_cursor
@@ -167,30 +178,30 @@ struct s_list_arr
   char *buff;
   t_arr *copy_line;
   t_arr *env;
-  // t_arr *current_line_free;
   t_arr *current_line;
   t_arr *history_line;
   t_arr *select_line;
   t_arr *tab_cmds;
 };
 
-/**
- * PROTOTYPES
+/*
+** PROTOTYPES
  */
 
-/**
- * Action on the signal
- */
+/*
+** Action on the signal
+*/
+
 int  ft_signal_init(void);
 int  ft_signal_restore(void);
 void  ft_signal_sigint_c(int num_sig);
 void  ft_signal_sigint_chariot(int num_sig);
 void  ft_signal_sigint_not_env(int num_sig);
-/**
- * Action to the terminal with termcaps
- */
-int  ft_get_term_restore(struct termios *term);
+/*
+** Action to the terminal with termcaps
+*/
 
+int  ft_get_term_restore(struct termios *term);
 int  ft_cursor_move_x(int new_pos_x, char *cmd);
 int  ft_term_apply_cmd(char *cmd, int n);
 int  ft_terminal_winsize(struct winsize *terminal_size);
@@ -210,16 +221,17 @@ int  ft_mode_insertion(void);
 int  ft_mode_insertion_end(void);
 int  ft_clear_down(void);
 
-/**
- * Function for t_arr
- */
+/*
+** Function for t_arr
+*/
  void  *ft_arr_strdup(const void *s, size_t n);
  void  ft_arr_putchar(const void *s);
  int  ft_check_is_char(t_arr *arr, char c);
 
- /**
-  * Functions for read the key
-  */
+/*
+** Functions for read the key
+*/
+
 int  ft_read_ctrl_c_not_env(t_cursor *cursor, t_arr *arr);
 int  ft_read_ctrl_c_env(t_cursor *cursor, t_arr *arr);
 int  ft_read_parse(const char *buff, t_cursor *cursor, t_list_arr *list_arr);
@@ -239,9 +251,10 @@ int  ft_read_parse_home_end(const char *buff, t_cursor *cursor, t_arr *arr);
 int  ft_read_parse_ctrl_arrow(const char *buff, t_cursor *cursor, t_arr *arr);
 
 
-/**
- * Action on the cursor
- */
+/*
+** Action on the cursor
+*/
+
 int  ft_free_cursor(t_cursor *cursor);
 int  ft_cursor_left(t_cursor *cursor, t_arr *arr);
 int  ft_cursor_right(t_cursor *cursor, t_arr *arr);
@@ -344,9 +357,10 @@ int  ft_cursor_select_overide_tab(t_cursor *cursor, t_arr *arr,
 int  ft_cursor_select_overide_char(t_cursor *cursor, t_arr *arr,
   t_arr *select_line, int is_will_reverse);
 
-/**
- * Parsing section
- */
+/*
+** Parsing section
+*/
+
 t_arr *ft_parse_line(t_arr *arr);
 t_arr  *ft_parse_separate_cmd(t_arr *arr);
 int  ft_parse_init_cmd_line(t_cmd_line *line);
@@ -391,9 +405,11 @@ int  ft_parse_check_end_space(t_arr *arr);
 int  ft_parse_check_file_redirect(t_arr *arr);
 int  ft_parse_check_error(t_arr *cmd);
 int  ft_parse_pop_and_replace_and_check_error(t_arr *tab_cmds);
+
 /**
  * fork test
  */
+
 #include <fcntl.h>
 #include <sys/wait.h>
 int  ft_fork_loop(t_arr **env, t_arr *tab_cmds);
@@ -450,9 +466,10 @@ int  ft_fork_father(
 int  ft_fork_create_process(
   t_fork *st_fork, t_arr_fd *arr_fd, t_tab_tube *array_tube, t_tube *tab_tube);
 
-/**
- * builtin
- */
+/*
+** builtin
+*/
+
 int  ft_is_builtin(char *command);
 int  ft_builtin_exec(
   t_fork *st_fork, t_arr **env, int fd_stdout, int fd_stderr);
@@ -470,6 +487,14 @@ void  ft_read_line(char **env);
 t_kval  *ft_kval_init(const char *env_line);
 
 t_arr  *ft_env_init(char **env);
+int	ft_builtin_cd_set_env(
+	t_arr **envp, const char *key, const char *value, int	fd_stderr);
+char *ft_builtin_cd_absolute_path(const char *old_path, const char *new_path);
+int	ft_builtin_cd_is_existing_file(
+	const char *path_absolute, const char *new_path, int	fd_stderr);
+int	ft_builtin_cd_change_directory(
+	t_arr **env, const char *old_path, const char *new_path, int fd_stderr);
+
 
 void  ft_start(void);
 
