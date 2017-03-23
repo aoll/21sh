@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/03/23 14:39:36 by aollivie         ###   ########.fr        #
+#    Updated: 2017/03/23 15:17:47 by aollivie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,8 @@ C_TERM= ft_sup_char.c \
 C_READ= ft_read_parse.c \
 				ft_read_ctrl_c_env.c \
 				ft_read_parse_actions.c \
-				ft_read_parse_eof.c
+				ft_read_parse_eof.c \
+				ft_read_stdin.c
 
 C_CURSOR= ft_cursor_left.c \
 					ft_cursor_right.c \
@@ -111,7 +112,10 @@ C_CURSOR= ft_cursor_left.c \
 					ft_cursor_right_line_more_up.c \
 					ft_cursor_y_screen.c \
 					ft_cursor_select_overide_tab.c \
-					ft_cursor_select_overide_char.c
+					ft_cursor_select_overide_char.c \
+					ft_init_cursor_cmd.c \
+					ft_free_cursor.c \
+					ft_init_cursor_position.c
 
 C_PARSE= ft_parse_line.c \
 				 ft_parse_separate_cmd.c \

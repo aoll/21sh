@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:17:39 by aollivie          #+#    #+#             */
-/*   Updated: 2017/03/23 14:39:47 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/03/23 15:21:53 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,8 @@ void  ft_signal_sigint_not_env(int num_sig);
 /*
 ** Action to the terminal with termcaps
 */
+int	ft_get_term(struct termios *term);
+int	ft_init_terminal(void);
 
 int  ft_get_term_restore(struct termios *term);
 int  ft_cursor_move_x(int new_pos_x, char *cmd);
@@ -232,6 +234,7 @@ int  ft_clear_down(void);
 ** Functions for read the key
 */
 
+int ft_read_stdin(char **envp);
 int  ft_read_ctrl_c_not_env(t_cursor *cursor, t_arr *arr);
 int  ft_read_ctrl_c_env(t_cursor *cursor, t_arr *arr);
 int  ft_read_parse(const char *buff, t_cursor *cursor, t_list_arr *list_arr);
@@ -254,7 +257,8 @@ int  ft_read_parse_ctrl_arrow(const char *buff, t_cursor *cursor, t_arr *arr);
 /*
 ** Action on the cursor
 */
-
+int	ft_init_cursor_position(t_cursor *cursor);
+int	ft_init_cursor_cmd(t_cursor *cursor);
 int  ft_free_cursor(t_cursor *cursor);
 int  ft_cursor_left(t_cursor *cursor, t_arr *arr);
 int  ft_cursor_right(t_cursor *cursor, t_arr *arr);

@@ -1,4 +1,6 @@
 $> ls; ls leaks
+cd =========== env HOME !!!!!!!!!!!!!
+
 "ls erlmgk . 1>&2 | cat -e"  -> chelou?
 - env -i ./project.exe, up up up , enter , le cursor remonte apres le enter
 - exit , un \n de trop apres que la main soit rendu
