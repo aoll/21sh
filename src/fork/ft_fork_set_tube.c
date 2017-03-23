@@ -35,7 +35,7 @@ static int	ft_fork_set_tube_stdout(
 	return (EXIT_SUCCESS);
 }
 
-int	ft_fork_set_tube(
+int			ft_fork_set_tube(
 	t_arr_fd *arr_fd, t_tab_tube *array_tube, int i, int nb_pipe)
 {
 	if (arr_fd->arr_fd_stdin->length)

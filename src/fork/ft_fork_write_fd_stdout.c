@@ -12,10 +12,6 @@
 
 #include "project.h"
 
-/*
-**
-*/
-
 int	ft_fork_write_fd_stdout(
 	t_tab_tube *array_tube, t_tube *tab_tube, t_arr_fd *arr_fd, t_fork *st_fork)
 {
@@ -27,7 +23,7 @@ int	ft_fork_write_fd_stdout(
 		array_tube->tube_fork_stdout[0], buff, st_fork->len_stdout)))
 	{
 		if (rd < 0)
-			break;
+			break ;
 		if (st_fork->i < st_fork->nb_pipe && !st_fork->err)
 			write(tab_tube[st_fork->i].tube[1], buff, st_fork->len_stdout);
 		if (arr_fd->arr_fd_stdout->length)

@@ -12,10 +12,6 @@
 
 #include "project.h"
 
-/*
-*
-*/
-
 static int	ft_fork_read_file(t_tab_tube *array_tube, int *fd)
 {
 	int				rd;
@@ -25,7 +21,7 @@ static int	ft_fork_read_file(t_tab_tube *array_tube, int *fd)
 	while ((rd = read(*fd, buff, 1)))
 	{
 		if (rd < 0)
-		break;
+			break ;
 		write(array_tube->tube_fork_stdin[1], buff, 1);
 	}
 	ft_str_free(&buff);
@@ -68,7 +64,7 @@ static int	ft_fork_read_stdin(t_arr_fd *arr_fd, t_tab_tube *array_tube)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_fork_read_stdin_file(t_arr_fd *arr_fd, t_tab_tube *array_tube)
+int			ft_fork_read_stdin_file(t_arr_fd *arr_fd, t_tab_tube *array_tube)
 {
 	int				index;
 	int				*fd;
@@ -82,7 +78,7 @@ int	ft_fork_read_stdin_file(t_arr_fd *arr_fd, t_tab_tube *array_tube)
 		{
 			if (!arr_fd->arr_d_end_word->length)
 			{
-			 continue;
+				continue;
 			}
 			ft_fork_read_stdin(arr_fd, array_tube);
 		}

@@ -15,7 +15,7 @@
 int	ft_fork_list_fd_null(
 	char **cmd, int i, char **name_file, char **error_ptr)
 {
-	struct			stat buf;
+	struct stat		buf;
 	char			*tmp;
 
 	tmp = *cmd;

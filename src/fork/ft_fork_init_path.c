@@ -12,11 +12,7 @@
 
 #include "project.h"
 
-/*
-*
-*/
-
-static char *ft_fork_init_path_ptr(t_arr *env_copy)
+static char	*ft_fork_init_path_ptr(t_arr *env_copy)
 {
 	t_kval			*kval;
 	int				index_path;
@@ -25,8 +21,8 @@ static char *ft_fork_init_path_ptr(t_arr *env_copy)
 	index_path = ft_arr_indexof(env_copy, "PATH");
 	if (index_path > 0 & index_path < (int)env_copy->length)
 	{
-		kval = *(t_kval **)(
-			(unsigned char *)env_copy->ptr + index_path *env_copy->sizeof_elem);
+		kval = *(t_kval **)((unsigned char *)env_copy->ptr
+				+ index_path * env_copy->sizeof_elem);
 		if (!(path_ptr = ft_strdup(kval->value)))
 		{
 			path_ptr = ft_strnew(0);
@@ -39,7 +35,7 @@ static char *ft_fork_init_path_ptr(t_arr *env_copy)
 	return (path_ptr);
 }
 
-char *ft_fork_init_path(t_arr *env_copy, char **tab_cmd, int *err)
+char		*ft_fork_init_path(t_arr *env_copy, char **tab_cmd, int *err)
 {
 	char			*path_ptr;
 	char			**tab_path;

@@ -28,7 +28,7 @@ int	ft_fork(char **cmd, t_tube *tab_tube, t_arr **env, int nb_pipe)
 			&st_fork, &array_tube, &arr_fd, &cmd[st_fork.i])))
 			return (EXIT_FAILURE);
 		if ((st_fork.err = ft_fork_init_tab_cmd(&st_fork, cmd[st_fork.i])))
-			break;
+			break ;
 		if (ft_fork_check_is_builtin_exit(&st_fork, &arr_fd) == B_EXIT)
 			return (B_EXIT);
 		ft_fork_set_env_copy(&st_fork, *env, &array_tube);

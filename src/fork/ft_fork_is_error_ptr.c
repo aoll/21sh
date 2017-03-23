@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "project.h"
+
 /*
 ** check if error_ptr is set and write it on stderr and exit process
 */

@@ -60,7 +60,7 @@ static int	ft_fork_env_arr_to_tab_str_set_tab(
 	return (EXIT_SUCCESS);
 }
 
-int	ft_fork_env_arr_to_tab_str(t_arr *envp, char ***env_ptr)
+int			ft_fork_env_arr_to_tab_str(t_arr *envp, char ***env_ptr)
 {
 	char			**env;
 	int				index;

@@ -35,7 +35,7 @@ int	ft_fork_list_d_end_word(char **command, t_arr *arr_d_end_word)
 		{
 			if (!(end_word = ft_fork_name_file(&cmd, i + 1)))
 			{
-			 return (EXIT_FAILURE);
+				return (EXIT_FAILURE);
 			}
 			ft_arr_push(arr_d_end_word, end_word, -1);
 			cmd[i] = SPACE_SEPARATOR;

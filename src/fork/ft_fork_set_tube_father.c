@@ -12,10 +12,6 @@
 
 #include "project.h"
 
-/*
-*
-*/
-
 int	ft_fork_set_tube_father(
 	t_fork *st_fork, t_tab_tube *array_tube, t_tube *tab_tube, t_arr_fd *arr_fd)
 {

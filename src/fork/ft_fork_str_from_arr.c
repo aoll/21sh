@@ -16,7 +16,7 @@
 ** return a new string with the element of a t_arr
 */
 
-char *ft_fork_str_from_arr(t_arr *arr)
+char	*ft_fork_str_from_arr(t_arr *arr)
 {
 	char			*str;
 	int				index;

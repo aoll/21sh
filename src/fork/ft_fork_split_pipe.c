@@ -41,7 +41,7 @@ static int	ft_init_tab_tube(t_tube **tab_tube_ptr, int nb_pipe)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_fork_split_pipe(char *str, int nb_pipe, t_arr **env_ptr)
+int			ft_fork_split_pipe(char *str, int nb_pipe, t_arr **env_ptr)
 {
 	char			**cmds;
 	t_tube			*tab_tube;

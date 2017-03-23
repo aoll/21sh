@@ -12,10 +12,6 @@
 
 #include "project.h"
 
-/*
-*
-*/
-
 int	ft_fork_write_fd_stderr(
 	t_tab_tube *array_tube, t_arr_fd *arr_fd, t_fork *st_fork)
 {
@@ -28,7 +24,7 @@ int	ft_fork_write_fd_stderr(
 		array_tube->tube_fork_stderr[0], buff, st_fork->len_stderr)))
 	{
 		if (rd < 0)
-			break;
+			break ;
 		if (arr_fd->arr_fd_stderr->length)
 		{
 			ft_fork_write_list_fd(

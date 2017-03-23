@@ -18,7 +18,7 @@
 ** error if the file can be open
 */
 
-static int	ft_fork_list_fd_switch_right_dup(int	fd, t_arr_fd *arr_fd)
+static int	ft_fork_list_fd_switch_right_dup(int fd, t_arr_fd *arr_fd)
 {
 	int				err;
 
@@ -99,7 +99,7 @@ static int	ft_fork_list_fd_is_redirect(int c)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_fork_list_fd(char **command, t_arr_fd *arr_fd, char **error_ptr)
+int			ft_fork_list_fd(char **command, t_arr_fd *arr_fd, char **error_ptr)
 {
 	int				i;
 	int				*fd;
@@ -113,14 +113,14 @@ int	ft_fork_list_fd(char **command, t_arr_fd *arr_fd, char **error_ptr)
 		if (cmd[i] == D_LEFT_REDIRECT)
 		{
 			if ((err = ft_fork_list_fd_left_redirect(arr_fd->arr_fd_stdin)))
-			 return (EXIT_FAILURE);
+				return (EXIT_FAILURE);
 		}
 		else if (ft_fork_list_fd_is_redirect(cmd[i]))
 		{
 			if ((err = ft_fork_fd_from_name(&fd, &cmd, error_ptr, i)))
-			 return (EXIT_FAILURE);
+				return (EXIT_FAILURE);
 			if ((err = ft_fork_list_fd_switch_right(&fd, arr_fd, cmd, i)))
-			 return (EXIT_FAILURE);
+				return (EXIT_FAILURE);
 			cmd[i] = SPACE_SEPARATOR;
 		}
 	return (EXIT_SUCCESS);

@@ -86,7 +86,7 @@ static int	ft_fork_fd_switch(char *name_file, int token)
 	return (fd);
 }
 
-int *ft_fork_fd(char *name_file, int token)
+int			*ft_fork_fd(char *name_file, int token)
 {
 	int				fd;
 	int				*fd_ptr;

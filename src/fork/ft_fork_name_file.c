@@ -22,7 +22,7 @@ static int	ft_fork_name_file_set_int_different(char *s, int i, int c)
 	{
 		if (s[i] != c)
 		{
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -35,14 +35,14 @@ static int	ft_fork_name_file_set_int_equal(char *s, int i, int c)
 	{
 		if (s[i] == c)
 		{
-			break;
+			break ;
 		}
 		i++;
 	}
 	return (i);
 }
 
-char *ft_fork_name_file(char **command, int i)
+char		*ft_fork_name_file(char **command, int i)
 {
 	int				index;
 	char			*name_file;

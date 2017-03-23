@@ -28,7 +28,7 @@ int	ft_fork_write_tube(int dst_fd, int src_fd)
 	while ((rd = read(src_fd, buff, 1)))
 	{
 		if (rd < 0)
-			break;
+			break ;
 		write(dst_fd, buff, 1);
 		len++;
 	}
