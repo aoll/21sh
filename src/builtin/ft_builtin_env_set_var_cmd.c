@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_builtin_cd_is_existing_file.c                   :+:      :+:    :+:   */
+/*   ft_builtin_env_set_var_cmd.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/23 13:22:43 by aollivie          #+#    #+#             */
-/*   Updated: 2017/03/23 14:06:21 by aollivie         ###   ########.fr       */
+/*   Created: 2017/03/23 14:33:51 by aollivie          #+#    #+#             */
+/*   Updated: 2017/03/23 14:33:58 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
 
-/*
-** check if the file exis
-** 0 if succed or 1 if faillure
-*/
-
-int	ft_builtin_cd_is_existing_file(
-	const char *path_absolute, const char *new_path, int fd_stderr)
+int	ft_builtin_env_set_var_cmd(char **cmd, t_arr *env, bool *is_env_prev)
 {
-	int	err;
-
-	if ((err = access(path_absolute, F_OK)))
+	if (!(ft_strcmp(*cmd, "-i")) && *is_env_prev)
 	{
-		ft_putstr_fd("21sh: cd no file: ", fd_stderr);
-		ft_putstr_fd(new_path, fd_stderr);
-		ft_putstr_fd("\n", fd_stderr);
-		return (EXIT_FAILURE);
+		ft_builtin_env_free_kval(env);
 	}
+	else if ((ft_strcmp(*cmd, "env")))
+	{
+		return (1);
+	}
+	*is_env_prev = true;
 	return (EXIT_SUCCESS);
 }

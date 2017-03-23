@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:16:35 by aollivie          #+#    #+#             */
-/*   Updated: 2017/03/23 13:16:37 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/03/23 14:52:35 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,15 @@
 */
 
 static int	ft_builtin_setenv_set_name_value(
-	const char *s, char **name, char **value, int	fd_stderr)
+	const char *s, char **name, char **value, int fd_stderr)
 {
 	int	index;
 
 	index = ft_indexof_first_char(s, '=');
 	if (index <= 0)
-	{
 		ft_putstr_fd("21sh: setenv bad argument\n", fd_stderr);
+	if (index <= 0)
 		return (EXIT_FAILURE);
-	}
 	if (!(*name = ft_strsub(s, 0, index)))
 	{
 		ft_putstr_fd("21sh: error malloc\n", fd_stderr);
@@ -37,10 +36,10 @@ static int	ft_builtin_setenv_set_name_value(
 	if (index + 1 < (int)ft_strlen(s))
 	{
 		if (!(*value = ft_strsub(s, index + 1, ft_strlen(s) - index + 1)))
-	{
-		free(*name);
-		ft_putstr_fd("21sh: error malloc\n", fd_stderr);
-		return (EXIT_FAILURE);
+		{
+			free(*name);
+			ft_putstr_fd("21sh: error malloc\n", fd_stderr);
+			return (EXIT_FAILURE);
 		}
 	}
 	return (EXIT_SUCCESS);
@@ -132,33 +131,16 @@ static int	ft_builtin_setenv_add_or_edit_var(
 }
 
 /*
-** free name and value
-*/
-
-int	ft_free_name_value(char **name, char **value)
-{
-	if (*name)
-	{
-		free(*name);
-	}
-	if (*value)
-	{
-		free(*value);
-	}
-	return (EXIT_SUCCESS);
-}
-
-/*
 ** change or add a env variable
 ** 0 if succes
 ** 1 if error
 */
 
-int	ft_builtin_setenv(const char **tab_cmd, t_arr **env, int fd_stderr)
+int			ft_builtin_setenv(const char **tab_cmd, t_arr **env, int fd_stderr)
 {
-	int err;
-	char *name;
-	char *value;
+	int		err;
+	char	*name;
+	char	*value;
 
 	name = NULL;
 	value = NULL;

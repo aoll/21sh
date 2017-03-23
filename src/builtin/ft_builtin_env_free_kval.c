@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_builtin_cd_is_existing_file.c                   :+:      :+:    :+:   */
+/*   ft_builtin_env_free_kval.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/23 13:22:43 by aollivie          #+#    #+#             */
-/*   Updated: 2017/03/23 14:06:21 by aollivie         ###   ########.fr       */
+/*   Created: 2017/03/23 14:31:55 by aollivie          #+#    #+#             */
+/*   Updated: 2017/03/23 14:32:43 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
 
 /*
-** check if the file exis
-** 0 if succed or 1 if faillure
+** free the kvals in a t_arr
 */
 
-int	ft_builtin_cd_is_existing_file(
-	const char *path_absolute, const char *new_path, int fd_stderr)
+int	ft_builtin_env_free_kval(t_arr *env)
 {
-	int	err;
+	void	*kval;
 
-	if ((err = access(path_absolute, F_OK)))
+	while (env->length)
 	{
-		ft_putstr_fd("21sh: cd no file: ", fd_stderr);
-		ft_putstr_fd(new_path, fd_stderr);
-		ft_putstr_fd("\n", fd_stderr);
-		return (EXIT_FAILURE);
+		kval = ft_arr_pop(env, 0);
+		ft_kval_free(&kval);
 	}
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:16:27 by aollivie          #+#    #+#             */
-/*   Updated: 2017/03/23 13:16:38 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/03/23 14:51:10 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 ** if error print the adequattmessage
 ** return 0 if is correcttand 1 if != 2 (setenv including)
 */
+
 int	ft_builtin_setenv_check_argument(
-	const char ** tab_cmd, char *cmd, int	fd_stderr)
+	const char **tab_cmd, char *cmd, int fd_stderr)
 {
 	size_t	arr_len;
 

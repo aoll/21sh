@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 08:51:49 by alex              #+#    #+#             */
-/*   Updated: 2017/03/23 13:24:33 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/03/23 14:04:52 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 ** else nothing append
 */
 
-int	ft_builtin_cd_old_pwd(t_arr **envp, const char *actual_pwd, int	fd_stderr)
+int			ft_builtin_cd_old_pwd(
+	t_arr **envp, const char *actual_pwd, int fd_stderr)
 {
 	int		index_old_pwd;
 	t_kval	*kval;
@@ -42,7 +43,7 @@ int	ft_builtin_cd_old_pwd(t_arr **envp, const char *actual_pwd, int	fd_stderr)
 }
 
 static int	ft_builtin_cd_path(
-	t_arr **env, const char *path, const char *actual_pwd, int	fd_stderr)
+	t_arr **env, const char *path, const char *actual_pwd, int fd_stderr)
 {
 	int		err;
 
@@ -69,17 +70,16 @@ static int	ft_builtin_cd_path(
 ** change the currenttpwd and the old pwd
 */
 
-int	ft_builtin_cd(const char **tab_cmd, t_arr **env, int	fd_stderr)
+int			ft_builtin_cd(const char **tab_cmd, t_arr **env, int fd_stderr)
 {
 	int		len_array;
 	char	*actual_pwd;
 
 	len_array = ft_array_len((const void **)tab_cmd);
 	if (len_array > 2)
-	{
 		ft_putstr_fd("21sh: cd: too many arguments\n", fd_stderr);
+	if (len_array > 2)
 		return (EXIT_FAILURE);
-	}
 	if (!(actual_pwd = ft_strnew(1082)))
 	{
 		ft_putstr_fd("21sh: error malloc\n", fd_stderr);
@@ -92,13 +92,9 @@ int	ft_builtin_cd(const char **tab_cmd, t_arr **env, int	fd_stderr)
 		return (EXIT_FAILURE);
 	}
 	if (len_array > 1)
-	{
 		ft_builtin_cd_path(env, tab_cmd[1], actual_pwd, fd_stderr);
-	}
-	else
-	{
+	if (len_array <= 1)
 		ft_builtin_cd_path(env, HOME, actual_pwd, fd_stderr);
-	}
 	free(actual_pwd);
 	return (EXIT_SUCCESS);
 }

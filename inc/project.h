@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:17:39 by aollivie          #+#    #+#             */
-/*   Updated: 2017/03/23 13:23:44 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/03/23 14:39:47 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -494,7 +494,12 @@ int	ft_builtin_cd_is_existing_file(
 	const char *path_absolute, const char *new_path, int	fd_stderr);
 int	ft_builtin_cd_change_directory(
 	t_arr **env, const char *old_path, const char *new_path, int fd_stderr);
-
+int	ft_builtin_env_print(t_arr *env, int fd_stdout);
+int	ft_builtin_env_setenv(t_arr *env, char *var, int fd_stderr);
+int	ft_builtin_env_set_var_is_cmd(char **cmd, char ***tab_cmd);
+int	ft_builtin_env_free_kval(t_arr *env);
+int	ft_builtin_env_set_var_cmd(char **cmd, t_arr *env, bool *is_env_prev);
+int	ft_free_name_value(char **name, char **value);
 
 void  ft_start(void);
 

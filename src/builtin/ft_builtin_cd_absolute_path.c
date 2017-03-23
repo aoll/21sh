@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:21:40 by aollivie          #+#    #+#             */
-/*   Updated: 2017/03/23 13:21:50 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/03/23 14:05:46 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 ** return a string with the absolute new path
 ** NULL in case of faillure
 */
+
 char	*ft_builtin_cd_absolute_path(const char *old_path, const char *new_path)
 {
 	char	*path_tmp;
@@ -37,9 +38,7 @@ char	*ft_builtin_cd_absolute_path(const char *old_path, const char *new_path)
 	else
 	{
 		if (!(path_absolute = ft_strdup(new_path)))
-		{
 			return (NULL);
-		}
 	}
 	return (path_absolute);
 }

@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/03/23 13:23:11 by aollivie         ###   ########.fr        #
+#    Updated: 2017/03/23 14:39:36 by aollivie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -152,7 +152,13 @@ C_BUILTIN= ft_is_builtin.c \
 					 ft_builtin_cd_set_env.c \
 					 ft_builtin_cd_absolute_path.c \
 					 ft_builtin_cd_is_existing_file.c \
-					 ft_builtin_cd_change_directory.c
+					 ft_builtin_cd_change_directory.c \
+					 ft_builtin_env_print.c \
+					 ft_builtin_env_setenv.c \
+					 ft_builtin_env_set_var_is_cmd.c \
+					 ft_builtin_env_free_kval.c \
+					 ft_builtin_env_set_var_cmd.c \
+					 ft_free_name_value.c
 
 C_FORK= ft_fork_name_file.c \
 				ft_fork_env_arr_to_tab_str.c \

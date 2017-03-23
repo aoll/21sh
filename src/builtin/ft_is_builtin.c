@@ -6,14 +6,14 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:16:45 by aollivie          #+#    #+#             */
-/*   Updated: 2017/03/23 13:16:46 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/03/23 14:41:01 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
 
 /*
-** compare a string to a listtof builtin a return the index if is presenttor 0 if no
+** compare a string to a listtof builtin a return the index if is presenttor 0
 */
 
 int	ft_is_builtin(char *command)
