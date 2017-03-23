@@ -1,4 +1,6 @@
 $> ls; ls leaks
+echo a > test
+
 cd =========== env HOME !!!!!!!!!!!!!
 
 "ls erlmgk . 1>&2 | cat -e"  -> chelou?
