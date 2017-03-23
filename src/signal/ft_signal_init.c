@@ -6,44 +6,39 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 16:47:00 by alex              #+#    #+#             */
-/*   Updated: 2017/03/20 09:18:34 by alex             ###   ########.fr       */
+/*   Updated: 2017/03/23 15:05:12 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
 
-/*
-*
-*/
-
-void ft_signal_sigint_not_env(int num_sig)
+void	ft_signal_sigint_not_env(int num_sig)
 {
 	(void)num_sig;
 	g_is_ctrl_c_father++;
 	ft_putstr("\n$> ");
-	return;
+	return ;
 }
 
-void ft_signal_sigint_chariot(int num_sig)
+void	ft_signal_sigint_chariot(int num_sig)
 {
 	(void)num_sig;
 	ft_putstr("\n");
-	return;
+	return ;
 }
 
-void ft_signal_sigint_c(int num_sig)
+void	ft_signal_sigint_c(int num_sig)
 {
 	(void)num_sig;
-	// ft_putstr("\n^C\n");
 	g_is_ctrl_c_father++;
-	return;
+	return ;
 }
 
 /*
 ** init the signal
 */
 
-int	ft_signal_init(void)
+int		ft_signal_init(void)
 {
 	int				num_sig;
 

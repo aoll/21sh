@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 15:51:21 by alex              #+#    #+#             */
-/*   Updated: 2017/03/20 09:17:46 by alex             ###   ########.fr       */
+/*   Updated: 2017/03/23 15:09:04 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ int	ft_read_parse_cut(t_cursor *cursor, t_list_arr *list_arr)
 	if (!cursor->is_env)
 		return (EXIT_SUCCESS);
 	if (list_arr->select_line->length)
-		return (ft_cursor_cut(
-			cursor, list_arr->arr, list_arr->select_line, &list_arr->copy_line));
+	{
+		return (ft_cursor_cut(cursor,
+			list_arr->arr, list_arr->select_line, &list_arr->copy_line));
+	}
 	return (EXIT_FAILURE);
 }
 
@@ -37,8 +39,10 @@ int	ft_read_parse_copy(t_cursor *cursor, t_list_arr *list_arr)
 	if (!cursor->is_env)
 		return (EXIT_SUCCESS);
 	if (list_arr->select_line->length)
+	{
 		return (ft_cursor_copy_line(
 			cursor, list_arr->select_line, &list_arr->copy_line));
+	}
 	return (EXIT_FAILURE);
 }
 

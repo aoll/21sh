@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 15:56:36 by alex              #+#    #+#             */
-/*   Updated: 2017/03/11 15:45:38 by alex             ###   ########.fr       */
+/*   Updated: 2017/03/23 15:07:08 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	ft_read_parse_eof_free_arr(t_cursor *cursor, t_list_arr *list_arr)
 ** free arr history_line and inside elem and buff
 */
 
-int	ft_read_parse_eof_free(t_cursor *cursor, t_list_arr *list_arr)
+int			ft_read_parse_eof_free(t_cursor *cursor, t_list_arr *list_arr)
 {
 	int				index_history_free;
 	int				index_current_free;
@@ -69,14 +69,15 @@ int	ft_read_parse_eof_free(t_cursor *cursor, t_list_arr *list_arr)
 ** else return 1
 */
 
-int	ft_read_parse_eof(t_cursor *cursor, t_list_arr *list_arr,
+int			ft_read_parse_eof(t_cursor *cursor, t_list_arr *list_arr,
 	struct termios *term, bool option)
 {
 	char			*buff_ptr;
 
 	buff_ptr = list_arr->buff;
 	if ((buff_ptr[0] == 4 && !buff_ptr[1] && !buff_ptr[2] && !buff_ptr[3]
-		&& !buff_ptr[4] && !buff_ptr[5] && !buff_ptr[6] && !buff_ptr[7]) || option)
+		&& !buff_ptr[4] && !buff_ptr[5] && !buff_ptr[6] && !buff_ptr[7])
+		|| option)
 	{
 		// si une ligne de commande est en cours exec ligne; ft_putstr("$> ");
 		ft_read_parse_eof_free(cursor, list_arr);

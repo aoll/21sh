@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/12 17:56:22 by alex              #+#    #+#             */
-/*   Updated: 2017/03/15 17:37:59 by alex             ###   ########.fr       */
+/*   Updated: 2017/03/23 14:55:26 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_cusor_clear_down_line_init(
 ** print the down line
 */
 
-int	ft_cusor_clear_down_line(t_cursor *cursor, t_arr *arr)
+int			ft_cusor_clear_down_line(t_cursor *cursor, t_arr *arr)
 {
 	int				index;
 	int				pos_y;
