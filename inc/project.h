@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:17:39 by aollivie          #+#    #+#             */
-/*   Updated: 2017/03/23 15:21:53 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/19 16:59:01 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,14 @@ int  ft_clear_down(void);
 /*
 ** Functions for read the key
 */
-
+int	ft_init_list_arr(t_list_arr *list_arr, char **envp);
+int	ft_check_loop(
+	struct winsize *terminal_size_old, t_cursor *cursor, t_list_arr *list_arr);
+int	ft_init_init_term_arr(
+	t_list_arr *list_arr, char **envp,
+t_cursor *cursor, struct winsize *terminal_size_old);
+int	ft_read_exit(t_list_arr *list_arr, t_cursor *cursor, struct termios *term);
+int	ft_read_deselect(t_list_arr *list_arr, t_cursor *cursor);
 int ft_read_stdin(char **envp);
 int  ft_read_ctrl_c_not_env(t_cursor *cursor, t_arr *arr);
 int  ft_read_ctrl_c_env(t_cursor *cursor, t_arr *arr);
