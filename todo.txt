@@ -1,6 +1,9 @@
+ctrl-c ls -R / not good
+
 $> ls; ls leaks
 echo a > test
 
+que ce passe t'il si en cours de route le NAME term est modifie dans l'env?
 cd =========== env HOME !!!!!!!!!!!!!
 
 "ls erlmgk . 1>&2 | cat -e"  -> chelou?

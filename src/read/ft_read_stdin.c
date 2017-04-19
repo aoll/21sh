@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 15:19:13 by aollivie          #+#    #+#             */
-/*   Updated: 2017/04/19 17:05:44 by alex             ###   ########.fr       */
+/*   Updated: 2017/04/19 20:45:10 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	ft_read_init_term(struct termios *term, t_cursor *cursor)
 	return (EXIT_SUCCESS);
 }
 
+
 int ft_read_stdin(char **envp)
 {
 	t_cursor		cursor;
@@ -49,6 +50,7 @@ int ft_read_stdin(char **envp)
 	char			*line;
 	t_list_arr		list_arr;
 	int 			err;
+
 
 	if ((err = ft_read_init_term(&term, &cursor)))
 	{
@@ -77,56 +79,8 @@ int ft_read_stdin(char **envp)
 				}
 				else if ((!cursor.dquote && !cursor.quote && list_arr.buff[0] == 10 && !list_arr.buff[1] && !list_arr.buff[2] && !list_arr.buff[3] && !list_arr.buff[4] && !list_arr.buff[5] && !list_arr.buff[6] && !list_arr.buff[7]))
 				{
-					if (cursor.is_env)
-					{
-						ft_cursor_end(&cursor, list_arr.arr);
-					}
-					list_arr.tab_cmds = ft_parse_line(list_arr.arr);
-					if (list_arr.tab_cmds)
-					{
-						if (cursor.is_env)
-						{
-							ft_term_apply_cmd(cursor.mode_insertion_end, 1);
-							if (ft_get_term_restore(&term))
-								return (EXIT_FAILURE);
-						}
-						if (ft_fork_loop(&list_arr.env, list_arr.tab_cmds) == B_EXIT)
-						{
-							ft_read_exit(&list_arr, &cursor, &term);
-							return (EXIT_SUCCESS);
-						}
-						ft_putstr("\n");
-						signal(SIGINT, ft_signal_sigint_chariot);
-						signal(SIGINT, ft_signal_sigint_c);
-						if (list_arr.tab_cmds)
-						{
-							if (list_arr.tab_cmds->length)
-							{
-								ft_arr_free(ft_arr_pop(list_arr.tab_cmds, 0));
-							}
-							if (list_arr.tab_cmds->ptr)
-							{
-								free(list_arr.tab_cmds->ptr);
-							}
-							free(list_arr.tab_cmds);
-							list_arr.tab_cmds = NULL;
-						}
-						if (cursor.is_env)
-						{
-							ft_term_apply_cmd(cursor.mode_insertion, 1);
-							term.c_lflag &= ~(ICANON);
-							term.c_lflag &= ~(ECHO);
-							if (tcsetattr(0, TCSADRAIN, &term) == -1)
-							{
-								return (EXIT_FAILURE);
-							}
-						}
-					}
-					else
-					{
-						ft_putstr("\n");
-					}
-					ft_cursor_valide_line(&cursor, &list_arr.history_line, &list_arr.current_line, &list_arr.arr);
+					if ((err = ft_read_exec(&cursor, &list_arr, &term)) != -1)
+						return (err);
 				}
 				else
 				{

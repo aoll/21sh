@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/04/19 16:59:10 by alex             ###   ########.fr        #
+#    Updated: 2017/04/19 20:44:23 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,8 @@ C_READ= ft_read_parse.c \
 				ft_check_loop.c \
 				ft_init_init_term_arr.c \
 				ft_read_deselect.c \
-				ft_read_exit.c
+				ft_read_exit.c \
+				ft_read_exec.c
 
 C_CURSOR= ft_cursor_left.c \
 					ft_cursor_right.c \
