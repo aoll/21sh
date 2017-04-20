@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:17:39 by aollivie          #+#    #+#             */
-/*   Updated: 2017/04/20 14:37:58 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/20 15:02:59 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@
 
 #define TABULATION_LEN 4
 #define PADDING_BUFFER 30
-
-
 #define SPACE_SEPARATOR       -1
 #define D_LEFT_REDIRECT       -2
 #define D_RIGHT_REDIRECT      -3
@@ -44,15 +42,14 @@
 #define STDOUT_STDERR_REDIRECT -8
 #define STDERR_REDIRECT       -9
 #define D_STDERR_REDIRECT     -10
-
 #define B_ENV                   1
 #define B_SETENV                2
 #define B_UNSETENV              3
 #define B_CD                    4
 #define B_ECHO                  5
 #define B_EXIT                  6
-
 #define HOME                    "/home/alex"
+
 /*
 ** GLOBAL
 */
@@ -66,53 +63,44 @@ int g_is_ctrl_c_father;
 typedef struct s_cursor t_cursor;
 struct  s_cursor
 {
-  bool is_env;
-
-  char *prompt;
-  size_t prompt_len;
-
-  int pos_x;
-  int pos_y;
-  int index_line;
-  int y_total;
-  int y_start;
-  int index_history;
-
-  struct winsize terminal_size;
-
-  bool is_select;
-
-  bool quote;
-  bool dquote;
-
-  int prev_chariot;
-  int chariot;
-
-  char char_tmp; //inactive for the moment if for add_char_save with é à ù etc..
-
-  char *up;
-  char *down;
-  char *left;
-  char *right;
-  char *move_x;
-  char *sup_char;
-  char *clear_down;
-  char *mode_insertion;
-  char *mode_insertion_end;
-  char *mode_basic_video;
-  char *mode_reverse_video;
-  char *save_cursor_position;
-  char *restore_cursor_position;
-  char *scroll_up; // not use
-  char *scroll_down;// not use
-  char *left_corner_up;// not use
-  char *left_corner_down;
-  char *clear_current_line;
-  char *marge;
-  char *no_marge;
-
-  char *clear_all_the_screen;
-  int test;
+	bool			is_env;
+	char			*prompt;
+	size_t			prompt_len;
+	int				pos_x;
+	int				pos_y;
+	int				index_line;
+	int				y_total;
+	int				y_start;
+	int				index_history;
+	struct winsize	terminal_size;
+	bool			is_select;
+	bool			quote;
+	bool			dquote;
+	int				prev_chariot;
+	int				chariot;
+	char			char_tmp;
+	char			*up;
+	char			*down;
+	char			*left;
+	char			*right;
+	char			*move_x;
+	char			*sup_char;
+	char			*clear_down;
+	char			*mode_insertion;
+	char			*mode_insertion_end;
+	char			*mode_basic_video;
+	char			*mode_reverse_video;
+	char			*save_cursor_position;
+	char			*restore_cursor_position;
+	char			*scroll_up;
+	char			*scroll_down;
+	char			*left_corner_up;
+	char			*left_corner_down;
+	char			*clear_current_line;
+	char			*marge;
+	char			*no_marge;
+	char			*clear_all_the_screen;
+	int			test;
 };
 
 typedef struct s_cmd_line t_cmd_line;
@@ -508,7 +496,7 @@ int  ft_builtin_exit(char **tab_cmd, t_arr **env);
 int  ft_builtin_setenv_check_argument(
   const char ** tab_cmd, char *cmd, int fd_stderr);
 
-void  ft_read_line(char **env);
+int	ft_read_line(char **env);
 
 t_kval  *ft_kval_init(const char *env_line);
 

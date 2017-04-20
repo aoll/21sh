@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 09:26:47 by alex              #+#    #+#             */
-/*   Updated: 2017/04/20 14:33:59 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/20 14:45:54 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,9 +156,6 @@ int	ft_term_apply_cmd(char *cmd, int n)
 	return (EXIT_SUCCESS);
 }
 
-/*
-** move the cursor to a new position x
-*/
 
 int	ft_cursor_move_x(int new_pos_x, char *cmd)
 {
@@ -170,15 +167,9 @@ int	ft_cursor_move_x(int new_pos_x, char *cmd)
 	return (EXIT_SUCCESS);
 }
 
-void ft_loop(char **env)
-{
-	ft_read_stdin(env);
-	return;
-}
-
-void ft_read_line(char **env)
+int ft_read_line(char **env)
 {
 	ft_signal_init();
-	ft_loop(env);
-	return;
+	return (ft_read_stdin(env));
+
 }
