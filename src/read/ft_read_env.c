@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 10:44:17 by aollivie          #+#    #+#             */
-/*   Updated: 2017/04/20 12:04:21 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/20 12:40:22 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ static int	ft_read_env_switch(
 	return (-2);
 }
 
-int	ft_read_env(t_cursor *cursor, t_list_arr *list_arr, struct termios *term)
+int			ft_read_env(
+	t_cursor *cursor, t_list_arr *list_arr, struct termios *term)
 {
 	int rd;
 	int err;

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 20:44:54 by alex              #+#    #+#             */
-/*   Updated: 2017/04/20 11:57:57 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/20 12:41:47 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ static int	ft_read_exec_cmds(
 	return (EXIT_SUCCESS);
 }
 
-int	ft_read_exec(t_cursor *cursor, t_list_arr *list_arr, struct termios *term)
+int			ft_read_exec(
+	t_cursor *cursor, t_list_arr *list_arr, struct termios *term)
 {
-  int err;
+	int err;
 
 	if (cursor->is_env)
 		ft_cursor_end(cursor, list_arr->arr);

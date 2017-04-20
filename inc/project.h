@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:17:39 by aollivie          #+#    #+#             */
-/*   Updated: 2017/04/20 12:09:34 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/20 14:37:58 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,13 +226,10 @@ int  ft_move_down(void);
 int  ft_move_left(void);
 int  ft_move_right(void);
 int  ft_move_x(int new_pos_x);
-int  ft_cursor_save_position(void);
-int  ft_cursor_restore_position(void);
 int  ft_mode_reverse_video(void);
 int  ft_mode_basic_video(void);
 int  ft_mode_insertion(void);
 int  ft_mode_insertion_end(void);
-int  ft_clear_down(void);
 
 /*
 ** Function for t_arr
@@ -529,7 +526,5 @@ int	ft_builtin_env_set_var_is_cmd(char **cmd, char ***tab_cmd);
 int	ft_builtin_env_free_kval(t_arr *env);
 int	ft_builtin_env_set_var_cmd(char **cmd, t_arr *env, bool *is_env_prev);
 int	ft_free_name_value(char **name, char **value);
-
-void  ft_start(void);
 
 # endif

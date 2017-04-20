@@ -6,40 +6,12 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 09:26:47 by alex              #+#    #+#             */
-/*   Updated: 2017/03/23 15:20:23 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/20 14:33:59 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
-
 #include <signal.h>
-
-/*
-** print the key
-*/
-
-int  ft_print_key(char *buff)
-{
-	ft_putchar('\n');
-	ft_putnbr(buff[0]);
-	ft_putchar('\n');
-	ft_putnbr(buff[1]);
-	ft_putchar('\n');
-	ft_putnbr(buff[2]);
-	ft_putchar('\n');
-	ft_putnbr(buff[3]);
-	ft_putchar('\n');
-	ft_putnbr(buff[4]);
-	ft_putchar('\n');
-	ft_putnbr(buff[5]);
-	ft_putchar('\n');
-	ft_putnbr(buff[6]);
-	ft_putchar('\n');
-	ft_putnbr(buff[7]);
-	ft_putchar('\n');
-	ft_bzero(buff, 8);
-	return (EXIT_SUCCESS);
-}
 
 int	ft_get_term(struct termios *term)
 {
@@ -198,12 +170,8 @@ int	ft_cursor_move_x(int new_pos_x, char *cmd)
 	return (EXIT_SUCCESS);
 }
 
-
-
-
 void ft_loop(char **env)
 {
-
 	ft_read_stdin(env);
 	return;
 }

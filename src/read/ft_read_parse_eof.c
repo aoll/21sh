@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 15:56:36 by alex              #+#    #+#             */
-/*   Updated: 2017/03/23 15:07:08 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/20 12:42:20 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int			ft_read_parse_eof(t_cursor *cursor, t_list_arr *list_arr,
 		&& !buff_ptr[4] && !buff_ptr[5] && !buff_ptr[6] && !buff_ptr[7])
 		|| option)
 	{
-		// si une ligne de commande est en cours exec ligne; ft_putstr("$> ");
 		ft_read_parse_eof_free(cursor, list_arr);
 		ft_putchar('\n');
 		if (cursor->is_env)

@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/04/20 10:49:55 by aollivie         ###   ########.fr        #
+#    Updated: 2017/04/20 14:40:06 by aollivie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,14 +46,11 @@ C_TERM= ft_sup_char.c \
   			ft_move_left.c \
   			ft_move_right.c \
   			ft_move_x.c \
-  			ft_cursor_save_position.c \
-  			ft_cursor_restore_position.c \
   			ft_mode_reverse_video.c \
   			ft_mode_basic_video.c \
   			ft_mode_insertion.c \
-  			ft_clear_down.c \
-				my_putchar.c \
-				ft_terminal_winsize.c
+			my_putchar.c \
+			ft_terminal_winsize.c
 
 C_READ= ft_read_parse.c \
 				ft_read_ctrl_c_env.c \
@@ -69,7 +66,9 @@ C_READ= ft_read_parse.c \
 				ft_read_get.c \
 				ft_read_end.c \
 				ft_read_no_env.c \
-				ft_read_env.c
+				ft_read_env.c \
+				ft_read_line.c \
+				ft_env_init.c
 
 C_CURSOR= ft_cursor_left.c \
 					ft_cursor_right.c \
@@ -152,7 +151,8 @@ C_PARSE= ft_parse_line.c \
 				 ft_parse_check_end_space.c \
 				 ft_parse_check_file_redirect.c \
 				 ft_parse_check_error.c \
-				 ft_parse_pop_and_replace_and_check_error.c
+				 ft_parse_pop_and_replace_and_check_error.c \
+				 ft_check_is_char.c
 
 C_BUILTIN= ft_is_builtin.c \
 					 ft_builtin_exec.c \
@@ -225,7 +225,7 @@ C_FORK= ft_fork_name_file.c \
 C_SIGNAL= ft_signal_init.c \
 					ft_signal_restore.c
 
-ST_SRC= ft_start.c ft_env_init.c ft_read_line.c ft_check_is_char.c
+ST_SRC=
 
 
 UC_SRC = main_test.c

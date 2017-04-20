@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 15:19:13 by aollivie          #+#    #+#             */
-/*   Updated: 2017/04/20 12:26:06 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/20 12:43:12 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	ft_read_stdin_loop(
 	return (-1);
 }
 
-int ft_read_stdin(char **envp)
+int			ft_read_stdin(char **envp)
 {
 	t_read r;
 
