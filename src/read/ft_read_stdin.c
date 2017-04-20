@@ -6,13 +6,13 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 15:19:13 by aollivie          #+#    #+#             */
-/*   Updated: 2017/04/20 11:33:31 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/20 12:26:06 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
 
-int	ft_read_init_term(struct termios *term, t_cursor *cursor)
+static int	ft_read_init_term(struct termios *term, t_cursor *cursor)
 {
 	int err;
 
@@ -38,39 +38,43 @@ int	ft_read_init_term(struct termios *term, t_cursor *cursor)
 	return (EXIT_SUCCESS);
 }
 
+static int	ft_read_stdin_loop(
+	t_cursor *cursor, t_list_arr *list_arr, struct termios *term, char **line)
+{
+	int err;
+
+	if (cursor->is_env)
+	{
+		if ((err = ft_read_env(cursor, list_arr, term)) == -1)
+			return (-1);
+		if (err != -2)
+			return (err);
+	}
+	else
+	{
+		if ((err = ft_read_no_env(
+			cursor, list_arr, line, term)) == -1)
+			return (-1);
+		if (err == EXIT_SUCCESS)
+			return (EXIT_SUCCESS);
+	}
+	return (-1);
+}
 
 int ft_read_stdin(char **envp)
 {
-	t_cursor		cursor;
-	struct			winsize terminal_size_old;
-	struct termios	term;
-	char			*line;
-	t_list_arr		list_arr;
-	int 			err;
+	t_read r;
 
-	if ((err = ft_read_init_term(&term, &cursor)))
+	if ((r.err = ft_read_init_term(&r.term, &r.cursor)))
 		return (EXIT_FAILURE);
-	ft_init_init_term_arr(&list_arr, envp, &cursor, &terminal_size_old);
+	ft_init_init_term_arr(&r.list_arr, envp, &r.cursor, &r.terminal_size_old);
 	while (1 == 1)
 	{
-		if (ft_check_loop(&terminal_size_old, &cursor, &list_arr))
+		if (ft_check_loop(&r.terminal_size_old, &r.cursor, &r.list_arr))
 			continue;
-		if (cursor.is_env)
-		{
-			if ((err = ft_read_env(&cursor, &list_arr, &term)) == -1)
-				continue;
-			if (err != -2)
-				return (err);
-		}
-		else
-		{
-			if ((err = ft_read_no_env(&cursor, &list_arr, &line, &term)) == -1)
-				continue;
-			else if (err == EXIT_SUCCESS)
-			{
-				return (EXIT_SUCCESS);
-			}
-		}
+		if ((r.err = ft_read_stdin_loop(
+			&r.cursor, &r.list_arr, &r.term, &r.line)) != -1)
+			return (r.err);
 	}
 	return (EXIT_SUCCESS);
 }

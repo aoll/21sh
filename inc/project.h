@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:17:39 by aollivie          #+#    #+#             */
-/*   Updated: 2017/04/20 10:49:42 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/20 12:09:34 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,54 +134,65 @@ struct s_tube
 typedef struct s_fork t_fork;
 struct s_fork
 {
-  int i;
-  int nb_pipe;
-  int err;
-  int len_stdout;
-  int len_stderr;
-  int index_builtin;
-  char *error_ptr;
-  t_arr *env_copy;
-  char **tab_cmd;
-  char **envp;
-  int status;
-  t_arr **env;
-  int stdin_copy;
-  int stdout_copy;
-  int stderr_copy;
+	int i;
+	int nb_pipe;
+	int err;
+	int len_stdout;
+	int len_stderr;
+	int index_builtin;
+	char *error_ptr;
+	t_arr *env_copy;
+	char **tab_cmd;
+	char **envp;
+	int status;
+	t_arr **env;
+	int stdin_copy;
+	int stdout_copy;
+	int stderr_copy;
 
 };
 
 typedef struct s_arr_fd t_arr_fd;
 struct s_arr_fd
 {
-  t_arr *arr_fd_stdout;
-  t_arr *arr_fd_stderr;
-  t_arr *arr_fd_stdin;
-  t_arr *arr_d_end_word;
+	t_arr *arr_fd_stdout;
+	t_arr *arr_fd_stderr;
+	t_arr *arr_fd_stdin;
+	t_arr *arr_d_end_word;
 };
 
 typedef struct s_tab_tube t_tab_tube;
 struct s_tab_tube
 {
-  int tube_fork_stdout_tmp[2];
-  int tube_fork_stderr_tmp[2];
-  int tube_fork_stdout[2];
-  int tube_fork_stderr[2];
-  int tube_fork_stdin[2];
+	int tube_fork_stdout_tmp[2];
+	int tube_fork_stderr_tmp[2];
+	int tube_fork_stdout[2];
+	int tube_fork_stderr[2];
+	int tube_fork_stdin[2];
 };
 
 typedef struct s_list_arr t_list_arr;
 struct s_list_arr
 {
-  t_arr *arr;
-  char *buff;
-  t_arr *copy_line;
-  t_arr *env;
-  t_arr *current_line;
-  t_arr *history_line;
-  t_arr *select_line;
-  t_arr *tab_cmds;
+	t_arr *arr;
+	char *buff;
+	t_arr *copy_line;
+	t_arr *env;
+	t_arr *current_line;
+	t_arr *history_line;
+	t_arr *select_line;
+	t_arr *tab_cmds;
+};
+
+typedef struct s_read t_read;
+struct	s_read
+{
+	t_cursor		cursor;
+	struct			winsize terminal_size_old;
+	struct termios	term;
+	char			*line;
+	t_list_arr		list_arr;
+	int 			err;
 };
 
 /*
