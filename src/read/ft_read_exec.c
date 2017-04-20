@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 20:44:54 by alex              #+#    #+#             */
-/*   Updated: 2017/04/19 21:10:20 by alex             ###   ########.fr       */
+/*   Updated: 2017/04/20 11:57:57 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ int	ft_read_exec(t_cursor *cursor, t_list_arr *list_arr, struct termios *term)
 		ft_putstr("\n");
 	}
 	ft_cursor_valide_line(cursor, &list_arr->history_line,
-    &list_arr->current_line, &list_arr->arr);
+		&list_arr->current_line, &list_arr->arr);
 	return (-1);
 }

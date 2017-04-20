@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 15:19:13 by aollivie          #+#    #+#             */
-/*   Updated: 2017/04/19 20:45:10 by alex             ###   ########.fr       */
+/*   Updated: 2017/04/20 11:33:31 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,115 +42,33 @@ int	ft_read_init_term(struct termios *term, t_cursor *cursor)
 int ft_read_stdin(char **envp)
 {
 	t_cursor		cursor;
-
-	int					rd;
-
 	struct			winsize terminal_size_old;
 	struct termios	term;
 	char			*line;
 	t_list_arr		list_arr;
 	int 			err;
 
-
 	if ((err = ft_read_init_term(&term, &cursor)))
-	{
 		return (EXIT_FAILURE);
-	}
 	ft_init_init_term_arr(&list_arr, envp, &cursor, &terminal_size_old);
 	while (1 == 1)
 	{
 		if (ft_check_loop(&terminal_size_old, &cursor, &list_arr))
-		{
 			continue;
-		}
 		if (cursor.is_env)
 		{
-			if ((rd = read(0, list_arr.buff, 8)) > 0)
-			{
-				cursor.is_select = false;
-				if (!(ft_read_parse((const char *)list_arr.buff, &cursor, &list_arr)))
-				{
-					ft_read_deselect(&list_arr, &cursor);
-					continue;
-				}
-				else if (!(ft_read_parse_eof(&cursor, &list_arr, &term, false)))
-				{
-					return (EXIT_SUCCESS);
-				}
-				else if ((!cursor.dquote && !cursor.quote && list_arr.buff[0] == 10 && !list_arr.buff[1] && !list_arr.buff[2] && !list_arr.buff[3] && !list_arr.buff[4] && !list_arr.buff[5] && !list_arr.buff[6] && !list_arr.buff[7]))
-				{
-					if ((err = ft_read_exec(&cursor, &list_arr, &term)) != -1)
-						return (err);
-				}
-				else
-				{
-					ft_cursor_add_char(&cursor, list_arr.arr, list_arr.buff);
-				}
-				if (!cursor.is_select && list_arr.select_line->length && list_arr.arr->length)
-				{
-					ft_cursor_deselect_all(&cursor, list_arr.arr, list_arr.select_line);
-				}
-				ft_bzero(list_arr.buff, 8);
-			}
+			if ((err = ft_read_env(&cursor, &list_arr, &term)) == -1)
+				continue;
+			if (err != -2)
+				return (err);
 		}
 		else
 		{
-			line = NULL;
-			if (g_is_ctrl_c_father)
-			{
-				g_is_ctrl_c_father = 0;
-				ft_str_free(&line);
+			if ((err = ft_read_no_env(&cursor, &list_arr, &line, &term)) == -1)
 				continue;
-			}
-			if (get_next_line(0, &line))
+			else if (err == EXIT_SUCCESS)
 			{
-				while (list_arr.arr->length)
-				{
-					free(ft_arr_pop(list_arr.arr, 0));
-				}
-				ft_arr_str(list_arr.arr, line);
-				if (line)
-				{
-					free(line);
-					line = NULL;
-				}
-				list_arr.tab_cmds = ft_parse_line(list_arr.arr);
-				if (list_arr.tab_cmds)
-				{
-					ft_fork_loop(&list_arr.env, list_arr.tab_cmds);
-				}
-				if (list_arr.tab_cmds)
-				{
-					if (list_arr.tab_cmds->length)
-					{
-						ft_arr_free(ft_arr_pop(list_arr.tab_cmds, 0));
-					}
-					if (list_arr.tab_cmds->ptr)
-					{
-						free(list_arr.tab_cmds->ptr);
-					}
-					free(list_arr.tab_cmds);
-					list_arr.tab_cmds = NULL;
-				}
-				ft_putstr(cursor.prompt);
-			}
-			else
-			{
-				if (line)
-				{
-					free(line);
-					line = NULL;
-				}
-				if (!(ft_read_parse_eof(&cursor, &list_arr, &term, true)))
-				{
-					return (EXIT_SUCCESS);
-				}
 				return (EXIT_SUCCESS);
-			}
-			if (line)
-			{
-				free(line);
-				line = NULL;
 			}
 		}
 	}

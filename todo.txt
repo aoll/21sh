@@ -1,3 +1,6 @@
+not exit if no env
+
+
 ctrl-c ls -R / not good
 
 $> ls; ls leaks
