@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 08:51:49 by alex              #+#    #+#             */
-/*   Updated: 2017/03/23 14:04:52 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/21 15:21:58 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** else nothing append
 */
 
-int			ft_builtin_cd_old_pwd(
+static int			ft_builtin_cd_old_pwd(
 	t_arr **envp, const char *actual_pwd, int fd_stderr)
 {
 	int		index_old_pwd;

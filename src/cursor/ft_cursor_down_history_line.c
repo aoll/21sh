@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 08:44:53 by alex              #+#    #+#             */
-/*   Updated: 2017/03/15 15:56:16 by alex             ###   ########.fr       */
+/*   Updated: 2017/04/21 15:25:37 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** set the cursor to the begin of the line, increment history line
 */
 
-int			ft_cursor_down_history_line_set_cursor(t_cursor *cursor)
+static int	ft_cursor_down_history_line_set_cursor(t_cursor *cursor)
 {
 	cursor->index_line = 0;
 	cursor->pos_x = cursor->prompt_len;

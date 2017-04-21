@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:16:41 by aollivie          #+#    #+#             */
-/*   Updated: 2017/03/23 14:52:00 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/21 15:24:16 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** pop and free the kval
 */
 
-int	ft_builtin_unsetenv_pop_key(t_arr **env, int index)
+static int	ft_builtin_unsetenv_pop_key(t_arr **env, int index)
 {
 	t_kval *kval;
 
@@ -41,7 +41,8 @@ int	ft_builtin_unsetenv_pop_key(t_arr **env, int index)
 ** and the env stay the same
 */
 
-int	ft_builtin_unsetenv(const char **tab_cmd, t_arr **env, int fd_stderr)
+int			ft_builtin_unsetenv(
+	const char **tab_cmd, t_arr **env, int fd_stderr)
 {
 	int		err;
 	int		index;

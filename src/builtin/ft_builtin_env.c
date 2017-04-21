@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 09:05:25 by alex              #+#    #+#             */
-/*   Updated: 2017/03/23 14:35:13 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/21 15:23:44 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** free and print the env
 */
 
-int	ft_builtin_env_print_free(char ***tab_cmd, t_arr *env, int fd_stdout)
+static int	ft_builtin_env_print_free(char ***tab_cmd, t_arr *env, int fd_stdout)
 {
 	free(*tab_cmd);
 	*tab_cmd = NULL;
@@ -24,7 +24,7 @@ int	ft_builtin_env_print_free(char ***tab_cmd, t_arr *env, int fd_stdout)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_builtin_env_print_init(char ***cmd, char ***tab_cmd, bool *is_env_prev)
+static int	ft_builtin_env_print_init(char ***cmd, char ***tab_cmd, bool *is_env_prev)
 {
 	if (!tab_cmd)
 		return (EXIT_FAILURE);
@@ -37,7 +37,7 @@ int	ft_builtin_env_print_init(char ***cmd, char ***tab_cmd, bool *is_env_prev)
 ** setta listtoff var in the env before execute a commande or print the new env
 */
 
-int	ft_builtin_env_set_var(
+static int	ft_builtin_env_set_var(
 	char ***tab_cmd, t_arr *env, int fd_stdout, int fd_stderr)
 {
 	char	**cmd;
@@ -72,7 +72,8 @@ int	ft_builtin_env_set_var(
 ** env -u "VAR_NAME" unsetenv the var
 */
 
-int	ft_builtin_env(char ***tab_cmd, t_arr **env, int fd_stdout, int fd_stderr)
+int			ft_builtin_env(
+	char ***tab_cmd, t_arr **env, int fd_stdout, int fd_stderr)
 {
 	char	**cmd;
 
