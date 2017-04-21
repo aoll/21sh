@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:16:45 by aollivie          #+#    #+#             */
-/*   Updated: 2017/03/23 14:41:01 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/21 19:15:12 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	ft_is_builtin(char *command)
 		return (B_UNSETENV);
 	else if (!ft_strcmp("cd", command))
 		return (B_CD);
-	else if (!ft_strcmp("echo", command))
-		return (B_ECHO);
+	// else if (!ft_strcmp("echoChouette", command))
+	// 	return (B_ECHO);
 	else if (!ft_strcmp("exit", command))
 		return (B_EXIT);
 	return (0);

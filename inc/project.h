@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:17:39 by aollivie          #+#    #+#             */
-/*   Updated: 2017/04/20 15:02:59 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/21 19:29:28 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -491,7 +491,7 @@ int  ft_builtin_env(char ***tab_cmd, t_arr **env, int fd_stdout, int fd_stderr);
 int  ft_builtin_setenv(const char **tab_cmd, t_arr **env, int fd_stderr);
 int  ft_builtin_unsetenv(const char **tab_cmd, t_arr **env, int fd_stderr);
 int  ft_builtin_cd(const char **tab_cmd, t_arr **env, int fd_stderr);
-int  ft_builtin_echo(const char **tab_cmd, t_arr **env);
+int  ft_builtin_echo(char **tab_cmd, t_arr **env);
 int  ft_builtin_exit(char **tab_cmd, t_arr **env);
 int  ft_builtin_setenv_check_argument(
   const char ** tab_cmd, char *cmd, int fd_stderr);
