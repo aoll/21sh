@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/04/20 14:40:06 by aollivie         ###   ########.fr        #
+#    Updated: 2017/04/21 13:49:14 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ C_TERM= ft_sup_char.c \
   			ft_mode_basic_video.c \
   			ft_mode_insertion.c \
 			my_putchar.c \
-			ft_terminal_winsize.c
+			ft_terminal_winsize.c \
+			ft_terminal_tool.c
 
 C_READ= ft_read_parse.c \
 				ft_read_ctrl_c_env.c \
