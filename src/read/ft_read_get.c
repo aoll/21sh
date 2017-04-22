@@ -6,13 +6,13 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 09:45:16 by aollivie          #+#    #+#             */
-/*   Updated: 2017/04/22 11:55:21 by alex             ###   ########.fr       */
+/*   Updated: 2017/04/22 12:19:49 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
 
-static ft_arr_add(t_list_arr *list_arr, char **line)
+static bool ft_arr_add(t_list_arr *list_arr, char **line)
 {
 	ft_arr_str(list_arr->arr, *line);
 	if (*line)
