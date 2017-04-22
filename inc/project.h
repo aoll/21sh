@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:17:39 by aollivie          #+#    #+#             */
-/*   Updated: 2017/04/21 19:29:28 by alex             ###   ########.fr       */
+/*   Updated: 2017/04/22 11:46:55 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,8 @@ int	ft_read_no_env(
 	t_cursor *cursor, t_list_arr *list_arr, char **line, struct termios *term);
 int	ft_read_end(
 	t_cursor *cursor, t_list_arr *list_arr, struct termios *term, char **line);
-int	ft_read_get(t_cursor *cursor, t_list_arr *list_arr, char **line);
+int	ft_read_get(
+	t_cursor *cursor, t_list_arr *list_arr, char **line, bool quote);
 int	ft_read_exec(t_cursor *cursor, t_list_arr *list_arr, struct termios *term);
 int	ft_init_list_arr(t_list_arr *list_arr, char **envp);
 int	ft_check_loop(

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 15:56:36 by alex              #+#    #+#             */
-/*   Updated: 2017/04/20 12:42:20 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/22 11:23:00 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int			ft_read_parse_eof(t_cursor *cursor, t_list_arr *list_arr,
 	char			*buff_ptr;
 
 	buff_ptr = list_arr->buff;
+	if (list_arr->arr->length)
+		return (EXIT_FAILURE);
 	if ((buff_ptr[0] == 4 && !buff_ptr[1] && !buff_ptr[2] && !buff_ptr[3]
 		&& !buff_ptr[4] && !buff_ptr[5] && !buff_ptr[6] && !buff_ptr[7])
 		|| option)
