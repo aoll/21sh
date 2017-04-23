@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 10:35:40 by aollivie          #+#    #+#             */
-/*   Updated: 2017/04/22 12:02:10 by alex             ###   ########.fr       */
+/*   Updated: 2017/04/23 19:20:13 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int			ft_read_no_env(
 	}
 	if (get_next_line(0, line))
 	{
+		if (!ft_strcmp(*line, "exit"))
+			return (ft_read_end(cursor, list_arr, term, line));
 		ft_read_get(cursor, list_arr, line, ft_check_dquote_quote(*line));
 	}
 	else if (!*line)

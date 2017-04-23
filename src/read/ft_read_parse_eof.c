@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 15:56:36 by alex              #+#    #+#             */
-/*   Updated: 2017/04/22 11:23:00 by alex             ###   ########.fr       */
+/*   Updated: 2017/04/23 19:22:11 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ int			ft_read_parse_eof(t_cursor *cursor, t_list_arr *list_arr,
 		|| option)
 	{
 		ft_read_parse_eof_free(cursor, list_arr);
-		ft_putchar('\n');
 		if (cursor->is_env)
 		{
+			ft_putchar('\n');
 			ft_term_apply_cmd(cursor->mode_insertion_end, 1);
 			if (ft_get_term_restore(term))
 				return (EXIT_SUCCESS);
