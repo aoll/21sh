@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 14:13:55 by alex              #+#    #+#             */
-/*   Updated: 2017/02/09 14:17:16 by alex             ###   ########.fr       */
+/*   Updated: 2017/04/23 19:35:58 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	ft_fork_loop(t_arr **env, t_arr *tab_cmds)
 		ft_str_free(&cmd_str);
 		if (i_return == B_EXIT)
 		{
+			ft_putstr("\n");
 			return (i_return);
 		}
 		index++;

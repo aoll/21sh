@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:16:21 by aollivie          #+#    #+#             */
-/*   Updated: 2017/03/23 14:37:17 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/04/23 19:34:54 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,5 @@
 
 int	ft_builtin_exit(char **tab_cmd, t_arr **env)
 {
-	ft_putstr("EXIT\n");
 	return (EXIT_SUCCESS);
 }
