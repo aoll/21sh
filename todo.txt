@@ -1,15 +1,14 @@
-not exit if no env
+
+try echo "o'k" (le shell a limpression que la quote est ouverte alors quelle est enferme entre deux dquote)
 
 
-ctrl-c ls -R / not good
+pour lancer une commande rajout de de / avant la commade!!!!!!
 
 $> ls; ls leaks
-echo a > test
 
 que ce passe t'il si en cours de route le NAME term est modifie dans l'env?
 cd =========== env HOME !!!!!!!!!!!!!
 
-"ls erlmgk . 1>&2 | cat -e"  -> chelou?
 - env -i ./project.exe, up up up , enter , le cursor remonte apres le enter
 - exit , un \n de trop apres que la main soit rendu
 - " and ' for env -i ./project
@@ -19,13 +18,12 @@ zsh: aucun fichier ou dossier de ce type: toto
 - wc <&3 || wc <&tutu
 zsh: 3: mauvais descripteur de fichier
 - wc <&-
-- 			EXIT !!!!!!!!!!!!!!!!!!!!!!! -----------
 - rajouter un check '&' doit avoir soit a sa droite soit a sa gauche un '>'
 
-- // si une ligne de commande est en cours exec ligne; ft_putstr("$> "); pour le ctrl-D
+
 - avant execve restaurer toutes les modes termcaps a la normal et cela fonctionnera
 - echo ls | ./project.exe
 - rm: remove write-protected regular empty file 'a'? $> y
 - rajouter une limite a la ligne ex: 10 char max
-- pour les Z intempestifs lors d'un resize look ft_add_char (resize que si nouvel touche tape)
+
 -- mutli commande , certaines pas efface apres resize
