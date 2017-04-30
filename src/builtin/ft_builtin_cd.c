@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 08:51:49 by alex              #+#    #+#             */
-/*   Updated: 2017/04/21 15:21:58 by alex             ###   ########.fr       */
+/*   Updated: 2017/04/30 18:34:23 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int			ft_builtin_cd_old_pwd(
 	index_old_pwd = ft_arr_indexof(env, "OLDPWD");
 	if (index_old_pwd == -1 || index_old_pwd >= (int)env->length)
 	{
-		ft_putstr_fd("21sh: OLDPWD nottpresent: -\n", fd_stderr);
+		ft_putstr_fd("21sh: OLDPWD not present: -\n", fd_stderr);
 		return (EXIT_FAILURE);
 	}
 	kval = *(t_kval **)(
@@ -65,6 +65,26 @@ static int	ft_builtin_cd_path(
 	return (EXIT_SUCCESS);
 }
 
+static int	ft_builtin_cd_home(t_arr **envp, const char *actual_pwd, int fd_stderr)
+{
+	int		index_home;
+	t_kval	*kval;
+	int		err;
+	t_arr	*env;
+
+	env = *envp;
+	index_home = ft_arr_indexof(env, "HOME");
+	if (index_home == -1 || index_home >= (int)env->length)
+	{
+		ft_putstr_fd("21sh: HOME not present: cd\n", fd_stderr);
+		return (EXIT_FAILURE);
+	}
+	kval = *(t_kval **)(
+		(unsigned char *)env->ptr + index_home * env->sizeof_elem);
+	ft_builtin_cd_path(envp, kval->value, actual_pwd, fd_stderr);
+	return (EXIT_SUCCESS);
+}
+
 /*
 ** change the currenttpath
 ** change the currenttpwd and the old pwd
@@ -94,7 +114,7 @@ int			ft_builtin_cd(const char **tab_cmd, t_arr **env, int fd_stderr)
 	if (len_array > 1)
 		ft_builtin_cd_path(env, tab_cmd[1], actual_pwd, fd_stderr);
 	if (len_array <= 1)
-		ft_builtin_cd_path(env, HOME, actual_pwd, fd_stderr);
+		ft_builtin_cd_home(env, actual_pwd, fd_stderr);
 	free(actual_pwd);
 	return (EXIT_SUCCESS);
 }

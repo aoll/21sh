@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:17:39 by aollivie          #+#    #+#             */
-/*   Updated: 2017/04/22 11:46:55 by alex             ###   ########.fr       */
+/*   Updated: 2017/04/30 18:34:49 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@
 #define B_CD                    4
 #define B_ECHO                  5
 #define B_EXIT                  6
-#define HOME                    "/home/alex"
 
 /*
 ** GLOBAL
