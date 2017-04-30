@@ -1,17 +1,18 @@
 
 try echo "o'k" (le shell a limpression que la quote est ouverte alors quelle est enferme entre deux dquote)
 
+env -i cd
+21sh: command not found: cd
+alors que c'est un bultin
 
 pour lancer une commande rajout de de / avant la commade!!!!!!
 
 $> ls; ls leaks
 
-que ce passe t'il si en cours de route le NAME term est modifie dans l'env?
-cd =========== env HOME !!!!!!!!!!!!!
 
 - env -i ./project.exe, up up up , enter , le cursor remonte apres le enter
-- exit , un \n de trop apres que la main soit rendu
-- " and ' for env -i ./project
+
+
 
 - wc < tutu < toto (toto n'etant pas existant)
 zsh: aucun fichier ou dossier de ce type: toto
@@ -22,7 +23,7 @@ zsh: 3: mauvais descripteur de fichier
 
 
 - avant execve restaurer toutes les modes termcaps a la normal et cela fonctionnera
-- echo ls | ./project.exe
+
 - rm: remove write-protected regular empty file 'a'? $> y
 - rajouter une limite a la ligne ex: 10 char max
 
