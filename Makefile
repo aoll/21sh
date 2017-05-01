@@ -6,7 +6,7 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/04/21 13:49:14 by alex             ###   ########.fr        #
+#    Updated: 2017/05/01 12:05:42 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -125,7 +125,8 @@ C_CURSOR= ft_cursor_left.c \
 					ft_cursor_select_overide_char.c \
 					ft_init_cursor_cmd.c \
 					ft_free_cursor.c \
-					ft_init_cursor_position.c
+					ft_init_cursor_position.c \
+					ft_arr_del_char_check_quote_is_inside.c
 
 C_PARSE= ft_parse_line.c \
 				 ft_parse_separate_cmd.c \

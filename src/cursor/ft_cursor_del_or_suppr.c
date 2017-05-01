@@ -6,16 +6,17 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/12 18:39:15 by alex              #+#    #+#             */
-/*   Updated: 2017/03/15 15:53:38 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/01 12:01:50 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
 
-static int	ft_cursor_arr_pop_elem_set_cursor(
-	t_cursor *cursor, t_arr *arr, char *s_line)
+static void	ft_cursor_arr_pop_elem_set_cursor(
+	t_cursor *cursor, t_arr *arr, char *s_line, int index_line_tmp)
 {
-	if (*s_line == '"')
+	if (*s_line == '"'
+	&& !ft_arr_del_char_check_quote_is_inside(cursor, arr, '\'', index_line_tmp))
 		if (!cursor->quote)
 		{
 			cursor->dquote = !cursor->dquote;
@@ -25,7 +26,8 @@ static int	ft_cursor_arr_pop_elem_set_cursor(
 				cursor->quote = true;
 			}
 		}
-	if (*s_line == '\'')
+	if (*s_line == '\''
+	&& !ft_arr_del_char_check_quote_is_inside(cursor, arr, '"', index_line_tmp))
 		if (!cursor->dquote)
 		{
 			cursor->quote = !cursor->quote;
@@ -35,7 +37,6 @@ static int	ft_cursor_arr_pop_elem_set_cursor(
 				cursor->dquote = true;
 			}
 		}
-	return (EXIT_SUCCESS);
 }
 
 static int	ft_cursor_arr_pop_elem_tabulation(
@@ -69,7 +70,7 @@ static int	ft_cursor_arr_pop_elem(t_arr *arr, t_cursor *cursor,
 
 	s_line = *(char **)((unsigned char *)arr->ptr + arr->sizeof_elem *
 	(index_line_tmp - is_prev_char));
-	ft_cursor_arr_pop_elem_set_cursor(cursor, arr, s_line);
+	ft_cursor_arr_pop_elem_set_cursor(cursor, arr, s_line, index_line_tmp);
 	if (s_line[4] == 1)
 	{
 		ft_cursor_arr_pop_elem_tabulation(arr, index_line_tmp, is_prev_char);

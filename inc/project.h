@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:17:39 by aollivie          #+#    #+#             */
-/*   Updated: 2017/04/30 18:34:49 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/01 12:05:22 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,6 +267,8 @@ int  ft_read_parse_ctrl_arrow(const char *buff, t_cursor *cursor, t_arr *arr);
 /*
 ** Action on the cursor
 */
+int	ft_arr_del_char_check_quote_is_inside(
+	t_cursor *cursor, t_arr *arr, char c_quote, int index_line_tmp);
 int	ft_init_cursor_position(t_cursor *cursor);
 int	ft_init_cursor_cmd(t_cursor *cursor);
 int  ft_free_cursor(t_cursor *cursor);
