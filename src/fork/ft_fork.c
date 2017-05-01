@@ -6,13 +6,24 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:46:59 by alex              #+#    #+#             */
-/*   Updated: 2017/02/10 10:58:10 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/01 13:04:45 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
 
-int	ft_fork(char **cmd, t_tube *tab_tube, t_arr **env, int nb_pipe)
+static int	ft_fork_is_exit(
+	t_fork *st_fork, t_arr *env, t_tab_tube *array_tube, t_arr_fd *arr_fd)
+{
+	if (ft_fork_check_is_builtin_exit(st_fork, arr_fd) == B_EXIT)
+		return (B_EXIT);
+	ft_fork_set_env_copy(st_fork, env, array_tube);
+	if (ft_fork_check_is_builtin_exit(st_fork, arr_fd) == B_EXIT)//waza
+		return (B_EXIT);
+	return (EXIT_SUCCESS);
+}
+
+int					ft_fork(char **cmd, t_tube *tab_tube, t_arr **env, int nb_pipe)
 {
 	t_tab_tube		array_tube;
 	t_arr_fd		arr_fd;
@@ -29,9 +40,8 @@ int	ft_fork(char **cmd, t_tube *tab_tube, t_arr **env, int nb_pipe)
 			return (EXIT_FAILURE);
 		if ((st_fork.err = ft_fork_init_tab_cmd(&st_fork, cmd[st_fork.i])))
 			break ;
-		if (ft_fork_check_is_builtin_exit(&st_fork, &arr_fd) == B_EXIT)
+		if (ft_fork_is_exit(&st_fork, *env, &array_tube, &arr_fd) == B_EXIT)
 			return (B_EXIT);
-		ft_fork_set_env_copy(&st_fork, *env, &array_tube);
 		if ((st_fork.err = ft_fork_create_process(
 			&st_fork, &arr_fd, &array_tube, tab_tube)))
 			return (EXIT_FAILURE);
