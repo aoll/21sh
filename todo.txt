@@ -1,21 +1,8 @@
-
-try echo "o'k" (le shell a limpression que la quote est ouverte alors quelle est enferme entre deux dquote)
-
-env -i cd
-21sh: command not found: cd
-alors que c'est un bultin
-
-pour lancer une commande rajout de de / avant la commade!!!!!!
-
 $> ls; ls leaks
 
 
 - env -i ./project.exe, up up up , enter , le cursor remonte apres le enter
 
-
-
-- wc < tutu < toto (toto n'etant pas existant)
-zsh: aucun fichier ou dossier de ce type: toto
 - wc <&3 || wc <&tutu
 zsh: 3: mauvais descripteur de fichier
 - wc <&-
@@ -26,5 +13,3 @@ zsh: 3: mauvais descripteur de fichier
 
 - rm: remove write-protected regular empty file 'a'? $> y
 - rajouter une limite a la ligne ex: 10 char max
-
--- mutli commande , certaines pas efface apres resize
