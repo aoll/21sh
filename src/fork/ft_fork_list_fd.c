@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 11:51:20 by alex              #+#    #+#             */
-/*   Updated: 2017/03/15 21:42:51 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/16 16:08:39 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@
 static int	ft_fork_list_fd_switch_right_dup(int fd, t_arr_fd *arr_fd)
 {
 	int				err;
+	int				*f = malloc(sizeof(int));
 
-	if (fd == -2)
+	if (fd == -1)
 	{
 		if ((err = ft_fork_list_fd_dup(
 			arr_fd->arr_fd_stdout, (const t_arr *)arr_fd->arr_fd_stderr)))
@@ -30,7 +31,7 @@ static int	ft_fork_list_fd_switch_right_dup(int fd, t_arr_fd *arr_fd)
 			return (EXIT_FAILURE);
 		}
 	}
-	else if (fd == -1)
+	else if (fd == -2)
 	{
 		if ((err = ft_fork_list_fd_dup(
 			arr_fd->arr_fd_stderr, (const t_arr *)arr_fd->arr_fd_stdout)))
