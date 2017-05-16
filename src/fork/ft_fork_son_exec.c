@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:49:12 by alex              #+#    #+#             */
-/*   Updated: 2017/05/05 15:19:11 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/16 08:26:31 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_fork_son_exec(char *path_cmd, char **tab_cmd, char **envp)
 	{
 		if (tab_cmd[i][0] == '"' || tab_cmd[i][0] == '\'')
 		{
-			tmp = ft_strsub(tab_cmd[i], 1, ft_strlen(tab_cmd[i]) - 2 );
+			tmp = ft_strsub(tab_cmd[i], 1, ft_strlen(tab_cmd[i]) - 2);
 			free(tab_cmd[i]);
 			tab_cmd[i] = ft_strdup(tmp);
 			free(tmp);

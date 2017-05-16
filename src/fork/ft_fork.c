@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:46:59 by alex              #+#    #+#             */
-/*   Updated: 2017/05/01 13:04:45 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/16 08:28:06 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static int	ft_fork_is_exit(
 	if (ft_fork_check_is_builtin_exit(st_fork, arr_fd) == B_EXIT)
 		return (B_EXIT);
 	ft_fork_set_env_copy(st_fork, env, array_tube);
-	if (ft_fork_check_is_builtin_exit(st_fork, arr_fd) == B_EXIT)//waza
+	if (ft_fork_check_is_builtin_exit(st_fork, arr_fd) == B_EXIT)
 		return (B_EXIT);
 	return (EXIT_SUCCESS);
 }
 
-int					ft_fork(char **cmd, t_tube *tab_tube, t_arr **env, int nb_pipe)
+int			ft_fork(char **cmd, t_tube *tab_tube, t_arr **env, int nb_pipe)
 {
 	t_tab_tube		array_tube;
 	t_arr_fd		arr_fd;
