@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 16:24:59 by alex              #+#    #+#             */
-/*   Updated: 2017/05/05 15:12:40 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/16 08:52:30 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char				*ft_fork_init_path(t_arr *env_copy, char **tab_cmd, int *err)
 		ft_str_free(&path_tmp);
 		path_tmp = ft_strjoin(tab_path[index], "/");
 		path_tmp = ft_strjoin_free(&path_tmp, *tab_cmd);
+		*err = 0;
 		index++;
 	}
 	ft_array_free(&tab_path);
