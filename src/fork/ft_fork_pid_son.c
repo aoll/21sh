@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 11:38:59 by alex              #+#    #+#             */
-/*   Updated: 2017/04/21 19:24:10 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/17 18:55:30 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	ft_fork_pid_son(t_fork *st_fork, t_arr_fd *arr_fd, t_tab_tube *array_tube)
 
 	re = 0;
 	ft_signal_restore();
+	// ft_putstr("\nson hy\n");
 	ft_fork_set_tube(arr_fd, array_tube, st_fork->i, st_fork->nb_pipe);
 	ft_fork_is_error_ptr(&st_fork->error_ptr, arr_fd);
 	path_tmp = NULL;
@@ -38,6 +39,7 @@ int	ft_fork_pid_son(t_fork *st_fork, t_arr_fd *arr_fd, t_tab_tube *array_tube)
 	if (re != B_ECHO)
 		ft_fork_command_not_found(
 			&st_fork->tab_cmd, st_fork->index_builtin, arr_fd);
+	// ft_putstr("\nson by\n");
 	exit(EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }

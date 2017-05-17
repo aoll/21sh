@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:49:35 by alex              #+#    #+#             */
-/*   Updated: 2017/04/21 13:50:28 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/17 19:49:25 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@ int	ft_get_term(struct termios *term)
 {
 	char			*name_terminal;
 
-	if (!(name_terminal = getenv("TERM"))) //retour le nom du terminal
+	if (!(name_terminal = getenv("TERM")) || ft_strcmp(name_terminal, "xterm-256color")) //retour le nom du terminal
 		return (EXIT_FAILURE);
+	fprintf(stderr, "%s\n","term found" );
 	if (tgetent(NULL, name_terminal) != 1) //check if name_terminal exist and if
 		return (EXIT_FAILURE);   //the terminfo databbase could be found
+	fprintf(stderr, "%s\n","tgetent found" );
 	if (tcgetattr(0, term) == -1) // rempli la struct termios avec les
-		return (EXIT_FAILURE);  // possibilités du terminal
+		return (-2);  // possibilités du terminal
+	fprintf(stderr, "%s\n","tcgetattr found" );
 	return (EXIT_SUCCESS);
 }
 

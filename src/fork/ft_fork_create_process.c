@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 12:46:21 by alex              #+#    #+#             */
-/*   Updated: 2017/02/09 18:29:20 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/17 18:26:19 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	ft_fork_create_process(
 	if (!pid)
 	{
 		ft_fork_pid_son(st_fork, arr_fd, array_tube);
+		exit(0);
 	}
 	else if (pid)
 	{

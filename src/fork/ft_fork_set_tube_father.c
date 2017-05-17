@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 12:24:58 by alex              #+#    #+#             */
-/*   Updated: 2017/05/17 17:39:58 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/17 18:56:25 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,12 @@ int	ft_fork_set_tube_father(
 	//si il y a eu -2
 
 
-
+	// ft_putstr("\nhello\n");
 
 	close(array_tube->tube_fork_stderr[1]);
 	close(array_tube->tube_fork_stdout[1]);
 	ft_fork_write_fd_stdout(array_tube, tab_tube, arr_fd, st_fork);
 	ft_fork_write_fd_stderr(array_tube, arr_fd, st_fork);
+	// ft_putstr("\nby father\n");
 	return (EXIT_SUCCESS);
 }
