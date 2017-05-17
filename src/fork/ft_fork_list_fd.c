@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 11:51:20 by alex              #+#    #+#             */
-/*   Updated: 2017/05/17 11:21:05 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/17 15:03:16 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	ft_fork_list_fd_switch_right_dup(int fd, t_arr_fd *arr_fd)
 
 	if (fd == -1)
 	{
-		*f = -2;
+		*f = -1;
 		ft_arr_push(arr_fd->arr_fd_stderr, f, -1);
 		if ((err = ft_fork_list_fd_dup(
 			arr_fd->arr_fd_stdout, (const t_arr *)arr_fd->arr_fd_stderr)))
@@ -35,7 +35,7 @@ static int	ft_fork_list_fd_switch_right_dup(int fd, t_arr_fd *arr_fd)
 	}
 	else if (fd == -2)
 	{
-		*f = -1;
+		*f = -2;
 		ft_arr_push(arr_fd->arr_fd_stdout, f, -1);
 		if ((err = ft_fork_list_fd_dup(
 			arr_fd->arr_fd_stderr, (const t_arr *)arr_fd->arr_fd_stdout)))
