@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 17:04:43 by alex              #+#    #+#             */
-/*   Updated: 2017/03/17 12:10:13 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/17 15:15:55 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** dup the fd from a arr to a other
 */
 
-int	ft_fork_list_fd_dup(t_arr *dst, const t_arr *src)
+int	ft_fork_list_fd_dup(t_arr *dst, t_arr *src)
 {
 	int				*fd_tmp;
 	int				*fd_dup;
@@ -31,8 +31,10 @@ int	ft_fork_list_fd_dup(t_arr *dst, const t_arr *src)
 		{
 			return (EXIT_FAILURE);
 		}
+
 		*fd_dup = *fd_tmp;
 		ft_arr_push(dst, fd_dup, -1);
+		free(ft_arr_pop(src, index));
 		index++;
 	}
 	return (EXIT_SUCCESS);

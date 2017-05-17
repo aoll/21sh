@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 12:24:58 by alex              #+#    #+#             */
-/*   Updated: 2017/05/17 15:03:52 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/17 17:39:58 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static int	ft_fork_set_tube_father_is_fd(t_arr *arr, int fd_target)
 	while (i < (int)arr->length)
 	{
 		fd = *(int **)((unsigned char *)arr->ptr + i * arr->sizeof_elem);
-		ft_putnbr(*fd);
+		// ft_putstr("\nfather");
+		// ft_putnbr(*fd);
 		if (*fd == fd_target)
 		{
 			// free(ft_arr_pop(arr, i));
@@ -43,23 +44,39 @@ int	ft_fork_set_tube_father(
 	close(array_tube->tube_fork_stderr_tmp[1]);
 
 	// ft_fork_set_tube_father_is_fd(arr_fd->arr_fd_stdout, -1);
-	ft_putstr("\nstderr:");
-	ft_fork_set_tube_father_is_fd(arr_fd->arr_fd_stderr, -1);
+	// ft_putstr("\nstderr:");ft_putnbr(arr_fd->arr_fd_stderr->length);ft_putstr("\n");
+	//
+	// ft_fork_set_tube_father_is_fd(arr_fd->arr_fd_stderr, 10);
+	//
+	// ft_putstr("\nstdout:");ft_putnbr(arr_fd->arr_fd_stdout->length);ft_putstr("\n");
+	//
+	// ft_fork_set_tube_father_is_fd(arr_fd->arr_fd_stdout, 10);
 
-	// st_fork->len_stderr = ft_fork_write_tube(
-	// 	array_tube->tube_fork_stderr[1], array_tube->tube_fork_stdout_tmp[0]);
+	st_fork->len_stderr = 0;
+	st_fork->len_stdout = 0;
+	// if (ft_fork_set_tube_father_is_fd(arr_fd->arr_fd_stderr, 1))
+
+	// if (arr_fd->arr_fd_stdout->length)
+	if (ft_fork_set_tube_father_is_fd(arr_fd->arr_fd_stdout, -2))
+		st_fork->len_stderr += ft_fork_write_tube(
+			array_tube->tube_fork_stderr[1], array_tube->tube_fork_stdout_tmp[0]);
 
 
-	st_fork->len_stdout = ft_fork_write_tube(
+	st_fork->len_stdout += ft_fork_write_tube(
 		array_tube->tube_fork_stdout[1], array_tube->tube_fork_stdout_tmp[0]);
 
 	//si il y eu -2
-	ft_putstr("\nstdout:");
+	// ft_putstr("\nstdout:");
+	// if (ft_fork_set_tube_father_is_fd(arr_fd->arr_fd_stderr, -1))
+	// 	st_fork->len_stdout += ft_fork_write_tube(
+	// 		array_tube->tube_fork_stdout[1], array_tube->tube_fork_stderr_tmp[0]);
+
+	// if (arr_fd->arr_fd_stderr->length)
 	if (ft_fork_set_tube_father_is_fd(arr_fd->arr_fd_stderr, -1))
 		st_fork->len_stdout += ft_fork_write_tube(
 			array_tube->tube_fork_stdout[1], array_tube->tube_fork_stderr_tmp[0]);
 
-	st_fork->len_stderr = ft_fork_write_tube(
+	st_fork->len_stderr += ft_fork_write_tube(
 		array_tube->tube_fork_stderr[1], array_tube->tube_fork_stderr_tmp[0]);
 
 	//si il y a eu -2

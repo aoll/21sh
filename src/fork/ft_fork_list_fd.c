@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 11:51:20 by alex              #+#    #+#             */
-/*   Updated: 2017/05/17 15:03:16 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/17 17:29:31 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,26 @@ static int	ft_fork_list_fd_switch_right_dup(int fd, t_arr_fd *arr_fd)
 	int				err;
 	int				*f = malloc(sizeof(int));
 
-	if (fd == -1)
+	ft_putnbr(fd);
+	if (fd == -2)
 	{
-		*f = -1;
-		ft_arr_push(arr_fd->arr_fd_stderr, f, -1);
+		// *f = 2;
+		// ft_arr_push(arr_fd->arr_fd_stdout, f, -1);
 		if ((err = ft_fork_list_fd_dup(
-			arr_fd->arr_fd_stdout, (const t_arr *)arr_fd->arr_fd_stderr)))
+			arr_fd->arr_fd_stdout, arr_fd->arr_fd_stderr)))
 		{
 			return (EXIT_FAILURE);
 		}
 	}
-	else if (fd == -2)
+	else if (fd == -1)
 	{
-		*f = -2;
-		ft_arr_push(arr_fd->arr_fd_stdout, f, -1);
+		// *f = -1;
+		// ft_arr_push(arr_fd->arr_fd_stderr, f, -1);
+		// f = malloc(sizeof(int));
+		// *f = 2;
+		// ft_arr_push(arr_fd->arr_fd_stderr, f, -1);
 		if ((err = ft_fork_list_fd_dup(
-			arr_fd->arr_fd_stderr, (const t_arr *)arr_fd->arr_fd_stdout)))
+			arr_fd->arr_fd_stderr, arr_fd->arr_fd_stdout)))
 		{
 			return (EXIT_FAILURE);
 		}
@@ -62,6 +66,7 @@ static int	ft_fork_list_fd_switch_right_redirect(
 	}
 	else if (c == S_RIGHT_REDIRECT || c == D_RIGHT_REDIRECT)
 	{
+		// ft_putstr("\nc is redirect");ft_putnbr(**fd);ft_putstr("\n");
 		ft_arr_push(arr_fd->arr_fd_stdout, *fd, -1);
 	}
 	else if (c == S_LEFT_REDIRECT)
@@ -83,14 +88,14 @@ static int	ft_fork_list_fd_switch_right(
 	int				*fd;
 
 	fd = *fd_ptr;
-	if (*fd == -2 || *fd == -1)
-	{
-		if ((err = ft_fork_list_fd_switch_right_dup(*fd, arr_fd)))
-		{
-			return (EXIT_FAILURE);
-		}
-		return (EXIT_SUCCESS);
-	}
+	// if (*fd == -2 || *fd == -1)
+	// {
+	// 	if ((err = ft_fork_list_fd_switch_right_dup(*fd, arr_fd)))
+	// 	{
+	// 		return (EXIT_FAILURE);
+	// 	}
+	// 	return (EXIT_SUCCESS);
+	// }
 	if ((err = ft_fork_list_fd_switch_right_redirect(cmd[i], fd_ptr, arr_fd)))
 	{
 		return (EXIT_FAILURE);
@@ -104,6 +109,7 @@ static int	ft_fork_list_fd_is_redirect(int c)
 		|| c == STDOUT_STDERR_REDIRECT || c == STDERR_REDIRECT
 		|| c == D_STDERR_REDIRECT || c == S_LEFT_REDIRECT)
 	{
+		// ft_putstr("\nc:");ft_putnbr(c);ft_putstr("\n");
 		return (1);
 	}
 	return (EXIT_SUCCESS);
@@ -119,6 +125,8 @@ int			ft_fork_list_fd(char **command, t_arr_fd *arr_fd, char **error_ptr)
 	i = -1;
 	cmd = *command;
 	ft_arr_close_arr_fd(arr_fd);
+	// ft_putstr("\n-----------------\nlen stdout");ft_putnbr(arr_fd->arr_fd_stdout->length);ft_putstr("\n");
+	// ft_putstr("\nlen stderr");ft_putnbr(arr_fd->arr_fd_stderr->length);ft_putstr("\n");
 	while (cmd[++i])
 		if (cmd[i] == D_LEFT_REDIRECT)
 		{
@@ -133,5 +141,8 @@ int			ft_fork_list_fd(char **command, t_arr_fd *arr_fd, char **error_ptr)
 				return (EXIT_FAILURE);
 			cmd[i] = SPACE_SEPARATOR;
 		}
+	// ft_putstr("\nlen stdout end");ft_putnbr(arr_fd->arr_fd_stdout->length);ft_putstr("\n");
+	// ft_putstr("\nlen stderr end");ft_putnbr(arr_fd->arr_fd_stderr->length);ft_putstr("\n");
+	// ft_putstr("\n-------------------------\n");
 	return (EXIT_SUCCESS);
 }
