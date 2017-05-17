@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 12:24:58 by alex              #+#    #+#             */
-/*   Updated: 2017/05/17 10:45:55 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/17 12:19:16 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,22 @@ int	ft_fork_set_tube_father(
 {
 	close(array_tube->tube_fork_stdout_tmp[1]);
 	close(array_tube->tube_fork_stderr_tmp[1]);
+
 	st_fork->len_stdout = ft_fork_write_tube(
 		array_tube->tube_fork_stdout[1], array_tube->tube_fork_stdout_tmp[0]);
 
-//si il y eu -1
+	//si il y eu -1
 	st_fork->len_stdout += ft_fork_write_tube(
 		array_tube->tube_fork_stdout[1], array_tube->tube_fork_stderr_tmp[0]);
 
 	st_fork->len_stderr = ft_fork_write_tube(
 		array_tube->tube_fork_stderr[1], array_tube->tube_fork_stderr_tmp[0]);
 
-//si il y a eu -2
-	st_fork->len_stderr += ft_fork_write_tube(
+	//si il y a eu -2
+	st_fork->len_stderr = ft_fork_write_tube(
 		array_tube->tube_fork_stderr[1], array_tube->tube_fork_stdout_tmp[0]);
+
+
 
 	close(array_tube->tube_fork_stderr[1]);
 	close(array_tube->tube_fork_stdout[1]);
