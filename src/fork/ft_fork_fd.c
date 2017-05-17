@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 11:40:46 by alex              #+#    #+#             */
-/*   Updated: 2017/05/16 13:54:03 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/17 11:22:16 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,5 @@ int			*ft_fork_fd(char *name_file, int token)
 		fd *= -1;
 	}
 	*fd_ptr = fd;
-	ft_putstr("\nfd:");
-	ft_putnbr(fd);
-	ft_putstr("\n");
 	return (fd_ptr);
 }

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 17:39:39 by alex              #+#    #+#             */
-/*   Updated: 2017/02/09 08:12:39 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/17 11:10:16 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int			ft_fork_read_stdin_file(t_arr_fd *arr_fd, t_tab_tube *array_tube)
 			}
 			ft_fork_read_stdin(arr_fd, array_tube);
 		}
-		else
+		else if (*fd != 0 && *fd != -1 && *fd != -2)
 		{
 			ft_fork_read_file(array_tube, fd);
 		}

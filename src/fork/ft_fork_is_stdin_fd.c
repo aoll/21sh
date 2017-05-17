@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 11:48:10 by alex              #+#    #+#             */
-/*   Updated: 2017/03/15 21:41:01 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/17 11:13:10 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 int	ft_fork_is_stdin_fd(
 	t_fork *st_fork, t_tube *tab_tube, t_arr_fd *arr_fd, t_tab_tube *array_tube)
 {
+	//fork !!!!!!!!!!!!!!!!!!!!
 	if (arr_fd->arr_fd_stdin->length)
 	{
 		ft_fork_write_tube_stdin(
