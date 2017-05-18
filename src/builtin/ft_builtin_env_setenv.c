@@ -24,12 +24,12 @@ int	ft_builtin_env_setenv(t_arr *env, char *var, int fd_stderr)
 
 	if (!(cmd = ft_strjoin("setenv ", var)))
 	{
-		ft_putstr_fd("21sh: error malloc\n", STDERR);
+		ft_putstr_fd("mysh: error malloc\n", STDERR);
 		return (EXIT_FAILURE);
 	}
 	if (!(tab_cmd = ft_strsplit(cmd, ' ')))
 	{
-		ft_putstr_fd("21sh: error malloc\n", STDERR);
+		ft_putstr_fd("mysh: error malloc\n", STDERR);
 		return (EXIT_FAILURE);
 	}
 	ft_builtin_setenv((const char **)tab_cmd, &env, fd_stderr);

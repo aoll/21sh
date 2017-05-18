@@ -26,18 +26,18 @@ static int	ft_parse_check_file_redirect_check_end_line(
 			(unsigned char *)arr->ptr + (line->index + 1) * arr->sizeof_elem);
 		if (*line->s_line == D_LEFT_REDIRECT)
 		{
-			ft_putstr_fd("\n21sh: parse error near `>'", STDERR);
+			ft_putstr_fd("\nmysh: parse error near `>'", STDERR);
 			return (EXIT_FAILURE);
 		}
 		if (ft_isspace(*line->s_line))
 		{
-			ft_putstr_fd("\n21sh: parse error near `&'", STDERR);
+			ft_putstr_fd("\nmysh: parse error near `&'", STDERR);
 			return (EXIT_FAILURE);
 		}
 	}
 	else
 	{
-		ft_putstr_fd("\n21sh: parse error near `\\n'", STDERR);
+		ft_putstr_fd("\nmysh: parse error near `\\n'", STDERR);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
@@ -61,7 +61,7 @@ static int	ft_parse_check_file_redirect_switch(t_cmd_line *line, t_arr *arr)
 				+ (line->index - 1) * arr->sizeof_elem);
 				if (ft_isspace(*line->s_line))
 				{
-					ft_putstr_fd("\n21sh: parse error near `&'", STDERR);
+					ft_putstr_fd("\nmysh: parse error near `&'", STDERR);
 					return (EXIT_FAILURE);
 				}
 			}

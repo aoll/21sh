@@ -23,22 +23,22 @@ static int	ft_parse_check_error_redirect(t_arr *cmd)
 
 	if ((err = ft_parse_check_double(cmd, S_LEFT_REDIRECT)))
 	{
-		ft_putstr_fd("\n21sh: parse error near `<'", STDERR);
+		ft_putstr_fd("\nmysh: parse error near `<'", STDERR);
 		return (EXIT_FAILURE);
 	}
 	else if ((err = ft_parse_check_double(cmd, D_LEFT_REDIRECT)))
 	{
-		ft_putstr_fd("\n21sh: parse error near `<'", STDERR);
+		ft_putstr_fd("\nmysh: parse error near `<'", STDERR);
 		return (EXIT_FAILURE);
 	}
 	else if ((err = ft_parse_check_double(cmd, S_RIGHT_REDIRECT)))
 	{
-		ft_putstr_fd("\n21sh: parse error near `>'", STDERR);
+		ft_putstr_fd("\nmysh: parse error near `>'", STDERR);
 		return (EXIT_FAILURE);
 	}
 	else if ((err = ft_parse_check_double(cmd, D_RIGHT_REDIRECT)))
 	{
-		ft_putstr_fd("\n21sh: parse error near `>'", STDERR);
+		ft_putstr_fd("\nmysh: parse error near `>'", STDERR);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
@@ -50,17 +50,17 @@ static int	ft_parse_check_error_stdout_sdterr_pipe(t_arr *cmd)
 
 	if ((err = ft_parse_check_double(cmd, STDOUT_STDERR_REDIRECT)))
 	{
-		ft_putstr_fd("\n21sh: parse error near `>'", STDERR);
+		ft_putstr_fd("\nmysh: parse error near `>'", STDERR);
 		return (EXIT_FAILURE);
 	}
 	else if ((err = ft_parse_check_double(cmd, PIPE)))
 	{
-		ft_putstr_fd("\n21sh: parse error near `|'", STDERR);
+		ft_putstr_fd("\nmysh: parse error near `|'", STDERR);
 		return (EXIT_FAILURE);
 	}
 	else if ((err = ft_parse_check_end_space(cmd)))
 	{
-		ft_putstr_fd("\n21sh: parse error near `\\n'", STDERR);
+		ft_putstr_fd("\nmysh: parse error near `\\n'", STDERR);
 		return (EXIT_FAILURE);
 	}
 	else if ((err = ft_parse_check_file_redirect(cmd)))

@@ -29,7 +29,7 @@ static int	ft_builtin_cd_old_pwd(
 	index_old_pwd = ft_arr_indexof(env, "OLDPWD");
 	if (index_old_pwd == -1 || index_old_pwd >= (int)env->length)
 	{
-		ft_putstr_fd("21sh: OLDPWD not present: -\n", fd_stderr);
+		ft_putstr_fd("mysh: OLDPWD not present: -\n", fd_stderr);
 		return (EXIT_FAILURE);
 	}
 	kval = *(t_kval **)(
@@ -77,7 +77,7 @@ static int	ft_builtin_cd_home(
 	index_home = ft_arr_indexof(env, "HOME");
 	if (index_home == -1 || index_home >= (int)env->length)
 	{
-		ft_putstr_fd("21sh: HOME not present: cd\n", fd_stderr);
+		ft_putstr_fd("mysh: HOME not present: cd\n", fd_stderr);
 		return (EXIT_FAILURE);
 	}
 	kval = *(t_kval **)(
@@ -98,18 +98,18 @@ int			ft_builtin_cd(const char **tab_cmd, t_arr **env, int fd_stderr)
 
 	len_array = ft_array_len((const void **)tab_cmd);
 	if (len_array > 2)
-		ft_putstr_fd("21sh: cd: too many arguments\n", fd_stderr);
+		ft_putstr_fd("mysh: cd: too many arguments\n", fd_stderr);
 	if (len_array > 2)
 		return (EXIT_FAILURE);
 	if (!(actual_pwd = ft_strnew(1082)))
 	{
-		ft_putstr_fd("21sh: error malloc\n", fd_stderr);
+		ft_putstr_fd("mysh: error malloc\n", fd_stderr);
 		return (EXIT_FAILURE);
 	}
 	if (!getcwd(actual_pwd, 1082))
 	{
 		free(actual_pwd);
-		ft_putstr_fd("21sh: error malloc\n", fd_stderr);
+		ft_putstr_fd("mysh: error malloc\n", fd_stderr);
 		return (EXIT_FAILURE);
 	}
 	if (len_array > 1)

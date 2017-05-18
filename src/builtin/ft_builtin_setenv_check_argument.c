@@ -26,14 +26,14 @@ int	ft_builtin_setenv_check_argument(
 	arr_len = ft_array_len((const void **)tab_cmd);
 	if (!arr_len || arr_len < 2)
 	{
-		ft_putstr_fd("21sh: ", fd_stderr);
+		ft_putstr_fd("mysh: ", fd_stderr);
 		ft_putstr_fd(cmd, fd_stderr);
 		ft_putstr_fd(" to few arguments\n", fd_stderr);
 		return (EXIT_FAILURE);
 	}
 	else if (arr_len > 2)
 	{
-		ft_putstr_fd("21sh: ", fd_stderr);
+		ft_putstr_fd("mysh: ", fd_stderr);
 		ft_putstr_fd(cmd, fd_stderr);
 		ft_putstr_fd(" too many arguments\n", fd_stderr);
 		return (EXIT_FAILURE);

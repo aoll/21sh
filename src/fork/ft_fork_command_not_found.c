@@ -21,7 +21,7 @@ int	ft_fork_command_not_found(
 {
 	if (!index_builtin)
 	{
-		ft_putstr_fd("21sh: command not found: ", STDERR);
+		ft_putstr_fd("mysh: command not found: ", STDERR);
 		ft_putstr_fd(**tab_cmd, STDERR);
 		ft_putstr_fd("\n", STDERR);
 		ft_array_free(tab_cmd);

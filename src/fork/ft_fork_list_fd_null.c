@@ -25,11 +25,11 @@ int	ft_fork_list_fd_null(
 		free(*error_ptr);
 	if (S_ISDIR(buf.st_mode))
 	{
-		*error_ptr = ft_strdup("21sh: it is a directory: ");
+		*error_ptr = ft_strdup("mysh: it is a directory: ");
 	}
 	else
 	{
-		*error_ptr = ft_strdup("21sh: permission denied: ");
+		*error_ptr = ft_strdup("mysh: permission denied: ");
 	}
 	*error_ptr = ft_strjoin_free(error_ptr, *name_file);
 	*error_ptr = ft_strjoin_free(error_ptr, "\n");

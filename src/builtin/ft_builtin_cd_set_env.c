@@ -44,7 +44,7 @@ int			ft_builtin_cd_set_env(
 	{
 		if (!(kval = ft_kval_new()))
 		{
-			ft_putstr_fd("21sh: error malloc\n", fd_stderr);
+			ft_putstr_fd("mysh: error malloc\n", fd_stderr);
 			return (EXIT_FAILURE);
 		}
 		ft_builtin_cd_set_kval(kval, env, key, value);

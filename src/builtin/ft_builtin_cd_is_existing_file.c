@@ -24,7 +24,7 @@ int	ft_builtin_cd_is_existing_file(
 
 	if ((err = access(path_absolute, F_OK)))
 	{
-		ft_putstr_fd("21sh: cd no file: ", fd_stderr);
+		ft_putstr_fd("mysh: cd no file: ", fd_stderr);
 		ft_putstr_fd(new_path, fd_stderr);
 		ft_putstr_fd("\n", fd_stderr);
 		return (EXIT_FAILURE);

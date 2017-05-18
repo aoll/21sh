@@ -25,12 +25,12 @@ static int	ft_builtin_setenv_set_name_value(
 
 	index = ft_indexof_first_char(s, '=');
 	if (index <= 0)
-		ft_putstr_fd("21sh: setenv bad argument\n", fd_stderr);
+		ft_putstr_fd("mysh: setenv bad argument\n", fd_stderr);
 	if (index <= 0)
 		return (EXIT_FAILURE);
 	if (!(*name = ft_strsub(s, 0, index)))
 	{
-		ft_putstr_fd("21sh: error malloc\n", fd_stderr);
+		ft_putstr_fd("mysh: error malloc\n", fd_stderr);
 		return (EXIT_FAILURE);
 	}
 	if (index + 1 < (int)ft_strlen(s))
@@ -38,7 +38,7 @@ static int	ft_builtin_setenv_set_name_value(
 		if (!(*value = ft_strsub(s, index + 1, ft_strlen(s) - index + 1)))
 		{
 			free(*name);
-			ft_putstr_fd("21sh: error malloc\n", fd_stderr);
+			ft_putstr_fd("mysh: error malloc\n", fd_stderr);
 			return (EXIT_FAILURE);
 		}
 	}
@@ -157,7 +157,7 @@ int			ft_builtin_setenv(const char **tab_cmd, t_arr **env, int fd_stderr)
 		env, (const char *)name, (const char *)value)))
 	{
 		ft_free_name_value(&name, &value);
-		ft_putstr_fd("21sh: error malloc\n", fd_stderr);
+		ft_putstr_fd("mysh: error malloc\n", fd_stderr);
 		return (EXIT_FAILURE);
 	}
 	ft_free_name_value(&name, &value);

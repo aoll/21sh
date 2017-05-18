@@ -46,7 +46,7 @@ static int	ft_parse_pop_and_replace_and_check_error_switch(t_arr *cmd)
 	ft_parse_replace_by_token(cmd);
 	if ((err = ft_parse_check_double_redirect(cmd)))
 	{
-		ft_putstr_fd("\n21sh: parse error near `&'", STDERR);
+		ft_putstr_fd("\nmysh: parse error near `&'", STDERR);
 		return (EXIT_FAILURE);
 	}
 	ft_parse_replace_double_by_token(cmd);
