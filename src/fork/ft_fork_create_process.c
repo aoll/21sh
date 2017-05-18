@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 12:46:21 by alex              #+#    #+#             */
-/*   Updated: 2017/05/18 14:10:59 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 14:52:14 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,8 @@ int	ft_fork_create_process(
 	t_fork *st_fork, t_arr_fd *arr_fd, t_tab_tube *array_tube, t_tube *tab_tube)
 {
 	pid_t			pid;
-	int t[2];
 
 	pid = 0;
-	pipe(t);
 	if ((pid = fork()) == -1)
 	{
 		return (EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 12:30:24 by alex              #+#    #+#             */
-/*   Updated: 2017/05/18 14:11:28 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 14:52:37 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,10 @@ int	ft_fork_father(
 			array_tube->tube_fork_stdout_tmp[1],
 			array_tube->tube_fork_stderr_tmp[1]);
 	}
-	// ft_putstr("\nmidlle dup \n");
 	wait(&st_fork->status);
-	// ft_putstr("\nmidlle -- dup \n");
 	ft_fork_set_tube_father(st_fork, array_tube, tab_tube, arr_fd);
-	// ft_putstr("\nmidlle ++ dup \n");
 	if (st_fork->i < st_fork->nb_pipe && !st_fork->err)
 	{
-		// ft_putstr("\ndup 0\n");
 		close(tab_tube[st_fork->i].tube[1]);
 		dup2(tab_tube[st_fork->i].tube[0], 0);
 	}
@@ -44,6 +40,5 @@ int	ft_fork_father(
 	while (arr_fd->arr_d_end_word->length)
 		free(ft_arr_pop(arr_fd->arr_d_end_word, 0));
 	st_fork->i++;
-	// ft_putstr("\nby dup\n");
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 08:33:53 by alex              #+#    #+#             */
-/*   Updated: 2017/05/18 11:39:24 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 14:56:06 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	ft_fork_write_fd_stdout(
 	int				rd;
 
 	buff = ft_strnew(st_fork->len_stdout);
-	// ft_putstr("\nyo stdout\n");
 	while ((rd = read(
 		array_tube->tube_fork_stdout[0], buff, st_fork->len_stdout)))
 	{
@@ -33,7 +32,6 @@ int	ft_fork_write_fd_stdout(
 		if (!arr_fd->arr_fd_stdout->length && st_fork->i >= st_fork->nb_pipe)
 			write(STDOUT, buff, st_fork->len_stdout);
 	}
-	// ft_putstr("\nby stdout\n");
 	ft_str_free(&buff);
 	return (EXIT_SUCCESS);
 }

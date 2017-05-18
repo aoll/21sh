@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:17:39 by aollivie          #+#    #+#             */
-/*   Updated: 2017/05/12 12:40:21 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 14:58:04 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -445,7 +445,7 @@ int					ft_fork_list_fd_null(
 	char **cmd, int i, char **name_file, char **error_ptr);
 int					ft_fork_fd_from_name(
 	int **fd, char **command, char **error_ptr, int i);
-int					ft_fork_list_fd_dup(t_arr *dst, const t_arr *src);
+int					ft_fork_list_fd_dup(t_arr *dst, t_arr *src);
 int					ft_fork_list_fd_stderr(
 	t_arr *arr_fd_stderr, t_arr *arr_fd_stdout, int **fd_ptr, int c);
 int					ft_fork_list_fd_left_redirect(t_arr *arr_fd_stdin);
@@ -490,7 +490,7 @@ int					ft_fork_son_exec(
 int					ft_fork_is_stdin_fd(
 	t_fork *st_fork, t_tube *tab_tube,
 	t_arr_fd *arr_fd, t_tab_tube *array_tube);
-int					ft_fork_set_tube_father(
+void				ft_fork_set_tube_father(
 	t_fork *st_fork, t_tab_tube *array_tube,
 	t_tube *tab_tube, t_arr_fd *arr_fd);
 int					ft_fork_father(

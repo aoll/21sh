@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 08:16:30 by alex              #+#    #+#             */
-/*   Updated: 2017/05/17 17:29:59 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 14:55:54 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,11 @@ int	ft_fork_write_tube(int dst_fd, int src_fd)
 
 	len = 0;
 	buff = ft_strnew(1);
-	// ft_putstr("\nwrite:");
 	while ((rd = read(src_fd, buff, 1)))
 	{
 		if (rd < 0)
 			break ;
 		write(dst_fd, buff, 1);
-		// write(1, buff, 1);
 		len++;
 	}
 	ft_str_free(&buff);
