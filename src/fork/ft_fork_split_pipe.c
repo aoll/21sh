@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:52:41 by alex              #+#    #+#             */
-/*   Updated: 2017/05/16 08:31:22 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 18:12:30 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int			ft_fork_split_pipe(char *str, int nb_pipe, t_arr **env_ptr)
 	char			**cmds;
 	t_tube			*tab_tube;
 	t_arr			*env;
-	int				i_return ;
+	int				i_return;
 
 	env = *env_ptr;
 	if (ft_init_tab_tube(&tab_tube, nb_pipe))

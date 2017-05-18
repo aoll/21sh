@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 14:13:55 by alex              #+#    #+#             */
-/*   Updated: 2017/04/23 19:35:58 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/18 18:12:45 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_fork_loop(t_arr **env, t_arr *tab_cmds)
 	int				index;
 	t_arr			*cmd;
 	char			*cmd_str;
-	int				i_return ;
+	int				i_return;
 
 	index = 0;
 	cmd_str = NULL;
