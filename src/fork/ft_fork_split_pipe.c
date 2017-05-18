@@ -46,7 +46,7 @@ int			ft_fork_split_pipe(char *str, int nb_pipe, t_arr **env_ptr)
 	char			**cmds;
 	t_tube			*tab_tube;
 	t_arr			*env;
-	int				i_return;
+	int				i_return ;
 
 	env = *env_ptr;
 	if (ft_init_tab_tube(&tab_tube, nb_pipe))

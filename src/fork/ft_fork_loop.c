@@ -21,7 +21,7 @@ int	ft_fork_loop(t_arr **env, t_arr *tab_cmds)
 	int				index;
 	t_arr			*cmd;
 	char			*cmd_str;
-	int				i_return;
+	int				i_return ;
 
 	index = 0;
 	cmd_str = NULL;
