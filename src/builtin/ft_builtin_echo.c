@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 14:50:50 by aollivie          #+#    #+#             */
-/*   Updated: 2017/04/21 19:56:54 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/18 15:25:07 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static int	ft_echo_check_quote(char c, bool *dquote, bool *quote)
 	}
 	return (EXIT_SUCCESS);
 }
-
 
 static int	ft_echo_print(char *s)
 {

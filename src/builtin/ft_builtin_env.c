@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 09:05:25 by alex              #+#    #+#             */
-/*   Updated: 2017/04/21 15:23:44 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/18 15:25:41 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 ** free and print the env
 */
 
-static int	ft_builtin_env_print_free(char ***tab_cmd, t_arr *env, int fd_stdout)
+static int	ft_builtin_env_print_free(
+	char ***tab_cmd, t_arr *env, int fd_stdout)
 {
 	free(*tab_cmd);
 	*tab_cmd = NULL;
@@ -24,7 +25,8 @@ static int	ft_builtin_env_print_free(char ***tab_cmd, t_arr *env, int fd_stdout)
 	return (EXIT_SUCCESS);
 }
 
-static int	ft_builtin_env_print_init(char ***cmd, char ***tab_cmd, bool *is_env_prev)
+static int	ft_builtin_env_print_init(
+	char ***cmd, char ***tab_cmd, bool *is_env_prev)
 {
 	if (!tab_cmd)
 		return (EXIT_FAILURE);

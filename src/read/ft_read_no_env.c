@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 10:35:40 by aollivie          #+#    #+#             */
-/*   Updated: 2017/05/17 19:51:08 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 15:18:20 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static bool	ft_check_dquote_quote(char *s)
 int			ft_read_no_env(
 	t_cursor *cursor, t_list_arr *list_arr, char **line, struct termios *term)
 {
+	int rd;
+
 	*line = NULL;
 	if (g_is_ctrl_c_father)
 	{
@@ -54,9 +56,8 @@ int			ft_read_no_env(
 		ft_str_free(line);
 		return (-1);
 	}
-	if (get_next_line(0, line))
+	if ((rd = get_next_line(0, line)))
 	{
-		// fprintf(stderr, "%s\n", "yo yo error");
 		if (!ft_strcmp(*line, "exit"))
 			return (ft_read_end(cursor, list_arr, term, line));
 		ft_read_get(cursor, list_arr, line, ft_check_dquote_quote(*line));
@@ -65,6 +66,8 @@ int			ft_read_no_env(
 	{
 		return (ft_read_end(cursor, list_arr, term, line));
 	}
+	if (!rd)
+		return (ft_read_end(cursor, list_arr, term, line));
 	if (*line)
 	{
 		free(*line);

@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 11:51:54 by aollivie          #+#    #+#             */
-/*   Updated: 2017/05/01 11:21:13 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/18 15:27:34 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 static bool	ft_arr_add_char_check_quote_after(
 	t_cursor *cursor, t_arr *arr, char c_quote)
 {
-	char *char_line;
-	int index;
-	int c_after;
+	char	*char_line;
+	int		index;
+	int		c_after;
 
 	c_after = 0;
 	index = cursor->index_line;
@@ -49,9 +49,9 @@ static bool	ft_arr_add_char_check_quote_after(
 static bool	ft_arr_add_char_check_quote_before(
 	t_cursor *cursor, t_arr *arr, char c_quote)
 {
-	char *char_line;
-	int index;
-	int c_before;
+	char	*char_line;
+	int		index;
+	int		c_before;
 
 	c_before = 0;
 	index = cursor->index_line - 1;
@@ -82,7 +82,7 @@ static int	ft_arr_add_char_check_quote_is_inside(
 	if (ft_arr_add_char_check_quote_before(cursor, arr, c_quote) &&
 	ft_arr_add_char_check_quote_after(cursor, arr, c_quote))
 	{
-			return (true);
+		return (true);
 	}
 	return (false);
 }
@@ -91,7 +91,7 @@ static int	ft_arr_add_char_check_quote_is_inside(
 ** add a char to arr a marke if is a element to a tabulation
 */
 
-int	ft_arr_add_char(t_cursor *cursor, t_arr *arr, char c, int is_tab)
+int			ft_arr_add_char(t_cursor *cursor, t_arr *arr, char c, int is_tab)
 {
 	char	*char_line;
 

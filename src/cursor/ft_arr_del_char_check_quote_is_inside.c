@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 12:01:33 by alex              #+#    #+#             */
-/*   Updated: 2017/05/01 12:02:03 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/18 15:29:43 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 static bool	ft_arr_del_char_check_quote_after(
 	t_cursor *cursor, t_arr *arr, char c_quote, int index_line_tmp)
 {
-	char *char_line;
-	int index;
-	int c_after;
+	char	*char_line;
+	int		index;
+	int		c_after;
 
 	c_after = 0;
 	index = index_line_tmp;
@@ -49,9 +49,9 @@ static bool	ft_arr_del_char_check_quote_after(
 static bool	ft_arr_del_char_check_quote_before(
 	t_cursor *cursor, t_arr *arr, char c_quote, int index_line_tmp)
 {
-	char *char_line;
-	int index;
-	int c_before;
+	char	*char_line;
+	int		index;
+	int		c_before;
 
 	c_before = 0;
 	index = index_line_tmp;
@@ -76,13 +76,13 @@ static bool	ft_arr_del_char_check_quote_before(
 ** check if the new quote is inside quote or dquote
 */
 
-int	ft_arr_del_char_check_quote_is_inside(
+int			ft_arr_del_char_check_quote_is_inside(
 	t_cursor *cursor, t_arr *arr, char c_quote, int index_line_tmp)
 {
-	if (ft_arr_del_char_check_quote_before(cursor, arr, c_quote, index_line_tmp) &&
-	ft_arr_del_char_check_quote_after(cursor, arr, c_quote, index_line_tmp))
+	if (ft_arr_del_char_check_quote_before(cursor, arr, c_quote, index_line_tmp)
+	&& ft_arr_del_char_check_quote_after(cursor, arr, c_quote, index_line_tmp))
 	{
-			return (true);
+		return (true);
 	}
 	return (false);
 }

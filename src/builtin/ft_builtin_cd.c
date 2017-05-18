@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 08:51:49 by alex              #+#    #+#             */
-/*   Updated: 2017/04/30 18:34:23 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/18 15:24:13 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** else nothing append
 */
 
-static int			ft_builtin_cd_old_pwd(
+static int	ft_builtin_cd_old_pwd(
 	t_arr **envp, const char *actual_pwd, int fd_stderr)
 {
 	int		index_old_pwd;
@@ -65,7 +65,8 @@ static int	ft_builtin_cd_path(
 	return (EXIT_SUCCESS);
 }
 
-static int	ft_builtin_cd_home(t_arr **envp, const char *actual_pwd, int fd_stderr)
+static int	ft_builtin_cd_home(
+	t_arr **envp, const char *actual_pwd, int fd_stderr)
 {
 	int		index_home;
 	t_kval	*kval;

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/12 18:39:15 by alex              #+#    #+#             */
-/*   Updated: 2017/05/01 12:01:50 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/18 15:30:59 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static void	ft_cursor_arr_pop_elem_set_cursor(
 	t_cursor *cursor, t_arr *arr, char *s_line, int index_line_tmp)
 {
-	if (*s_line == '"'
-	&& !ft_arr_del_char_check_quote_is_inside(cursor, arr, '\'', index_line_tmp))
+	if (*s_line == '"' && !ft_arr_del_char_check_quote_is_inside(
+		cursor, arr, '\'', index_line_tmp))
 		if (!cursor->quote)
 		{
 			cursor->dquote = !cursor->dquote;
