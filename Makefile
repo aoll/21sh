@@ -6,22 +6,22 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/05/01 12:05:42 by alex             ###   ########.fr        #
+#    Updated: 2017/05/18 17:50:23 by aollivie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-DEBUG=yes
+DEBUG=no
 CC=clang
 
 ifeq ($(DEBUG), yes)
 				CFLAGS= -Wall -Wextra -Wno-unused-variable -Wno-unused-parameter -O1 -g #-fsanitize=address -fno-omit-frame-pointer # -g -fsanitize=address,undefined # -g -ansi -pedantic
 else
-		CFLAGS= -Wall -Wextra -Werror -O1 -g #-fsanitize=address -fno-omit-frame-pointer
+		CFLAGS= -Wall -Wextra -Werror #-O1 -g #-fsanitize=address -fno-omit-frame-pointer
 endif
 
 
-NAME =project.exe
+NAME =minishell
 
 LIBFT =libft/libft.a
 
