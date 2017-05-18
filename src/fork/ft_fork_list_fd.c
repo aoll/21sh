@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 11:51:20 by alex              #+#    #+#             */
-/*   Updated: 2017/05/18 11:51:46 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 13:29:50 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,9 @@ int			ft_fork_list_fd(char **command, t_arr_fd *arr_fd, char **error_ptr)
 		}
 	if (arr_fd->arr_fd_stdout->length)
 	{
-		int *fd_tmp = *((int **)arr_fd->arr_fd_stdout->ptr);
-		*fd = -10;
+		fd = *((int **)arr_fd->arr_fd_stdout->ptr);
+		if (*fd == 0)
+			*fd = -10;
 	}
 
 	return (EXIT_SUCCESS);

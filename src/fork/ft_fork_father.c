@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 12:30:24 by alex              #+#    #+#             */
-/*   Updated: 2017/05/18 11:23:35 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 14:11:28 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 int	ft_fork_father(
 	t_fork *st_fork, t_tube *tab_tube, t_tab_tube *array_tube, t_arr_fd *arr_fd)
 {
-	// ft_putstr("\nhello dup\n");
 	ft_fork_is_stdin_fd(st_fork, tab_tube, arr_fd, array_tube);
 	if (st_fork->index_builtin > B_ENV)
 	{

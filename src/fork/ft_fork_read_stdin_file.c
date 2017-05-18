@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 17:39:39 by alex              #+#    #+#             */
-/*   Updated: 2017/05/17 11:10:16 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 14:26:10 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,27 @@ static int	ft_fork_read_stdin(t_arr_fd *arr_fd, t_tab_tube *array_tube)
 {
 	char			*end_word;
 	char			*line;
+	char			*tmp;
+	int				rd;
 
 	line = NULL;
+	tmp = ft_strnew(0);
 	end_word = ft_arr_pop(arr_fd->arr_d_end_word, 0);
 	while (ft_strcmp(line, end_word) != 0 || arr_fd->arr_d_end_word->length)
 	{
 		ft_fork_read_stdin_is_end_word(arr_fd, &end_word, &line);
 		if (line)
 		{
-			write(array_tube->tube_fork_stdin[1], line, ft_strlen(line));
-			*line = '\n';
-			write(array_tube->tube_fork_stdin[1], line, 1);
+			tmp = ft_strjoin_free(&tmp, line);
+			tmp = ft_strjoin_free(&tmp, "\n");
 			ft_str_free(&line);
 		}
-		get_next_line(0, &line);
+		if (!get_next_line(0, &line))
+			break ;
 	}
+	write(array_tube->tube_fork_stdin[1], tmp, ft_strlen(tmp));
+
+	ft_str_free(&tmp);
 	ft_str_free(&line);
 	ft_str_free(&end_word);
 	return (EXIT_SUCCESS);
