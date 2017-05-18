@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 15:16:05 by aollivie          #+#    #+#             */
-/*   Updated: 2017/03/23 15:16:24 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 16:47:17 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 int	ft_init_cursor_position(t_cursor *cursor)
 {
-	cursor->prompt = ft_strdup("\033[32m$> \033[0m");
+	cursor->prompt = ft_strdup("$> ");
 	cursor->pos_y = 0;
 	cursor->prompt_len = 3;
 	cursor->pos_x = cursor->prompt_len;
