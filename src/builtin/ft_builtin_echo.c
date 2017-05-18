@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 14:50:50 by aollivie          #+#    #+#             */
-/*   Updated: 2017/05/18 15:25:07 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 17:58:07 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int			ft_builtin_echo(char **tab_cmd, t_arr **env)
 {
 	int	i;
 
+	(void)env;
 	i = 1;
 	while (tab_cmd[i])
 	{

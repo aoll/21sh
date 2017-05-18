@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 10:30:05 by alex              #+#    #+#             */
-/*   Updated: 2017/02/06 11:31:16 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/18 17:58:41 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ static int	ft_parse_replace_sdterr_double_redirect_switch_prev_line(
 static int	ft_parse_replace_sdterr_double_redirect_switch_prev_prev_line(
 	t_cmd_line *line, char **s_prev_line, char **s_prev_prev_line, t_arr *arr)
 {
-	char			*s_prev_prev_prev_line;
-
 	if (line->index - 2 >= 0)
 	{
 		*s_prev_prev_line = *(char **)(

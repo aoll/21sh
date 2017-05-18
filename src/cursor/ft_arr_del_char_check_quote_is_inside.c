@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 12:01:33 by alex              #+#    #+#             */
-/*   Updated: 2017/05/18 15:29:43 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 17:56:47 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static bool	ft_arr_del_char_check_quote_after(
 	int		index;
 	int		c_after;
 
+	(void)cursor;
 	c_after = 0;
 	index = index_line_tmp;
 	while (index < (int)arr->length)
@@ -53,6 +54,7 @@ static bool	ft_arr_del_char_check_quote_before(
 	int		index;
 	int		c_before;
 
+	(void)cursor;
 	c_before = 0;
 	index = index_line_tmp;
 	while (index >= 0)

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 08:45:05 by alex              #+#    #+#             */
-/*   Updated: 2017/03/18 10:23:23 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/18 17:55:43 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int			ft_parse_replace_sdterr_redirect(t_arr *arr)
 {
 	char			*s_prev_line;
 	char			*s_prev_prev_line;
-	char			*s_prev_prev_prev_line;
 	t_cmd_line		line;
 
 	ft_parse_init_cmd_line(&line);

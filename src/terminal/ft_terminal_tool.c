@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:49:35 by alex              #+#    #+#             */
-/*   Updated: 2017/05/18 16:43:59 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 17:51:29 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	ft_init_terminal(void)
 
 int	ft_get_term_restore(struct termios *term)
 {
-	char			*name_terminal;
-
 	term->c_lflag |= ICANON;
 	term->c_lflag |= ECHO;
 	if (tcsetattr(0, 0, term) == -1)

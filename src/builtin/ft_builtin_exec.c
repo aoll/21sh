@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 08:51:43 by alex              #+#    #+#             */
-/*   Updated: 2017/04/21 19:29:58 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/18 17:53:48 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 int	ft_builtin_exec(
 	t_fork *st_fork, t_arr **env, int fd_stdout, int fd_stderr)
 {
+	(void)fd_stdout;
 	if (!st_fork->index_builtin)
 		return (EXIT_FAILURE);
 	if (st_fork->index_builtin == B_SETENV)

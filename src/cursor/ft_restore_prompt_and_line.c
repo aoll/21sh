@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 12:49:03 by alex              #+#    #+#             */
-/*   Updated: 2017/03/13 12:49:59 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/18 17:52:14 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 
 int	ft_restore_prompt_and_line(t_cursor *cursor, t_arr *arr)
 {
-	int				nb_char;
-
 	if (!cursor)
 	{
 		return (EXIT_FAILURE);

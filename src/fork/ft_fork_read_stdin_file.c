@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 17:39:39 by alex              #+#    #+#             */
-/*   Updated: 2017/05/18 14:55:47 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 17:59:38 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static int	ft_fork_read_stdin(t_arr_fd *arr_fd, t_tab_tube *array_tube)
 	char			*end_word;
 	char			*line;
 	char			*tmp;
-	int				rd;
 
 	line = NULL;
 	tmp = ft_strnew(0);

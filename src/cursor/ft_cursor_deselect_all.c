@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 15:53:58 by alex              #+#    #+#             */
-/*   Updated: 2017/03/15 15:54:50 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/18 17:51:47 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int			ft_cursor_deselect_all(
 	t_cursor *cursor, t_arr *arr, t_arr *select_line)
 {
 	t_cursor		end;
-	int				nb_line_displayed;
 
 	if (!select_line->length || !cursor->save_cursor_position)
 		return (EXIT_SUCCESS);

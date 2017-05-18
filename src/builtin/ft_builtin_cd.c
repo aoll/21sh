@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 08:51:49 by alex              #+#    #+#             */
-/*   Updated: 2017/05/18 15:24:13 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 17:52:56 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ static int	ft_builtin_cd_home(
 {
 	int		index_home;
 	t_kval	*kval;
-	int		err;
 	t_arr	*env;
 
 	env = *envp;

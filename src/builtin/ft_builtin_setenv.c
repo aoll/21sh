@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:16:35 by aollivie          #+#    #+#             */
-/*   Updated: 2017/03/23 14:52:35 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 17:59:18 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ static int	ft_builtin_setenv_edit_var(
 	t_arr	*env;
 	int		err;
 
+	(void)name;
 	env = *envp;
 	kval = *(t_kval **)((unsigned char *)env->ptr + index * env->sizeof_elem);
 	if (!value)
