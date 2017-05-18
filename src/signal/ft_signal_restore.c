@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 17:00:09 by alex              #+#    #+#             */
-/*   Updated: 2017/05/16 11:29:36 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 10:21:27 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 int	ft_signal_restore(void)
 {
+	// signal(SIGTSTP, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
 	return (EXIT_SUCCESS);
 }

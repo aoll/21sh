@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 11:51:20 by alex              #+#    #+#             */
-/*   Updated: 2017/05/17 17:29:31 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 11:51:46 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,11 @@ int			ft_fork_list_fd(char **command, t_arr_fd *arr_fd, char **error_ptr)
 				return (EXIT_FAILURE);
 			cmd[i] = SPACE_SEPARATOR;
 		}
-	// ft_putstr("\nlen stdout end");ft_putnbr(arr_fd->arr_fd_stdout->length);ft_putstr("\n");
-	// ft_putstr("\nlen stderr end");ft_putnbr(arr_fd->arr_fd_stderr->length);ft_putstr("\n");
-	// ft_putstr("\n-------------------------\n");
+	if (arr_fd->arr_fd_stdout->length)
+	{
+		int *fd_tmp = *((int **)arr_fd->arr_fd_stdout->ptr);
+		*fd = -10;
+	}
+
 	return (EXIT_SUCCESS);
 }

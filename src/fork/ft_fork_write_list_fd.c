@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 19:05:38 by alex              #+#    #+#             */
-/*   Updated: 2017/05/17 17:27:51 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 11:51:06 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,14 @@ int	ft_fork_write_list_fd(t_arr *arr, char *buff, int len)
 	while (index < (int)arr->length)
 	{
 		fd = *(int **)((unsigned char *)arr->ptr + index * arr->sizeof_elem);
-		if (*fd < 0)
-			// index++;
+		if (*fd == -10)
+		{
+			*fd = -1;
+		}
+		else if (*fd < 0)
+		{
 			*fd *= -1;
+		}
 		// ft_putstr("\nlist:");
 		// ft_putnbr(*fd);
 		write(*fd, buff, len);
