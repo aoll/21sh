@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 15:19:13 by aollivie          #+#    #+#             */
-/*   Updated: 2017/05/17 19:52:31 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 16:42:18 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@ static int	ft_read_init_term(struct termios *term, t_cursor *cursor)
 	if ((err = ft_get_term(term)))
 	{
 		if (err == -2)
-			exit(0);
-		fprintf(stderr, "%s\n", "is_env false" );
+			exit(1);
 		cursor->is_env = false;
 		signal(SIGINT, ft_signal_sigint_not_env);
 	}
 	else
 	{
-		fprintf(stderr, "%s\n", "is_env true" );
 		cursor->is_env = true;
 		term->c_lflag &= ~(ICANON);
 		term->c_lflag &= ~(ECHO);
@@ -39,8 +37,6 @@ static int	ft_read_init_term(struct termios *term, t_cursor *cursor)
 		}
 		ft_init_cursor_cmd(cursor);
 	}
-	
-	fprintf(stderr, "%s\n", "is_env" );
 	return (EXIT_SUCCESS);
 }
 

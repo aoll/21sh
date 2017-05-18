@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 09:26:47 by alex              #+#    #+#             */
-/*   Updated: 2017/04/21 13:50:22 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/18 16:39:43 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@
 ** is give for arr->f_print, print some elem
 */
 
-void ft_arr_putchar(const void *s)
+void	ft_arr_putchar(const void *s)
 {
 	char			*s_line;
 
 	if (!s)
 	{
-		return;
+		return ;
 	}
 	s_line = *(char **)s;
 	if (!s_line)
 	{
-		return;
+		return ;
 	}
 	if (s_line[5] == 1)
 	{
@@ -37,7 +37,7 @@ void ft_arr_putchar(const void *s)
 	}
 	ft_putstr(*((char **)s));
 	ft_mode_basic_video();
-	return;
+	return ;
 }
 
 /*
@@ -45,7 +45,7 @@ void ft_arr_putchar(const void *s)
 ** is give for arr->f_dup, dup some elem and return a void *
 */
 
-void *ft_arr_strdup(const void *s, size_t n)
+void	*ft_arr_strdup(const void *s, size_t n)
 {
 	void			*new;
 
@@ -67,7 +67,7 @@ void *ft_arr_strdup(const void *s, size_t n)
 ** in case of fail NULL is returned
 */
 
-t_kval *ft_kval_dup(const t_kval *old)
+t_kval	*ft_kval_dup(const t_kval *old)
 {
 	t_kval			*new;
 
@@ -87,7 +87,7 @@ t_kval *ft_kval_dup(const t_kval *old)
 ** is give for arr->f_dup, dup some elem and return a void *
 */
 
-void *ft_arr_kvaldup(const void *s, size_t n)
+void	*ft_arr_kvaldup(const void *s, size_t n)
 {
 	void			*new;
 
@@ -100,9 +100,8 @@ void *ft_arr_kvaldup(const void *s, size_t n)
 	return (new);
 }
 
-int ft_read_line(char **env)
+int		ft_read_line(char **env)
 {
 	ft_signal_init();
 	return (ft_read_stdin(env));
-
 }

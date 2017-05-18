@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 17:36:02 by alex              #+#    #+#             */
-/*   Updated: 2017/05/17 17:30:55 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 15:33:52 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@ int	ft_fork_list_fd_tmp(char **cmd, t_arr_fd *arr_fd, char **error_ptr)
 	fd = NULL;
 	while (cmd[i])
 	{
-		// ft_putstr("\n");
-		// ft_putstr(cmd[i]);
-		// ft_putstr("\n");
 		if ((err = ft_fork_list_fd(&cmd[i], arr_fd, error_ptr)))
 		{
 			ft_arr_close_arr_fd(arr_fd);

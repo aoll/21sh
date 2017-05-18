@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aollivie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 11:12:43 by aollivie          #+#    #+#             */
-/*   Updated: 2017/03/14 11:35:49 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 16:36:39 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_kval_print(const void *ptr)
 	ft_putstr("=");
 	ft_putstr(tmp->value);
 	ft_putstr("\n");
-	return;
+	return ;
 }
 
 t_kval	*ft_kval_init(const char *env_line)

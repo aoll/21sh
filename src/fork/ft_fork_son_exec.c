@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:49:12 by alex              #+#    #+#             */
-/*   Updated: 2017/05/16 08:52:41 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 16:34:40 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_fork_son_exec(char *path_cmd, char **tab_cmd, char **envp)
 {
-	int i;
-	char *tmp;
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	if (!ft_strcmp(tab_cmd[0], "echo"))

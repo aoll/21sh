@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 10:35:40 by aollivie          #+#    #+#             */
-/*   Updated: 2017/05/18 15:18:20 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 16:41:36 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,6 @@ int			ft_read_no_env(
 	if (!rd)
 		return (ft_read_end(cursor, list_arr, term, line));
 	if (*line)
-	{
-		free(*line);
-		*line = NULL;
-	}
+		ft_str_free(line);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 11:51:20 by alex              #+#    #+#             */
-/*   Updated: 2017/05/18 14:55:28 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 16:33:32 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,6 @@
 ** give a list of fd with good right and position cursor
 ** error if the file can be open
 */
-
-static int	ft_fork_list_fd_switch_right_dup(int fd, t_arr_fd *arr_fd)
-{
-	int				err;
-	int				*f = malloc(sizeof(int));
-
-	ft_putnbr(fd);
-	if (fd == -2)
-	{
-		if ((err = ft_fork_list_fd_dup(
-			arr_fd->arr_fd_stdout, arr_fd->arr_fd_stderr)))
-		{
-			return (EXIT_FAILURE);
-		}
-	}
-	else if (fd == -1)
-	{
-		if ((err = ft_fork_list_fd_dup(
-			arr_fd->arr_fd_stderr, arr_fd->arr_fd_stdout)))
-		{
-			return (EXIT_FAILURE);
-		}
-	}
-	return (EXIT_SUCCESS);
-}
 
 static int	ft_fork_list_fd_switch_right_redirect(
 	int c, int **fd, t_arr_fd *arr_fd)
@@ -98,6 +73,19 @@ static int	ft_fork_list_fd_is_redirect(int c)
 	return (EXIT_SUCCESS);
 }
 
+static int	ft_fork_list_fd_0(t_arr_fd *arr_fd)
+{
+	int				*fd;
+
+	if (arr_fd->arr_fd_stdout->length)
+	{
+		fd = *((int **)arr_fd->arr_fd_stdout->ptr);
+		if (*fd == 0)
+			*fd = -10;
+	}
+	return (EXIT_SUCCESS);
+}
+
 int			ft_fork_list_fd(char **command, t_arr_fd *arr_fd, char **error_ptr)
 {
 	int				i;
@@ -122,11 +110,6 @@ int			ft_fork_list_fd(char **command, t_arr_fd *arr_fd, char **error_ptr)
 				return (EXIT_FAILURE);
 			cmd[i] = SPACE_SEPARATOR;
 		}
-	if (arr_fd->arr_fd_stdout->length)
-	{
-		fd = *((int **)arr_fd->arr_fd_stdout->ptr);
-		if (*fd == 0)
-			*fd = -10;
-	}
+	ft_fork_list_fd_0(arr_fd);
 	return (EXIT_SUCCESS);
 }

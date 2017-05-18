@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 12:24:58 by alex              #+#    #+#             */
-/*   Updated: 2017/05/18 14:58:14 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 16:35:23 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,10 @@ static int	ft_fork_set_tube_father_is_fd(t_arr *arr, int fd_target)
 		}
 		i++;
 	}
-
 	return (c);
 }
 
-
-void	ft_fork_set_tube_father(
+void		ft_fork_set_tube_father(
 	t_fork *st_fork, t_tab_tube *array_tube, t_tube *tab_tube, t_arr_fd *arr_fd)
 {
 	close(array_tube->tube_fork_stdout_tmp[1]);

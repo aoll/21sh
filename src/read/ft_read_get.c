@@ -6,13 +6,13 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 09:45:16 by aollivie          #+#    #+#             */
-/*   Updated: 2017/04/22 12:19:49 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/18 16:37:28 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "project.h"
 
-static bool ft_arr_add(t_list_arr *list_arr, char **line)
+static bool	ft_arr_add(t_list_arr *list_arr, char **line)
 {
 	ft_arr_str(list_arr->arr, *line);
 	if (*line)
@@ -23,7 +23,8 @@ static bool ft_arr_add(t_list_arr *list_arr, char **line)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_read_get(t_cursor *cursor, t_list_arr *list_arr, char **line, bool quote)
+int			ft_read_get(
+	t_cursor *cursor, t_list_arr *list_arr, char **line, bool quote)
 {
 	if (quote)
 		return (ft_arr_add(list_arr, line));

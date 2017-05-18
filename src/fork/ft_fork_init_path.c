@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 16:24:59 by alex              #+#    #+#             */
-/*   Updated: 2017/05/16 08:52:30 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/18 15:33:09 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*ft_fork_init_path_ptr(t_arr *env_copy)
 	return (path_ptr);
 }
 
-char				*ft_fork_init_path(t_arr *env_copy, char **tab_cmd, int *err)
+char		*ft_fork_init_path(t_arr *env_copy, char **tab_cmd, int *err)
 {
 	char			*path_ptr;
 	char			**tab_path;
