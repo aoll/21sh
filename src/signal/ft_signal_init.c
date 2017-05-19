@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 16:47:00 by alex              #+#    #+#             */
-/*   Updated: 2017/05/18 14:58:25 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/19 08:48:32 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int		ft_signal_init(void)
 		num_sig++;
 	}
 	g_is_ctrl_c_father = 0;
+	signal(SIGTSTP, SIG_DFL);
 	signal(SIGINT, ft_signal_sigint_c);
 	return (EXIT_SUCCESS);
 }

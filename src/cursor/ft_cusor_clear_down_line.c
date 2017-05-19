@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/12 17:56:22 by alex              #+#    #+#             */
-/*   Updated: 2017/03/23 14:55:26 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/19 09:29:18 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ int			ft_cusor_clear_down_line(t_cursor *cursor, t_arr *arr)
 			i++;
 		}
 	}
+	if (arr->length + cursor->prompt_len > cursor->terminal_size.ws_row)
+		ft_term_apply_cmd(cursor->down, 1);
+	ft_term_apply_cmd(cursor->clear_current_line, 1);
 	ft_term_apply_cmd(cursor->restore_cursor_position, 1);
 	return (index);
 }
