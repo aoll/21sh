@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 20:44:54 by alex              #+#    #+#             */
-/*   Updated: 2017/04/20 12:41:47 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/05/21 19:22:03 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	ft_read_exec_cmds(
 	signal(SIGINT, ft_signal_sigint_c);
 	if (list_arr->tab_cmds)
 	{
-		if (list_arr->tab_cmds->length)
+		while (list_arr->tab_cmds->length)
 			ft_arr_free(ft_arr_pop(list_arr->tab_cmds, 0));
 		if (list_arr->tab_cmds->ptr)
 			free(list_arr->tab_cmds->ptr);

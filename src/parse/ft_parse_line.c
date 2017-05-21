@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/29 09:31:13 by alex              #+#    #+#             */
-/*   Updated: 2017/02/06 15:22:11 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/21 19:23:45 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_arr	*ft_parse_line(t_arr *arr)
 	{
 		if (tab_cmds)
 		{
-			if (tab_cmds->length)
+			while (tab_cmds->length)
 				ft_arr_free(ft_arr_pop(tab_cmds, 0));
 			if (tab_cmds->ptr)
 				free(tab_cmds->ptr);

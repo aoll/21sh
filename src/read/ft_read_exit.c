@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:59:19 by alex              #+#    #+#             */
-/*   Updated: 2017/04/19 16:59:51 by alex             ###   ########.fr       */
+/*   Updated: 2017/05/21 19:22:37 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_read_exit(t_list_arr *list_arr, t_cursor *cursor, struct termios *term)
 {
 	if (list_arr->tab_cmds)
 	{
-		if (list_arr->tab_cmds->length)
+		while (list_arr->tab_cmds->length)
 		{
 			ft_arr_free(ft_arr_pop(list_arr->tab_cmds, 0));
 		}
