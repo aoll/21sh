@@ -6,12 +6,12 @@
 #    By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/14 17:07:06 by aollivie          #+#    #+#              #
-#    Updated: 2017/05/18 17:50:23 by aollivie         ###   ########.fr        #
+#    Updated: 2017/05/21 19:07:42 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-DEBUG=no
+DEBUG=yes
 CC=clang
 
 ifeq ($(DEBUG), yes)
