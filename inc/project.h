@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:17:39 by aollivie          #+#    #+#             */
-/*   Updated: 2017/10/11 13:03:46 by alex             ###   ########.fr       */
+/*   Updated: 2017/10/14 12:18:10 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@
 */
 
 int							g_is_ctrl_c_father;
-int							fdin;
+int							clean;
 
 /*
 ** STRUCT
@@ -123,6 +123,7 @@ struct				s_tube
 typedef struct s_fork		t_fork;
 struct				s_fork
 {
+	int				pid;
 	int				i;
 	int				nb_pipe;
 	int				err;

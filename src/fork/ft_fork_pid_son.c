@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 11:38:59 by alex              #+#    #+#             */
-/*   Updated: 2017/10/11 19:35:42 by alex             ###   ########.fr       */
+/*   Updated: 2017/10/14 11:32:39 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	ft_fork_pid_son(t_fork *st_fork, t_arr_fd *arr_fd, t_tab_tube *array_tube)
 	char	*path_tmp;
 	int		re;
 
-	// ft_putstr("\nhello father\n");
 	re = 0;
 	ft_signal_restore();
 	//waza
@@ -40,6 +39,6 @@ int	ft_fork_pid_son(t_fork *st_fork, t_arr_fd *arr_fd, t_tab_tube *array_tube)
 	if (re != B_ECHO)
 		ft_fork_command_not_found(
 			&st_fork->tab_cmd, st_fork->index_builtin, arr_fd);
-	// exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }
