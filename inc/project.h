@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:17:39 by aollivie          #+#    #+#             */
-/*   Updated: 2017/05/18 14:58:04 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/10/11 13:03:46 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
 */
 
 int							g_is_ctrl_c_father;
+int							fdin;
 
 /*
 ** STRUCT
@@ -498,8 +499,8 @@ int					ft_fork_father(
 	t_tab_tube *array_tube, t_arr_fd *arr_fd);
 int					ft_fork_create_process(
 	t_fork *st_fork, t_arr_fd *arr_fd,
-	t_tab_tube *array_tube, t_tube *tab_tube);
-
+	t_tab_tube *array_tube, t_tube *tab_tube, char **cmd,  t_arr **env);
+int			ft_fork_re(char **cmd, t_tube *tab_tube, t_arr **env,  t_fork *st_fork, t_arr_fd *arr_fd);
 /*
 ** builtin
 */

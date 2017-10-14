@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 16:47:00 by alex              #+#    #+#             */
-/*   Updated: 2017/05/19 08:48:32 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/10/11 12:48:53 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ int		ft_signal_init(void)
 {
 	int				num_sig;
 
-	num_sig = 1;
-	while (num_sig < NSIG)
-	{
-		signal(num_sig, SIG_IGN);
-		num_sig++;
-	}
-	g_is_ctrl_c_father = 0;
-	signal(SIGTSTP, SIG_DFL);
-	signal(SIGINT, ft_signal_sigint_c);
+	// num_sig = 1;
+	// while (num_sig < NSIG)
+	// {
+	// 	signal(num_sig, SIG_IGN);
+	// 	num_sig++;
+	// }
+	// g_is_ctrl_c_father = 0;
+	// signal(SIGTSTP, SIG_DFL);
+	// signal(SIGINT, ft_signal_sigint_c);
 	return (EXIT_SUCCESS);
 }

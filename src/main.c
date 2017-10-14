@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 09:27:27 by alex              #+#    #+#             */
-/*   Updated: 2017/05/18 16:45:20 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/10/10 22:36:23 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	main(int ac, char **av, char **env)
 {
+	fdin = 0;
 	(void)ac;
 	(void)av;
 	return (ft_read_line(env));
