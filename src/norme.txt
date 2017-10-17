@@ -1,0 +1,262 @@
+Norme: ./norme.txt
+Warning: Not a valid file
+Norme: ./builtin/ft_builtin_cd.c
+Norme: ./builtin/ft_builtin_cd_absolute_path.c
+Norme: ./builtin/ft_builtin_cd_is_existing_file.c
+Norme: ./builtin/ft_builtin_echo.c
+Norme: ./builtin/ft_builtin_cd_set_env.c
+Norme: ./builtin/ft_builtin_env_free_kval.c
+Norme: ./builtin/ft_builtin_env_set_var_cmd.c
+Norme: ./builtin/ft_builtin_env.c
+Norme: ./builtin/ft_builtin_env_set_var_is_cmd.c
+Norme: ./builtin/ft_builtin_env_setenv.c
+Norme: ./builtin/ft_builtin_cd_change_directory.c
+Norme: ./builtin/ft_builtin_exit.c
+Norme: ./builtin/ft_builtin_env_print.c
+Norme: ./builtin/ft_builtin_exec.c
+Norme: ./builtin/ft_free_name_value.c
+Norme: ./builtin/ft_builtin_setenv_check_argument.c
+Norme: ./builtin/ft_builtin_unsetenv.c
+Norme: ./builtin/ft_is_builtin.c
+Norme: ./cursor/ft_arr_index_line_start_showed.c
+Norme: ./cursor/ft_clear_up_from_bottom.c
+Norme: ./cursor/ft_arr_add_char.c
+Norme: ./cursor/ft_cursor_clear_down.c
+Norme: ./cursor/ft_cursor_clear_up.c
+Norme: ./builtin/ft_builtin_setenv.c
+Norme: ./cursor/ft_cursor_cut.c
+Norme: ./cursor/ft_cursor_add_char.c
+Norme: ./cursor/ft_arr_del_char_check_quote_is_inside.c
+Norme: ./cursor/ft_cursor_copy_line.c
+Norme: ./cursor/ft_cursor_down_line.c
+Norme: ./cursor/ft_cursor_down_history_line.c
+Norme: ./cursor/ft_cursor_home.c
+Norme: ./cursor/ft_cursor_deselect_all.c
+Norme: ./cursor/ft_cursor_end.c
+Norme: ./cursor/ft_cursor_del_or_suppr.c
+Norme: ./cursor/ft_cursor_left_chariot.c
+Norme: ./cursor/ft_cursor_left_same_line.c
+Norme: ./cursor/ft_cursor_move_to_index_line_from_start.c
+Norme: ./cursor/ft_cursor_left_tab.c
+Norme: ./cursor/ft_cursor_index_prev_line_end.c
+Norme: ./cursor/ft_cursor_move_to_start.c
+Norme: ./cursor/ft_cursor_left.c
+Norme: ./cursor/ft_cursor_print_chariot.c
+Norme: ./cursor/ft_cursor_paste.c
+Norme: ./cursor/ft_cursor_print_char.c
+Norme: ./cursor/ft_cursor_nb_line_displayed.c
+Norme: ./cursor/ft_cursor_print_overide_line.c
+Norme: ./cursor/ft_cursor_right_chariot.c
+Norme: ./cursor/ft_cursor_restore_y_x.c
+Norme: ./cursor/ft_cursor_resize.c
+Norme: ./cursor/ft_cursor_right_line_more_up.c
+Norme: ./cursor/ft_cursor_right_same_line.c
+Norme: ./cursor/ft_cursor_right_tab.c
+Norme: ./cursor/ft_cursor_right.c
+Norme: ./cursor/ft_cursor_select_overide_char.c
+Norme: ./cursor/ft_cursor_right_line_more.c
+Norme: ./cursor/ft_cursor_select_left.c
+Norme: ./cursor/ft_cursor_select_overide_tab.c
+Norme: ./cursor/ft_cursor_up_line.c
+Norme: ./cursor/ft_cursor_up_history_line.c
+Norme: ./cursor/ft_cursor_valide_line_init_cursor_prompt.c
+Norme: ./cursor/ft_cursor_valide_line_with_line.c
+Norme: ./cursor/ft_cursor_select_right.c
+Norme: ./cursor/ft_cursor_valide_line_without_line.c
+Norme: ./cursor/ft_cursor_word_left.c
+Norme: ./cursor/ft_cursor_word_right.c
+Norme: ./cursor/ft_free_cursor.c
+Norme: ./cursor/ft_index_line_end_showed.c
+Norme: ./cursor/ft_cusor_clear_down_line.c
+Norme: ./cursor/ft_index_line_start_showed.c
+Norme: ./cursor/ft_init_cursor_cmd.c
+Norme: ./cursor/ft_nb_char_between_two_chariot.c
+Norme: ./cursor/ft_cursor_valide_line.c
+Error (line 84): bad indentation
+Error (line 84): C++ comment
+Norme: ./cursor/ft_restore_prompt_and_line.c
+Norme: ./fork/ft_arr_close_arr_fd.c
+Norme: ./fork/ft_arr_free_arr_fd.c
+Norme: ./fork/ft_check_is_char.c
+Norme: ./cursor/ft_cursor_y_screen.c
+Norme: ./fork/ft_fork_back_std.c
+Norme: ./cursor/ft_init_cursor_position.c
+Norme: ./fork/ft_fork_check_is_builtin_exit.c
+Norme: ./fork/ft_fork_command_not_found.c
+Norme: ./fork/ft_fork_close_array_tube.c
+Norme: ./fork/ft_fork_father.c
+Error (line 23): bad indentation
+Error (line 23): C++ comment
+Error (line 32): C++ comment
+Error (line 33): C++ comment
+Error (line 34): C++ comment
+Error (line 35): C++ comment
+Error (line 36): C++ comment
+Error (line 37): C++ comment
+Error (line 38): C++ comment
+Error (line 39): C++ comment
+Error (line 40): C++ comment
+Norme: ./fork/ft_fork.c
+Error: global scope bad aligned
+Error (line 26): ft_fork_re have 5 parameters
+Error (line 26): function ft_fork_re has 38 lines
+Error (line 26): line has 102 characters
+Error (line 26, col 59): bad spacing
+Error (line 39): Empty line
+Error (line 40): bad indentation
+Error (line 40): C++ comment
+Error (line 41): bad indentation
+Error (line 41): C++ comment
+Error (line 42): bad indentation
+Error (line 42): C++ comment
+Error (line 43): Empty line
+Error (line 46): Empty line
+Error (line 47): bad indentation
+Error (line 47): C++ comment
+Error (line 48): bad indentation
+Error (line 48): C++ comment
+Error (line 49): bad indentation
+Error (line 49): C++ comment
+Error (line 50): bad indentation
+Error (line 50): C++ comment
+Error (line 51): bad indentation
+Error (line 51): C++ comment
+Error (line 52): bad indentation
+Error (line 52): C++ comment
+Error (line 53): Empty line
+Error (line 56): C++ comment
+Error (line 57): bad indentation
+Error (line 58): Empty line
+Error (line 59): bad indentation
+Error (line 59): C++ comment
+Error (line 60): bad indentation
+Error (line 60): C++ comment
+Error (line 61): bad indentation
+Error (line 61): C++ comment
+Error (line 62): bad indentation
+Error (line 62): C++ comment
+Error (line 63): bad indentation
+Error (line 63): C++ comment
+Error (line 64): Empty line
+Error (line 68): comment not well formatted
+Norme: ./fork/ft_fork_fd_from_name.c
+Norme: ./fork/ft_fork_create_process.c
+Error: global scope bad aligned
+Error (line 15): Space before function name
+Error (line 15, col 25): no newline before block
+Error (line 16): missing newline after while
+Error (line 16, col 22): space after cast
+Error (line 16, col 47): no newline before block
+Error (line 16, col 47): no newline after block
+Error (line 16, col 48): no newline before block
+Error (line 19): bad indentation
+Error (line 20): bad indentation
+Error (line 28): declarations in ft_fork_create_process are bad aligned
+Error (line 28): ft_fork_create_process have 6 parameters
+Error (line 28): function ft_fork_create_process has 45 lines
+Error (line 29): line has 107 characters
+Error (line 29, col 89): bad spacing
+Error (line 42): line has 114 characters
+Error (line 53, col 55): bad spacing
+Norme: ./fork/ft_fork_free_st_fork_and_arr_fd.c
+Error (line 23): bad indentation
+Error (line 23): C++ comment
+Norme: ./fork/ft_fork_init_arr_fd.c
+Norme: ./fork/ft_fork_env_arr_to_tab_str.c
+Norme: ./fork/ft_fork_init_loop.c
+Norme: ./fork/ft_fork_init_env_copy.c
+Error (line 30): bad indentation
+Error (line 30): C++ comment
+Error (line 35): C++ comment
+Error (line 37): C++ comment
+Norme: ./fork/ft_fork_fd.c
+Norme: ./fork/ft_fork_init_st_fork.c
+Norme: ./fork/ft_fork_is_error_ptr.c
+Norme: ./fork/ft_fork_init_tab_cmd.c
+Norme: ./fork/ft_fork_list_d_end_word.c
+Norme: ./fork/ft_fork_is_stdin_fd.c
+Norme: ./fork/ft_fork_list_fd_left_redirect.c
+Norme: ./fork/ft_fork_init_path.c
+Norme: ./fork/ft_fork_list_fd_dup.c
+Norme: ./fork/ft_fork_list_fd_stderr.c
+Norme: ./fork/ft_fork_list_fd_null.c
+Norme: ./fork/ft_fork_list_fd_tmp.c
+Norme: ./fork/ft_fork_nb_pipe.c
+Norme: ./fork/ft_fork_name_file.c
+Norme: ./fork/ft_fork_open_file.c
+Norme: ./fork/ft_fork_pipe_array_tube.c
+Norme: ./fork/ft_fork_list_fd.c
+Norme: ./fork/ft_fork_set_env_copy.c
+Norme: ./fork/ft_fork_loop.c
+Norme: ./fork/ft_fork_pid_son.c
+Norme: ./fork/ft_fork_set_tube.c
+Norme: ./fork/ft_fork_set_tube_fd.c
+Norme: ./fork/ft_fork_son_exec.c
+Norme: ./fork/ft_fork_set_tube_father.c
+Norme: ./fork/ft_fork_str_from_arr.c
+Norme: ./fork/ft_fork_write_fd_stderr.c
+Norme: ./fork/ft_fork_write_fd_stdout.c
+Norme: ./fork/ft_fork_read_stdin_file.c
+Norme: ./fork/ft_fork_write_list_fd.c
+Norme: ./main.c
+Norme: ./fork/ft_fork_write_tube_stdin.c
+Norme: ./fork/ft_fork_split_pipe.c
+Norme: ./fork/ft_fork_write_tube.c
+Norme: ./parse/ft_parse_check_d_quote.c
+Norme: ./parse/ft_parse_check_end_space.c
+Norme: ./parse/ft_parse_check_double.c
+Norme: ./parse/ft_parse_check_double_redirect.c
+Norme: ./parse/ft_parse_check_error.c
+Norme: ./parse/ft_parse_init_cmd_line.c
+Norme: ./parse/ft_parse_init_new_arr_line.c
+Norme: ./parse/ft_parse_is_only_space.c
+Norme: ./parse/ft_parse_pop_prev_space.c
+Norme: ./parse/ft_parse_check_file_redirect.c
+Norme: ./parse/ft_parse_pop_space_inside.c
+Norme: ./parse/ft_parse_replace_d_left_redirect.c
+Norme: ./parse/ft_parse_pop_and_replace_and_check_error.c
+Norme: ./parse/ft_parse_replace_file_redirect.c
+Norme: ./parse/ft_parse_replace_d_right_redirect.c
+Norme: ./parse/ft_parse_replace_s_left_redirect.c
+Norme: ./parse/ft_parse_replace_s_right_redirect.c
+Norme: ./parse/ft_parse_replace_sdterr_redirect.c
+Norme: ./parse/ft_parse_replace_sdterr_double_redirect.c
+Norme: ./parse/ft_parse_line.c
+Norme: ./parse/ft_parse_replace_pipe.c
+Norme: ./parse/ft_parse_replace_space.c
+Norme: ./parse/ft_parse_replace_stderr_double_prev_line.c
+Norme: ./read/ft_check_loop.c
+Norme: ./parse/ft_parse_separate_cmd.c
+Norme: ./parse/ft_parse_replace_stderr_prev_line.c
+Norme: ./read/ft_init_list_arr.c
+Norme: ./parse/ft_parse_replace_stdin_sdterr_redirect.c
+Norme: ./read/ft_read_ctrl_c_env.c
+Norme: ./read/ft_read_end.c
+Norme: ./read/ft_env_init.c
+Norme: ./read/ft_init_init_term_arr.c
+Norme: ./read/ft_read_deselect.c
+Norme: ./read/ft_read_exit.c
+Norme: ./read/ft_read_exec.c
+Norme: ./read/ft_read_env.c
+Norme: ./read/ft_read_get.c
+Norme: ./read/ft_read_line.c
+Norme: ./read/ft_read_no_env.c
+Norme: ./read/ft_read_parse_eof.c
+Norme: ./read/ft_read_stdin.c
+Norme: ./signal/ft_signal_restore.c
+Norme: ./signal/ft_signal_init.c
+Norme: ./terminal/ft_mode_insertion.c
+Norme: ./terminal/ft_mode_reverse_video.c
+Norme: ./read/ft_read_parse.c
+Norme: ./terminal/ft_move_down.c
+Norme: ./terminal/ft_move_right.c
+Norme: ./terminal/ft_move_up.c
+Norme: ./terminal/ft_move_x.c
+Norme: ./read/ft_read_parse_actions.c
+Norme: ./terminal/ft_mode_basic_video.c
+Norme: ./terminal/ft_terminal_winsize.c
+Norme: ./terminal/ft_move_left.c
+Norme: ./terminal/my_putchar.c
+Norme: ./terminal/ft_sup_char.c
+Norme: ./terminal/ft_terminal_tool.c
+Error (line 37): C++ comment
