@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 11:12:04 by alex              #+#    #+#             */
-/*   Updated: 2017/10/15 19:24:46 by alex             ###   ########.fr       */
+/*   Updated: 2017/10/17 13:30:02 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,6 @@
 int	ft_fork_set_tube_fd(
 	t_fork *st_fork, t_tab_tube *array_tube, t_arr_fd *arr_fd, char **cmd)
 {
-	//No more need
-	// if (st_fork->i)
-	// {
-	// 	ft_fork_close_array_tube(array_tube);
-	// }
-	// ft_fork_pipe_array_tube(array_tube);
 	st_fork->index_builtin = false;
 	st_fork->err = 0;
 	ft_str_free(&st_fork->error_ptr);

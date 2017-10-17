@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 17:39:39 by alex              #+#    #+#             */
-/*   Updated: 2017/10/17 04:27:30 by alex             ###   ########.fr       */
+/*   Updated: 2017/10/17 13:30:51 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,6 @@ static int	ft_fork_read_stdin(t_arr_fd *arr_fd, t_tab_tube *array_tube)
 		if (!get_next_line(0, &line))
 			break ;
 	}
-	// ft_putstr("\ntmp: ");ft_putstr(tmp);ft_putstr(".\n");
-	// write(0, tmp, ft_strlen(tmp));
-	// write(0, tmp, 0);
 	ft_str_free(&tmp);
 	ft_str_free(&line);
 	ft_str_free(&end_word);

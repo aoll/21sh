@@ -6,7 +6,7 @@
 /*   By: aollivie <aollivie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 13:17:39 by aollivie          #+#    #+#             */
-/*   Updated: 2017/10/14 12:18:10 by alex             ###   ########.fr       */
+/*   Updated: 2017/10/17 14:43:31 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,6 @@
 # define B_CD					4
 # define B_ECHO					5
 # define B_EXIT					6
-
-/*
-** GLOBAL
-*/
-
-int							g_is_ctrl_c_father;
-int							clean;
 
 /*
 ** STRUCT
@@ -183,6 +176,21 @@ struct				s_read
 	t_list_arr		list_arr;
 	int				err;
 };
+
+typedef struct s_sig		t_sig;
+struct				s_sig
+{
+	int				g_is_ctrl_c_father;
+	int				pid;
+};
+
+/*
+** GLOBAL
+*/
+
+t_sig						g_sig;
+// int							g_is_ctrl_c_father;
+int							clean;
 
 /*
 ** PROTOTYPES

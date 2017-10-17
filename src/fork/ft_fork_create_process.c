@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 12:46:21 by alex              #+#    #+#             */
-/*   Updated: 2017/10/16 14:37:35 by alex             ###   ########.fr       */
+/*   Updated: 2017/10/17 14:41:03 by aollivie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	ft_fork_create_process(
 	}
 	else if (pid)
 	{
-
 		if (st_fork->nb_pipe && st_fork->i < st_fork->nb_pipe  && !st_fork->err)
 		{
 			close(tab_tube[st_fork->i].tube[1]);
