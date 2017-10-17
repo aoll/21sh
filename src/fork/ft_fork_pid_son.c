@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 11:38:59 by alex              #+#    #+#             */
-/*   Updated: 2017/10/17 03:24:43 by alex             ###   ########.fr       */
+/*   Updated: 2017/10/17 03:27:51 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,27 @@ int	ft_fork_write_in_file(t_arr *arr, int fd_target)
 		// ft_putstr("\nfd: ");ft_putnbr(*fd);ft_putstr(".\n");
 		if (*fd == -2 && !fd_target)
 		{
-			line = ft_strnew(BUFF_SIZE);
+			line = NULL;
 			char *tmp = ft_strnew(0);
 			while (get_next_line(0, &line) > 0) {
-				tmp = ft_strjoin(tmp, ft_strjoin(line, "\n"));
+				if (line)
+				{
+					tmp = ft_strjoin_free(&tmp, line);
+					tmp = ft_strjoin_free(&tmp, "\n");
+					ft_str_free(&line);
+				}
 			}
-			free(line);
+			if (line)
+			{
+				free(line);
+			}
 			pipe(p);
 
 			ft_putstr_fd(tmp, p[1]);
 			close(p[1]);
 			dup2(p[0], fd_target);
 			close(p[0]);
+			free(tmp);
 			return (EXIT_SUCCESS);
 		}
 		if (*fd == -10 )

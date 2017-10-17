@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:46:59 by alex              #+#    #+#             */
-/*   Updated: 2017/10/16 16:16:47 by alex             ###   ########.fr       */
+/*   Updated: 2017/10/17 04:24:31 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,11 @@ static int	ft_fork_is_exit(
 		return (B_EXIT);
 	return (EXIT_SUCCESS);
 }
-//
-// int	ft_fork_re()
-// {
-//
-// 	return (EXIT_SUCCESS);
-// }
-
-
 
 int			ft_fork_re(char **cmd, t_tube *tab_tube, t_arr **env,  t_fork *st_fork, t_arr_fd *arr_fd)
 {
 	t_tab_tube		array_tube;
-	// t_arr_fd		arr_fd;
 
-
-
-	// if (st_fork->i < st_fork->nb_pipe)
-	// {
-	// 	st_fork->i++;
-	// 	ft_fork_re(cmd, tab_tube, env, st_fork, arr_fd);
-	// 	st_fork->i--;
-	// }
 	if (st_fork->i > st_fork->nb_pipe)
 	{
 		return (EXIT_SUCCESS);
@@ -96,7 +79,7 @@ int	ft_fork(char **cmd, t_tube *tab_tube, t_arr **env, int nb_pipe)
 	if ((st_fork.err = ft_fork_init_loop(
 		&st_fork, &arr_fd, (const char **)cmd, nb_pipe)))
 		return (EXIT_FAILURE);
-	ft_fork_re(cmd, tab_tube, env, &st_fork, &arr_fd);
+	if (ft_fork_re(cmd, tab_tube, env, &st_fork, &arr_fd) == B_EXIT)
+		return (B_EXIT);
 	return (ft_fork_free_st_fork_and_arr_fd(&st_fork, &arr_fd));
-	// return (EXIT_SUCCESS);
 }

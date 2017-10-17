@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 17:39:39 by alex              #+#    #+#             */
-/*   Updated: 2017/10/16 18:01:27 by alex             ###   ########.fr       */
+/*   Updated: 2017/10/17 04:27:30 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ static int	ft_fork_read_stdin(t_arr_fd *arr_fd, t_tab_tube *array_tube)
 	line = NULL;
 	tmp = ft_strnew(0);
 	end_word = ft_arr_pop(arr_fd->arr_d_end_word, 0);
-	ft_putstr("\n");ft_putstr(end_word);ft_putstr(".\n");
-	// while (ft_strcmp(line, end_word) != 0 || arr_fd->arr_d_end_word->length)
 	while (ft_strcmp(line, end_word) != 0 || arr_fd->arr_d_end_word->length)
 	{
 		ft_fork_read_stdin_is_end_word(arr_fd, &end_word, &line);
