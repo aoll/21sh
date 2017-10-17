@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 11:51:20 by alex              #+#    #+#             */
-/*   Updated: 2017/05/18 16:33:32 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/10/16 16:20:32 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,12 @@ static int	ft_fork_list_fd_0(t_arr_fd *arr_fd)
 	if (arr_fd->arr_fd_stdout->length)
 	{
 		fd = *((int **)arr_fd->arr_fd_stdout->ptr);
+		if (*fd == 0)
+			*fd = -10;
+	}
+	if (arr_fd->arr_fd_stderr->length)
+	{
+		fd = *((int **)arr_fd->arr_fd_stderr->ptr);
 		if (*fd == 0)
 			*fd = -10;
 	}

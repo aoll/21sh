@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:49:35 by alex              #+#    #+#             */
-/*   Updated: 2017/05/18 17:51:29 by aollivie         ###   ########.fr       */
+/*   Updated: 2017/10/17 01:19:35 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	ft_init_terminal(void)
 		return (EXIT_FAILURE);
 	term.c_lflag &= ~(ICANON);
 	term.c_lflag &= ~(ECHO);
+	// term.c_lflag &= ~(ECHONL);
 	if (tcsetattr(0, TCSADRAIN, &term) == -1)
 	{
 		return (EXIT_FAILURE);

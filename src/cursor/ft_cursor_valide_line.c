@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/11 17:20:46 by alex              #+#    #+#             */
-/*   Updated: 2017/04/24 21:49:26 by alex             ###   ########.fr       */
+/*   Updated: 2017/10/15 19:27:55 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	ft_cursor_valide_line_switch(
 	}
 	else if (tmp_current_line->length == 1 && !tmp_arr->length)
 	{
+		// ft_putstr("$> ");
 		ft_cursor_valide_line_without_line(tmp_history_line);
 	}
 	else if (tmp_current_line->length >= 2 && tmp_arr->length)

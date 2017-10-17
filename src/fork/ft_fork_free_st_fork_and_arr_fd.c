@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:08:09 by alex              #+#    #+#             */
-/*   Updated: 2017/02/09 13:10:53 by alex             ###   ########.fr       */
+/*   Updated: 2017/10/16 14:34:23 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 int	ft_fork_free_st_fork_and_arr_fd(t_fork *st_fork, t_arr_fd *arr_fd)
 {
+	// waza
 	ft_fork_back_std(st_fork);
 	if (st_fork->env_copy)
 	{
